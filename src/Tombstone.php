@@ -20,7 +20,7 @@ class Tombstone {
     /**
      * @param HandlerInterface[] $handlers
      */
-    public function __construct(array $handlers = []) {
+    public function __construct(array $handlers = array()) {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider(1);
     }
