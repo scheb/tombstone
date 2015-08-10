@@ -1,6 +1,6 @@
 <?php
 // Run this with CLI.
-// In this example the tombstone is invoked, which displays a message on the console.
+// In this example the tombstone is invoked, which displays a message on the console and writes a log file.
 
 require(__DIR__.'/../vendor/autoload.php');
 
@@ -15,8 +15,9 @@ function callTombstone() {
     $tombstone->register('2015-08-10', 'scheb');
 }
 
-$fileHandler = new \Scheb\Tombstone\Handlers\EchoHandler();
-$tombstone = new \Scheb\Tombstone\Tombstone([$fileHandler]);
+$echoHandler = new \Scheb\Tombstone\Handlers\EchoHandler();
+$fileHandler = new \Scheb\Tombstone\Handlers\StreamHandler(__DIR__ . '/logs/tombstone.log');
+$tombstone = new \Scheb\Tombstone\Tombstone([$echoHandler, $fileHandler]);
 
 $test = new Testing();
 $test->methodCall();
