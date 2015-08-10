@@ -1,0 +1,23 @@
+{
+    "name": "scheb/tombstone",
+    "description": "Tombstones for PHP",
+    "keywords": ["tombstone", "dead code"],
+    "homepage": "https://github.com/scheb/tombstone",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Scheb",
+            "email": "me@christianscheb.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.6"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Scheb\\Tombstone\\": "src/"
+        }
+    }
+}
