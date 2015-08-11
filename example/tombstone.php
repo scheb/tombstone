@@ -15,8 +15,8 @@ function callTombstone() {
     $tombstone->register('2015-08-10', 'scheb');
 }
 
-$echoHandler = new \Scheb\Tombstone\Handlers\EchoHandler();
-$fileHandler = new \Scheb\Tombstone\Handlers\StreamHandler(__DIR__ . '/logs/tombstone.log');
+$echoHandler = new \Scheb\Tombstone\Handler\EchoHandler();
+$fileHandler = new \Scheb\Tombstone\Handler\StreamHandler(__DIR__ . '/logs/tombstone.log');
 $tombstone = new \Scheb\Tombstone\Tombstone([$echoHandler, $fileHandler]);
 
 $test = new Testing();

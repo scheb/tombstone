@@ -1,5 +1,5 @@
 <?php
-namespace Scheb\Tombstone\Formatters;
+namespace Scheb\Tombstone\Formatter;
 
 use Scheb\Tombstone\Vampire;
 

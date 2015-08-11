@@ -1,5 +1,5 @@
 <?php
-namespace Scheb\Tombstone\Handlers;
+namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Vampire;
 

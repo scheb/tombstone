@@ -1,7 +1,7 @@
 <?php
 namespace Scheb\Tombstone;
 
-use Scheb\Tombstone\Handlers\HandlerInterface;
+use Scheb\Tombstone\Handler\HandlerInterface;
 use Scheb\Tombstone\Tracing\TraceProvider;
 use Scheb\Tombstone\Tracing\TraceProviderInterface;
 

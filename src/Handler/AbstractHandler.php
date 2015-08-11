@@ -1,8 +1,8 @@
 <?php
-namespace Scheb\Tombstone\Handlers;
+namespace Scheb\Tombstone\Handler;
 
-use Scheb\Tombstone\Formatters\FormatterInterface;
-use Scheb\Tombstone\Formatters\LineFormatter;
+use Scheb\Tombstone\Formatter\FormatterInterface;
+use Scheb\Tombstone\Formatter\LineFormatter;
 
 abstract class AbstractHandler implements HandlerInterface
 {

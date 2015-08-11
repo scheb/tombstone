@@ -1,7 +1,7 @@
 <?php
-namespace Scheb\Tombstone\Handlers;
+namespace Scheb\Tombstone\Handler;
 
-use Scheb\Tombstone\Formatters\FormatterInterface;
+use Scheb\Tombstone\Formatter\FormatterInterface;
 use Scheb\Tombstone\Vampire;
 
 interface HandlerInterface {
