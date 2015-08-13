@@ -1,4 +1,6 @@
 <?php
+namespace Scheb\Tombstone\Example;
+
 require(__DIR__.'/../vendor/autoload.php');
 require(__DIR__.'/../tombstone.php');
 
@@ -24,6 +26,7 @@ class Testing {
 function run() {
     $test = new Testing();
     $test->publicMethod();
+    tombstone('2015-08-13', 'scheb');
 }
 
 run();
