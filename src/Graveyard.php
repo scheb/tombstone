@@ -3,14 +3,8 @@ namespace Scheb\Tombstone;
 
 use Scheb\Tombstone\Handler\HandlerInterface;
 use Scheb\Tombstone\Tracing\TraceProvider;
-use Scheb\Tombstone\Tracing\TraceProviderInterface;
 
-class Tombstone {
-
-    /**
-     * @var TraceProviderInterface
-     */
-    private $traceProvider;
+class Graveyard {
 
     /**
      * @var HandlerInterface[]
@@ -26,13 +20,6 @@ class Tombstone {
     }
 
     /**
-     * @param TraceProviderInterface $traceProvider
-     */
-    public function setTraceProvider(TraceProviderInterface $traceProvider){
-        $this->traceProvider = $traceProvider;
-    }
-
-    /**
      * @param HandlerInterface $handler
      */
     public function addHandler(HandlerInterface $handler) {
@@ -42,9 +29,9 @@ class Tombstone {
     /**
      * @param string $date
      * @param string $author
+     * @param array $trace
      */
-    public function register($date, $author) {
-        $trace = $this->traceProvider->getTrace();
+    public function tombstone($date, $author, array $trace) {
         $vampire = Vampire::create($date, $author, $trace);
         foreach ($this->handlers as $handler) {
             $handler->log($vampire);
