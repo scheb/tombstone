@@ -16,7 +16,7 @@ class Tombstone
     /**
      * @var string
      */
-    protected $fileName;
+    protected $file;
 
     /**
      * @var int
@@ -31,15 +31,15 @@ class Tombstone
     /**
      * @param string $tombstoneDate
      * @param string $author
-     * @param string $fileName
+     * @param string $file
      * @param int $line
      * @param string $method
      */
-    public function __construct($tombstoneDate, $author, $fileName, $line, $method)
+    public function __construct($tombstoneDate, $author, $file, $line, $method)
     {
         $this->tombstoneDate = $tombstoneDate;
         $this->author = $author;
-        $this->fileName = $fileName;
+        $this->file = $file;
         $this->line = $line;
         $this->method = $method;
     }
@@ -65,15 +65,15 @@ class Tombstone
      */
     public function getPosition()
     {
-        return $this->fileName.':'.$this->line;
+        return $this->file.':'.$this->line;
     }
 
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFile()
     {
-        return $this->fileName;
+        return $this->file;
     }
 
     /**

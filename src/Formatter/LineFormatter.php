@@ -21,7 +21,7 @@ class LineFormatter implements FormatterInterface
             $vampire->getAwakeningDate(),
             $vampire->getTombstoneDate(),
             $vampire->getAuthor(),
-            $vampire->getFileName(),
+            $vampire->getFile(),
             $vampire->getLine(),
             $vampire->getMethod(),
             $vampire->getInvoker()

@@ -14,7 +14,7 @@ class LogFormat
         return $vampire->getAwakeningDate() . "\t"
             . $vampire->getTombstoneDate() . "\t"
             . $vampire->getAuthor() . "\t"
-            . $vampire->getFileName() . "\t"
+            . $vampire->getFile() . "\t"
             . $vampire->getLine() . "\t"
             . $vampire->getMethod() . "\t"
             . $vampire->getInvoker();

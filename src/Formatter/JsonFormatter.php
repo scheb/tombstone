@@ -19,7 +19,7 @@ class JsonFormatter implements FormatterInterface
             'awakeningDate' => $vampire->getAwakeningDate(),
             'tombstoneDate' => $vampire->getTombstoneDate(),
             'author' => $vampire->getAuthor(),
-            'fileName' => $vampire->getFileName(),
+            'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
             'invoker' => $vampire->getInvoker(),
