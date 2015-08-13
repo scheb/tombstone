@@ -1,7 +1,7 @@
 <?php
 namespace Scheb\Tombstone;
 
-class Vampire
+class Vampire extends Tombstone
 {
 
     /**
@@ -10,36 +10,12 @@ class Vampire
     private $awakeningDate;
 
     /**
-     * @var string
-     */
-    private $author;
-
-    /**
-     * @var string
-     */
-    private $tombstoneDate;
-
-    /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
-     * @var int
-     */
-    private $line;
-
-    /**
-     * @var string
-     */
-    private $method;
-
-    /**
      * @var string|null
      */
     private $invoker;
 
     /**
+     * @param string $awakeningDate
      * @param string $tombstoneDate
      * @param string $author
      * @param string $fileName
@@ -47,14 +23,10 @@ class Vampire
      * @param string $method
      * @param string|null $invoker
      */
-    public function __construct($tombstoneDate, $author, $fileName, $line, $method, $invoker)
+    public function __construct($awakeningDate, $tombstoneDate, $author, $fileName, $line, $method, $invoker)
     {
-        $this->awakeningDate = date('c');
-        $this->author = $author;
-        $this->tombstoneDate = $tombstoneDate;
-        $this->fileName = $fileName;
-        $this->line = $line;
-        $this->method = $method;
+        parent::__construct($tombstoneDate, $author, $fileName, $line, $method);
+        $this->awakeningDate = $awakeningDate;
         $this->invoker = $invoker;
     }
 
@@ -73,7 +45,7 @@ class Vampire
         $method = self::getMethodFromTrace($firstFrame);
         $invoker = $secondFrame ? self::getMethodFromTrace($secondFrame) : null;
 
-        return new self($date, $author, $file, $line, $method, $invoker);
+        return new self(date('c'), $date, $author, $file, $line, $method, $invoker);
     }
 
     /**
@@ -93,45 +65,6 @@ class Vampire
         return $this->awakeningDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTombstoneDate()
-    {
-        return $this->tombstoneDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileName()
-    {
-        return $this->fileName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLine()
-    {
-        return $this->line;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
 
     /**
      * @return null|string
