@@ -78,10 +78,10 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param $reportDir
-     * @param $result
+     * @param string $reportDir
+     * @param AnalyzerResult $result
      */
-    protected function generateHtmlReport($reportDir, $result)
+    protected function generateHtmlReport($reportDir, AnalyzerResult $result)
     {
         $this->output->writeln('Generate HTML report');
         try {
