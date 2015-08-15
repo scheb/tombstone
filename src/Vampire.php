@@ -81,4 +81,12 @@ class Vampire
     {
         return $this->tombstone;
     }
+
+    /**
+     * @param Tombstone $tombstone
+     */
+    public function setTombstone($tombstone)
+    {
+        $this->tombstone = $tombstone;
+    }
 }

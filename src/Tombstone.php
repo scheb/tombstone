@@ -29,6 +29,11 @@ class Tombstone
     private $method;
 
     /**
+     * @var Vampire[]
+     */
+    private $vampires = array();
+
+    /**
      * @param string $tombstoneDate
      * @param string $author
      * @param string $file
@@ -90,5 +95,29 @@ class Tombstone
     public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * @param Vampire $vampire
+     */
+    public function addVampire(Vampire $vampire)
+    {
+        $this->vampires[] = $vampire;
+    }
+
+    /**
+     * @return Vampire[]
+     */
+    public function getVampires()
+    {
+        return $this->vampires;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasVampires()
+    {
+        return !$this->vampires;
     }
 }
