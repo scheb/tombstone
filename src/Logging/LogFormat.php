@@ -28,7 +28,7 @@ class LogFormat
      */
     public static function logToVampire($log)
     {
-        $v = explode("\t", $log);
+        $v = explode("\t", trim($log, "\n\r"));
         if (count($v) !== 7) {
             return null;
         }
