@@ -32,7 +32,7 @@ class Graveyard {
      * @param array $trace
      */
     public function tombstone($date, $author, array $trace) {
-        $vampire = Vampire::create($date, $author, $trace);
+        $vampire = Vampire::createFromCall($date, $author, $trace);
         foreach ($this->handlers as $handler) {
             $handler->log($vampire);
         }

@@ -1,9 +1,8 @@
 <?php
 namespace Scheb\Tombstone;
 
-class Vampire extends Tombstone
+class Vampire
 {
-
     /**
      * @var string
      */
@@ -15,19 +14,20 @@ class Vampire extends Tombstone
     private $invoker;
 
     /**
-     * @param string $awakeningDate
-     * @param string $tombstoneDate
-     * @param string $author
-     * @param string $fileName
-     * @param int $line
-     * @param string $method
-     * @param string|null $invoker
+     * @var Tombstone
      */
-    public function __construct($awakeningDate, $tombstoneDate, $author, $fileName, $line, $method, $invoker)
+    private $tombstone;
+
+    /**
+     * @param string $awakeningDate
+     * @param string|null $invoker
+     * @param Tombstone $tombstone
+     */
+    public function __construct($awakeningDate, $invoker, Tombstone $tombstone)
     {
-        parent::__construct($tombstoneDate, $author, $fileName, $line, $method);
         $this->awakeningDate = $awakeningDate;
         $this->invoker = $invoker;
+        $this->tombstone = $tombstone;
     }
 
     /**
@@ -36,7 +36,7 @@ class Vampire extends Tombstone
      * @param array $trace
      * @return Vampire
      */
-    public static function create($date, $author, $trace)
+    public static function createFromCall($date, $author, $trace)
     {
         $firstFrame = $trace[0];
         $secondFrame = isset($trace[1]) ? $trace[1] : null;
@@ -44,8 +44,9 @@ class Vampire extends Tombstone
         $line = $firstFrame['line'];
         $method = self::getMethodFromTrace($firstFrame);
         $invoker = $secondFrame ? self::getMethodFromTrace($secondFrame) : null;
+        $tombstone = new Tombstone($date, $author, $file, $line, $method);
 
-        return new self(date('c'), $date, $author, $file, $line, $method, $invoker);
+        return new self(date('c'), $invoker, $tombstone);
     }
 
     /**
@@ -65,12 +66,19 @@ class Vampire extends Tombstone
         return $this->awakeningDate;
     }
 
-
     /**
      * @return null|string
      */
     public function getInvoker()
     {
         return $this->invoker;
+    }
+
+    /**
+     * @return Tombstone
+     */
+    public function getTombstone()
+    {
+        return $this->tombstone;
     }
 }

@@ -6,27 +6,27 @@ class Tombstone
     /**
      * @var string
      */
-    protected $tombstoneDate;
+    private $tombstoneDate;
 
     /**
      * @var string
      */
-    protected $author;
+    private $author;
 
     /**
      * @var string
      */
-    protected $file;
+    private $file;
 
     /**
      * @var int
      */
-    protected $line;
+    private $line;
 
     /**
      * @var string
      */
-    protected $method;
+    private $method;
 
     /**
      * @param string $tombstoneDate

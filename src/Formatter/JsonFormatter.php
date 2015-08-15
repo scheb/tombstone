@@ -17,11 +17,11 @@ class JsonFormatter implements FormatterInterface
     {
         return json_encode(array(
             'awakeningDate' => $vampire->getAwakeningDate(),
-            'tombstoneDate' => $vampire->getTombstoneDate(),
-            'author' => $vampire->getAuthor(),
-            'file' => $vampire->getFile(),
-            'line' => $vampire->getLine(),
-            'method' => $vampire->getMethod(),
+            'tombstoneDate' => $vampire->getTombstone()->getTombstoneDate(),
+            'author' => $vampire->getTombstone()->getAuthor(),
+            'file' => $vampire->getTombstone()->getFile(),
+            'line' => $vampire->getTombstone()->getLine(),
+            'method' => $vampire->getTombstone()->getMethod(),
             'invoker' => $vampire->getInvoker(),
         )) . "\n";
     }

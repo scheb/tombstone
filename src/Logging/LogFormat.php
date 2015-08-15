@@ -1,6 +1,7 @@
 <?php
 namespace Scheb\Tombstone\Logging;
 
+use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
 class LogFormat
@@ -12,12 +13,12 @@ class LogFormat
      */
     public static function vampireToLog(Vampire $vampire) {
         return $vampire->getAwakeningDate() . "\t"
-            . $vampire->getTombstoneDate() . "\t"
-            . $vampire->getAuthor() . "\t"
-            . $vampire->getFile() . "\t"
-            . $vampire->getLine() . "\t"
-            . $vampire->getMethod() . "\t"
-            . $vampire->getInvoker();
+            . $vampire->getInvoker() . "\t"
+            . $vampire->getTombstone()->getTombstoneDate() . "\t"
+            . $vampire->getTombstone()->getAuthor() . "\t"
+            . $vampire->getTombstone()->getFile() . "\t"
+            . $vampire->getTombstone()->getLine() . "\t"
+            . $vampire->getTombstone()->getMethod();
     }
 
     /***
@@ -32,6 +33,6 @@ class LogFormat
             return null;
         }
 
-        return new Vampire($v[0], $v[1], $v[2], $v[3], $v[4], $v[5], $v[6]);
+        return new Vampire($v[0], $v[1], new Tombstone($v[2], $v[3], $v[4], $v[5], $v[6]));
     }
 }
