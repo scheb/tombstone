@@ -18,6 +18,9 @@
     "require-dev": {
         "symfony/console": "~2.7"
     },
+    "bin": [
+        "bin/tombstone"
+    ],
     "autoload": {
         "psr-4": {
             "Scheb\\Tombstone\\": "src/"
