@@ -38,7 +38,7 @@ class TombstoneList implements \Countable, \Iterator
 
     /**
      * @param string $method
-     * @return array|null
+     * @return Tombstone
      */
     public function getInMethod($method)
     {
@@ -52,7 +52,7 @@ class TombstoneList implements \Countable, \Iterator
     /**
      * @param string $file
      * @param int $line
-     * @return array|null
+     * @return Tombstone
      */
     public function getInFileAndLine($file, $line)
     {
