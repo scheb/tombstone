@@ -16,8 +16,10 @@ class MethodNameStrategy implements MatchingStrategyInterface
     public function matchVampireToTombstone(Vampire $vampire, TombstoneList $tombstoneList)
     {
         if ($matchingTombstones = $tombstoneList->getInMethod($vampire->getMethod())) {
-            if (count($matchingTombstones) === 1) {
-                return $matchingTombstones[0];
+            foreach ($matchingTombstones as $matchingTombstone) {
+                if ($vampire->inscriptionEquals($matchingTombstone)) {
+                    return $matchingTombstone;
+                }
             }
         }
 
