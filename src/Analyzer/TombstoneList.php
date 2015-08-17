@@ -57,7 +57,7 @@ class TombstoneList implements \Countable, \Iterator
     public function getInFileAndLine($file, $line)
     {
         $pos = $this->getPosition($file, $line);
-        if ($this->fileLineIndex[$pos]) {
+        if (isset($this->fileLineIndex[$pos])) {
             return $this->fileLineIndex[$pos];
         }
 
