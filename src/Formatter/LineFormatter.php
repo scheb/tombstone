@@ -19,11 +19,11 @@ class LineFormatter implements FormatterInterface
         return sprintf(
             $template,
             $vampire->getAwakeningDate(),
-            $vampire->getTombstone()->getTombstoneDate(),
-            $vampire->getTombstone()->getAuthor(),
-            $vampire->getTombstone()->getFile(),
-            $vampire->getTombstone()->getLine(),
-            $vampire->getTombstone()->getMethod(),
+            $vampire->getTombstoneDate(),
+            $vampire->getAuthor(),
+            $vampire->getFile(),
+            $vampire->getLine(),
+            $vampire->getMethod(),
             $vampire->getInvoker()
         );
     }

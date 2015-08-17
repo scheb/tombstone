@@ -50,7 +50,7 @@ class Analyzer
      */
     private function matchVampireToTombstone($vampire, $tombstoneList)
     {
-        if ($matchingTombstone = $tombstoneList->getInMethod($vampire->getTombstone()->getMethod())) {
+        if ($matchingTombstone = $tombstoneList->getInMethod($vampire->getMethod())) {
             return $matchingTombstone;
         }
 

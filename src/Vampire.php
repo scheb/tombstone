@@ -89,4 +89,52 @@ class Vampire
     {
         $this->tombstone = $tombstone;
     }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->tombstone->getAuthor();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTombstoneDate()
+    {
+        return $this->tombstone->getTombstoneDate();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->tombstone->getPosition();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->tombstone->getFile();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLine()
+    {
+        return $this->tombstone->getLine();
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->tombstone->getMethod();
+    }
 }
