@@ -89,6 +89,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private function displayDeleted(AnalyzerResult $result) {
         foreach ($result->getDeleted() as $vampire) {
             $this->output->printTombstone($vampire->getTombstone());
+            $this->output->newLine();
         }
     }
 }
