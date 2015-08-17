@@ -1,11 +1,25 @@
 <?php
 namespace Scheb\Tombstone\Analyzer;
 
+use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
+use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
+use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
 class Analyzer
 {
+    /**
+     * @var MatchingStrategyInterface[]
+     */
+    private $matchingStrategies;
+
+    public function __construct()
+    {
+        $this->matchingStrategies[] = new MethodNameStrategy();
+        $this->matchingStrategies[] = new PositionStrategy();
+    }
+
     /**
      * @param TombstoneList $tombstoneList
      * @param VampireList $vampireList
@@ -48,10 +62,12 @@ class Analyzer
      *
      * @return Tombstone|null
      */
-    private function matchVampireToTombstone($vampire, $tombstoneList)
+    private function matchVampireToTombstone(Vampire $vampire, TombstoneList $tombstoneList)
     {
-        if ($matchingTombstone = $tombstoneList->getInMethod($vampire->getMethod())) {
-            return $matchingTombstone;
+        foreach ($this->matchingStrategies as $strategy) {
+            if ($matchingTombstone = $strategy->matchVampireToTombstone($vampire, $tombstoneList)) {
+                return $matchingTombstone;
+            }
         }
 
         return null;
@@ -63,7 +79,7 @@ class Analyzer
      *
      * @return AnalyzerResult
      */
-    protected function createResult(TombstoneList $tombstoneList, array $unmatchedVampires)
+    private function createResult(TombstoneList $tombstoneList, array $unmatchedVampires)
     {
         $result = new AnalyzerResult();
         $result->setDeleted($unmatchedVampires);
