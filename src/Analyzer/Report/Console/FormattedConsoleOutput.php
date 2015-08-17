@@ -48,7 +48,11 @@ class FormattedConsoleOutput
     {
         $this->output->writeln(sprintf('<info>tombstone("%s", "%s")</info>', $tombstone->getTombstoneDate(), $tombstone->getAuthor()));
         $this->output->writeln(sprintf('  in file <comment>%s:%s</comment>', $tombstone->getFile(), $tombstone->getLine()));
-        $this->output->writeln(sprintf('  in method <comment>%s</comment>', $tombstone->getMethod()));
+        if ($tombstone->getMethod()) {
+            $this->output->writeln(sprintf('  in method <comment>%s</comment>', $tombstone->getMethod()));
+        } else {
+            $this->output->writeln(sprintf('  in global scope'));
+        }
     }
 
     /**
