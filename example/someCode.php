@@ -9,7 +9,7 @@ use Scheb\Tombstone\GraveyardProvider;
 use Scheb\Tombstone\Handler\LogHandler;
 
 $logHandler = new LogHandler(__DIR__ . '/logs/tombstone.log');
-$graveyard = new Graveyard([$logHandler]);
+$graveyard = new Graveyard(array($logHandler));
 GraveyardProvider::setGraveyard($graveyard);
 
 class Testing {
