@@ -10,7 +10,7 @@ class TraceProvider {
      */
     public static function getTrace($skipFrames) {
         ++$skipFrames; // Skip this call
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $skipFrames + 2);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $skipFrames + 3);
         return array_splice($trace, $skipFrames);
     }
 }

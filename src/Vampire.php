@@ -38,12 +38,19 @@ class Vampire
      */
     public static function createFromCall($date, $author, $trace)
     {
-        $firstFrame = $trace[0];
-        $secondFrame = isset($trace[1]) ? $trace[1] : null;
-        $file = $firstFrame['file'];
-        $line = $firstFrame['line'];
-        $method = self::getMethodFromTrace($firstFrame);
-        $invoker = $secondFrame ? self::getMethodFromTrace($secondFrame) : null;
+        // This is the call to the tombstone
+        $tombstoneCall = $trace[0];
+        $file = $tombstoneCall['file'];
+        $line = $tombstoneCall['line'];
+
+        // This is the method with the tombstone contained
+        $context = isset($trace[1]) ? $trace[1] : null;
+        $method = self::getMethodFromTrace($context);
+
+        // This is the method that called the method with the tombstone
+        $secondFrame = isset($trace[2]) ? $trace[2] : null;
+        $invoker = self::getMethodFromTrace($secondFrame);
+
         $tombstone = new Tombstone($date, $author, $file, $line, $method);
 
         return new self(date('c'), $invoker, $tombstone);
@@ -51,11 +58,26 @@ class Vampire
 
     /**
      * @param array $frame
+     *
      * @return string
      */
     private static function getMethodFromTrace($frame)
     {
-        return (isset($frame['class']) ? $frame['class'].$frame['type'] : '').$frame['function'];
+        if (!is_array($frame)) {
+            return null;
+        }
+
+        return (isset($frame['class']) ? $frame['class'] . $frame['type'] : '') . $frame['function'];
+    }
+
+    /**
+     * @param Tombstone $tombstone
+     *
+     * @return bool
+     */
+    public function inscriptionEquals(Tombstone $tombstone)
+    {
+        return $this->tombstone->inscriptionEquals($tombstone);
     }
 
     /**

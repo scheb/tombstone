@@ -50,6 +50,16 @@ class Tombstone
     }
 
     /**
+     * @param Tombstone $tombstone
+     *
+     * @return bool
+     */
+    public function inscriptionEquals(Tombstone $tombstone)
+    {
+        return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() == $this->tombstoneDate;
+    }
+
+    /**
      * @return string
      */
     public function getAuthor()
