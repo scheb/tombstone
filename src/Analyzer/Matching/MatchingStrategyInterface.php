@@ -10,6 +10,7 @@ interface MatchingStrategyInterface
     /**
      * @param Vampire $vampire
      * @param TombstoneList $tombstoneList
+     *
      * @return Tombstone|null
      */
     public function matchVampireToTombstone(Vampire $vampire, TombstoneList $tombstoneList);
