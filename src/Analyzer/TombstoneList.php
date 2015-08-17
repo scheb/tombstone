@@ -17,7 +17,7 @@ class TombstoneList implements \Countable, \Iterator
     private $fileLineIndex = array();
 
     /**
-     * @var Tombstone[]
+     * @var Tombstone[][]
      */
     private $methodIndex = array();
 
@@ -33,12 +33,15 @@ class TombstoneList implements \Countable, \Iterator
         $tombstone = new Tombstone($date, $author, $file, $line, $methodName);
         $this->tombstones[] = $tombstone;
         $this->fileLineIndex[$this->getPosition($file, $line)] = $tombstone;
-        $this->methodIndex[$methodName] = $tombstone;
+        if (!isset($this->methodIndex[$methodName])) {
+            $this->methodIndex[$methodName] = array();
+        }
+        $this->methodIndex[$methodName][] = $tombstone;
     }
 
     /**
      * @param string $method
-     * @return Tombstone
+     * @return Tombstone[]
      */
     public function getInMethod($method)
     {
