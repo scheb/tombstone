@@ -1,5 +1,5 @@
 <?php
-namespace Scheb\Tombstone\Cli;
+namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Symfony\Component\Console\Application as AbstractApplication;
 use Symfony\Component\Console\Input\ArrayInput;

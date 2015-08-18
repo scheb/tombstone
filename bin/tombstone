@@ -1,5 +1,5 @@
 #!/usr/bin/env php
 <?php
 require(__DIR__.'/../vendor/autoload.php');
-$application = new Scheb\Tombstone\Cli\Application;
+$application = new Scheb\Tombstone\Analyzer\Cli\Application;
 $application->run();

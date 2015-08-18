@@ -1,5 +1,5 @@
 <?php
-namespace Scheb\Tombstone\Cli;
+namespace Scheb\Tombstone\Analyzer\Cli;
 
 use PhpParser\Lexer;
 use Scheb\Tombstone\Analyzer\Analyzer;
