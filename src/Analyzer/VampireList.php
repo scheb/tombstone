@@ -22,7 +22,7 @@ class VampireList implements \Countable, \Iterator
     public function addVampire(Vampire $vampire)
     {
         $position = $vampire->getPosition();
-        $logDate = strtotime($vampire->getAwakeningDate());
+        $logDate = strtotime($vampire->getInvocationDate());
         if (!isset($this->vampires[$position]) || $logDate > $this->maxDatePerPosition[$position]) {
             $this->vampires[$position] = $vampire;
             $this->maxDatePerPosition[$position] = $logDate;

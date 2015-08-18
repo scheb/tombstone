@@ -12,7 +12,7 @@ class LogFormat
      * @return string
      */
     public static function vampireToLog(Vampire $vampire) {
-        return $vampire->getAwakeningDate() . "\t"
+        return $vampire->getInvocationDate() . "\t"
             . $vampire->getInvoker() . "\t"
             . $vampire->getTombstoneDate() . "\t"
             . $vampire->getAuthor() . "\t"

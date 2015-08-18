@@ -6,7 +6,7 @@ class Vampire
     /**
      * @var string
      */
-    private $awakeningDate;
+    private $invocationDate;
 
     /**
      * @var string|null
@@ -19,13 +19,13 @@ class Vampire
     private $tombstone;
 
     /**
-     * @param string $awakeningDate
+     * @param string $invocationDate
      * @param string|null $invoker
      * @param Tombstone $tombstone
      */
-    public function __construct($awakeningDate, $invoker, Tombstone $tombstone)
+    public function __construct($invocationDate, $invoker, Tombstone $tombstone)
     {
-        $this->awakeningDate = $awakeningDate;
+        $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
         $this->tombstone = $tombstone;
     }
@@ -84,9 +84,9 @@ class Vampire
     /**
      * @return string
      */
-    public function getAwakeningDate()
+    public function getInvocationDate()
     {
-        return $this->awakeningDate;
+        return $this->invocationDate;
     }
 
     /**

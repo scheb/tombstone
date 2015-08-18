@@ -18,7 +18,7 @@ class LineFormatter implements FormatterInterface
         $template = "%s - Vampire detected: %s by %s, in %s:%s in %s, invoked by %s\n";
         return sprintf(
             $template,
-            $vampire->getAwakeningDate(),
+            $vampire->getInvocationDate(),
             $vampire->getTombstoneDate(),
             $vampire->getAuthor(),
             $vampire->getFile(),
