@@ -14,7 +14,7 @@ class Tombstone
     private $author;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $label;
 
@@ -41,7 +41,7 @@ class Tombstone
     /**
      * @param string $tombstoneDate
      * @param string $author
-     * @param string $label
+     * @param string|null $label
      * @param string $file
      * @param int $line
      * @param string $method
@@ -93,7 +93,7 @@ class Tombstone
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLabel()
     {

@@ -29,7 +29,7 @@ class Graveyard {
     /**
      * @param string $date
      * @param string $author
-     * @param string $label
+     * @param string|null $label
      * @param array $trace
      */
     public function tombstone($date, $author, $label, array $trace) {
