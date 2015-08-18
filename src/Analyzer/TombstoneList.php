@@ -22,17 +22,13 @@ class TombstoneList implements \Countable, \Iterator
     private $methodIndex = array();
 
     /**
-     * @param string $file
-     * @param string $line
-     * @param string $methodName
-     * @param string $date
-     * @param string $author
+     * @param Tombstone $tombstone
      */
-    public function addTombstone($file, $line, $methodName, $date, $author)
+    public function addTombstone(Tombstone $tombstone)
     {
-        $tombstone = new Tombstone($date, $author, $file, $line, $methodName);
         $this->tombstones[] = $tombstone;
-        $this->fileLineIndex[$this->getPosition($file, $line)] = $tombstone;
+        $this->fileLineIndex[$tombstone->getPosition()] = $tombstone;
+        $methodName = $tombstone->getMethod();
         if (!isset($this->methodIndex[$methodName])) {
             $this->methodIndex[$methodName] = array();
         }

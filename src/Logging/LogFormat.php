@@ -16,6 +16,7 @@ class LogFormat
             . $vampire->getInvoker() . "\t"
             . $vampire->getTombstoneDate() . "\t"
             . $vampire->getAuthor() . "\t"
+            . $vampire->getLabel() . "\t"
             . $vampire->getFile() . "\t"
             . $vampire->getLine() . "\t"
             . $vampire->getMethod();
@@ -29,10 +30,10 @@ class LogFormat
     public static function logToVampire($log)
     {
         $v = explode("\t", trim($log, "\n\r"));
-        if (count($v) !== 7) {
+        if (count($v) < 8) {
             return null;
         }
 
-        return new Vampire($v[0], $v[1], new Tombstone($v[2], $v[3], $v[4], $v[5], $v[6]));
+        return new Vampire($v[0], $v[1], new Tombstone($v[2], $v[3] ?: null, $v[4], $v[5], $v[6], $v[7]));
     }
 }

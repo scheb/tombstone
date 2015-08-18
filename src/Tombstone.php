@@ -16,6 +16,11 @@ class Tombstone
     /**
      * @var string
      */
+    private $label;
+
+    /**
+     * @var string
+     */
     private $file;
 
     /**
@@ -36,17 +41,19 @@ class Tombstone
     /**
      * @param string $tombstoneDate
      * @param string $author
+     * @param string $label
      * @param string $file
      * @param int $line
      * @param string $method
      */
-    public function __construct($tombstoneDate, $author, $file, $line, $method)
+    public function __construct($tombstoneDate, $author, $label, $file, $line, $method)
     {
         $this->tombstoneDate = $tombstoneDate;
         $this->author = $author;
         $this->file = $file;
         $this->line = $line;
         $this->method = $method;
+        $this->label = $label;
     }
 
     /**
@@ -73,6 +80,14 @@ class Tombstone
     public function getTombstoneDate()
     {
         return $this->tombstoneDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**

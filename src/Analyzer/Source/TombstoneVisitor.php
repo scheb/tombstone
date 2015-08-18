@@ -10,6 +10,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
 use Scheb\Tombstone\Analyzer\TombstoneList;
+use Scheb\Tombstone\Tombstone;
 
 class TombstoneVisitor extends NameResolver
 {
@@ -69,7 +70,9 @@ class TombstoneVisitor extends NameResolver
                 $params = $this->extractParameters($node);
                 $date = isset($params[0]) ? $params[0] : null;
                 $author = isset($params[1]) ? $params[1] : null;
-                $this->tombstoneList->addTombstone($this->file, $line, $methodName, $date, $author);
+                $label = isset($params[2]) ? $params[2] : null;
+                $tombstone = new Tombstone($date, $author, $label, $this->file, $line, $methodName);
+                $this->tombstoneList->addTombstone($tombstone);
             }
         }
     }

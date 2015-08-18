@@ -29,10 +29,11 @@ class Graveyard {
     /**
      * @param string $date
      * @param string $author
+     * @param string $label
      * @param array $trace
      */
-    public function tombstone($date, $author, array $trace) {
-        $vampire = Vampire::createFromCall($date, $author, $trace);
+    public function tombstone($date, $author, $label, array $trace) {
+        $vampire = Vampire::createFromCall($date, $author, $label, $trace);
         foreach ($this->handlers as $handler) {
             $handler->log($vampire);
         }
