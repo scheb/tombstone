@@ -57,6 +57,16 @@ class Tombstone
     }
 
     /**
+     * @param string $file
+     * @param string $line
+     * @return string
+     */
+    public static function createPosition($file, $line)
+    {
+        return $file . ':' . $line;
+    }
+
+    /**
      * @param Tombstone $tombstone
      *
      * @return bool
@@ -95,7 +105,7 @@ class Tombstone
      */
     public function getPosition()
     {
-        return $this->file.':'.$this->line;
+        return self::createPosition($this->file, $this->line);
     }
 
     /**

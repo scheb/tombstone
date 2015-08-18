@@ -55,22 +55,12 @@ class TombstoneList implements \Countable, \Iterator
      */
     public function getInFileAndLine($file, $line)
     {
-        $pos = $this->getPosition($file, $line);
+        $pos = Tombstone::createPosition($file, $line);
         if (isset($this->fileLineIndex[$pos])) {
             return $this->fileLineIndex[$pos];
         }
 
         return null;
-    }
-
-    /**
-     * @param string $file
-     * @param int $line
-     * @return string
-     */
-    private function getPosition($file, $line)
-    {
-        return $file.':'.$line;
     }
 
     /**
