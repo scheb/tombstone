@@ -18,6 +18,7 @@ class JsonFormatter implements FormatterInterface
         return json_encode(array(
             'invocationDate' => $vampire->getInvocationDate(),
             'tombstoneDate' => $vampire->getTombstoneDate(),
+            'label' => $vampire->getLabel(),
             'author' => $vampire->getAuthor(),
             'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
