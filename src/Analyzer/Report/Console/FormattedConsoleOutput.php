@@ -46,7 +46,8 @@ class FormattedConsoleOutput
      */
     public function printTombstone($tombstone)
     {
-        $this->output->writeln(sprintf('<info>tombstone("%s", "%s")</info>', $tombstone->getTombstoneDate(), $tombstone->getAuthor()));
+        $label = $tombstone->getLabel() ? ', "' . $tombstone->getLabel() . '"' : '';
+        $this->output->writeln(sprintf('<info>tombstone("%s", "%s"%s)</info>', $tombstone->getTombstoneDate(), $tombstone->getAuthor(), $label));
         $this->output->writeln(sprintf('  in file <comment>%s:%s</comment>', $tombstone->getFile(), $tombstone->getLine()));
         if ($tombstone->getMethod()) {
             $this->output->writeln(sprintf('  in method <comment>%s</comment>', $tombstone->getMethod()));
