@@ -1,6 +1,6 @@
 {
     "name": "scheb/tombstone",
-    "description": " Dead code detection with tombstones for PHP",
+    "description": "Dead code detection with tombstones for PHP",
     "keywords": ["tombstone", "dead code"],
     "homepage": "https://github.com/scheb/tombstone",
     "license": "MIT",
