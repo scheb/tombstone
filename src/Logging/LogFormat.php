@@ -12,14 +12,15 @@ class LogFormat
      * @return string
      */
     public static function vampireToLog(Vampire $vampire) {
-        return $vampire->getInvocationDate() . "\t"
-            . $vampire->getInvoker() . "\t"
-            . $vampire->getTombstoneDate() . "\t"
+        return $vampire->getTombstoneDate() . "\t"
             . $vampire->getAuthor() . "\t"
             . $vampire->getLabel() . "\t"
             . $vampire->getFile() . "\t"
             . $vampire->getLine() . "\t"
-            . $vampire->getMethod();
+            . $vampire->getMethod() . "\t"
+            . $vampire->getInvocationDate() . "\t"
+            . $vampire->getInvoker();
+
     }
 
     /***
@@ -34,6 +35,6 @@ class LogFormat
             return null;
         }
 
-        return new Vampire($v[0], $v[1], new Tombstone($v[2], $v[3] ?: null, $v[4], $v[5], $v[6], $v[7]));
+        return new Vampire($v[6], $v[7], new Tombstone($v[0], $v[1], $v[2] ?: null, $v[3], $v[4], $v[5]));
     }
 }
