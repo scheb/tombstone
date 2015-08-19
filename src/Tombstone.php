@@ -67,6 +67,14 @@ class Tombstone
     }
 
     /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return md5($this->author . "\n" . $this->tombstoneDate . "\n" . $this->label);
+    }
+
+    /**
      * @param Tombstone $tombstone
      *
      * @return bool

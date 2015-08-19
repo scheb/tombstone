@@ -31,7 +31,7 @@ class LogDirectoryScanner
      */
     public function getVampires()
     {
-        $finder = new FinderFacade(array($this->logDir), array(), array('*.log'));
+        $finder = new FinderFacade(array($this->logDir), array(), array('*.tombstone'));
         foreach ($finder->findFiles() as $file) {
             $this->logReader->aggregateLog($file);
         }
