@@ -161,6 +161,6 @@ class Tombstone
      */
     public function hasVampires()
     {
-        return !$this->vampires;
+        return !!$this->vampires;
     }
 }
