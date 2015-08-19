@@ -12,16 +12,11 @@
     ],
     "require": {
         "php": ">=5.3.6",
-        "nikic/php-parser": "~1.4",
-        "sebastian/finder-facade": "~1.2",
         "psr/log": "~1.0"
     },
-    "require-dev": {
-        "symfony/console": "~2.7"
+    "suggest": {
+        "scheb/tombstone-analyzer": "Analysis tool for tombstone logs"
     },
-    "bin": [
-        "bin/tombstone"
-    ],
     "autoload": {
         "psr-4": {
             "Scheb\\Tombstone\\": "src/"
