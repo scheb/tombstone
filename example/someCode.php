@@ -6,9 +6,9 @@ require(__DIR__.'/../tombstone.php');
 
 use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\GraveyardProvider;
-use Scheb\Tombstone\Handler\LogHandler;
+use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 
-$logHandler = new LogHandler(__DIR__ . '/logs/tombstone.log');
+$logHandler = new AnalyzerLogHandler(__DIR__ . '/logs');
 $graveyard = new Graveyard(array($logHandler));
 GraveyardProvider::setGraveyard($graveyard);
 
