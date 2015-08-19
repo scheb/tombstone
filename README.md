@@ -29,7 +29,7 @@ the same (important for code analysis).
 3) Configure the graveyard
 
 All tombstones are sent to a "graveyard". By default the graveyard isn't doing anything with the tombstones. You have to
-register a handler. What you usually want is the `StreamHandler` , which it writes human-readable information to a log file.
+register a handler. What you usually want is the `StreamHandler` , which writes human-readable information to a log file.
 
 ```php
 $streamHandler = new \Scheb\Tombstone\Handler\StreamHandler("$logDir/tombstones.log");
