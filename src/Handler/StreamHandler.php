@@ -3,6 +3,12 @@ namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Vampire;
 
+/*
+ * Based on the StreamHandler from Monolog
+ * https://github.com/Seldaek/monolog
+ *
+ * (c) Jordi Boggiano <j.boggiano@seld.be>
+ */
 class StreamHandler extends AbstractHandler
 {
 
