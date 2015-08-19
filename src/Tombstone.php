@@ -73,7 +73,7 @@ class Tombstone
      */
     public function inscriptionEquals(Tombstone $tombstone)
     {
-        return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() == $this->tombstoneDate;
+        return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() === $this->tombstoneDate && $tombstone->getLabel() === $this->label;
     }
 
     /**
