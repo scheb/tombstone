@@ -2,7 +2,7 @@
 namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\VampireList;
-use Scheb\Tombstone\Logging\LogFormat;
+use Scheb\Tombstone\Logging\AnalyzerLogFormat;
 use Scheb\Tombstone\Vampire;
 
 class LogReader
@@ -30,7 +30,7 @@ class LogReader
         $handle = fopen($file, "r");
         while(!feof($handle)){
             $line = fgets($handle);
-            $vampire = LogFormat::logToVampire($line);
+            $vampire = AnalyzerLogFormat::logToVampire($line);
             if ($vampire) {
                 $this->vampires->addVampire($vampire);
             }

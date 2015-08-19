@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Logging;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
-class LogFormat
+class AnalyzerLogFormat
 {
     const CURRENT_VERSION = 1;
 

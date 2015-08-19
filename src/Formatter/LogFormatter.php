@@ -1,7 +1,7 @@
 <?php
 namespace Scheb\Tombstone\Formatter;
 
-use Scheb\Tombstone\Logging\LogFormat;
+use Scheb\Tombstone\Logging\AnalyzerLogFormat;
 use Scheb\Tombstone\Vampire;
 
 class LogFormatter implements FormatterInterface
@@ -16,6 +16,6 @@ class LogFormatter implements FormatterInterface
      */
     public function format(Vampire $vampire)
     {
-        return LogFormat::vampireToLog($vampire) . "\n";
+        return AnalyzerLogFormat::vampireToLog($vampire) . "\n";
     }
 }
