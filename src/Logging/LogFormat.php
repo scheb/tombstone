@@ -14,16 +14,17 @@ class LogFormat
      * @return string
      */
     public static function vampireToLog(Vampire $vampire) {
-        return self::CURRENT_VERSION . "\t"
-            . $vampire->getTombstoneDate() . "\t"
-            . $vampire->getAuthor() . "\t"
-            . $vampire->getLabel() . "\t"
-            . $vampire->getFile() . "\t"
-            . $vampire->getLine() . "\t"
-            . $vampire->getMethod() . "\t"
-            . $vampire->getInvocationDate() . "\t"
-            . $vampire->getInvoker();
-
+        return json_encode(array(
+            'v' => self::CURRENT_VERSION,
+            'd' => $vampire->getTombstoneDate(),
+            'a' => $vampire->getAuthor(),
+            'l' => $vampire->getLabel(),
+            'f' => $vampire->getFile(),
+            'n' => $vampire->getLine(),
+            'm' => $vampire->getMethod(),
+            'id' => $vampire->getInvocationDate(),
+            'im' => $vampire->getInvoker(),
+        ));
     }
 
     /***
@@ -33,11 +34,14 @@ class LogFormat
      */
     public static function logToVampire($log)
     {
-        $v = explode("\t", trim($log, "\n\r"));
-        $version = isset($v[0]) ? (int) $v[0] : null;
+        $data = json_decode($log, true);
+        if ($data === null || !isset($data['v'])) {
+            return null;
+        }
+        $version = (int) $data['v'];
 
         if ($version === 1) {
-            return new Vampire($v[7], $v[8], new Tombstone($v[1], $v[2], $v[3] ?: null, $v[4], $v[5], $v[6]));
+            return new Vampire($data['id'], $data['im'], new Tombstone($data['d'], $data['a'], $data['l'], $data['f'], $data['n'], $data['m']));
         }
 
         return null;
