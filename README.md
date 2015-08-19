@@ -3,6 +3,12 @@ scheb/tombstone
 
 Implements the concept of **Tombstones for PHP**.
 
+[![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
+[![HHVM Status](http://hhvm.h4cc.de/badge/scheb/tombstone.png)](http://hhvm.h4cc.de/package/scheb/tombstone)
+[![Coverage Status](https://coveralls.io/repos/scheb/tombstone/badge.png?branch=master)](https://coveralls.io/r/scheb/tombstone?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
+[![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
 
 Inspired by: http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code
