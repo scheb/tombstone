@@ -16,13 +16,13 @@ class JsonFormatter implements FormatterInterface
     public function format(Vampire $vampire)
     {
         return json_encode(array(
-            'invocationDate' => $vampire->getInvocationDate(),
             'tombstoneDate' => $vampire->getTombstoneDate(),
-            'label' => $vampire->getLabel(),
             'author' => $vampire->getAuthor(),
+            'label' => $vampire->getLabel(),
             'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
+            'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
         )) . "\n";
     }
