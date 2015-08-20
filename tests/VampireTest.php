@@ -1,6 +1,7 @@
 <?php
 namespace Scheb\Tombstone\Tests;
 
+use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
 
 class VampireTest extends \PHPUnit_Framework_TestCase
@@ -10,23 +11,7 @@ class VampireTest extends \PHPUnit_Framework_TestCase
      */
     public function createFromCall_dataGiven_returnCorrectlyConstructedVampire()
     {
-        $stackTrace = array(
-            array(
-                'file' => 'file1.php',
-                'line' => 11,
-                'function' => 'tombstone',
-            ),
-            array(
-                'file' => 'file2.php',
-                'line' => 22,
-                'function' => 'containingMethodName',
-            ),
-            array(
-                'file' => 'file3.php',
-                'line' => 33,
-                'function' => 'invokerMethodName',
-            )
-        );
+        $stackTrace = TraceFixture::getTraceFixture();
         $vampire = Vampire::createFromCall('2015-08-19', 'author', 'label', $stackTrace);
 
         $this->assertInstanceOf('Scheb\Tombstone\Vampire', $vampire);
