@@ -7,17 +7,17 @@ class TraceFixture
     {
         return array(
             array(
-                'file' => 'file1.php',
+                'file' => '/path/to/file1.php',
                 'line' => 11,
                 'function' => 'tombstone',
             ),
             array(
-                'file' => 'file2.php',
+                'file' => '/path/to/file2.php',
                 'line' => 22,
                 'function' => 'containingMethodName',
             ),
             array(
-                'file' => 'file3.php',
+                'file' => '/path/to/file3.php',
                 'line' => 33,
                 'function' => 'invokerMethodName',
             )

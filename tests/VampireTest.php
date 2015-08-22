@@ -19,10 +19,10 @@ class VampireTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2015-08-19', $vampire->getTombstoneDate());
         $this->assertEquals('author', $vampire->getAuthor());
         $this->assertEquals('label', $vampire->getLabel());
-        $this->assertEquals('file1.php', $vampire->getFile());
+        $this->assertEquals('/path/to/file1.php', $vampire->getFile());
         $this->assertEquals(11, $vampire->getLine());
         $this->assertEquals('containingMethodName', $vampire->getMethod());
-        $this->assertEquals('file1.php:11', $vampire->getPosition());
+        $this->assertEquals('/path/to/file1.php:11', $vampire->getPosition());
         $this->assertEquals('invokerMethodName', $vampire->getInvoker());
 
         $invocationDate = strtotime($vampire->getInvocationDate());

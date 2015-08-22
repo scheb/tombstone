@@ -32,4 +32,13 @@ class RelativePathTest extends \PHPUnit_Framework_TestCase
         $returnValue = RelativePath::makeRelativeTo($path, $baseDir);
         $this->assertEquals('/path/to/file.php', $returnValue);
     }
+
+    /**
+     * @test
+     */
+    public function makeRelativeTo_noBaseDirGiven_returnSamePath() {
+        $path = '/path/to/file.php';
+        $returnValue = RelativePath::makeRelativeTo($path, null);
+        $this->assertEquals('/path/to/file.php', $returnValue);
+    }
 }
