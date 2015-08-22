@@ -46,7 +46,8 @@ class AnalyzerLogHandler extends AbstractHandler
         $this->useLocking = $useLocking;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         parent::__destruct();
         foreach ($this->logStreams as $stream) {
             $stream->close();

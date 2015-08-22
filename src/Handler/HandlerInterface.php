@@ -4,7 +4,8 @@ namespace Scheb\Tombstone\Handler;
 use Scheb\Tombstone\Formatter\FormatterInterface;
 use Scheb\Tombstone\Vampire;
 
-interface HandlerInterface {
+interface HandlerInterface
+{
 
     /**
      * Log a vampire

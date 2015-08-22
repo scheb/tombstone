@@ -3,7 +3,8 @@ namespace Scheb\Tombstone\Tests\Fixtures;
 
 class TraceFixture
 {
-    public static function getTraceFixture() {
+    public static function getTraceFixture()
+    {
         return array(
             array(
                 'file' => 'file1.php',

@@ -8,7 +8,8 @@ class TraceProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function getTraceHere_traceContainingFunction_returnStackTrace() {
+    public function getTraceHere_traceContainingFunction_returnStackTrace()
+    {
         $thisMethod = __FUNCTION__;
         $thisClass = __CLASS__;
 
