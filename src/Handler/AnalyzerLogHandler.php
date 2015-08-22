@@ -107,6 +107,7 @@ class AnalyzerLogHandler extends AbstractHandler
             return false;
         }
 
+        clearstatcache(null, $logFile);
         return filesize($logFile) >= $this->sizeLimit;
     }
 
