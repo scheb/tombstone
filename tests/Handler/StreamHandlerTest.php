@@ -9,8 +9,8 @@
 namespace Monolog\Handler;
 
 use Scheb\Tombstone\Handler\StreamHandler;
-use Scheb\Tombstone\Tests\Fixtures\LabelFormatter;
 use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
+use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
 use Scheb\Tombstone\Vampire;
 
 class StreamHandlerTest extends \PHPUnit_Framework_TestCase

@@ -1,5 +1,5 @@
 <?php
-namespace Scheb\Tombstone\Tests\Fixtures;
+namespace Scheb\Tombstone\Tests\Stubs;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;
 use Scheb\Tombstone\Vampire;

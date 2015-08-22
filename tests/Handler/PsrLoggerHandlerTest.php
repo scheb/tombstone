@@ -2,8 +2,8 @@
 namespace Scheb\Tombstone\Tests\Handler;
 
 use Scheb\Tombstone\Handler\PsrLoggerHandler;
-use Scheb\Tombstone\Tests\Fixtures\LabelFormatter;
 use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
+use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
 
 class PsrLoggerHandlerTest extends \PHPUnit_Framework_TestCase
 {
