@@ -3,6 +3,7 @@ namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
+use Scheb\Tombstone\Vampire;
 
 class GraveyardTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,6 +56,23 @@ class GraveyardTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf('Scheb\Tombstone\Vampire'));
 
         $trace = TraceFixture::getTraceFixture();
+        $this->graveyard->tombstone('date', 'author', 'label', $trace);
+    }
+
+    /**
+     * @test
+     */
+    public function tombstone_sourceDirSet_()
+    {
+        $this->handler
+            ->expects($this->once())
+            ->method('log')
+            ->with($this->callback(function ($vampire) {
+                return $vampire instanceof Vampire && $vampire->getFile() === 'file1.php';
+            }));
+
+        $trace = TraceFixture::getTraceFixture();
+        $this->graveyard->setSourceDir('/path/to');
         $this->graveyard->tombstone('date', 'author', 'label', $trace);
     }
 

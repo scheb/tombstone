@@ -2,6 +2,7 @@
 namespace Scheb\Tombstone;
 
 use Scheb\Tombstone\Handler\HandlerInterface;
+use Scheb\Tombstone\Tracing\RelativePath;
 use Scheb\Tombstone\Tracing\TraceProvider;
 
 class Graveyard
@@ -13,12 +14,27 @@ class Graveyard
     private $handlers;
 
     /**
-     * @param HandlerInterface[] $handlers
+     * @var string
      */
-    public function __construct(array $handlers = array())
+    private $sourceDir;
+
+    /**
+     * @param HandlerInterface[] $handlers
+     * @param null $sourceDir
+     */
+    public function __construct(array $handlers = array(), $sourceDir = null)
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider(1);
+        $this->sourceDir = $sourceDir;
+    }
+
+    /**
+     * @param string $sourceDir
+     */
+    public function setSourceDir($sourceDir)
+    {
+        $this->sourceDir = $sourceDir;
     }
 
     /**
@@ -37,10 +53,32 @@ class Graveyard
      */
     public function tombstone($date, $author, $label, array $trace)
     {
+        $trace = $this->traceRelativePath($trace);
         $vampire = Vampire::createFromCall($date, $author, $label, $trace);
         foreach ($this->handlers as $handler) {
             $handler->log($vampire);
         }
+    }
+
+    /**
+     * @param array $trace
+     *
+     * @return array
+     */
+    private function traceRelativePath(array $trace)
+    {
+        if (!$this->sourceDir) {
+            return $trace;
+        }
+
+        foreach ($trace as $key => &$frame) {
+            if (isset($frame['file'])) {
+                $frame['file'] = str_replace('\\', '/', $frame['file']);
+                $frame['file'] = RelativePath::makeRelativeTo($frame['file'], $this->sourceDir);
+            }
+        }
+
+        return $trace;
     }
 
     public function flush()
