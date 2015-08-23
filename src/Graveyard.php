@@ -2,7 +2,7 @@
 namespace Scheb\Tombstone;
 
 use Scheb\Tombstone\Handler\HandlerInterface;
-use Scheb\Tombstone\Tracing\RelativePath;
+use Scheb\Tombstone\Tracing\PathNormalizer;
 use Scheb\Tombstone\Tracing\TraceProvider;
 
 class Graveyard
@@ -34,7 +34,7 @@ class Graveyard
      */
     public function setSourceDir($sourceDir)
     {
-        $this->sourceDir = str_replace('\\', '/', $sourceDir);
+        $this->sourceDir = PathNormalizer::normalizeDirectorySeparator($sourceDir);
     }
 
     /**
@@ -73,8 +73,8 @@ class Graveyard
 
         foreach ($trace as $key => &$frame) {
             if (isset($frame['file'])) {
-                $frame['file'] = str_replace('\\', '/', $frame['file']);
-                $frame['file'] = RelativePath::makeRelativeTo($frame['file'], $this->sourceDir);
+                $frame['file'] = PathNormalizer::normalizeDirectorySeparator($frame['file']);
+                $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->sourceDir);
             }
         }
 

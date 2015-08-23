@@ -1,8 +1,17 @@
 <?php
 namespace Scheb\Tombstone\Tracing;
 
-class RelativePath
+class PathNormalizer
 {
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function normalizeDirectorySeparator($path) {
+        return str_replace('\\', '/', $path);
+    }
+
     /**
      * @param string $path
      * @param string $baseDir

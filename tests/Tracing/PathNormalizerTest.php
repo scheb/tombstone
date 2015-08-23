@@ -1,9 +1,9 @@
 <?php
 namespace Tracing;
 
-use Scheb\Tombstone\Tracing\RelativePath;
+use Scheb\Tombstone\Tracing\PathNormalizer;
 
-class RelativePathTest extends \PHPUnit_Framework_TestCase
+class PathNormalizerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -11,7 +11,7 @@ class RelativePathTest extends \PHPUnit_Framework_TestCase
      */
     public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($baseDir) {
         $path = '/path/to/file.php';
-        $returnValue = RelativePath::makeRelativeTo($path, $baseDir);
+        $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals('file.php', $returnValue);
     }
 
@@ -29,7 +29,7 @@ class RelativePathTest extends \PHPUnit_Framework_TestCase
     public function makeRelativeTo_pathHasDifferentBase_returnSamePath() {
         $path = '/path/to/file.php';
         $baseDir = '/other/base';
-        $returnValue = RelativePath::makeRelativeTo($path, $baseDir);
+        $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals('/path/to/file.php', $returnValue);
     }
 
@@ -38,7 +38,7 @@ class RelativePathTest extends \PHPUnit_Framework_TestCase
      */
     public function makeRelativeTo_noBaseDirGiven_returnSamePath() {
         $path = '/path/to/file.php';
-        $returnValue = RelativePath::makeRelativeTo($path, null);
+        $returnValue = PathNormalizer::makeRelativeTo($path, null);
         $this->assertEquals('/path/to/file.php', $returnValue);
     }
 }
