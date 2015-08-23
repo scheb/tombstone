@@ -8,13 +8,20 @@ php:
   - 5.6
   - 7.0
 
+matrix:
+  include:
+    - php: 5.3
+      env: COMPOSER_FLAGS="--prefer-lowest"
+
 cache:
   directories:
     - $COMPOSER_CACHE_DIR
 
-before_script:
+before_install:
   - composer selfupdate
-  - composer require --prefer-source --no-interaction --dev
+
+install:
+  - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
   - mkdir -p build/logs
