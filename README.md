@@ -5,8 +5,8 @@ Implements the concept of **Tombstones for PHP**.
 
 [![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/scheb/tombstone/badge.svg)](https://travis-ci.org/scheb/tombstone)
-[![HHVM Status](http://hhvm.h4cc.de/badge/scheb/tombstone.png)](http://hhvm.h4cc.de/package/scheb/tombstone)
-[![Coverage Status](https://coveralls.io/repos/scheb/tombstone/badge.png?branch=master)](https://coveralls.io/r/scheb/tombstone?branch=master)
+[![HHVM Status](http://hhvm.h4cc.de/badge/scheb/tombstone.svg)](http://hhvm.h4cc.de/package/scheb/tombstone)
+[![Coverage Status](https://coveralls.io/repos/scheb/tombstone/badge.svg?branch=master&service=github)](https://coveralls.io/github/scheb/tombstone?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
 
