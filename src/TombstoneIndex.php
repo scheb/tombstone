@@ -2,6 +2,7 @@
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class TombstoneIndex implements \Countable, \Iterator
 {
@@ -9,14 +10,6 @@ class TombstoneIndex implements \Countable, \Iterator
      * @var string
      */
     private $sourceDir;
-
-    /**
-     * @param string $sourceDir
-     */
-    public function __construct($sourceDir)
-    {
-        $this->sourceDir = $sourceDir;
-    }
 
     /**
      * @var Tombstone[]
@@ -29,9 +22,22 @@ class TombstoneIndex implements \Countable, \Iterator
     private $fileLineIndex = array();
 
     /**
+     * @var Tombstone[]
+     */
+    private $relativeFileLineIndex = array();
+
+    /**
      * @var Tombstone[][]
      */
     private $methodIndex = array();
+
+    /**
+     * @param string $sourceDir
+     */
+    public function __construct($sourceDir)
+    {
+        $this->sourceDir = PathNormalizer::normalizeDirectorySeparator($sourceDir);
+    }
 
     /**
      * @param Tombstone $tombstone
@@ -39,8 +45,13 @@ class TombstoneIndex implements \Countable, \Iterator
     public function addTombstone(Tombstone $tombstone)
     {
         $this->tombstones[] = $tombstone;
+
         $position = FilePosition::createPosition($tombstone->getFile(), $tombstone->getLine());
         $this->fileLineIndex[$position] = $tombstone;
+
+        $relativePosition = FilePosition::createPosition($this->normalizeAndRelativePath($tombstone->getFile()), $tombstone->getLine());
+        $this->relativeFileLineIndex[$relativePosition] = $tombstone;
+
         $methodName = $tombstone->getMethod();
         if (!isset($this->methodIndex[$methodName])) {
             $this->methodIndex[$methodName] = array();
@@ -73,7 +84,23 @@ class TombstoneIndex implements \Countable, \Iterator
             return $this->fileLineIndex[$pos];
         }
 
+        $pos = FilePosition::createPosition($file, $line);
+        if (isset($this->relativeFileLineIndex[$pos])) {
+            return $this->relativeFileLineIndex[$pos];
+        }
+
         return null;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    private function normalizeAndRelativePath($path)
+    {
+        $path = PathNormalizer::normalizeDirectorySeparator($path);
+        return PathNormalizer::makeRelativeTo($path, $this->sourceDir);
     }
 
     /**
