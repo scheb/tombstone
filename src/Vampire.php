@@ -140,14 +140,6 @@ class Vampire
     /**
      * @return string
      */
-    public function getPosition()
-    {
-        return $this->tombstone->getPosition();
-    }
-
-    /**
-     * @return string
-     */
     public function getFile()
     {
         return $this->tombstone->getFile();

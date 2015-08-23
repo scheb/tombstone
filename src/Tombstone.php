@@ -57,16 +57,6 @@ class Tombstone
     }
 
     /**
-     * @param string $file
-     * @param string $line
-     * @return string
-     */
-    public static function createPosition($file, $line)
-    {
-        return $file . ':' . $line;
-    }
-
-    /**
      * @return string
      */
     public function getHash()
@@ -106,14 +96,6 @@ class Tombstone
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPosition()
-    {
-        return self::createPosition($this->file, $this->line);
     }
 
     /**

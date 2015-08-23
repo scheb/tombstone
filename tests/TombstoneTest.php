@@ -21,15 +21,6 @@ class TombstoneTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function createPosition_fileAndLineGiven_returnString()
-    {
-        $returnValue = Tombstone::createPosition('file.php', 12);
-        $this->assertEquals('file.php:12', $returnValue);
-    }
-
-    /**
-     * @test
-     */
     public function getHash_valuesSet_returnCorrectHash()
     {
         $tombstone = $this->createTombstone();
