@@ -90,10 +90,12 @@ class Command extends AbstractCommand
      */
     protected function generateHtmlReport($reportDir, AnalyzerResult $result)
     {
-        $this->output->writeln('Generate HTML report');
+        $this->output->writeln('');
+        $this->output->write('Generate HTML report...');
         try {
             $report = new HtmlReportGenerator($reportDir);
             $report->generate($result);
+            $this->output->writeln(' Done');
         } catch (\Exception $e) {
             $this->output->writeln('Could not generate HTML report: '.$e->getMessage());
         }
