@@ -5,6 +5,18 @@ use Scheb\Tombstone\Tombstone;
 
 class TombstoneList implements \Countable, \Iterator
 {
+    /**
+     * @var string
+     */
+    private $sourceDir;
+
+    /**
+     * @param string $sourceDir
+     */
+    public function __construct($sourceDir)
+    {
+        $this->sourceDir = $sourceDir;
+    }
 
     /**
      * @var Tombstone[]

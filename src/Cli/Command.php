@@ -10,6 +10,7 @@ use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Source\SourceDirectoryScanner;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
+use Scheb\Tombstone\Analyzer\TombstoneList;
 use Scheb\Tombstone\Analyzer\VampireList;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -67,7 +68,7 @@ class Command extends AbstractCommand
      * @return AnalyzerResult
      */
     private function createResult($sourceDir, $logDir) {
-        $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(), $sourceDir);
+        $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(new TombstoneList($sourceDir)), $sourceDir);
         $tombstoneList = $sourceScanner->getTombstones();
 
         $logScanner = new LogDirectoryScanner(new LogReader(new VampireList()), $logDir);

@@ -9,11 +9,12 @@ use Scheb\Tombstone\Analyzer\TombstoneList;
 class TombstoneExtractorFactory
 {
     /**
+     * @param TombstoneList $tombstoneList
+     *
      * @return TombstoneExtractor
      */
-    public static function create()
+    public static function create(TombstoneList $tombstoneList)
     {
-        $tombstoneList = new TombstoneList();
         $visitor = new TombstoneVisitor($tombstoneList);
         $traverser = new NodeTraverser();
         $parser = new Parser(new Lexer());
