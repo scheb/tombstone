@@ -3,6 +3,13 @@ scheb/tombstone-analyzer
 
 **Report generation** for the **Tombstones** created with the [https://github.com/scheb/tombstone](scheb/tombstone) library.
 
+[![Build Status](https://travis-ci.org/scheb/tombstone-analyzer.svg?branch=master)](https://travis-ci.org/scheb/tombstone-analyzer)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/scheb/tombstone-analyzer/badge.svg)](https://travis-ci.org/scheb/tombstone-analyzer)
+[![HHVM Status](http://hhvm.h4cc.de/badge/scheb/tombstone-analyzer.svg)](http://hhvm.h4cc.de/package/scheb/tombstone-analyzer)
+[![Coverage Status](https://coveralls.io/repos/scheb/tombstone-analyzer/badge.svg?branch=master&service=github)](https://coveralls.io/github/scheb/tombstone-analyzer?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/scheb/tombstone-analyzer/v/stable.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
+[![License](https://poser.pugx.org/scheb/tombstone-analyzer/license.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
 
 Inspired by: http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code
