@@ -1,7 +1,7 @@
 scheb/tombstone-analyzer
 ========================
 
-**Report generation** for the **Tombstones** created with the [https://github.com/scheb/tombstone](scheb/tombstone) library.
+**Report generation** for the **Tombstones** created with the [scheb/tombstone](https://github.com/scheb/tombstone) library.
 
 [![Build Status](https://travis-ci.org/scheb/tombstone-analyzer.svg?branch=master)](https://travis-ci.org/scheb/tombstone-analyzer)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/scheb/tombstone-analyzer/badge.svg)](https://travis-ci.org/scheb/tombstone-analyzer)
