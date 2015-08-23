@@ -1,0 +1,31 @@
+{
+    "name": "scheb/tombstone-analyzer",
+    "description": "Generates reports based on the logs from scheb/tombstone",
+    "keywords": ["tombstone", "dead code", "report"],
+    "homepage": "https://github.com/scheb/tombstone-analyzer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Scheb",
+            "email": "me@christianscheb.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.6",
+        "scheb/tombstone": "0.4.0",
+        "symfony/console": "~2.7",
+        "nikic/php-parser": "~1.4",
+        "sebastian/finder-facade": "~1.2"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "~0.6"
+    },
+    "bin": [
+        "tombstone"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Scheb\\Tombstone\\Analyzer\\": "src/"
+        }
+    }
+}
