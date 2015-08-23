@@ -52,6 +52,7 @@ class AnalyzerResult
      */
     public function setDeleted(array $deleted)
     {
+        $this->deleted = $deleted;
         foreach ($deleted as $vampire) {
             $this->initFileIndex($vampire->getFile());
             $this->perFile[$vampire->getFile()]['deleted'][] = $vampire;
