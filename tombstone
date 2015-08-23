@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+$autoloader = array(
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../../autoload.php'
+);
+
+foreach ($autoloader as $autoloaderFile) {
+    if (file_exists($autoloaderFile)) {
+        define('TOMBSTONE_COMPOSER_INSTALL', $autoloaderFile);
+        break;
+    }
+}
+
+unset($autoloaderFile);
+
+if (!defined('TOMBSTONE_COMPOSER_INSTALL')) {
+    fwrite(STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+    die(1);
+}
+
+require TOMBSTONE_COMPOSER_INSTALL;
+
+$application = new Scheb\Tombstone\Analyzer\Cli\Application;
+$application->run();
