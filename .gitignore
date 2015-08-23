@@ -1,4 +1,4 @@
-.idea
-vendor
-report
-composer.lock
+/.idea
+/vendor
+/report
+/composer.lock
