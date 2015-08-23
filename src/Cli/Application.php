@@ -10,7 +10,7 @@ class Application extends AbstractApplication
 {
     public function __construct()
     {
-        AbstractApplication::__construct('cli');
+        AbstractApplication::__construct('cli', 'dev-master');
     }
 
     protected function getCommandName(InputInterface $input)
@@ -34,6 +34,7 @@ class Application extends AbstractApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('Tombstone Analyzer ' . $this->getVersion());
         if (!$input->getFirstArgument()) {
             $input = new ArrayInput(array('--help'));
         }
