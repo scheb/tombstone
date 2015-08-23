@@ -39,7 +39,8 @@ class TombstoneList implements \Countable, \Iterator
     public function addTombstone(Tombstone $tombstone)
     {
         $this->tombstones[] = $tombstone;
-        $this->fileLineIndex[$tombstone->getPosition()] = $tombstone;
+        $position = FilePosition::createPosition($tombstone->getFile(), $tombstone->getLine());
+        $this->fileLineIndex[$position] = $tombstone;
         $methodName = $tombstone->getMethod();
         if (!isset($this->methodIndex[$methodName])) {
             $this->methodIndex[$methodName] = array();
@@ -67,7 +68,7 @@ class TombstoneList implements \Countable, \Iterator
      */
     public function getInFileAndLine($file, $line)
     {
-        $pos = Tombstone::createPosition($file, $line);
+        $pos = FilePosition::createPosition($file, $line);
         if (isset($this->fileLineIndex[$pos])) {
             return $this->fileLineIndex[$pos];
         }
