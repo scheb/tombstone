@@ -2,8 +2,6 @@
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
-use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
-use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
@@ -14,10 +12,12 @@ class Analyzer
      */
     private $matchingStrategies;
 
-    public function __construct()
+    /**
+     * @param array $matchingStrategies
+     */
+    public function __construct(array $matchingStrategies)
     {
-        $this->matchingStrategies[] = new MethodNameStrategy();
-        $this->matchingStrategies[] = new PositionStrategy();
+        $this->matchingStrategies = $matchingStrategies;
     }
 
     /**

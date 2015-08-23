@@ -6,6 +6,8 @@ use Scheb\Tombstone\Analyzer\Analyzer;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Log\LogDirectoryScanner;
 use Scheb\Tombstone\Analyzer\Log\LogReader;
+use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
+use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Source\SourceDirectoryScanner;
@@ -74,7 +76,11 @@ class Command extends AbstractCommand
         $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), $logDir);
         $vampireIndex = $logScanner->getVampires();
 
-        $analyzer = new Analyzer();
+        $analyzer = new Analyzer([
+            new MethodNameStrategy(),
+            new PositionStrategy(),
+        ]);
+
         return $analyzer->getResult($tombstoneIndex, $vampireIndex);
     }
 
