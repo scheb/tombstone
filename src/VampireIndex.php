@@ -3,7 +3,7 @@ namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Vampire;
 
-class VampireList implements \Countable, \Iterator
+class VampireIndex implements \Countable, \Iterator
 {
 
     /**

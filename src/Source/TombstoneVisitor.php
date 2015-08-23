@@ -9,7 +9,7 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
-use Scheb\Tombstone\Analyzer\TombstoneList;
+use Scheb\Tombstone\Analyzer\TombstoneIndex;
 use Scheb\Tombstone\Tombstone;
 
 class TombstoneVisitor extends NameResolver
@@ -30,16 +30,16 @@ class TombstoneVisitor extends NameResolver
     private $file;
 
     /**
-     * @var TombstoneList
+     * @var TombstoneIndex
      */
-    private $tombstoneList;
+    private $tombstoneIndex;
 
     /**
-     * @param TombstoneList $tombstoneList
+     * @param TombstoneIndex $tombstoneIndex
      */
-    public function __construct(TombstoneList $tombstoneList)
+    public function __construct(TombstoneIndex $tombstoneIndex)
     {
-        $this->tombstoneList = $tombstoneList;
+        $this->tombstoneIndex = $tombstoneIndex;
     }
 
     /**
@@ -72,7 +72,7 @@ class TombstoneVisitor extends NameResolver
                 $author = isset($params[1]) ? $params[1] : null;
                 $label = isset($params[2]) ? $params[2] : null;
                 $tombstone = new Tombstone($date, $author, $label, $this->file, $line, $methodName);
-                $this->tombstoneList->addTombstone($tombstone);
+                $this->tombstoneIndex->addTombstone($tombstone);
             }
         }
     }
@@ -106,11 +106,11 @@ class TombstoneVisitor extends NameResolver
     }
 
     /**
-     * @return TombstoneList
+     * @return TombstoneIndex
      */
     public function getTombstones()
     {
-        return $this->tombstoneList;
+        return $this->tombstoneIndex;
     }
 
     /**

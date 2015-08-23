@@ -6,7 +6,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\Parser;
 use Scheb\Tombstone\Analyzer\Exception\TombstoneExtractionException;
-use Scheb\Tombstone\Analyzer\TombstoneList;
+use Scheb\Tombstone\Analyzer\TombstoneIndex;
 
 class TombstoneExtractor
 {
@@ -59,7 +59,7 @@ class TombstoneExtractor
     }
 
     /**
-     * @return TombstoneList
+     * @return TombstoneIndex
      */
     public function getTombstones()
     {

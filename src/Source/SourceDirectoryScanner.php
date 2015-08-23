@@ -1,7 +1,7 @@
 <?php
 namespace Scheb\Tombstone\Analyzer\Source;
 
-use Scheb\Tombstone\Analyzer\TombstoneList;
+use Scheb\Tombstone\Analyzer\TombstoneIndex;
 use SebastianBergmann\FinderFacade\FinderFacade;
 
 class SourceDirectoryScanner
@@ -27,7 +27,7 @@ class SourceDirectoryScanner
     }
 
     /**
-     * @return TombstoneList
+     * @return TombstoneIndex
      */
     public function getTombstones()
     {

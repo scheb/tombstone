@@ -10,8 +10,8 @@ use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Source\SourceDirectoryScanner;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
-use Scheb\Tombstone\Analyzer\TombstoneList;
-use Scheb\Tombstone\Analyzer\VampireList;
+use Scheb\Tombstone\Analyzer\TombstoneIndex;
+use Scheb\Tombstone\Analyzer\VampireIndex;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -68,14 +68,14 @@ class Command extends AbstractCommand
      * @return AnalyzerResult
      */
     private function createResult($sourceDir, $logDir) {
-        $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(new TombstoneList($sourceDir)), $sourceDir);
-        $tombstoneList = $sourceScanner->getTombstones();
+        $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(new TombstoneIndex($sourceDir)), $sourceDir);
+        $tombstoneIndex = $sourceScanner->getTombstones();
 
-        $logScanner = new LogDirectoryScanner(new LogReader(new VampireList()), $logDir);
-        $vampireList = $logScanner->getVampires();
+        $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), $logDir);
+        $vampireIndex = $logScanner->getVampires();
 
         $analyzer = new Analyzer();
-        return $analyzer->getResult($tombstoneList, $vampireList);
+        return $analyzer->getResult($tombstoneIndex, $vampireIndex);
     }
 
     /**

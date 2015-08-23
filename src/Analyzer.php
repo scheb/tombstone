@@ -21,30 +21,30 @@ class Analyzer
     }
 
     /**
-     * @param TombstoneList $tombstoneList
-     * @param VampireList $vampireList
+     * @param TombstoneIndex $tombstoneIndex
+     * @param VampireIndex $vampireIndex
      *
      * @return AnalyzerResult
      */
-    public function getResult(TombstoneList $tombstoneList, VampireList $vampireList)
+    public function getResult(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex)
     {
-        $unmatched = $this->match($tombstoneList, $vampireList);
-        return $this->createResult($tombstoneList, $unmatched);
+        $unmatched = $this->match($tombstoneIndex, $vampireIndex);
+        return $this->createResult($tombstoneIndex, $unmatched);
     }
 
     /**
-     * @param TombstoneList $tombstoneList
-     * @param VampireList $vampireList
+     * @param TombstoneIndex $tombstoneIndex
+     * @param VampireIndex $vampireIndex
      *
      * @return Vampire[]
      */
-    private function match(TombstoneList $tombstoneList, VampireList $vampireList)
+    private function match(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex)
     {
         $unmatched = array();
 
         /** @var Vampire $vampire */
-        foreach ($vampireList as $vampire) {
-            $relatedTombstone = $this->matchVampireToTombstone($vampire, $tombstoneList);
+        foreach ($vampireIndex as $vampire) {
+            $relatedTombstone = $this->matchVampireToTombstone($vampire, $tombstoneIndex);
             if ($relatedTombstone) {
                 $relatedTombstone->addVampire($vampire);
                 $vampire->setTombstone($relatedTombstone);
@@ -58,14 +58,14 @@ class Analyzer
 
     /**
      * @param Vampire $vampire
-     * @param TombstoneList $tombstoneList
+     * @param TombstoneIndex $tombstoneIndex
      *
      * @return Tombstone|null
      */
-    private function matchVampireToTombstone(Vampire $vampire, TombstoneList $tombstoneList)
+    private function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex)
     {
         foreach ($this->matchingStrategies as $strategy) {
-            if ($matchingTombstone = $strategy->matchVampireToTombstone($vampire, $tombstoneList)) {
+            if ($matchingTombstone = $strategy->matchVampireToTombstone($vampire, $tombstoneIndex)) {
                 return $matchingTombstone;
             }
         }
@@ -74,17 +74,17 @@ class Analyzer
     }
 
     /**
-     * @param TombstoneList $tombstoneList
+     * @param TombstoneIndex $tombstoneIndex
      * @param array $unmatchedVampires
      *
      * @return AnalyzerResult
      */
-    private function createResult(TombstoneList $tombstoneList, array $unmatchedVampires)
+    private function createResult(TombstoneIndex $tombstoneIndex, array $unmatchedVampires)
     {
         $result = new AnalyzerResult();
         $result->setDeleted($unmatchedVampires);
 
-        foreach ($tombstoneList as $tombstone) {
+        foreach ($tombstoneIndex as $tombstone) {
             if ($tombstone->hasVampires()) {
                 $result->addUndead($tombstone);
             } else {

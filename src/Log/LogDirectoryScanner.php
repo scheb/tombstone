@@ -1,7 +1,7 @@
 <?php
 namespace Scheb\Tombstone\Analyzer\Log;
 
-use Scheb\Tombstone\Analyzer\VampireList;
+use Scheb\Tombstone\Analyzer\VampireIndex;
 use SebastianBergmann\FinderFacade\FinderFacade;
 
 class LogDirectoryScanner
@@ -27,7 +27,7 @@ class LogDirectoryScanner
     }
 
     /**
-     * @return VampireList
+     * @return VampireIndex
      */
     public function getVampires()
     {

@@ -1,21 +1,21 @@
 <?php
 namespace Scheb\Tombstone\Analyzer\Log;
 
-use Scheb\Tombstone\Analyzer\VampireList;
+use Scheb\Tombstone\Analyzer\VampireIndex;
 use Scheb\Tombstone\Logging\AnalyzerLogFormat;
 use Scheb\Tombstone\Vampire;
 
 class LogReader
 {
     /**
-     * @var VampireList
+     * @var VampireIndex
      */
     private $vampires;
 
     /**
      * @param $vampires
      */
-    public function __construct(VampireList $vampires)
+    public function __construct(VampireIndex $vampires)
     {
         $this->vampires = $vampires;
     }
@@ -39,7 +39,7 @@ class LogReader
     }
 
     /**
-     * @return VampireList
+     * @return VampireIndex
      */
     public function getVampires()
     {

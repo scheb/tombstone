@@ -3,7 +3,7 @@ namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Tombstone;
 
-class TombstoneList implements \Countable, \Iterator
+class TombstoneIndex implements \Countable, \Iterator
 {
     /**
      * @var string
