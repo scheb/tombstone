@@ -20,15 +20,6 @@ class FormattedConsoleOutput
     }
 
     /**
-     * @param string $text
-     */
-    public function headline($text)
-    {
-        $this->output->writeln($text);
-        $this->output->writeln(str_repeat('-', strlen($text)));
-    }
-
-    /**
      * @param $text
      */
     public function writeln($text)
@@ -44,13 +35,13 @@ class FormattedConsoleOutput
     /**
      * @param Tombstone $tombstone
      */
-    public function printTombstone($tombstone)
+    public function printTombstone($tombstone, $prefix)
     {
         $label = $tombstone->getLabel() ? ', "' . $tombstone->getLabel() . '"' : '';
-        $this->output->writeln(sprintf('<info>tombstone("%s", "%s"%s)</info>', $tombstone->getTombstoneDate(), $tombstone->getAuthor(), $label));
-        $this->output->writeln(sprintf('  in file <comment>%s:%s</comment>', $tombstone->getFile(), $tombstone->getLine()));
+        $this->output->writeln(sprintf('  [%s] <info>tombstone("%s", "%s"%s)</info>', $prefix, $tombstone->getTombstoneDate(), $tombstone->getAuthor(), $label));
+        $this->output->writeln(sprintf('    in file <comment>%s:%s</comment>', $tombstone->getFile(), $tombstone->getLine()));
         if ($tombstone->getMethod()) {
-            $this->output->writeln(sprintf('  in method <comment>%s</comment>', $tombstone->getMethod()));
+            $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
         } else {
             $this->output->writeln(sprintf('  in global scope'));
         }
@@ -61,7 +52,7 @@ class FormattedConsoleOutput
      */
     public function printCalledBy(array $invokers) {
         foreach ($invokers as $invoker) {
-            $this->output->writeln(sprintf('  was called by <error>%s</error>', $invoker ?: 'global scope'));
+            $this->output->writeln(sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));
         }
     }
 }

@@ -4,6 +4,8 @@ namespace Scheb\Tombstone\Analyzer\Report;
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Vampire;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleReportGenerator implements ReportGeneratorInterface
@@ -28,68 +30,59 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $numDead = count($result->getDead());
         $numDeleted = count($result->getDeleted());
 
-        if ($numUndead) {
-            $this->output->headline(sprintf('Vampires (%d)', $numUndead));
-            $this->output->writeln('Those tombstones have been called according to the logs.');
-            $this->output->newLine();
-            $this->displayVampires($result);
-        }
+        $this->output->newLine();
+        $this->output->writeln(sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
+        $this->output->writeln(sprintf('Deleted tombstones: %d', $numDeleted));
 
-        if ($numDead) {
-            $this->output->headline(sprintf('Tombstones (%d)', $numDead));
-            $this->output->writeln('Those tombstones have not been called. Consider deleting the dead code.');
+        foreach ($result->getPerFile() as $file => $fileResult) {
             $this->output->newLine();
-            $this->displayTombstones($result);
-        }
-
-        if ($numDeleted) {
-            $this->output->headline(sprintf('Deleted tombstones (%d)', $numDeleted));
-            $this->output->writeln('Those appear in the log but could not be found in the code. They\'re assumed to be deleted.');
-            $this->output->newLine();
-            $this->displayDeleted($result);
+            $this->output->writeln($file);
+            $this->displayVampires($fileResult['undead']);
+            $this->displayTombstones($fileResult['dead']);
+            $this->displayDeleted($fileResult['deleted']);
         }
     }
 
     /**
-     * @param AnalyzerResult $result
+     * @param Tombstone[] $result
      */
-    private function displayVampires(AnalyzerResult $result)
+    private function displayVampires($result)
     {
-        foreach ($result->getUndead() as $tombstone) {
-            $this->output->printTombstone($tombstone);
+        foreach ($result as $tombstone) {
+            $this->output->newLine();
+            $this->output->printTombstone($tombstone, 'Vampire');
             $invokers = array();
             foreach ($tombstone->getVampires() as $vampire) {
                 $invokers[] = $vampire->getInvoker();
             }
             $this->output->printCalledBy(array_unique($invokers));
-            $this->output->newLine();
         }
     }
 
     /**
-     * @param AnalyzerResult $result
+     * @param Tombstone[] $result
      */
-    private function displayTombstones(AnalyzerResult $result)
+    private function displayTombstones($result)
     {
-        foreach ($result->getDead() as $tombstone) {
-            $this->output->printTombstone($tombstone);
+        foreach ($result as $tombstone) {
+            $this->output->newLine();
+            $this->output->printTombstone($tombstone, 'RIP');
             $date = $tombstone->getTombstoneDate();
             if ($age = TimePeriodFormatter::formatAge($date)) {
                 $this->output->writeln(sprintf('  was not called for %s', $age));
             } else {
                 $this->output->writeln(sprintf('  was not called since %s', $date));
             }
-            $this->output->newLine();
         }
     }
 
     /**
-     * @param AnalyzerResult $result
+     * @param Vampire[] $result
      */
-    private function displayDeleted(AnalyzerResult $result) {
-        foreach ($result->getDeleted() as $vampire) {
-            $this->output->printTombstone($vampire->getTombstone());
+    private function displayDeleted($result) {
+        foreach ($result as $vampire) {
             $this->output->newLine();
+            $this->output->printTombstone($vampire->getTombstone(), 'Deleted');
         }
     }
 }
