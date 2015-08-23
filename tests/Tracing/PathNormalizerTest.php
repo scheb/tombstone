@@ -25,38 +25,44 @@ class PathNormalizerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider getBaseDirsToTest
+     * @dataProvider getTestCasesForRelativePath
      */
-    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($baseDir) {
-        $path = '/path/to/file.php';
+    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($path, $baseDir) {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
-        $this->assertEquals('file.php', $returnValue);
+        $this->assertEquals('directory/file.php', $returnValue);
     }
 
-    public function getBaseDirsToTest()
+    /**
+     * @return array
+     */
+    public function getTestCasesForRelativePath()
     {
         return array(
-            array('/path/to'),
-            array('/path/to/'),
+            array('/path/to/directory/file.php', '/path/to'),
+            array('/path/to/directory/file.php', '/path/to/'),
+            array('C:\\path\\to\\directory\\file.php', 'C:\\path\\to'),
+            array('C:\\path\\to\\directory\\file.php', 'C:\\path\\to\\'),
         );
     }
 
     /**
      * @test
+     * @dataProvider getTestCasesForKeepingPath
      */
-    public function makeRelativeTo_pathHasDifferentBase_returnSamePath() {
-        $path = '/path/to/file.php';
-        $baseDir = '/other/base';
+    public function makeRelativeTo_pathHasDifferentBase_returnSamePath($path, $baseDir) {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
-        $this->assertEquals('/path/to/file.php', $returnValue);
+        $this->assertEquals($path, $returnValue);
     }
 
     /**
-     * @test
+     * @return array
      */
-    public function makeRelativeTo_noBaseDirGiven_returnSamePath() {
-        $path = '/path/to/file.php';
-        $returnValue = PathNormalizer::makeRelativeTo($path, null);
-        $this->assertEquals('/path/to/file.php', $returnValue);
+    public function getTestCasesForKeepingPath() {
+        return array(
+            array('/path/to/file.php', '/other/base'),
+            array('/path/to/file.php', null),
+            array('C:\\path\\to\\file.php', 'C:\\other\\path'),
+            array('C:\\path\\to\\file.php', null),
+        );
     }
 }

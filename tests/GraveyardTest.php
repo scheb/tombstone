@@ -79,17 +79,17 @@ class GraveyardTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function tombstone_windowsStyleSourceDirSet_logRelativePath()
+    public function tombstone_sourceDirNotMatchedFilePath_logAbsolutePath()
     {
         $this->handler
             ->expects($this->once())
             ->method('log')
             ->with($this->callback(function ($vampire) {
-                return $vampire instanceof Vampire && $vampire->getFile() === 'file1.php';
+                return $vampire instanceof Vampire && $vampire->getFile() === '/path/to/file1.php';
             }));
 
         $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->setSourceDir('\\path\\to');
+        $this->graveyard->setSourceDir('/other/path');
         $this->graveyard->tombstone('date', 'author', 'label', $trace);
     }
 

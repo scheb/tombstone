@@ -34,7 +34,7 @@ class Graveyard
      */
     public function setSourceDir($sourceDir)
     {
-        $this->sourceDir = PathNormalizer::normalizeDirectorySeparator($sourceDir);
+        $this->sourceDir = $sourceDir;
     }
 
     /**
@@ -73,7 +73,6 @@ class Graveyard
 
         foreach ($trace as $key => &$frame) {
             if (isset($frame['file'])) {
-                $frame['file'] = PathNormalizer::normalizeDirectorySeparator($frame['file']);
                 $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->sourceDir);
             }
         }

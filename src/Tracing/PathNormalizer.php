@@ -22,6 +22,7 @@ class PathNormalizer
     {
         if ($baseDir && self::startsWith($path, $baseDir)) {
             $path = substr($path, strlen($baseDir));
+            $path = PathNormalizer::normalizeDirectorySeparator($path);
             if ($path[0] === '/') {
                 $path = substr($path, 1);
             }
