@@ -39,14 +39,6 @@ class AnalyzerResult
     }
 
     /**
-     * @param Tombstone $tombstone
-     */
-    public function addVanished(Tombstone $tombstone)
-    {
-        $this->deleted[] = $tombstone;
-    }
-
-    /**
      * @return \Scheb\Tombstone\Tombstone[]
      */
     public function getDead()
