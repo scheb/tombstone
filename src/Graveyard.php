@@ -26,7 +26,7 @@ class Graveyard
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider(1);
-        $this->sourceDir = $sourceDir;
+		$this->setSourceDir($sourceDir);
     }
 
     /**
@@ -34,7 +34,7 @@ class Graveyard
      */
     public function setSourceDir($sourceDir)
     {
-        $this->sourceDir = $sourceDir;
+        $this->sourceDir = str_replace('\\', '/', $sourceDir);
     }
 
     /**
