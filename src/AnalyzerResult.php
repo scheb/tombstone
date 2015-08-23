@@ -8,6 +8,11 @@ class AnalyzerResult
 {
 
     /**
+     * @var array
+     */
+    private $perFile = array();
+
+    /**
      * @var Tombstone[]
      */
     private $dead = array();
@@ -28,6 +33,8 @@ class AnalyzerResult
     public function addDead(Tombstone $tombstone)
     {
         $this->dead[] = $tombstone;
+        $this->initFileIndex($tombstone->getFile());
+        $this->perFile[$tombstone->getFile()]['dead'][] = $tombstone;
     }
 
     /**
@@ -36,6 +43,29 @@ class AnalyzerResult
     public function addUndead(Tombstone $tombstone)
     {
         $this->undead[] = $tombstone;
+        $this->initFileIndex($tombstone->getFile());
+        $this->perFile[$tombstone->getFile()]['undead'][] = $tombstone;
+    }
+
+    /**
+     * @param Vampire[] $deleted
+     */
+    public function setDeleted(array $deleted)
+    {
+        foreach ($deleted as $vampire) {
+            $this->initFileIndex($vampire->getFile());
+            $this->perFile[$vampire->getFile()]['deleted'][] = $vampire;
+        }
+    }
+
+    /**
+     * @param string $file
+     */
+    private function initFileIndex($file)
+    {
+        if (!isset($this->perFile[$file])) {
+            $this->perFile[$file] = array('dead' => array(), 'undead' => array(), 'deleted' => array());
+        }
     }
 
     /**
@@ -63,10 +93,11 @@ class AnalyzerResult
     }
 
     /**
-     * @param array $deleted
+     * @return array
      */
-    public function setDeleted(array $deleted)
+    public function getPerFile()
     {
-        $this->deleted = $deleted;
+        ksort($this->perFile);
+        return $this->perFile;
     }
 }
