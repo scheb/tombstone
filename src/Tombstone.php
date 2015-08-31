@@ -61,7 +61,7 @@ class Tombstone
      */
     public function getHash()
     {
-        return md5($this->tombstoneDate . "\n" . $this->author . "\n" . $this->label);
+        return md5($this->tombstoneDate . "\n" . $this->author . "\n" . $this->label . "\n" . $this->file . "\n" . $this->line);
     }
 
     /**

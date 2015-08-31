@@ -25,7 +25,7 @@ class TombstoneTest extends \PHPUnit_Framework_TestCase
     {
         $tombstone = $this->createTombstone();
         $hash = $tombstone->getHash();
-        $this->assertEquals('ed8b6f2d651ec9bf688910c6bdd04d6a', $hash);
+        $this->assertEquals('95e5a3e7077eff0b0ff0d3bbdaa05e9c', $hash);
     }
 
     /**
