@@ -93,7 +93,7 @@ Report Generation
 [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) is a library to analyze the code and the log
 files written by `AnalyzerLogHandler`. The data is used to generate reports about dead and undead code in your project.
 
-[Read more about report generation](https://github.com/scheb/tombstone-analyzer/README.md).
+[Read more about report generation](https://github.com/scheb/tombstone-analyzer/blob/master/README.md).
 
 Acknowledgments
 ---------------
