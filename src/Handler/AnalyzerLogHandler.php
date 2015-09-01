@@ -2,7 +2,7 @@
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;
-use Scheb\Tombstone\Formatter\LogFormatter;
+use Scheb\Tombstone\Formatter\AnalyzerLogFormatter;
 use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogHandler extends AbstractHandler
@@ -138,6 +138,6 @@ class AnalyzerLogHandler extends AbstractHandler
      */
     protected function getDefaultFormatter()
     {
-        return new LogFormatter();
+        return new AnalyzerLogFormatter();
     }
 }

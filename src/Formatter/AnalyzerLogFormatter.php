@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Formatter;
 use Scheb\Tombstone\Logging\AnalyzerLogFormat;
 use Scheb\Tombstone\Vampire;
 
-class LogFormatter implements FormatterInterface
+class AnalyzerLogFormatter implements FormatterInterface
 {
 
     /**
