@@ -13,7 +13,7 @@ class AnalyzerLogHandlerTest extends \PHPUnit_Framework_TestCase
     private $logDir;
 
     public function setUp() {
-        $this->logDir = __DIR__ . '/../logs/';
+        $this->logDir = __DIR__ . '/../_logs/';
         $this->clearLogFiles();
     }
 
