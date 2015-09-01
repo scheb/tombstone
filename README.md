@@ -39,8 +39,11 @@ All tombstones are sent to a "graveyard". By default the graveyard isn't doing a
 register a handler. What you usually want is the `StreamHandler`, which writes human-readable information to a log file.
 
 ```php
-$streamHandler = new \Scheb\Tombstone\Handler\StreamHandler("$logDir/tombstones.log");
-\Scheb\Tombstone\GraveyardProvider::getGraveyard()->addHandler($streamHandler);
+use Scheb\Tombstone\GraveyardProvider;
+use Scheb\Tombstone\Handler\StreamHandler;
+
+$streamHandler = new StreamHandler("$logDir/tombstones.log");
+GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 ```
 
 [Read more about handlers and formatters below](#handlers-formatters).
