@@ -30,25 +30,25 @@ class Command extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('analyze')
-            ->addArgument('sourceDir', InputArgument::REQUIRED, 'Path to the PHP source')
-            ->addArgument('logDir', InputArgument::REQUIRED, 'Path to the log files')
-            ->addOption('report', 'r', InputOption::VALUE_REQUIRED, 'Generate HTML to directory');
+            ->setName('tombstone')
+            ->addArgument('source-dir', InputArgument::REQUIRED, 'Path to PHP source files')
+            ->addArgument('log-dir', InputArgument::REQUIRED, 'Path to the log files')
+            ->addOption('report-html', 'rh', InputOption::VALUE_REQUIRED, 'Generate HTML report to a directory');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
-        $reportDir = $input->getOption('report');
-        $sourceDir = realpath($input->getArgument('sourceDir'));
+        $htmlReportDir = $input->getOption('report-html');
+        $sourceDir = realpath($input->getArgument('source-dir'));
         if (!$sourceDir) {
-            $output->writeln('Argument "sourceDir" is not a valid directory');
+            $output->writeln('Argument "source-dir" is not a valid directory');
             return 1;
         }
 
-        $logDir = realpath($input->getArgument('logDir'));
+        $logDir = realpath($input->getArgument('log-dir'));
         if (!$logDir) {
-            $output->writeln('Argument "logDir" is not a valid directory');
+            $output->writeln('Argument "log-dir" is not a valid directory');
             return 1;
         }
 
@@ -56,8 +56,8 @@ class Command extends AbstractCommand
         $report = new ConsoleReportGenerator($output);
         $report->generate($result);
 
-        if ($reportDir) {
-            $this->generateHtmlReport($reportDir, $result);
+        if ($htmlReportDir) {
+            $this->generateHtmlReport($htmlReportDir, $result);
         }
 
         return 0;

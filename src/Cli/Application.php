@@ -15,7 +15,7 @@ class Application extends AbstractApplication
 
     protected function getCommandName(InputInterface $input)
     {
-        return 'analyze';
+        return 'tombstone';
     }
 
     protected function getDefaultCommands()
