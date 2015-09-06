@@ -100,4 +100,28 @@ class AnalyzerResult
         ksort($this->perFile);
         return $this->perFile;
     }
+
+    /**
+     * @return int
+     */
+    public function getDeadCount()
+    {
+        return count($this->dead);
+    }
+
+    /**
+     * @return int
+     */
+    public function getUndeadCount()
+    {
+        return count($this->undead);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeletedCount()
+    {
+        return count($this->deleted);
+    }
 }

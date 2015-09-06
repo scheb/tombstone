@@ -38,9 +38,9 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
     public function generate(AnalyzerResult $result)
     {
-        $numUndead = count($result->getUndead());
-        $numDead = count($result->getDead());
-        $numDeleted = count($result->getDeleted());
+        $numUndead = $result->getUndeadCount();
+        $numDead = $result->getDeadCount();
+        $numDeleted = $result->getDeletedCount();
 
         $this->output->newLine();
         $this->output->writeln(sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
