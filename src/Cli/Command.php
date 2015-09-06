@@ -53,7 +53,7 @@ class Command extends AbstractCommand
         }
 
         $result = $this->createResult($sourceDir, $logDir);
-        $report = new ConsoleReportGenerator($output);
+        $report = new ConsoleReportGenerator($output, $sourceDir);
         $report->generate($result);
 
         if ($htmlReportDir) {

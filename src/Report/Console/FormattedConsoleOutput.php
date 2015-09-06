@@ -39,7 +39,7 @@ class FormattedConsoleOutput
     {
         $label = $tombstone->getLabel() ? ', "' . $tombstone->getLabel() . '"' : '';
         $this->output->writeln(sprintf('  [%s] <info>tombstone("%s", "%s"%s)</info>', $prefix, $tombstone->getTombstoneDate(), $tombstone->getAuthor(), $label));
-        $this->output->writeln(sprintf('    in file <comment>%s:%s</comment>', $tombstone->getFile(), $tombstone->getLine()));
+        $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
         if ($tombstone->getMethod()) {
             $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
         } else {

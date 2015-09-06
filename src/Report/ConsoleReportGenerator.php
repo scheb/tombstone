@@ -16,11 +16,23 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private $output;
 
     /**
-     * @param OutputInterface $output
+     * @var string
      */
-    public function __construct(OutputInterface $output)
+    private $sourceDir;
+
+    /**
+     * @var int
+     */
+    private $now;
+
+    /**
+     * @param OutputInterface $output
+     * @param string $sourceDir
+     */
+    public function __construct(OutputInterface $output, $sourceDir)
     {
         $this->output = new FormattedConsoleOutput($output);
+        $this->sourceDir = $sourceDir;
         $this->now = time();
     }
 
@@ -36,10 +48,12 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
         foreach ($result->getPerFile() as $file => $fileResult) {
             $this->output->newLine();
-            $this->output->writeln($file);
-            $this->displayVampires($fileResult['undead']);
-            $this->displayTombstones($fileResult['dead']);
-            $this->displayDeleted($fileResult['deleted']);
+            $absoluteFilePath = PathTools::makePathAbsolute($file, $this->sourceDir);
+
+            $this->output->writeln($absoluteFilePath);
+            $this->displayVampires($fileResult->getUndead());
+            $this->displayTombstones($fileResult->getDead());
+            $this->displayDeleted($fileResult->getDeleted());
         }
     }
 
