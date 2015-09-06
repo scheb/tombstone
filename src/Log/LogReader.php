@@ -21,7 +21,7 @@ class LogReader
     }
 
     /**
-     * @return string $file
+     * @param string $file
      *
      * @return Vampire[]
      */
