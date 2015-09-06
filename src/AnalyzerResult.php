@@ -6,9 +6,8 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerResult
 {
-
     /**
-     * @var array
+     * @var AnalyzerFileResult[]
      */
     private $perFile = array();
 
@@ -34,7 +33,7 @@ class AnalyzerResult
     {
         $this->dead[] = $tombstone;
         $this->initFileIndex($tombstone->getFile());
-        $this->perFile[$tombstone->getFile()]['dead'][] = $tombstone;
+        $this->perFile[$tombstone->getFile()]->addDead($tombstone);
     }
 
     /**
@@ -44,7 +43,7 @@ class AnalyzerResult
     {
         $this->undead[] = $tombstone;
         $this->initFileIndex($tombstone->getFile());
-        $this->perFile[$tombstone->getFile()]['undead'][] = $tombstone;
+        $this->perFile[$tombstone->getFile()]->addUndead($tombstone);
     }
 
     /**
@@ -55,7 +54,7 @@ class AnalyzerResult
         $this->deleted = $deleted;
         foreach ($deleted as $vampire) {
             $this->initFileIndex($vampire->getFile());
-            $this->perFile[$vampire->getFile()]['deleted'][] = $vampire;
+            $this->perFile[$vampire->getFile()]->addDeleted($vampire);
         }
     }
 
@@ -65,7 +64,7 @@ class AnalyzerResult
     private function initFileIndex($file)
     {
         if (!isset($this->perFile[$file])) {
-            $this->perFile[$file] = array('dead' => array(), 'undead' => array(), 'deleted' => array());
+            $this->perFile[$file] = new AnalyzerFileResult($file);
         }
     }
 
@@ -94,7 +93,7 @@ class AnalyzerResult
     }
 
     /**
-     * @return array
+     * @return AnalyzerFileResult[]
      */
     public function getPerFile()
     {
