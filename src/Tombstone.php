@@ -59,6 +59,14 @@ class Tombstone
     /**
      * @return string
      */
+    public function __toString() {
+        $label = $this->label ? ', "' . $this->label . '"' : '';
+        return sprintf('tombstone("%s", "%s"%s)', $this->tombstoneDate, $this->author, $label);
+    }
+
+    /**
+     * @return string
+     */
     public function getHash()
     {
         return md5($this->tombstoneDate . "\n" . $this->author . "\n" . $this->label . "\n" . $this->file . "\n" . $this->line);

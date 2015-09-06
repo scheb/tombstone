@@ -21,6 +21,22 @@ class TombstoneTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function toString_withLabel_returnString() {
+        $tombstone = $this->createTombstone();
+        $this->assertEquals('tombstone("2015-08-19", "author", "label")', (string) $tombstone);
+    }
+
+    /**
+     * @test
+     */
+    public function toString_withoutLabel_returnString() {
+        $tombstone = $this->createTombstone('2015-08-19', 'author', null);
+        $this->assertEquals('tombstone("2015-08-19", "author")', (string) $tombstone);
+    }
+
+    /**
+     * @test
+     */
     public function getHash_valuesSet_returnCorrectHash()
     {
         $tombstone = $this->createTombstone();
