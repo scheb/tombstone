@@ -8,9 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends AbstractApplication
 {
+    const VERSION = 'dev-master';
+
     public function __construct()
     {
-        AbstractApplication::__construct('cli', 'dev-master');
+        AbstractApplication::__construct('cli', self::VERSION);
     }
 
     protected function getCommandName(InputInterface $input)
