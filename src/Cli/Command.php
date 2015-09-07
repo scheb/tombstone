@@ -126,10 +126,10 @@ class Command extends AbstractCommand
      */
     private function createProgressBar($width)
     {
-        $progess = new ProgressBar($this->output, $width);
-        $progess->setBarWidth(50);
-        $progess->display();
+        $progress = new ProgressBar($this->output, $width);
+        $progress->setBarWidth(50);
+        $progress->display();
 
-        return $progess;
+        return $progress;
     }
 }
