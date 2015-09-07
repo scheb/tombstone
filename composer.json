@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.3.6",
-        "scheb/tombstone": "dev-master",
+        "scheb/tombstone": "0.6.0",
         "symfony/console": "~2.7",
         "nikic/php-parser": "~1.4",
         "sebastian/finder-facade": "~1.2",
