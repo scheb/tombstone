@@ -37,8 +37,7 @@ class FormattedConsoleOutput
      */
     public function printTombstone($tombstone, $prefix)
     {
-        $label = $tombstone->getLabel() ? ', "' . $tombstone->getLabel() . '"' : '';
-        $this->output->writeln(sprintf('  [%s] <info>tombstone("%s", "%s"%s)</info>', $prefix, $tombstone->getTombstoneDate(), $tombstone->getAuthor(), $label));
+        $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
         $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
         if ($tombstone->getMethod()) {
             $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
