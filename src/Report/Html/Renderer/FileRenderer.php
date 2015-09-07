@@ -65,7 +65,7 @@ class FileRenderer implements ReportGeneratorInterface
         $this->fileTemplate->setVar(array(
             'path_to_root' => './' . str_repeat('../', substr_count($relativeFilePath, '/')),
             'full_path' => $fileResult->getFile(),
-            'breadcrumb' => '', // TODO: generate breadcrumb
+            'breadcrumb' => $this->renderBreadcrumb($relativeFilePath),
             'tombstones_list' => $tombstonesList,
             'source_code' => $sourceCode,
             'date' => date('r'),
@@ -152,5 +152,26 @@ class FileRenderer implements ReportGeneratorInterface
         }
 
         return $formattedCode;
+    }
+
+    /**
+     * @param string $relativeFilePath
+     *
+     * @return string
+     */
+    private function renderBreadcrumb($relativeFilePath)
+    {
+        $parts = explode('/', $relativeFilePath);
+        $numParts = count($parts);
+        $breadcrumbString = '<li class="active">' . $parts[$numParts - 1] . '</li> ';
+
+        for ($i = 0; $i < $numParts - 1; $i++) {
+            array_pop($parts);
+            $label = $parts[count($parts) - 1];
+            $link = implode('/', $parts) . '/index.html';
+            $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
+        }
+
+        return '<li><a href="./' . str_repeat('../', $numParts - 1) . 'index.html">' . $this->sourceDir . '</a></li> ' . $breadcrumbString;
     }
 }
