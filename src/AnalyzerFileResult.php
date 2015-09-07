@@ -35,6 +35,14 @@ class AnalyzerFileResult
     }
 
     /**
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * @param Tombstone $tombstone
      */
     public function addDead(Tombstone $tombstone)
@@ -95,5 +103,13 @@ class AnalyzerFileResult
     public function getUndeadCount()
     {
         return count($this->undead);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeletedCount()
+    {
+        return count($this->deleted);
     }
 }
