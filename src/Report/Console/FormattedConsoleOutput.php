@@ -42,7 +42,7 @@ class FormattedConsoleOutput
         if ($tombstone->getMethod()) {
             $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
         } else {
-            $this->output->writeln(sprintf('  in global scope'));
+            $this->output->writeln(sprintf('    in global scope'));
         }
     }
 
