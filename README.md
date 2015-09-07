@@ -26,19 +26,27 @@ Install via composer
 $ composer require scheb/tombstone-analyzer
 ```
 
+Composer automatically creates an executable binary `vendor/bin/tombstone`.
+
 Usage
 -----
 
 Execute the tool on the command line to show the help dialog:
 
 ```bash
-$ vendor/bin/tombstone
+$ tombstone
 ```
 
 Basic usage:
 
 ```bash
-$ vendor/bin/tombstone /path/to/php/sources /path/to/tombstone/logs
+$ tombstone /path/to/php/sources /path/to/tombstone/logs
+```
+
+Generate a HTML report:
+
+```bash
+$ tombstone /path/to/php/sources /path/to/tombstone/logs --report-html=/report/target/directory
 ```
 
 License
