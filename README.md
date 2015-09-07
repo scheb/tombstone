@@ -49,6 +49,11 @@ Generate a HTML report:
 $ tombstone /path/to/php/sources /path/to/tombstone/logs --report-html=/report/target/directory
 ```
 
+Acknowledgments
+---------------
+
+Thanks to [Sebastian Bergmann](https://github.com/sebastianbergmann) for letting me re-use parts of his code and the template files.
+
 License
 -------
 This library is available under the [MIT license](LICENSE).
