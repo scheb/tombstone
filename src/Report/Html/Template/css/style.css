@@ -14,6 +14,31 @@ body {
     margin-top: 0;
 }
 
+.tombstone-list .list-group-item-danger {
+    background-color: #f7eded;
+}
+
+.tombstone-list .list-group-item-success {
+    background-color: #f1faed;
+}
+
+.source-code td.number {
+    min-width: 60px;
+    padding-left: 20px;
+}
+
+.source-code td.codeLine {
+    width: 100%;
+}
+
+.icon-vampire td.number {
+    background: url('../img/vampire.png') left center no-repeat;
+}
+
+.icon-cross td.number {
+    background: url('../img/cross.png') left center no-repeat;
+}
+
 .tombstones-total {
     margin-bottom: 1px;
     border-bottom-left-radius: 0;
@@ -25,37 +50,8 @@ body {
     border-top-right-radius: 0;
 }
 
-.bs-callout {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #eee;
-    border-image: none;
-    border-radius: 3px;
-    border-style: solid;
-    border-width: 1px 1px 1px 5px;
-    padding: 10px;
-}
-
-.tombstone-list .list-group-item-danger {
-    background-color: #f7eded;
-}
-
-.tombstone-list .list-group-item-success {
-    background-color: #f1faed;
-}
-
 .tombstone-detail {
     margin-left: 25px;
-}
-
-.popover {
-    max-width: none;
-}
-
-.glyphicon {
-    margin-right: .25em;
 }
 
 .table-bordered > thead > tr > td {
@@ -86,21 +82,6 @@ body {
 
 .table tbody tr.danger, .table tbody td.danger, li.danger, span.danger {
     background-color: #f2dede;
-}
-
-.table tbody td.warning, li.warning, span.warning {
-    background-color: #fcf8e3;
-}
-
-.table tbody td.info {
-    background-color: #d9edf7;
-}
-
-td.big {
-    width: 117px;
-}
-
-td.small {
 }
 
 td.codeLine {
@@ -134,29 +115,4 @@ span.success, span.warning, span.danger {
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
-}
-
-#classCoverageDistribution, #classComplexity {
-    height: 200px;
-    width: 475px;
-}
-
-#toplink {
-    position: fixed;
-    left: 5px;
-    bottom: 5px;
-    outline: 0;
-}
-
-svg text {
-    font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    color: #666;
-    fill: #666;
-}
-
-.scrollbox {
-    height: 245px;
-    overflow-x: hidden;
-    overflow-y: scroll;
 }

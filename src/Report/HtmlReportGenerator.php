@@ -4,6 +4,7 @@ namespace Scheb\Tombstone\Analyzer\Report;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Html\Exception\HtmlReportException;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
 
 class HtmlReportGenerator implements ReportGeneratorInterface
 {
@@ -45,9 +46,9 @@ class HtmlReportGenerator implements ReportGeneratorInterface
 
 //        $directoryRenderer = new DirectoryRenderer($this->reportDir, $this->sourceDir);
 //        $directoryRenderer->generate($result);
-//
-//        $fileRenderer = new FileRenderer($this->reportDir, $this->sourceDir);
-//        $fileRenderer->generate($result);
+
+        $fileRenderer = new FileRenderer($this->reportDir, $this->sourceDir);
+        $fileRenderer->generate($result);
     }
 
     private function copySkeleton()
