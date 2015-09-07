@@ -57,7 +57,7 @@ class Command extends AbstractCommand
         $report->generate($result);
 
         if ($htmlReportDir) {
-            $this->generateHtmlReport($htmlReportDir, $result);
+            $this->generateHtmlReport($htmlReportDir, $sourceDir, $result);
         }
 
         return 0;
@@ -86,17 +86,19 @@ class Command extends AbstractCommand
 
     /**
      * @param string $reportDir
+     * @param string $sourceDir
      * @param AnalyzerResult $result
      */
-    protected function generateHtmlReport($reportDir, AnalyzerResult $result)
+    protected function generateHtmlReport($reportDir, $sourceDir, AnalyzerResult $result)
     {
         $this->output->writeln('');
-        $this->output->write('Generate HTML report...');
+        $this->output->write('Generate HTML report... ');
         try {
-            $report = new HtmlReportGenerator($reportDir);
+            $report = new HtmlReportGenerator($reportDir, $sourceDir);
             $report->generate($result);
-            $this->output->writeln(' Done');
+            $this->output->writeln('Done');
         } catch (\Exception $e) {
+            $this->output->writeln('Failed');
             $this->output->writeln('Could not generate HTML report: '.$e->getMessage());
         }
     }

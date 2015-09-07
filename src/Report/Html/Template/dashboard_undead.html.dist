@@ -1,0 +1,8 @@
+<li class="list-group-item list-group-item-danger">
+    <h4><img src="{{path_to_root}}img/vampire.png" title="Undead" /> <samp>{{tombstone}}</samp></h4>
+    <div class="tombstone-detail">
+        in line <samp>{{line}}</samp><br/>
+        in method <samp>{{method}}</samp><br/>
+        {{invocation}}
+    </div>
+</li>

@@ -1,0 +1,4 @@
+<h3><span class="glyphicon glyphicon-file"></span>{{file}}</h3>
+<ul class="tombstone-list list-group">
+{{item_list}}
+</ul>
