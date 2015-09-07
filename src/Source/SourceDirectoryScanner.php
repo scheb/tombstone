@@ -12,9 +12,9 @@ class SourceDirectoryScanner
     private $tombstoneExtractor;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $sourcePath;
+    private $files;
 
     /**
      * @param TombstoneExtractor $tombstoneExtractor
@@ -23,19 +23,30 @@ class SourceDirectoryScanner
     public function __construct(TombstoneExtractor $tombstoneExtractor, $sourcePath)
     {
         $this->tombstoneExtractor = $tombstoneExtractor;
-        $this->sourcePath = $sourcePath;
+        $finder = new FinderFacade(array($sourcePath), array(), array('*.php'));
+        $this->files = $finder->findFiles();
     }
 
     /**
+     * @param callable $onProgress
+     *
      * @return TombstoneIndex
      */
-    public function getTombstones()
+    public function getTombstones(callable $onProgress)
     {
-        $finder = new FinderFacade(array($this->sourcePath), array(), array('*.php'));
-        foreach ($finder->findFiles() as $file) {
+        foreach ($this->files as $file) {
             $this->tombstoneExtractor->extractTombstones($file);
+            $onProgress();
         }
 
         return $this->tombstoneExtractor->getTombstones();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumFiles()
+    {
+        return count($this->files);
     }
 }

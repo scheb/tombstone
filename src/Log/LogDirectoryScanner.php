@@ -7,14 +7,14 @@ use SebastianBergmann\FinderFacade\FinderFacade;
 class LogDirectoryScanner
 {
     /**
-     * @var string
-     */
-    private $logDir;
-
-    /**
      * @var LogReader
      */
     private $logReader;
+
+    /**
+     * @var string[]
+     */
+    private $files;
 
     /**
      * @param LogReader $logReader
@@ -23,19 +23,30 @@ class LogDirectoryScanner
     public function __construct(LogReader $logReader, $logDir)
     {
         $this->logReader = $logReader;
-        $this->logDir = $logDir;
+        $finder = new FinderFacade(array($logDir), array(), array('*.tombstone'));
+        $this->files = $finder->findFiles();
     }
 
     /**
+     * @param callable $onProgress
+     *
      * @return VampireIndex
      */
-    public function getVampires()
+    public function getVampires(callable $onProgress)
     {
-        $finder = new FinderFacade(array($this->logDir), array(), array('*.tombstone'));
-        foreach ($finder->findFiles() as $file) {
+        foreach ($this->files as $file) {
             $this->logReader->aggregateLog($file);
+            $onProgress();
         }
 
         return $this->logReader->getVampires();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumFiles()
+    {
+        return count($this->files);
     }
 }

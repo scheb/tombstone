@@ -15,6 +15,7 @@ use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\VampireIndex;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -70,11 +71,26 @@ class Command extends AbstractCommand
      * @return AnalyzerResult
      */
     private function createResult($sourceDir, $logDir) {
+        $this->output->writeln('');
+        $this->output->writeln('Scan source code ...');
         $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(new TombstoneIndex($sourceDir)), $sourceDir);
-        $tombstoneIndex = $sourceScanner->getTombstones();
 
+        $progress = $this->createProgressBar($sourceScanner->getNumFiles());
+        $tombstoneIndex = $sourceScanner->getTombstones(function() use ($progress) {
+            $progress->advance();
+        });
+
+        $this->output->writeln('');
+        $this->output->writeln('');
+
+        $this->output->writeln('Read log files ...');
         $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), $logDir);
-        $vampireIndex = $logScanner->getVampires();
+
+        $progress = $this->createProgressBar($logScanner->getNumFiles());
+        $vampireIndex = $logScanner->getVampires(function() use ($progress) {
+            $progress->advance();
+        });
+        $this->output->writeln('');
 
         $analyzer = new Analyzer([
             new MethodNameStrategy(),
@@ -101,5 +117,19 @@ class Command extends AbstractCommand
             $this->output->writeln('Failed');
             $this->output->writeln('Could not generate HTML report: '.$e->getMessage());
         }
+    }
+
+    /**
+     * @param int $width
+     *
+     * @return ProgressBar
+     */
+    private function createProgressBar($width)
+    {
+        $progess = new ProgressBar($this->output, $width);
+        $progess->setBarWidth(50);
+        $progess->display();
+
+        return $progess;
     }
 }
