@@ -9,6 +9,7 @@ use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Analyzer\Report\PathTools;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class DashboardRenderer implements ReportGeneratorInterface
 {
@@ -114,9 +115,7 @@ class DashboardRenderer implements ReportGeneratorInterface
                 $itemList = $this->renderUndeadTombstones($fileResult);
                 $itemList .= $this->renderDeadTombstones($fileResult);
 
-                // TODO: Link file to source
-                $absoluteFilePath = PathTools::makePathAbsolute($fileResult->getFile(), $this->sourceDir);
-                $tombstonesView .= $this->renderFile($absoluteFilePath, $itemList);
+                $tombstonesView .= $this->renderFile($fileResult->getFile(), $itemList);
             }
         }
 
@@ -140,7 +139,7 @@ class DashboardRenderer implements ReportGeneratorInterface
             }
             $this->deadTemplate->setVar(array(
                 'path_to_root' => './',
-                'tombstone' => (string) $tombstone,
+                'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => $tombstone->getMethod(),
                 'dead_since' => $deadSince,
@@ -163,7 +162,7 @@ class DashboardRenderer implements ReportGeneratorInterface
             $invocation = $this->renderInvokers($tombstone);
             $this->undeadTemplate->setVar(array(
                 'path_to_root' => './',
-                'tombstone' => (string) $tombstone,
+                'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => $tombstone->getMethod(),
                 'invocation' => $invocation,
@@ -251,5 +250,18 @@ class DashboardRenderer implements ReportGeneratorInterface
         }
 
         return $invokersString;
+    }
+
+    /**
+     * @param string $label
+     * @param string $fileName
+     * @param int $line
+     *
+     * @return string
+     */
+    private function linkTombstoneSource($label, $fileName, $line)
+    {
+        $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->sourceDir);
+        return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, $label);
     }
 }
