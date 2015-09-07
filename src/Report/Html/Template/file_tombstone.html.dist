@@ -1,6 +1,6 @@
 <tr>
     <td width="1" class="{{level}}">
-        <div align="right"><a href="#{{line}}">{{line}}</div>
+        <div align="right"><a href="#{{line}}">{{line}}</a></div>
     </td>
-    <td class="{{level}}"><a href="#{{line}}">tombstone("{{date}}", "{{author}}")</td>
+    <td class="{{level}}"><a href="#{{line}}">tombstone("{{date}}", "{{author}}")</a></td>
 </tr>
