@@ -38,13 +38,11 @@
     <hr />
 
     <h2>Tombstones in your Code</h2>
-    <p class="small">Undead tombstones (&quot;Vampires&quot;) should be removed. Code confirmed to be dead can be removed after a while.</p>
 {{tombstones_view}}
 
     <hr />
 
     <h2>Deleted Tombstones</h2>
-    <p class="small">Those tombstones have been found in the logs, but not in the source code. They're assumed to be deleted.</p>
 {{deleted_view}}
 </div>
 <footer>
