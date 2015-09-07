@@ -21,7 +21,7 @@
 <div class="container">
 
     <div class="progress tombstones-total">
-        <div class="progress-bar progress-bar-default" style="width: 100%">
+        <div class="progress-bar" style="width: 100%">
             <strong>{{tombstones_count}} Tombstones</strong>
         </div>
     </div>
