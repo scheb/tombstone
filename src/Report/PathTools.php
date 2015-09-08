@@ -9,7 +9,7 @@ class PathTools
      * @return bool
      */
     public static function isAbsolutePath($path) {
-        return $path[0] === '/' || preg_match('#^[a-zA-Z]:#', $path);
+        return $path && ($path[0] === '/' || preg_match('#^[a-zA-Z]:#', $path));
     }
 
     /**
@@ -27,6 +27,6 @@ class PathTools
             '/' => DIRECTORY_SEPARATOR,
             '\\' => DIRECTORY_SEPARATOR,
         );
-        return $rootDir . DIRECTORY_SEPARATOR . strtr($path, $directorySeparatorReplacement);
+        return $rootDir . ($path ? DIRECTORY_SEPARATOR . strtr($path, $directorySeparatorReplacement) : '');
     }
 }

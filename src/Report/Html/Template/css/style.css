@@ -22,6 +22,10 @@ body {
     background-color: #f1faed;
 }
 
+.directory-list .glyphicon {
+    margin-right: 0.25em;
+}
+
 .source-code td.number {
     min-width: 60px;
     padding-left: 20px;

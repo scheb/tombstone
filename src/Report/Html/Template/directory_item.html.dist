@@ -1,0 +1,14 @@
+<tr>
+    <td class="{{class}}"><span class="glyphicon glyphicon-{{icon}}"></span> <a href="{{link}}">{{name}}</a></td>
+    <td class="{{class}}">{{bar}}</td>
+    <td class="{{class}}">
+        <div align="right">{{total}}</div>
+    </td>
+    <td class="{{class}}">
+        <div align="right">{{numDead}}</div>
+    </td>
+    <td class="{{class}}">
+        <div align="right">{{numUndead}}</div>
+    </td>
+</tr>
+
