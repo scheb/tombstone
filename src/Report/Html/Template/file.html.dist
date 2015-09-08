@@ -30,7 +30,10 @@
         <thead>
         <tr>
             <td colspan="2">
-                <div align="center"><strong>Tombstones</strong></div>
+                <strong>Tombstone</strong>
+            </td>
+            <td>
+                <strong>Method</strong>
             </td>
         </tr>
         </thead>

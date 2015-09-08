@@ -114,9 +114,9 @@ class FileRenderer implements ReportGeneratorInterface
     private function renderTombstoneItem(Tombstone $tombstone, $class)
     {
         $this->tombstoneTemplate->setVar(array(
-            'date' => $tombstone->getTombstoneDate(),
-            'author' => $tombstone->getAuthor(),
+            'tombstone' => (string) $tombstone,
             'line' => $tombstone->getLine(),
+            'method' => $tombstone->getMethod(),
             'level' => $class,
         ));
 
