@@ -115,7 +115,8 @@ class DashboardRenderer implements ReportGeneratorInterface
                 $itemList = $this->renderUndeadTombstones($fileResult);
                 $itemList .= $this->renderDeadTombstones($fileResult);
 
-                $tombstonesView .= $this->renderFile($fileResult->getFile(), $itemList);
+                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+                $tombstonesView .= $this->renderFile($fileName, $itemList);
             }
         }
 
@@ -183,8 +184,8 @@ class DashboardRenderer implements ReportGeneratorInterface
         $deletedView = '';
         foreach ($result->getPerFile() as $fileResult) {
             if ($fileResult->getDeletedCount()) {
-                $absoluteFilePath = PathTools::makePathAbsolute($fileResult->getFile(), $this->sourceDir);
-                $deletedView .= $this->renderFile($absoluteFilePath, $this->renderDeletedTombstones($fileResult));
+                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+                $deletedView .= $this->renderFile($fileName, $this->renderDeletedTombstones($fileResult));
             }
         }
 
