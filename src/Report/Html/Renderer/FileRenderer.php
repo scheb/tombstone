@@ -72,7 +72,12 @@ class FileRenderer implements ReportGeneratorInterface
             'version' => Application::VERSION,
         ));
 
-        $this->fileTemplate->renderTo($this->reportDir . DIRECTORY_SEPARATOR . $relativeFilePath . '.html');
+        $reportFile = $this->reportDir . DIRECTORY_SEPARATOR . $relativeFilePath . '.html';
+        $reportDir = dirname($reportFile);
+        if (!is_dir($reportDir)) {
+            mkdir($reportDir, 0777, true);
+        }
+        $this->fileTemplate->renderTo($reportFile);
     }
 
     /**
