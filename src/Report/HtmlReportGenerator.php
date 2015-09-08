@@ -99,6 +99,8 @@ class HtmlReportGenerator implements ReportGeneratorInterface
             if (!@mkdir($dir, 0777, true)) {
                 throw new HtmlReportException('Could not create directory ' . $dir);
             }
+        } else if (!is_writable($dir)) {
+            throw new HtmlReportException('Directory ' . $dir . ' has to be writable');
         }
     }
 }
