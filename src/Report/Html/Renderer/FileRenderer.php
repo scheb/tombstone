@@ -168,15 +168,19 @@ class FileRenderer implements ReportGeneratorInterface
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="active">' . $parts[$numParts - 1] . '</li> ';
+        $breadcrumbString = '<li><a href="./' . str_repeat('../', $numParts - 1) . 'index.html">' . $this->sourceDir . '</a></li> ';
 
-        for ($i = 0; $i < $numParts - 1; $i++) {
-            array_pop($parts);
-            $label = $parts[count($parts) - 1];
-            $link = implode('/', $parts) . '/index.html';
-            $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
+        $folderUp = $numParts - 2;
+        while ($label = array_shift($parts)) {
+            if (!$parts) {
+                $breadcrumbString .= '<li class="active">' . $label . '</li> ';
+            } else {
+                $link = './' . str_repeat('../', $folderUp) . 'index.html';
+                $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
+            }
+            --$folderUp;
         }
 
-        return '<li><a href="./' . str_repeat('../', $numParts - 1) . 'index.html">' . $this->sourceDir . '</a></li> ' . $breadcrumbString;
+        return $breadcrumbString;
     }
 }
