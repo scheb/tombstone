@@ -92,8 +92,12 @@ class TombstoneVisitor extends NameResolver
      */
     private function isTombstoneFunction(FuncCall $node)
     {
-        $nameParts = $node->name->parts;
-        return count($nameParts) == 1 && $nameParts[0] == "tombstone";
+        if (isset($node->name->parts)) {
+            $nameParts = $node->name->parts;
+            return count($nameParts) == 1 && $nameParts[0] == "tombstone";
+        }
+
+        return false;
     }
 
     /**
