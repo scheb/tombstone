@@ -176,7 +176,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
 
         $parts = explode('/', $directoryPath);
         $numParts = count($parts);
-        $breadcrumbString = '<li><a href="./' . str_repeat('../', $numParts - 1) . 'index.html">' . $this->sourceDir . '</a></li> ';
+        $breadcrumbString = '<li><a href="./' . str_repeat('../', $numParts) . 'index.html">' . $this->sourceDir . '</a></li> ';
 
         $folderUp = $numParts - 1;
         while ($label = array_shift($parts)) {
