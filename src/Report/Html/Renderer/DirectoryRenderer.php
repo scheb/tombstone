@@ -103,6 +103,10 @@ class DirectoryRenderer implements ReportGeneratorInterface
         ));
 
         $reportFile = $this->reportDir . DIRECTORY_SEPARATOR . $directoryPath . '/index.html';
+        $reportDir = dirname($reportFile);
+        if (!is_dir($reportDir)) {
+            mkdir($reportDir, 0777, true);
+        }
         $this->directoryTemplate->renderTo($reportFile);
     }
 
