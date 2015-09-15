@@ -71,7 +71,7 @@ class SomeClass {
 Handlers write the information that was received from a tombstone to a target system (e.g. file system). Formatters are
 used to serialize that information.
 
-The bundle comes withe some pre-defined handlers and formatters. You can create your own handlers and formatters by
+The bundle comes with some pre-defined handlers and formatters. You can create your own handlers and formatters by
 implementing `Scheb\Tombstone\Handler\HandlerInterface` and `Scheb\Tombstone\Formatter\FormatterInterface`.
 
 ### Handlers
