@@ -48,6 +48,20 @@ GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 
 [Read more about handlers and formatters below](#handlers-formatters).
 
+### Relative Path Logs
+
+By default the absolute file path is used in the logs. This can be in problem in some environments (e.g. when your 
+deployment process creates a new directory for every release). If you tell the source root to the graveyard, it will log
+the relative file path instead. This makes log files exchangeable between different servers/environments/installation
+paths.
+
+```php
+GraveyardProvider::getGraveyard()->setSourceDir('/path/to/src');
+```
+
+It is especially useful, if you want to collect logs files from multiple production servers to run an overall analysis
+on a central server.
+
 Usage
 -----
 
