@@ -13,7 +13,7 @@ class GraveyardProvider
      */
     public static function getGraveyard()
     {
-        if (self::$graveyard == null) {
+        if (self::$graveyard === null) {
             self::$graveyard = new Graveyard();
         }
 
