@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": ">=5.3.6",
-        "scheb/tombstone": "0.6.0",
-        "symfony/console": "~2.7",
+        "scheb/tombstone": "0.7.0",
+        "symfony/console": "~2.7|~3.0",
         "nikic/php-parser": "~1.4",
         "sebastian/finder-facade": "~1.2",
         "phpunit/php-text-template": "~1.2"
