@@ -12,14 +12,14 @@
     ],
     "require": {
         "php": ">=5.3.6",
-        "scheb/tombstone": "0.7.0",
+        "scheb/tombstone": "0.8.0",
         "symfony/console": "~2.7|~3.0",
-        "nikic/php-parser": "~1.4",
+        "nikic/php-parser": "~2.0|~3.0",
         "sebastian/finder-facade": "~1.2",
         "phpunit/php-text-template": "~1.2"
     },
     "require-dev": {
-        "satooshi/php-coveralls": "~0.6"
+        "satooshi/php-coveralls": "~1.0"
     },
     "bin": [
         "tombstone"
