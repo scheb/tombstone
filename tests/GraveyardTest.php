@@ -5,7 +5,7 @@ use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
 
-class GraveyardTest extends \PHPUnit_Framework_TestCase
+class GraveyardTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -25,7 +25,7 @@ class GraveyardTest extends \PHPUnit_Framework_TestCase
 
     private function getHandlerMock()
     {
-        return $this->getMock('Scheb\Tombstone\Handler\HandlerInterface');
+        return $this->createMock('Scheb\Tombstone\Handler\HandlerInterface');
     }
 
     /**

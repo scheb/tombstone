@@ -1,9 +1,10 @@
 <?php
 namespace Scheb\Tombstone\Tests\Tracing;
 
+use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Tracing\TraceProvider;
 
-class TraceProviderTest extends \PHPUnit_Framework_TestCase
+class TraceProviderTest extends TestCase
 {
     /**
      * @test

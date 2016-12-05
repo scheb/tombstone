@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Tests;
 use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
 
-class VampireTest extends \PHPUnit_Framework_TestCase
+class VampireTest extends TestCase
 {
     /**
      * @test

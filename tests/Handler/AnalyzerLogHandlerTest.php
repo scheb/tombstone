@@ -1,11 +1,12 @@
 <?php
 namespace Scheb\Tombstone\Tests\Handler;
 
+use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
 use Scheb\Tombstone\Tests\Logging\AnalyzerLogFormatTest;
 
-class AnalyzerLogHandlerTest extends \PHPUnit_Framework_TestCase
+class AnalyzerLogHandlerTest extends TestCase
 {
     /**
      * @var string

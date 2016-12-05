@@ -1,18 +1,19 @@
 <?php
 namespace Scheb\Tombstone\Tests\Handler;
 
+use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Handler\PsrLoggerHandler;
 use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
 use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
 
-class PsrLoggerHandlerTest extends \PHPUnit_Framework_TestCase
+class PsrLoggerHandlerTest extends TestCase
 {
     /**
      * @test
      */
     public function log()
     {
-        $logger = $this->getMock('Psr\Log\LoggerInterface');
+        $logger = $this->createMock('Psr\Log\LoggerInterface');
         $logger
             ->expects($this->once())
             ->method('log')

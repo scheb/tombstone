@@ -1,10 +1,11 @@
 <?php
 namespace Scheb\Tombstone\Tests\Formatter;
 
+use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Formatter\JsonFormatter;
 use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
 
-class JsonFormatterTest extends \PHPUnit_Framework_TestCase
+class JsonFormatterTest extends TestCase
 {
     /**
      * @test

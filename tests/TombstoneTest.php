@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Tests;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
-class TombstoneTest extends \PHPUnit_Framework_TestCase
+class TombstoneTest extends TestCase
 {
 
     /**
