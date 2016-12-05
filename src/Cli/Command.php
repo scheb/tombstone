@@ -35,7 +35,7 @@ class Command extends AbstractCommand
             ->addArgument('source-dir', InputArgument::REQUIRED, 'Path to PHP source files')
             ->addArgument('log-dir', InputArgument::REQUIRED, 'Path to the log files')
             ->addOption('report-html', 'rh', InputOption::VALUE_REQUIRED, 'Generate HTML report to a directory')
-            ->addOption('source-match', 'm', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Match source files with providen regex', ['*.php']);
+            ->addOption('source-match', 'm', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Match source files with these patterns (multiple possible)', ['*.php']);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
