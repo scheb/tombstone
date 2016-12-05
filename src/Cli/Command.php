@@ -34,7 +34,8 @@ class Command extends AbstractCommand
             ->setName('tombstone')
             ->addArgument('source-dir', InputArgument::REQUIRED, 'Path to PHP source files')
             ->addArgument('log-dir', InputArgument::REQUIRED, 'Path to the log files')
-            ->addOption('report-html', 'rh', InputOption::VALUE_REQUIRED, 'Generate HTML report to a directory');
+            ->addOption('report-html', 'rh', InputOption::VALUE_REQUIRED, 'Generate HTML report to a directory')
+            ->addOption('source-match', 'm', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Match source files with providen regex', ['*.php']);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -53,7 +54,7 @@ class Command extends AbstractCommand
             return 1;
         }
 
-        $result = $this->createResult($sourceDir, $logDir);
+        $result = $this->createResult($sourceDir, $logDir, $input->getOption('source-match'));
         $report = new ConsoleReportGenerator($output, $sourceDir);
         $report->generate($result);
 
@@ -70,10 +71,16 @@ class Command extends AbstractCommand
      *
      * @return AnalyzerResult
      */
-    private function createResult($sourceDir, $logDir) {
+    private function createResult($sourceDir, $logDir, $regexExpressions) {
         $this->output->writeln('');
         $this->output->writeln('Scan source code ...');
-        $sourceScanner = new SourceDirectoryScanner(TombstoneExtractorFactory::create(new TombstoneIndex($sourceDir)), $sourceDir);
+        $sourceScanner = new SourceDirectoryScanner(
+            TombstoneExtractorFactory::create(
+                new TombstoneIndex($sourceDir)
+            ),
+            $sourceDir,
+            $regexExpressions
+        );
 
         $progress = $this->createProgressBar($sourceScanner->getNumFiles());
         $tombstoneIndex = $sourceScanner->getTombstones(function() use ($progress) {
