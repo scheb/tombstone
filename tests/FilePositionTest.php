@@ -3,7 +3,7 @@ namespace Scheb\Tombstone\Analyzer\Tests;
 
 use Scheb\Tombstone\Analyzer\FilePosition;
 
-class FilePositionTest extends \PHPUnit_Framework_TestCase
+class FilePositionTest extends TestCase
 {
     /**
      * @test
