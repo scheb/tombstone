@@ -5,7 +5,6 @@ scheb/tombstone-analyzer
 
 [![Build Status](https://travis-ci.org/scheb/tombstone-analyzer.svg?branch=master)](https://travis-ci.org/scheb/tombstone-analyzer)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/scheb/tombstone-analyzer/badge.svg)](https://travis-ci.org/scheb/tombstone-analyzer)
-[![HHVM Status](http://hhvm.h4cc.de/badge/scheb/tombstone-analyzer.svg)](http://hhvm.h4cc.de/package/scheb/tombstone-analyzer)
 [![Coverage Status](https://coveralls.io/repos/scheb/tombstone-analyzer/badge.svg?branch=master&service=github)](https://coveralls.io/github/scheb/tombstone-analyzer?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone-analyzer/v/stable.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
 [![License](https://poser.pugx.org/scheb/tombstone-analyzer/license.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
