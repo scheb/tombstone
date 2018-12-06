@@ -1,6 +1,6 @@
 <?php
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Test;
 
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;

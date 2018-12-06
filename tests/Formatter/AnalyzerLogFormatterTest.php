@@ -1,11 +1,11 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Formatter;
+namespace Scheb\Tombstone\Test\Formatter;
 
-use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Formatter\AnalyzerLogFormatter;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
-use Scheb\Tombstone\Tests\Logging\AnalyzerLogFormatTest;
+use Scheb\Tombstone\Test\Fixtures\VampireFixture;
+use Scheb\Tombstone\Test\Logging\AnalyzerLogFormatTest;
 
 class AnalyzerLogFormatterTest extends TestCase
 {

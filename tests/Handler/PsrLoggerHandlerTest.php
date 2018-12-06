@@ -1,11 +1,11 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Handler;
+namespace Scheb\Tombstone\Test\Handler;
 
-use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Handler\PsrLoggerHandler;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
-use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
+use Scheb\Tombstone\Test\Fixtures\VampireFixture;
+use Scheb\Tombstone\Test\Stubs\LabelFormatter;
 
 class PsrLoggerHandlerTest extends TestCase
 {

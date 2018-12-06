@@ -1,6 +1,6 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Fixtures;
+namespace Scheb\Tombstone\Test\Fixtures;
 
 class TraceFixture
 {

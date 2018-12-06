@@ -1,8 +1,8 @@
 <?php
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Test;
 
-use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
+use Scheb\Tombstone\Test\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
 
 class VampireTest extends TestCase

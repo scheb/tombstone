@@ -1,10 +1,10 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Formatter;
+namespace Scheb\Tombstone\Test\Formatter;
 
-use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Formatter\LineFormatter;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
+use Scheb\Tombstone\Test\Fixtures\VampireFixture;
 
 class LineFormatterTest extends TestCase
 {

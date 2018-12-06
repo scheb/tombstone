@@ -2,7 +2,7 @@
 
 namespace Tracing;
 
-use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class PathNormalizerTest extends TestCase

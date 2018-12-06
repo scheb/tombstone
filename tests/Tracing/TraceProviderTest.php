@@ -1,8 +1,8 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Tracing;
+namespace Scheb\Tombstone\Test\Tracing;
 
-use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Tracing\TraceProvider;
 
 class TraceProviderTest extends TestCase
