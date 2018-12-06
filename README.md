@@ -48,6 +48,18 @@ Generate a HTML report:
 $ tombstone /path/to/php/sources /path/to/tombstone/logs --report-html=/report/target/directory
 ```
 
+Contribute
+----------
+You're welcome to [contribute](https://github.com/scheb/tombstone-analyzer/graphs/contributors) to this library by
+creating a pull requests or feature request in the issues section. For pull requests, please follow these guidelines:
+
+- Symfony code style
+- PHP7.1 type hints for everything (including: return types, `void`, nullable types)
+- Please add/update test cases
+- Test methods should be named `[method]_[scenario]_[expected result]`
+
+To run the test suite install the dependencies with `composer install` and then execute `bin/phpunit`.
+
 Acknowledgments
 ---------------
 
