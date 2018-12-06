@@ -1,7 +1,7 @@
 {
     "name": "scheb/tombstone-analyzer",
     "description": "Generates reports based on the logs from scheb/tombstone",
-    "keywords": ["tombstone", "dead code", "report"],
+    "keywords": ["tombstone", "dead code removal", "static code analysis", "dynamic code analysis", "report"],
     "homepage": "https://github.com/scheb/tombstone-analyzer",
     "license": "MIT",
     "authors": [
