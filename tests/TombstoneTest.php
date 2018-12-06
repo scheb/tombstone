@@ -75,11 +75,11 @@ class TombstoneTest extends TestCase
         $tombstone2 = $this->createTombstone('2015-01-01', 'otherAuthor', 'label');
         $tombstone3 = $this->createTombstone('2015-01-01', 'author', 'otherLabel');
 
-        return array(
-            array($reference, $tombstone1),
-            array($reference, $tombstone2),
-            array($reference, $tombstone3),
-        );
+        return [
+            [$reference, $tombstone1],
+            [$reference, $tombstone2],
+            [$reference, $tombstone3],
+        ];
     }
 
     /**

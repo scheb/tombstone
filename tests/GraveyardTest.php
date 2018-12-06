@@ -23,7 +23,7 @@ class GraveyardTest extends TestCase
     public function setUp()
     {
         $this->handler = $this->getHandlerMock();
-        $this->graveyard = new Graveyard(array($this->handler));
+        $this->graveyard = new Graveyard([$this->handler]);
     }
 
     private function getHandlerMock(): MockObject

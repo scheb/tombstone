@@ -13,7 +13,7 @@ class AnalyzerLogHandler extends AbstractHandler
     /**
      * @var StreamHandler[]
      */
-    private $logStreams = array();
+    private $logStreams = [];
 
     /**
      * @var string

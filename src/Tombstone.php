@@ -37,7 +37,7 @@ class Tombstone
     /**
      * @var Vampire[]
      */
-    private $vampires = array();
+    private $vampires = [];
 
     public function __construct(string $tombstoneDate, ?string $author, ?string $label, string $file, int $line, ?string $method)
     {

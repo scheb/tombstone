@@ -35,7 +35,7 @@ class AnalyzerLogHandlerTest extends TestCase
     private function readLogFiles(): array
     {
         $handle = opendir($this->logDir);
-        $logFiles = array();
+        $logFiles = [];
         while ($file = readdir($handle)) {
             if ('.' == $file || '..' == $file || '.gitkeep' == $file) {
                 continue;

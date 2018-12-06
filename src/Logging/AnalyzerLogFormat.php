@@ -11,7 +11,7 @@ class AnalyzerLogFormat
 
     public static function vampireToLog(Vampire $vampire): string
     {
-        return json_encode(array(
+        return json_encode([
             'v' => self::CURRENT_VERSION,
             'd' => $vampire->getTombstoneDate(),
             'a' => $vampire->getAuthor(),
@@ -21,7 +21,7 @@ class AnalyzerLogFormat
             'm' => $vampire->getMethod(),
             'id' => $vampire->getInvocationDate(),
             'im' => $vampire->getInvoker(),
-        ));
+        ]);
     }
 
     public static function logToVampire(string $log): ?Vampire

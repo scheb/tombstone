@@ -23,7 +23,7 @@ class Graveyard
      */
     private $sourceDir;
 
-    public function __construct(array $handlers = array(), $sourceDir = null)
+    public function __construct(array $handlers = [], $sourceDir = null)
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider();

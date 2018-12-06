@@ -37,12 +37,12 @@ class PathNormalizerTest extends TestCase
 
     public function provideTestCasesForRelativePath(): array
     {
-        return array(
-            array('/path/to/directory/file.php', '/path/to'),
-            array('/path/to/directory/file.php', '/path/to/'),
-            array('C:\\path\\to\\directory\\file.php', 'C:\\path\\to'),
-            array('C:\\path\\to\\directory\\file.php', 'C:\\path\\to\\'),
-        );
+        return [
+            ['/path/to/directory/file.php', '/path/to'],
+            ['/path/to/directory/file.php', '/path/to/'],
+            ['C:\\path\\to\\directory\\file.php', 'C:\\path\\to'],
+            ['C:\\path\\to\\directory\\file.php', 'C:\\path\\to\\'],
+        ];
     }
 
     /**
@@ -57,11 +57,11 @@ class PathNormalizerTest extends TestCase
 
     public function provideTestCasesForKeepingPath(): array
     {
-        return array(
-            array('/path/to/file.php', '/other/base'),
-            array('/path/to/file.php', null),
-            array('C:\\path\\to\\file.php', 'C:\\other\\path'),
-            array('C:\\path\\to\\file.php', null),
-        );
+        return [
+            ['/path/to/file.php', '/other/base'],
+            ['/path/to/file.php', null],
+            ['C:\\path\\to\\file.php', 'C:\\other\\path'],
+            ['C:\\path\\to\\file.php', null],
+        ];
     }
 }

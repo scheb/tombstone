@@ -8,7 +8,7 @@ class JsonFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        return json_encode(array(
+        return json_encode([
             'tombstoneDate' => $vampire->getTombstoneDate(),
             'author' => $vampire->getAuthor(),
             'label' => $vampire->getLabel(),
@@ -17,6 +17,6 @@ class JsonFormatter implements FormatterInterface
             'method' => $vampire->getMethod(),
             'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
-        ))."\n";
+            ])."\n";
     }
 }
