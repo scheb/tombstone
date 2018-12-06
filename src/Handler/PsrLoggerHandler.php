@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Handler;
 
 use Psr\Log\LoggerInterface;
@@ -18,7 +19,7 @@ class PsrLoggerHandler extends AbstractHandler
 
     /**
      * @param LoggerInterface $logger
-     * @param mixed $level
+     * @param mixed           $level
      */
     public function __construct(LoggerInterface $logger, $level)
     {
@@ -27,7 +28,7 @@ class PsrLoggerHandler extends AbstractHandler
     }
 
     /**
-     * Log a vampire
+     * Log a vampire.
      *
      * @param Vampire $vampire
      */

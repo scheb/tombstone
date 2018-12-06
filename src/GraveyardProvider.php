@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone;
 
 class GraveyardProvider
@@ -13,7 +14,7 @@ class GraveyardProvider
      */
     public static function getGraveyard()
     {
-        if (self::$graveyard === null) {
+        if (null === self::$graveyard) {
             self::$graveyard = new Graveyard();
         }
 

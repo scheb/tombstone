@@ -6,6 +6,7 @@
  *
  * (c) Jordi Boggiano <j.boggiano@seld.be>
  */
+
 namespace Monolog\Handler;
 
 use Scheb\Tombstone\Tests\TestCase;
@@ -25,8 +26,8 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWrite()
     {
@@ -41,7 +42,7 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteCreatesTheStreamResource()
     {
@@ -50,20 +51,20 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteLocking()
     {
-        $temp = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'monolog_locked_log';
+        $temp = sys_get_temp_dir().DIRECTORY_SEPARATOR.'monolog_locked_log';
         $handler = new StreamHandler($temp, null, true);
         $handler->log($this->getRecord());
     }
 
     /**
      * @expectedException \LogicException
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteMissingResource()
     {
@@ -83,7 +84,7 @@ class StreamHandlerTest extends TestCase
     /**
      * @dataProvider invalidArgumentProvider
      * @expectedException \InvalidArgumentException
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      */
     public function testWriteInvalidArgument($invalidArgument)
     {
@@ -92,8 +93,8 @@ class StreamHandlerTest extends TestCase
 
     /**
      * @expectedException \UnexpectedValueException
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteInvalidResource()
     {
@@ -103,8 +104,8 @@ class StreamHandlerTest extends TestCase
 
     /**
      * @expectedException \UnexpectedValueException
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingResource()
     {
@@ -113,8 +114,8 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingPath()
     {
@@ -123,8 +124,8 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingFileResource()
     {
@@ -135,8 +136,8 @@ class StreamHandlerTest extends TestCase
     /**
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp /There is no existing directory at/
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingAndNotCreatablePath()
     {
@@ -150,8 +151,8 @@ class StreamHandlerTest extends TestCase
     /**
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp /There is no existing directory at/
-     * @covers Scheb\Tombstone\Handler\StreamHandler::__construct
-     * @covers Scheb\Tombstone\Handler\StreamHandler::log
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingAndNotCreatableFileResource()
     {

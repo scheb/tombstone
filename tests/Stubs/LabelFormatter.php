@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Stubs;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;

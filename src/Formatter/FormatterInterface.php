@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Formatter;
 
 use Scheb\Tombstone\Vampire;
@@ -6,7 +7,7 @@ use Scheb\Tombstone\Vampire;
 interface FormatterInterface
 {
     /**
-     * Formats a Vampire for the log
+     * Formats a Vampire for the log.
      *
      * @param Vampire $vampire
      *

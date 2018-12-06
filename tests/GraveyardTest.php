@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\Graveyard;
@@ -68,7 +69,7 @@ class GraveyardTest extends TestCase
             ->expects($this->once())
             ->method('log')
             ->with($this->callback(function ($vampire) {
-                return $vampire instanceof Vampire && $vampire->getFile() === 'file1.php';
+                return $vampire instanceof Vampire && 'file1.php' === $vampire->getFile();
             }));
 
         $trace = TraceFixture::getTraceFixture();
@@ -85,7 +86,7 @@ class GraveyardTest extends TestCase
             ->expects($this->once())
             ->method('log')
             ->with($this->callback(function ($vampire) {
-                return $vampire instanceof Vampire && $vampire->getFile() === '/path/to/file1.php';
+                return $vampire instanceof Vampire && '/path/to/file1.php' === $vampire->getFile();
             }));
 
         $trace = TraceFixture::getTraceFixture();

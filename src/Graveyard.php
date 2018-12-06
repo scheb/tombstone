@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone;
 
 use Scheb\Tombstone\Handler\HandlerInterface;
@@ -7,7 +8,6 @@ use Scheb\Tombstone\Tracing\TraceProvider;
 
 class Graveyard
 {
-
     /**
      * @var HandlerInterface[]
      */
@@ -20,13 +20,13 @@ class Graveyard
 
     /**
      * @param HandlerInterface[] $handlers
-     * @param null $sourceDir
+     * @param null               $sourceDir
      */
     public function __construct(array $handlers = array(), $sourceDir = null)
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider(1);
-		$this->setSourceDir($sourceDir);
+        $this->setSourceDir($sourceDir);
     }
 
     /**
@@ -46,10 +46,10 @@ class Graveyard
     }
 
     /**
-     * @param string $date
-     * @param string $author
+     * @param string      $date
+     * @param string      $author
      * @param string|null $label
-     * @param array $trace
+     * @param array       $trace
      */
     public function tombstone($date, $author, $label, array $trace)
     {

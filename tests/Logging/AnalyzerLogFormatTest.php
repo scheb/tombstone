@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Logging;
 
 use Scheb\Tombstone\Tests\TestCase;

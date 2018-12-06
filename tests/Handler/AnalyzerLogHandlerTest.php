@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Handler;
 
 use Scheb\Tombstone\Tests\TestCase;
@@ -13,8 +14,9 @@ class AnalyzerLogHandlerTest extends TestCase
      */
     private $logDir;
 
-    public function setUp() {
-        $this->logDir = __DIR__ . '/../_logs/';
+    public function setUp()
+    {
+        $this->logDir = __DIR__.'/../_logs/';
         $this->clearLogFiles();
     }
 
@@ -38,11 +40,11 @@ class AnalyzerLogHandlerTest extends TestCase
         $handle = opendir($this->logDir);
         $logFiles = array();
         while ($file = readdir($handle)) {
-            if ($file == '.' || $file == '..' || $file == '.gitkeep') {
+            if ('.' == $file || '..' == $file || '.gitkeep' == $file) {
                 continue;
             }
 
-            $logFiles[] = $this->logDir . $file;
+            $logFiles[] = $this->logDir.$file;
         }
 
         return $logFiles;
@@ -94,6 +96,6 @@ class AnalyzerLogHandlerTest extends TestCase
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);
         $logFileContent = file_get_contents($logFiles[0]);
-        $this->assertEquals(AnalyzerLogFormatTest::getLog() . "\n", $logFileContent);
+        $this->assertEquals(AnalyzerLogFormatTest::getLog()."\n", $logFileContent);
     }
 }

@@ -1,13 +1,13 @@
 <?php
+
 namespace Scheb\Tombstone\Formatter;
 
 use Scheb\Tombstone\Vampire;
 
 class JsonFormatter implements FormatterInterface
 {
-
     /**
-     * Formats a Vampire for the log
+     * Formats a Vampire for the log.
      *
      * @param Vampire $vampire
      *
@@ -24,6 +24,6 @@ class JsonFormatter implements FormatterInterface
             'method' => $vampire->getMethod(),
             'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
-        )) . "\n";
+        ))."\n";
     }
 }

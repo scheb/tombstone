@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Formatter;
 
 use Scheb\Tombstone\Tests\TestCase;
@@ -16,6 +17,6 @@ class JsonFormatterTest extends TestCase
         $formatter = new JsonFormatter();
         $returnValue = $formatter->format($vampire);
         $expectedLog = '{"tombstoneDate":"2014-01-01","author":"author","label":"label","file":"file","line":"line","method":"method","invocationDate":"2015-01-01","invoker":"invoker"}';
-        $this->assertEquals($expectedLog . "\n", $returnValue);
+        $this->assertEquals($expectedLog."\n", $returnValue);
     }
 }

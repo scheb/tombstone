@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\Tombstone;
@@ -6,11 +7,11 @@ use Scheb\Tombstone\Vampire;
 
 class TombstoneTest extends TestCase
 {
-
     /**
      * @param string $date
      * @param string $author
      * @param string $label
+     *
      * @return Tombstone
      */
     private function createTombstone($date = '2015-08-19', $author = 'author', $label = 'label')
@@ -21,7 +22,8 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function toString_withLabel_returnString() {
+    public function toString_withLabel_returnString()
+    {
         $tombstone = $this->createTombstone();
         $this->assertEquals('tombstone("2015-08-19", "author", "label")', (string) $tombstone);
     }
@@ -29,7 +31,8 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function toString_withoutLabel_returnString() {
+    public function toString_withoutLabel_returnString()
+    {
         $tombstone = $this->createTombstone('2015-08-19', 'author', null);
         $this->assertEquals('tombstone("2015-08-19", "author")', (string) $tombstone);
     }

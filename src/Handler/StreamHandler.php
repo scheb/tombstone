@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Vampire;
@@ -11,7 +12,6 @@ use Scheb\Tombstone\Vampire;
  */
 class StreamHandler extends AbstractHandler
 {
-
     protected $stream;
     protected $url;
     private $errorMessage;
@@ -21,8 +21,8 @@ class StreamHandler extends AbstractHandler
 
     /**
      * @param resource|string $stream
-     * @param int|null $filePermission Optional file permissions (default (0644) are only for owner read/write)
-     * @param Boolean $useLocking Try to lock log file before doing any writes
+     * @param int|null        $filePermission Optional file permissions (default (0644) are only for owner read/write)
+     * @param bool            $useLocking     Try to lock log file before doing any writes
      *
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
@@ -67,7 +67,7 @@ class StreamHandler extends AbstractHandler
             $this->errorMessage = null;
             set_error_handler(array($this, 'customErrorHandler'));
             $this->stream = fopen($this->url, 'a');
-            if ($this->filePermission !== null) {
+            if (null !== $this->filePermission) {
                 @chmod($this->url, $this->filePermission);
             }
             restore_error_handler();
@@ -101,7 +101,7 @@ class StreamHandler extends AbstractHandler
     private function getDirFromStream($stream)
     {
         $pos = strpos($stream, '://');
-        if ($pos === false) {
+        if (false === $pos) {
             return dirname($stream);
         }
         if ('file://' === substr($stream, 0, 7)) {

@@ -1,11 +1,11 @@
 <?php
+
 namespace Scheb\Tombstone\Tracing;
 
 class TraceProvider
 {
-
     /**
-     * @param integer $skipFrames
+     * @param int $skipFrames
      *
      * @return array
      */
@@ -13,6 +13,7 @@ class TraceProvider
     {
         ++$skipFrames; // Skip this call
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+
         return array_splice($trace, $skipFrames, 3);
     }
 }

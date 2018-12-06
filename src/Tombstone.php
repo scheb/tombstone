@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone;
 
 class Tombstone
@@ -39,12 +40,12 @@ class Tombstone
     private $vampires = array();
 
     /**
-     * @param string $tombstoneDate
-     * @param string $author
+     * @param string      $tombstoneDate
+     * @param string      $author
      * @param string|null $label
-     * @param string $file
-     * @param int $line
-     * @param string $method
+     * @param string      $file
+     * @param int         $line
+     * @param string      $method
      */
     public function __construct($tombstoneDate, $author, $label, $file, $line, $method)
     {
@@ -59,8 +60,10 @@ class Tombstone
     /**
      * @return string
      */
-    public function __toString() {
-        $label = $this->label ? ', "' . $this->label . '"' : '';
+    public function __toString()
+    {
+        $label = $this->label ? ', "'.$this->label.'"' : '';
+
         return sprintf('tombstone("%s", "%s"%s)', $this->tombstoneDate, $this->author, $label);
     }
 
@@ -69,7 +72,7 @@ class Tombstone
      */
     public function getHash()
     {
-        return md5($this->tombstoneDate . "\n" . $this->author . "\n" . $this->label . "\n" . $this->file . "\n" . $this->line);
+        return md5($this->tombstoneDate."\n".$this->author."\n".$this->label."\n".$this->file."\n".$this->line);
     }
 
     /**
@@ -151,6 +154,6 @@ class Tombstone
      */
     public function hasVampires()
     {
-        return !!$this->vampires;
+        return (bool) $this->vampires;
     }
 }

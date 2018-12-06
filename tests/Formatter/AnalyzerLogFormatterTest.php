@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Formatter;
 
 use Scheb\Tombstone\Tests\TestCase;
@@ -16,6 +17,6 @@ class AnalyzerLogFormatterTest extends TestCase
         $vampire = VampireFixture::getVampire();
         $formatter = new AnalyzerLogFormatter();
         $returnValue = $formatter->format($vampire);
-        $this->assertEquals(AnalyzerLogFormatTest::getLog() . "\n", $returnValue);
+        $this->assertEquals(AnalyzerLogFormatTest::getLog()."\n", $returnValue);
     }
 }

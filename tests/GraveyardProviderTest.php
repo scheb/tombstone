@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\GraveyardProvider;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;

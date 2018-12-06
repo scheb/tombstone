@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;
@@ -33,10 +34,10 @@ class AnalyzerLogHandler extends AbstractHandler
     private $useLocking;
 
     /**
-     * @param string $logDir
+     * @param string   $logDir
      * @param int|null $sizeLimit
-     * @param null $filePermission
-     * @param bool $useLocking
+     * @param null     $filePermission
+     * @param bool     $useLocking
      */
     public function __construct($logDir, $sizeLimit = null, $filePermission = null, $useLocking = false)
     {
@@ -55,7 +56,7 @@ class AnalyzerLogHandler extends AbstractHandler
     }
 
     /**
-     * Log a vampire
+     * Log a vampire.
      *
      * @param Vampire $vampire
      */
@@ -77,7 +78,8 @@ class AnalyzerLogHandler extends AbstractHandler
     {
         $date = date('Ymd');
         $hash = $vampire->getTombstone()->getHash();
-        return $this->logDir . '/' . sprintf(self::LOG_FILE_NAME, $hash, $date);
+
+        return $this->logDir.'/'.sprintf(self::LOG_FILE_NAME, $hash, $date);
     }
 
     /**
@@ -108,11 +110,12 @@ class AnalyzerLogHandler extends AbstractHandler
         }
 
         clearstatcache(null, $logFile);
+
         return filesize($logFile) >= $this->sizeLimit;
     }
 
     /**
-     * Flush everything
+     * Flush everything.
      */
     public function flush()
     {
@@ -124,7 +127,7 @@ class AnalyzerLogHandler extends AbstractHandler
     /**
      * Sets the formatter.
      *
-     * @param  FormatterInterface $formatter
+     * @param FormatterInterface $formatter
      */
     public function setFormatter(FormatterInterface $formatter)
     {

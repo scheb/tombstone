@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Logging;
 
 use Scheb\Tombstone\Tombstone;
@@ -13,7 +14,8 @@ class AnalyzerLogFormat
      *
      * @return string
      */
-    public static function vampireToLog(Vampire $vampire) {
+    public static function vampireToLog(Vampire $vampire)
+    {
         return json_encode(array(
             'v' => self::CURRENT_VERSION,
             'd' => $vampire->getTombstoneDate(),
@@ -35,12 +37,12 @@ class AnalyzerLogFormat
     public static function logToVampire($log)
     {
         $data = json_decode($log, true);
-        if ($data === null || !isset($data['v'])) {
+        if (null === $data || !isset($data['v'])) {
             return null;
         }
         $version = (int) $data['v'];
 
-        if ($version === 1) {
+        if (1 === $version) {
             return new Vampire($data['id'], $data['im'], new Tombstone($data['d'], $data['a'], $data['l'], $data['f'], $data['n'], $data['m']));
         }
 

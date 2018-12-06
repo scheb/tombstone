@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Tests\Fixtures;
 
 class TraceFixture
@@ -20,7 +21,7 @@ class TraceFixture
                 'file' => '/path/to/file3.php',
                 'line' => 33,
                 'function' => 'invokerMethodName',
-            )
+            ),
         );
     }
 }

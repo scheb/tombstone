@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;
@@ -6,23 +7,22 @@ use Scheb\Tombstone\Vampire;
 
 interface HandlerInterface
 {
-
     /**
-     * Log a vampire
+     * Log a vampire.
      *
      * @param Vampire $vampire
      */
     public function log(Vampire $vampire);
 
     /**
-     * Flush everything
+     * Flush everything.
      */
     public function flush();
 
     /**
      * Sets the formatter.
      *
-     * @param  FormatterInterface $formatter
+     * @param FormatterInterface $formatter
      */
     public function setFormatter(FormatterInterface $formatter);
 

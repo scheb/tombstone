@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone;
 
 class Vampire
@@ -19,9 +20,9 @@ class Vampire
     private $tombstone;
 
     /**
-     * @param string $invocationDate
+     * @param string      $invocationDate
      * @param string|null $invoker
-     * @param Tombstone $tombstone
+     * @param Tombstone   $tombstone
      */
     public function __construct($invocationDate, $invoker, Tombstone $tombstone)
     {
@@ -34,7 +35,8 @@ class Vampire
      * @param string $date
      * @param string $author
      * @param string $label
-     * @param array $trace
+     * @param array  $trace
+     *
      * @return Vampire
      */
     public static function createFromCall($date, $author, $label, $trace)
@@ -68,7 +70,7 @@ class Vampire
             return null;
         }
 
-        return (isset($frame['class']) ? $frame['class'] . $frame['type'] : '') . $frame['function'];
+        return (isset($frame['class']) ? $frame['class'].$frame['type'] : '').$frame['function'];
     }
 
     /**

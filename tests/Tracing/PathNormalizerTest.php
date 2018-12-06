@@ -1,4 +1,5 @@
 <?php
+
 namespace Tracing;
 
 use Scheb\Tombstone\Tests\TestCase;
@@ -28,7 +29,8 @@ class PathNormalizerTest extends TestCase
      * @test
      * @dataProvider getTestCasesForRelativePath
      */
-    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($path, $baseDir) {
+    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($path, $baseDir)
+    {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals('directory/file.php', $returnValue);
     }
@@ -50,7 +52,8 @@ class PathNormalizerTest extends TestCase
      * @test
      * @dataProvider getTestCasesForKeepingPath
      */
-    public function makeRelativeTo_pathHasDifferentBase_returnSamePath($path, $baseDir) {
+    public function makeRelativeTo_pathHasDifferentBase_returnSamePath($path, $baseDir)
+    {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals($path, $returnValue);
     }
@@ -58,7 +61,8 @@ class PathNormalizerTest extends TestCase
     /**
      * @return array
      */
-    public function getTestCasesForKeepingPath() {
+    public function getTestCasesForKeepingPath()
+    {
         return array(
             array('/path/to/file.php', '/other/base'),
             array('/path/to/file.php', null),
