@@ -6,14 +6,7 @@ use Scheb\Tombstone\Vampire;
 
 class LineFormatter implements FormatterInterface
 {
-    /**
-     * Formats a Vampire for the log.
-     *
-     * @param Vampire $vampire
-     *
-     * @return string
-     */
-    public function format(Vampire $vampire)
+    public function format(Vampire $vampire): string
     {
         $template = '%s - Vampire detected: tombstone("%s", "%s"%s), in file %s:%s, in function %s, invoked by %s'."\n";
 

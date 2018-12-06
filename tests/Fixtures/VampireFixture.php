@@ -7,16 +7,9 @@ use Scheb\Tombstone\Vampire;
 
 class VampireFixture
 {
-    /**
-     * @param string $date
-     * @param string $author
-     * @param string $label
-     *
-     * @return Vampire
-     */
-    public static function getVampire($date = '2014-01-01', $author = 'author', $label = 'label')
+    public static function getVampire(string $date = '2014-01-01', ?string $author = 'author', ?string $label = 'label'): Vampire
     {
-        $tombstone = new Tombstone($date, $author, $label, 'file', 'line', 'method');
+        $tombstone = new Tombstone($date, $author, $label, 'file', 123, 'method');
 
         return new Vampire('2015-01-01', 'invoker', $tombstone);
     }

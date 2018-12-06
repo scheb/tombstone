@@ -13,5 +13,5 @@ interface FormatterInterface
      *
      * @return string
      */
-    public function format(Vampire $vampire);
+    public function format(Vampire $vampire): string;
 }

@@ -17,7 +17,7 @@ interface HandlerInterface
     /**
      * Flush everything.
      */
-    public function flush();
+    public function flush(): void;
 
     /**
      * Sets the formatter.
@@ -31,5 +31,5 @@ interface HandlerInterface
      *
      * @return FormatterInterface
      */
-    public function getFormatter();
+    public function getFormatter(): FormatterInterface;
 }

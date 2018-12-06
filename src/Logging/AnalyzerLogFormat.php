@@ -7,14 +7,9 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogFormat
 {
-    const CURRENT_VERSION = 1;
+    private const CURRENT_VERSION = 1;
 
-    /**
-     * @param Vampire $vampire
-     *
-     * @return string
-     */
-    public static function vampireToLog(Vampire $vampire)
+    public static function vampireToLog(Vampire $vampire): string
     {
         return json_encode(array(
             'v' => self::CURRENT_VERSION,
@@ -29,12 +24,7 @@ class AnalyzerLogFormat
         ));
     }
 
-    /***
-     * @param string $log
-     *
-     * @return Vampire|null Returns null when log was not valid
-     */
-    public static function logToVampire($log)
+    public static function logToVampire(string $log): ?Vampire
     {
         $data = json_decode($log, true);
         if (null === $data || !isset($data['v'])) {

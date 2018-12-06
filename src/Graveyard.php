@@ -14,44 +14,33 @@ class Graveyard
     private $handlers;
 
     /**
+     * @var TraceProvider
+     */
+    private $traceProvider;
+
+    /**
      * @var string
      */
     private $sourceDir;
 
-    /**
-     * @param HandlerInterface[] $handlers
-     * @param null               $sourceDir
-     */
     public function __construct(array $handlers = array(), $sourceDir = null)
     {
         $this->handlers = $handlers;
-        $this->traceProvider = new TraceProvider(1);
+        $this->traceProvider = new TraceProvider();
         $this->setSourceDir($sourceDir);
     }
 
-    /**
-     * @param string $sourceDir
-     */
-    public function setSourceDir($sourceDir)
+    public function setSourceDir($sourceDir): void
     {
         $this->sourceDir = $sourceDir;
     }
 
-    /**
-     * @param HandlerInterface $handler
-     */
-    public function addHandler(HandlerInterface $handler)
+    public function addHandler(HandlerInterface $handler): void
     {
         $this->handlers[] = $handler;
     }
 
-    /**
-     * @param string      $date
-     * @param string      $author
-     * @param string|null $label
-     * @param array       $trace
-     */
-    public function tombstone($date, $author, $label, array $trace)
+    public function tombstone(string $date, ?string $author, ?string $label, array $trace): void
     {
         $trace = $this->traceRelativePath($trace);
         $vampire = Vampire::createFromCall($date, $author, $label, $trace);
@@ -60,12 +49,7 @@ class Graveyard
         }
     }
 
-    /**
-     * @param array $trace
-     *
-     * @return array
-     */
-    private function traceRelativePath(array $trace)
+    private function traceRelativePath(array $trace): array
     {
         if (!$this->sourceDir) {
             return $trace;
@@ -80,7 +64,7 @@ class Graveyard
         return $trace;
     }
 
-    public function flush()
+    public function flush(): void
     {
         foreach ($this->handlers as $handler) {
             $handler->flush();

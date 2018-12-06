@@ -27,12 +27,7 @@ class PsrLoggerHandler extends AbstractHandler
         $this->level = $level;
     }
 
-    /**
-     * Log a vampire.
-     *
-     * @param Vampire $vampire
-     */
-    public function log(Vampire $vampire)
+    public function log(Vampire $vampire): void
     {
         $this->logger->log($this->level, $this->getFormatter()->format($vampire));
     }

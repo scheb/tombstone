@@ -2,7 +2,9 @@
 
 namespace Scheb\Tombstone\Test;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Graveyard;
+use Scheb\Tombstone\Handler\HandlerInterface;
 use Scheb\Tombstone\Test\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
 
@@ -24,15 +26,15 @@ class GraveyardTest extends TestCase
         $this->graveyard = new Graveyard(array($this->handler));
     }
 
-    private function getHandlerMock()
+    private function getHandlerMock(): MockObject
     {
-        return $this->createMock('Scheb\Tombstone\Handler\HandlerInterface');
+        return $this->createMock(HandlerInterface::class);
     }
 
     /**
      * @test
      */
-    public function addHandler_anotherHandler_isCalledOnTombstone()
+    public function addHandler_anotherHandler_isCalledOnTombstone(): void
     {
         $handler = $this->getHandlerMock();
         $this->graveyard->addHandler($handler);
@@ -40,7 +42,7 @@ class GraveyardTest extends TestCase
         $this->handler
             ->expects($this->once())
             ->method('log')
-            ->with($this->isInstanceOf('Scheb\Tombstone\Vampire'));
+            ->with($this->isInstanceOf(Vampire::class));
 
         $trace = TraceFixture::getTraceFixture();
         $this->graveyard->tombstone('date', 'author', 'label', $trace);
@@ -49,12 +51,12 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function tombstone_handlersRegistered_callAllHandlers()
+    public function tombstone_handlersRegistered_callAllHandlers(): void
     {
         $this->handler
             ->expects($this->once())
             ->method('log')
-            ->with($this->isInstanceOf('Scheb\Tombstone\Vampire'));
+            ->with($this->isInstanceOf(Vampire::class));
 
         $trace = TraceFixture::getTraceFixture();
         $this->graveyard->tombstone('date', 'author', 'label', $trace);
@@ -63,7 +65,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function tombstone_sourceDirSet_logRelativePath()
+    public function tombstone_sourceDirSet_logRelativePath(): void
     {
         $this->handler
             ->expects($this->once())
@@ -80,7 +82,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function tombstone_sourceDirNotMatchedFilePath_logAbsolutePath()
+    public function tombstone_sourceDirNotMatchedFilePath_logAbsolutePath(): void
     {
         $this->handler
             ->expects($this->once())
@@ -97,7 +99,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function flush_handlerRegistered_flushAllHandlers()
+    public function flush_handlerRegistered_flushAllHandlers(): void
     {
         $this->handler
             ->expects($this->once())

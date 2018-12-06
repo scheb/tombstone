@@ -25,17 +25,14 @@ class AnalyzerLogHandlerTest extends TestCase
         $this->clearLogFiles();
     }
 
-    private function clearLogFiles()
+    private function clearLogFiles(): void
     {
         foreach ($this->readLogFiles() as $logFile) {
             unlink($logFile);
         }
     }
 
-    /**
-     * @return array
-     */
-    private function readLogFiles()
+    private function readLogFiles(): array
     {
         $handle = opendir($this->logDir);
         $logFiles = array();
@@ -53,7 +50,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
-    public function log_differentTombstones_twoLogFilesWritten()
+    public function log_differentTombstones_twoLogFilesWritten(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
         $handler->log(VampireFixture::getVampire('2015-01-01'));
@@ -66,7 +63,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
-    public function log_sizeLimitSet_stopWhenLimitExceeded()
+    public function log_sizeLimitSet_stopWhenLimitExceeded(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir, 128);
         $handler->log(VampireFixture::getVampire('2015-01-01'));
@@ -88,7 +85,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
-    public function log_logWritten_isAnalyzerLogFormat()
+    public function log_logWritten_isAnalyzerLogFormat(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
         $handler->log(VampireFixture::getVampire());
@@ -96,6 +93,6 @@ class AnalyzerLogHandlerTest extends TestCase
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);
         $logFileContent = file_get_contents($logFiles[0]);
-        $this->assertEquals(AnalyzerLogFormatTest::getLog()."\n", $logFileContent);
+        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD."\n", $logFileContent);
     }
 }

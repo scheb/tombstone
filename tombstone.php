@@ -3,10 +3,10 @@
 if (!function_exists('tombstone')) {
     /**
      * @param string      $date   Any date format strtotime() understands
-     * @param string      $author Your name
+     * @param string|null $author Your name
      * @param string|null $label  An optional label for the tombstone
      */
-    function tombstone($date, $author, $label = null)
+    function tombstone(string $date, ?string $author = null, ?string $label = null)
     {
         try {
             $trace = \Scheb\Tombstone\Tracing\TraceProvider::getTraceHere();

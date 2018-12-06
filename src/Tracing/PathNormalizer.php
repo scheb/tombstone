@@ -4,23 +4,12 @@ namespace Scheb\Tombstone\Tracing;
 
 class PathNormalizer
 {
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    public static function normalizeDirectorySeparator($path)
+    public static function normalizeDirectorySeparator(string $path): string
     {
         return str_replace('\\', '/', $path);
     }
 
-    /**
-     * @param string $path
-     * @param string $baseDir
-     *
-     * @return string
-     */
-    public static function makeRelativeTo($path, $baseDir)
+    public static function makeRelativeTo(string $path, ?string $baseDir): string
     {
         if ($baseDir && self::startsWith($path, $baseDir)) {
             $path = substr($path, strlen($baseDir));
@@ -33,13 +22,7 @@ class PathNormalizer
         return $path;
     }
 
-    /**
-     * @param string $haystack
-     * @param string $needle
-     *
-     * @return bool
-     */
-    private static function startsWith($haystack, $needle)
+    private static function startsWith(string $haystack, string $needle): bool
     {
         return '' === $needle || false !== strrpos($haystack, $needle, -strlen($haystack));
     }

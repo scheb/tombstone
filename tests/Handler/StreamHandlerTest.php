@@ -20,16 +20,16 @@ class StreamHandlerTest extends TestCase
     /**
      * @return Vampire
      */
-    public function getRecord($label = 'label')
+    public function getRecord($label = 'label'): Vampire
     {
-        return VampireFixture::getVampire(null, null, $label);
+        return VampireFixture::getVampire('2015-08-19', 'scheb', $label);
     }
 
     /**
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $handle = fopen('php://memory', 'a+');
         $handler = new StreamHandler($handle);
@@ -44,7 +44,7 @@ class StreamHandlerTest extends TestCase
     /**
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteCreatesTheStreamResource()
+    public function testWriteCreatesTheStreamResource(): void
     {
         $handler = new StreamHandler('php://memory');
         $handler->log($this->getRecord());
@@ -55,7 +55,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteLocking()
+    public function testWriteLocking(): void
     {
         $temp = sys_get_temp_dir().DIRECTORY_SEPARATOR.'monolog_locked_log';
         $handler = new StreamHandler($temp, null, true);
@@ -68,13 +68,23 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteMissingResource()
+    public function testWriteMissingResource(): void
     {
         $handler = new StreamHandler(null);
         $handler->log($this->getRecord());
     }
 
-    public function invalidArgumentProvider()
+    /**
+     * @dataProvider provideInvalidArguments
+     * @expectedException \InvalidArgumentException
+     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
+     */
+    public function testWriteInvalidArgument($invalidArgument): void
+    {
+        new StreamHandler($invalidArgument);
+    }
+
+    public function provideInvalidArguments(): array
     {
         return array(
             array(1),
@@ -84,21 +94,11 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidArgumentProvider
-     * @expectedException \InvalidArgumentException
-     * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
-     */
-    public function testWriteInvalidArgument($invalidArgument)
-    {
-        $handler = new StreamHandler($invalidArgument);
-    }
-
-    /**
      * @expectedException \UnexpectedValueException
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteInvalidResource()
+    public function testWriteInvalidResource(): void
     {
         $handler = new StreamHandler('bogus://url');
         $handler->log($this->getRecord());
@@ -109,7 +109,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteNonExistingResource()
+    public function testWriteNonExistingResource(): void
     {
         $handler = new StreamHandler('ftp://foo/bar/baz/'.rand(0, 10000));
         $handler->log($this->getRecord());
@@ -119,7 +119,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteNonExistingPath()
+    public function testWriteNonExistingPath(): void
     {
         $handler = new StreamHandler(sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
         $handler->log($this->getRecord());
@@ -130,7 +130,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteNonExistingFileResource()
+    public function testWriteNonExistingFileResource(): void
     {
         $handler = new StreamHandler('file://'.sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
         $handler->log($this->getRecord());
@@ -143,7 +143,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteNonExistingAndNotCreatablePath()
+    public function testWriteNonExistingAndNotCreatablePath(): void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
@@ -158,7 +158,7 @@ class StreamHandlerTest extends TestCase
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
-    public function testWriteNonExistingAndNotCreatableFileResource()
+    public function testWriteNonExistingAndNotCreatableFileResource(): void
     {
         if (defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');

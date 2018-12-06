@@ -12,11 +12,11 @@ class AnalyzerLogFormatterTest extends TestCase
     /**
      * @test
      */
-    public function format_vampireGiven_returnFormattedString()
+    public function format_vampireGiven_returnFormattedString(): void
     {
         $vampire = VampireFixture::getVampire();
         $formatter = new AnalyzerLogFormatter();
         $returnValue = $formatter->format($vampire);
-        $this->assertEquals(AnalyzerLogFormatTest::getLog()."\n", $returnValue);
+        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD."\n", $returnValue);
     }
 }

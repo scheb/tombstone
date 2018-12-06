@@ -10,7 +10,7 @@ class TraceProviderTest extends TestCase
     /**
      * @test
      */
-    public function getTraceHere_traceContainingFunction_returnStackTrace()
+    public function getTraceHere_traceContainingFunction_returnStackTrace(): void
     {
         $thisMethod = __FUNCTION__;
         $thisClass = __CLASS__;

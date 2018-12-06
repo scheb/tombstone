@@ -12,7 +12,7 @@ class PsrLoggerHandlerTest extends TestCase
     /**
      * @test
      */
-    public function log()
+    public function log_logMessageGiven_forwardToPsrLogger(): void
     {
         $logger = $this->createMock('Psr\Log\LoggerInterface');
         $logger

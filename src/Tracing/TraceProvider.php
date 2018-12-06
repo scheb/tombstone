@@ -4,12 +4,7 @@ namespace Scheb\Tombstone\Tracing;
 
 class TraceProvider
 {
-    /**
-     * @param int $skipFrames
-     *
-     * @return array
-     */
-    public static function getTraceHere($skipFrames = 0)
+    public static function getTraceHere(int $skipFrames = 0): array
     {
         ++$skipFrames; // Skip this call
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);

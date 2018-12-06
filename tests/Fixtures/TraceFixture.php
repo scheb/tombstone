@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Test\Fixtures;
 
 class TraceFixture
 {
-    public static function getTraceFixture()
+    public static function getTraceFixture(): array
     {
         return array(
             array(

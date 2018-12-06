@@ -8,29 +8,22 @@ use Scheb\Tombstone\Test\Fixtures\VampireFixture;
 
 class AnalyzerLogFormatTest extends TestCase
 {
-    /**
-     * @return string
-     */
-    public static function getLog()
-    {
-        return '{"v":1,"d":"2014-01-01","a":"author","l":"label","f":"file","n":"line","m":"method","id":"2015-01-01","im":"invoker"}';
-    }
+    public const LOG_RECORD = '{"v":1,"d":"2014-01-01","a":"author","l":"label","f":"file","n":123,"m":"method","id":"2015-01-01","im":"invoker"}';
 
     /**
      * @test
      */
-    public function vampireToLog()
+    public function vampireToLog_formatVampire_returnLogFormat(): void
     {
         $vampire = VampireFixture::getVampire();
         $returnValue = AnalyzerLogFormat::vampireToLog($vampire);
-        $expectedLog = self::getLog();
-        $this->assertEquals($returnValue, $expectedLog);
+        $this->assertEquals($returnValue, self::LOG_RECORD);
     }
 
     /**
      * @test
      */
-    public function logToVampire_invalidLog_returnNull()
+    public function logToVampire_invalidLog_returnNull(): void
     {
         $returnValue = AnalyzerLogFormat::logToVampire('invalid');
         $this->assertNull($returnValue);
@@ -39,10 +32,9 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
-    public function logToVampire_validLog_returnVampire()
+    public function logToVampire_validLog_returnVampire(): void
     {
-        $log = self::getLog();
-        $returnValue = AnalyzerLogFormat::logToVampire($log);
+        $returnValue = AnalyzerLogFormat::logToVampire(self::LOG_RECORD);
         $expectedVampire = VampireFixture::getVampire();
         $this->assertEquals($expectedVampire, $returnValue);
     }

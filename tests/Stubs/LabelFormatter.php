@@ -7,8 +7,8 @@ use Scheb\Tombstone\Vampire;
 
 class LabelFormatter implements FormatterInterface
 {
-    public function format(Vampire $vampire)
+    public function format(Vampire $vampire): string
     {
-        return $vampire->getLabel();
+        return $vampire->getLabel() ?? '';
     }
 }

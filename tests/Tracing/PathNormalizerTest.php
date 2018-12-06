@@ -10,7 +10,7 @@ class PathNormalizerTest extends TestCase
     /**
      * @test
      */
-    public function normalizeDirectorySeparator_unixPathGiven_returnSame()
+    public function normalizeDirectorySeparator_unixPathGiven_returnSame(): void
     {
         $returnValue = PathNormalizer::normalizeDirectorySeparator('/path/to/some/file.php');
         $this->assertEquals('/path/to/some/file.php', $returnValue);
@@ -19,7 +19,7 @@ class PathNormalizerTest extends TestCase
     /**
      * @test
      */
-    public function normalizeDirectorySeparator_windowsPathGiven_changeDirectorySeparator()
+    public function normalizeDirectorySeparator_windowsPathGiven_changeDirectorySeparator(): void
     {
         $returnValue = PathNormalizer::normalizeDirectorySeparator('C:\\path\\to\\some\\file.php');
         $this->assertEquals('C:/path/to/some/file.php', $returnValue);
@@ -27,18 +27,15 @@ class PathNormalizerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider getTestCasesForRelativePath
+     * @dataProvider provideTestCasesForRelativePath
      */
-    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath($path, $baseDir)
+    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath(string $path, string $baseDir): void
     {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals('directory/file.php', $returnValue);
     }
 
-    /**
-     * @return array
-     */
-    public function getTestCasesForRelativePath()
+    public function provideTestCasesForRelativePath(): array
     {
         return array(
             array('/path/to/directory/file.php', '/path/to'),
@@ -50,18 +47,15 @@ class PathNormalizerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider getTestCasesForKeepingPath
+     * @dataProvider provideTestCasesForKeepingPath
      */
-    public function makeRelativeTo_pathHasDifferentBase_returnSamePath($path, $baseDir)
+    public function makeRelativeTo_pathHasDifferentBase_returnSamePath(string $path, ?string $baseDir): void
     {
         $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals($path, $returnValue);
     }
 
-    /**
-     * @return array
-     */
-    public function getTestCasesForKeepingPath()
+    public function provideTestCasesForKeepingPath(): array
     {
         return array(
             array('/path/to/file.php', '/other/base'),

@@ -21,22 +21,16 @@ abstract class AbstractHandler implements HandlerInterface
         }
     }
 
-    public function flush()
+    public function flush(): void
     {
     }
 
-    /**
-     * @param FormatterInterface $formatter
-     */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter): void
     {
         $this->formatter = $formatter;
     }
 
-    /**
-     * @return FormatterInterface
-     */
-    public function getFormatter()
+    public function getFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
     {
         if (!$this->formatter) {
             $this->formatter = $this->getDefaultFormatter();
@@ -45,12 +39,7 @@ abstract class AbstractHandler implements HandlerInterface
         return $this->formatter;
     }
 
-    /**
-     * Gets the default formatter.
-     *
-     * @return FormatterInterface
-     */
-    protected function getDefaultFormatter()
+    protected function getDefaultFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
     {
         return new LineFormatter();
     }

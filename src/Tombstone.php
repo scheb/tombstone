@@ -10,7 +10,7 @@ class Tombstone
     private $tombstoneDate;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $author;
 
@@ -39,15 +39,7 @@ class Tombstone
      */
     private $vampires = array();
 
-    /**
-     * @param string      $tombstoneDate
-     * @param string      $author
-     * @param string|null $label
-     * @param string      $file
-     * @param int         $line
-     * @param string      $method
-     */
-    public function __construct($tombstoneDate, $author, $label, $file, $line, $method)
+    public function __construct(string $tombstoneDate, ?string $author, ?string $label, string $file, int $line, ?string $method)
     {
         $this->tombstoneDate = $tombstoneDate;
         $this->author = $author;
@@ -57,86 +49,54 @@ class Tombstone
         $this->label = $label;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $label = $this->label ? ', "'.$this->label.'"' : '';
 
         return sprintf('tombstone("%s", "%s"%s)', $this->tombstoneDate, $this->author, $label);
     }
 
-    /**
-     * @return string
-     */
-    public function getHash()
+    public function getHash(): string
     {
         return md5($this->tombstoneDate."\n".$this->author."\n".$this->label."\n".$this->file."\n".$this->line);
     }
 
-    /**
-     * @param Tombstone $tombstone
-     *
-     * @return bool
-     */
-    public function inscriptionEquals(Tombstone $tombstone)
+    public function inscriptionEquals(Tombstone $tombstone): bool
     {
         return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() === $this->tombstoneDate && $tombstone->getLabel() === $this->label;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTombstoneDate()
+    public function getTombstoneDate(): string
     {
         return $this->tombstoneDate;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLabel()
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * @return string
-     */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
 
-    /**
-     * @return int
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->line;
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod()
+    public function getMethod(): ?string
     {
         return $this->method;
     }
 
-    /**
-     * @param Vampire $vampire
-     */
-    public function addVampire(Vampire $vampire)
+    public function addVampire(Vampire $vampire): void
     {
         $this->vampires[] = $vampire;
     }
@@ -144,15 +104,12 @@ class Tombstone
     /**
      * @return Vampire[]
      */
-    public function getVampires()
+    public function getVampires(): array
     {
         return $this->vampires;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasVampires()
+    public function hasVampires(): bool
     {
         return (bool) $this->vampires;
     }

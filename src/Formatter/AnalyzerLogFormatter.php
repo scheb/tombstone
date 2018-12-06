@@ -7,14 +7,7 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogFormatter implements FormatterInterface
 {
-    /**
-     * Formats a Vampire for the log.
-     *
-     * @param Vampire $vampire
-     *
-     * @return string
-     */
-    public function format(Vampire $vampire)
+    public function format(Vampire $vampire): string
     {
         return AnalyzerLogFormat::vampireToLog($vampire)."\n";
     }

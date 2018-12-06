@@ -27,7 +27,7 @@ class StreamHandler extends AbstractHandler
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    public function __construct($stream, $filePermission = null, $useLocking = false)
+    public function __construct($stream, int $filePermission = null, $useLocking = false)
     {
         if (is_resource($stream)) {
             $this->stream = $stream;
@@ -40,10 +40,7 @@ class StreamHandler extends AbstractHandler
         $this->useLocking = $useLocking;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function close()
+    public function close(): void
     {
         if (is_resource($this->stream)) {
             fclose($this->stream);
@@ -51,10 +48,7 @@ class StreamHandler extends AbstractHandler
         $this->stream = null;
     }
 
-    /**
-     * @param Vampire $vampire
-     */
-    public function log(Vampire $vampire)
+    public function log(Vampire $vampire): void
     {
         $formatted = $this->getFormatter()->format($vampire);
         if (!is_resource($this->stream)) {
@@ -88,17 +82,12 @@ class StreamHandler extends AbstractHandler
         }
     }
 
-    private function customErrorHandler($code, $msg)
+    private function customErrorHandler($code, $msg): void
     {
         $this->errorMessage = preg_replace('{^(fopen|mkdir)\(.*?\): }', '', $msg);
     }
 
-    /**
-     * @param string $stream
-     *
-     * @return null|string
-     */
-    private function getDirFromStream($stream)
+    private function getDirFromStream(string $stream): ?string
     {
         $pos = strpos($stream, '://');
         if (false === $pos) {
@@ -111,7 +100,7 @@ class StreamHandler extends AbstractHandler
         return null;
     }
 
-    private function createDir()
+    private function createDir(): void
     {
         // Do not try to create dir if it has already been tried.
         if ($this->dirCreated) {

@@ -14,15 +14,15 @@ class TombstoneTest extends TestCase
      *
      * @return Tombstone
      */
-    private function createTombstone($date = '2015-08-19', $author = 'author', $label = 'label')
+    private function createTombstone(string $date = '2015-08-19', ?string $author = 'author', ?string $label = 'label'): Tombstone
     {
-        return new Tombstone($date, $author, $label, 'file', 'line', 'method');
+        return new Tombstone($date, $author, $label, 'file', 123, 'method');
     }
 
     /**
      * @test
      */
-    public function toString_withLabel_returnString()
+    public function toString_withLabel_returnString(): void
     {
         $tombstone = $this->createTombstone();
         $this->assertEquals('tombstone("2015-08-19", "author", "label")', (string) $tombstone);
@@ -31,7 +31,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function toString_withoutLabel_returnString()
+    public function toString_withoutLabel_returnString(): void
     {
         $tombstone = $this->createTombstone('2015-08-19', 'author', null);
         $this->assertEquals('tombstone("2015-08-19", "author")', (string) $tombstone);
@@ -40,17 +40,17 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function getHash_valuesSet_returnCorrectHash()
+    public function getHash_valuesSet_returnCorrectHash(): void
     {
         $tombstone = $this->createTombstone();
         $hash = $tombstone->getHash();
-        $this->assertEquals('95e5a3e7077eff0b0ff0d3bbdaa05e9c', $hash);
+        $this->assertEquals('25538d2a7fcf16500d7e4feb075ff8bb', $hash);
     }
 
     /**
      * @test
      */
-    public function inscriptionEquals_sameValues_returnTrue()
+    public function inscriptionEquals_sameValues_returnTrue(): void
     {
         $tombstone1 = $this->createTombstone();
         $tombstone2 = $this->createTombstone();
@@ -60,21 +60,15 @@ class TombstoneTest extends TestCase
 
     /**
      * @test
-     * @dataProvider getTombstonesToCompare
-     *
-     * @param Tombstone $tombstone1
-     * @param Tombstone $tombstone2
+     * @dataProvider provideTombstonesToCompare
      */
-    public function inscriptionEquals_differentInscription_returnFalse($tombstone1, $tombstone2)
+    public function inscriptionEquals_differentInscription_returnFalse(Tombstone $tombstone1, Tombstone $tombstone2): void
     {
         $result = $tombstone1->inscriptionEquals($tombstone2);
         $this->assertFalse($result);
     }
 
-    /**
-     * @return array
-     */
-    public function getTombstonesToCompare()
+    public function provideTombstonesToCompare(): array
     {
         $reference = $this->createTombstone('2015-01-01', 'author', 'label');
         $tombstone1 = $this->createTombstone('2015-01-02', 'author', 'label');
@@ -91,7 +85,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function hasVampires_noVampiresSet_returnFalse()
+    public function hasVampires_noVampiresSet_returnFalse(): void
     {
         $tombstone = $this->createTombstone();
         $this->assertFalse($tombstone->hasVampires());
@@ -100,7 +94,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function hasVampires_vampireAdded_returnTrue()
+    public function hasVampires_vampireAdded_returnTrue(): void
     {
         $tombstone = $this->createTombstone();
         $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', $tombstone));

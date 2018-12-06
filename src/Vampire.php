@@ -24,22 +24,14 @@ class Vampire
      * @param string|null $invoker
      * @param Tombstone   $tombstone
      */
-    public function __construct($invocationDate, $invoker, Tombstone $tombstone)
+    public function __construct(string $invocationDate, ?string $invoker, Tombstone $tombstone)
     {
         $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
         $this->tombstone = $tombstone;
     }
 
-    /**
-     * @param string $date
-     * @param string $author
-     * @param string $label
-     * @param array  $trace
-     *
-     * @return Vampire
-     */
-    public static function createFromCall($date, $author, $label, $trace)
+    public static function createFromCall(string $date, ?string $author, ?string $label, array $trace): Vampire
     {
         // This is the call to the tombstone
         $tombstoneCall = $trace[0];
@@ -47,118 +39,78 @@ class Vampire
         $line = $tombstoneCall['line'];
 
         // This is the method with the tombstone contained
-        $context = isset($trace[1]) ? $trace[1] : null;
-        $method = self::getMethodFromTrace($context);
+        $method = null;
+        if (isset($trace[1]) && is_array($trace[1])) {
+            $method = self::getMethodFromTrace($trace[1]);
+        }
 
         // This is the method that called the method with the tombstone
-        $secondFrame = isset($trace[2]) ? $trace[2] : null;
-        $invoker = self::getMethodFromTrace($secondFrame);
+        $invoker = null;
+        if (isset($trace[2]) && is_array($trace[2]))  {
+            $invoker = self::getMethodFromTrace($trace[2]);
+        }
 
         $tombstone = new Tombstone($date, $author, $label, $file, $line, $method);
 
         return new self(date('c'), $invoker, $tombstone);
     }
 
-    /**
-     * @param array $frame
-     *
-     * @return string
-     */
-    private static function getMethodFromTrace($frame)
+    private static function getMethodFromTrace(array $frame): string
     {
-        if (!is_array($frame)) {
-            return null;
-        }
-
         return (isset($frame['class']) ? $frame['class'].$frame['type'] : '').$frame['function'];
     }
 
-    /**
-     * @param Tombstone $tombstone
-     *
-     * @return bool
-     */
-    public function inscriptionEquals(Tombstone $tombstone)
+    public function inscriptionEquals(Tombstone $tombstone): bool
     {
         return $this->tombstone->inscriptionEquals($tombstone);
     }
 
-    /**
-     * @return string
-     */
-    public function getInvocationDate()
+    public function getInvocationDate(): string
     {
         return $this->invocationDate;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getInvoker()
+    public function getInvoker(): ?string
     {
         return $this->invoker;
     }
 
-    /**
-     * @return Tombstone
-     */
-    public function getTombstone()
+    public function getTombstone(): Tombstone
     {
         return $this->tombstone;
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function setTombstone($tombstone)
+    public function setTombstone(Tombstone $tombstone): void
     {
         $this->tombstone = $tombstone;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->tombstone->getAuthor();
-    }
-
-    /**
-     * @return string
-     */
-    public function getTombstoneDate()
+    public function getTombstoneDate(): string
     {
         return $this->tombstone->getTombstoneDate();
     }
 
-    /**
-     * @return string
-     */
-    public function getLabel()
+    public function getAuthor(): ?string
+    {
+        return $this->tombstone->getAuthor();
+    }
+
+    public function getLabel(): ?string
     {
         return $this->tombstone->getLabel();
     }
 
-    /**
-     * @return string
-     */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->tombstone->getFile();
     }
 
-    /**
-     * @return int
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->tombstone->getLine();
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod()
+    public function getMethod(): ?string
     {
         return $this->tombstone->getMethod();
     }

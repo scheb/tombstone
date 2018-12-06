@@ -9,10 +9,7 @@ class GraveyardProvider
      */
     private static $graveyard;
 
-    /**
-     * @return Graveyard
-     */
-    public static function getGraveyard()
+    public static function getGraveyard(): Graveyard
     {
         if (null === self::$graveyard) {
             self::$graveyard = new Graveyard();
@@ -21,10 +18,7 @@ class GraveyardProvider
         return self::$graveyard;
     }
 
-    /**
-     * @param Graveyard $graveyard
-     */
-    public static function setGraveyard(Graveyard $graveyard)
+    public static function setGraveyard(Graveyard $graveyard): void
     {
         self::$graveyard = $graveyard;
     }

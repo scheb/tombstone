@@ -8,7 +8,7 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogHandler extends AbstractHandler
 {
-    const LOG_FILE_NAME = '%s-%s.tombstone';
+    private const LOG_FILE_NAME = '%s-%s.tombstone';
 
     /**
      * @var StreamHandler[]
@@ -33,13 +33,7 @@ class AnalyzerLogHandler extends AbstractHandler
      */
     private $useLocking;
 
-    /**
-     * @param string   $logDir
-     * @param int|null $sizeLimit
-     * @param null     $filePermission
-     * @param bool     $useLocking
-     */
-    public function __construct($logDir, $sizeLimit = null, $filePermission = null, $useLocking = false)
+    public function __construct(string $logDir, int $sizeLimit = null, $filePermission = null, $useLocking = false)
     {
         $this->logDir = $logDir;
         $this->sizeLimit = $sizeLimit;
@@ -55,12 +49,7 @@ class AnalyzerLogHandler extends AbstractHandler
         }
     }
 
-    /**
-     * Log a vampire.
-     *
-     * @param Vampire $vampire
-     */
-    public function log(Vampire $vampire)
+    public function log(Vampire $vampire): void
     {
         $logFile = $this->getLogFile($vampire);
         if (!$this->sizeLimitReached($logFile)) {
@@ -69,12 +58,7 @@ class AnalyzerLogHandler extends AbstractHandler
         }
     }
 
-    /**
-     * @param Vampire $vampire
-     *
-     * @return string
-     */
-    private function getLogFile(Vampire $vampire)
+    private function getLogFile(Vampire $vampire): string
     {
         $date = date('Ymd');
         $hash = $vampire->getTombstone()->getHash();
@@ -82,12 +66,7 @@ class AnalyzerLogHandler extends AbstractHandler
         return $this->logDir.'/'.sprintf(self::LOG_FILE_NAME, $hash, $date);
     }
 
-    /**
-     * @param string $logFile
-     *
-     * @return StreamHandler
-     */
-    private function getLogStream($logFile)
+    private function getLogStream(string $logFile): StreamHandler
     {
         if (!isset($this->logStreams[$logFile])) {
             $handler = new StreamHandler($logFile, $this->filePermission, $this->useLocking);
@@ -98,12 +77,7 @@ class AnalyzerLogHandler extends AbstractHandler
         return $this->logStreams[$logFile];
     }
 
-    /**
-     * @param string $logFile
-     *
-     * @return bool
-     */
-    private function sizeLimitReached($logFile)
+    private function sizeLimitReached(string $logFile): bool
     {
         if ($this->sizeLimit <= 0 || !file_exists($logFile)) {
             return false;
@@ -114,32 +88,19 @@ class AnalyzerLogHandler extends AbstractHandler
         return filesize($logFile) >= $this->sizeLimit;
     }
 
-    /**
-     * Flush everything.
-     */
-    public function flush()
+    public function flush(): void
     {
         foreach ($this->logStreams as $stream) {
             $stream->flush();
         }
     }
 
-    /**
-     * Sets the formatter.
-     *
-     * @param FormatterInterface $formatter
-     */
-    public function setFormatter(FormatterInterface $formatter)
+    public function setFormatter(FormatterInterface $formatter): void
     {
         throw new \LogicException('Formatter of AnalyzerLogHandler cannot be changed.');
     }
 
-    /**
-     * Gets the formatter.
-     *
-     * @return FormatterInterface
-     */
-    protected function getDefaultFormatter()
+    protected function getDefaultFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
     {
         return new AnalyzerLogFormatter();
     }

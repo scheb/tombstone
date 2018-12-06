@@ -3,6 +3,7 @@
 namespace Scheb\Tombstone\Test;
 
 use Scheb\Tombstone\Test\Fixtures\TraceFixture;
+use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
 class VampireTest extends TestCase
@@ -10,13 +11,13 @@ class VampireTest extends TestCase
     /**
      * @test
      */
-    public function createFromCall_dataGiven_returnCorrectlyConstructedVampire()
+    public function createFromCall_dataGiven_returnCorrectlyConstructedVampire(): void
     {
         $stackTrace = TraceFixture::getTraceFixture();
         $vampire = Vampire::createFromCall('2015-08-19', 'author', 'label', $stackTrace);
 
-        $this->assertInstanceOf('Scheb\Tombstone\Vampire', $vampire);
-        $this->assertInstanceOf('Scheb\Tombstone\Tombstone', $vampire->getTombstone());
+        $this->assertInstanceOf(Vampire::class, $vampire);
+        $this->assertInstanceOf(Tombstone::class, $vampire->getTombstone());
         $this->assertEquals('2015-08-19', $vampire->getTombstoneDate());
         $this->assertEquals('author', $vampire->getAuthor());
         $this->assertEquals('label', $vampire->getLabel());
