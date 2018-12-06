@@ -26,6 +26,6 @@ class VampireTest extends TestCase
         $this->assertEquals('invokerMethodName', $vampire->getInvoker());
 
         $invocationDate = strtotime($vampire->getInvocationDate());
-        $this->assertEquals(time(), $invocationDate, null, 5);
+        $this->assertEquals(time(), $invocationDate, '', 5);
     }
 }

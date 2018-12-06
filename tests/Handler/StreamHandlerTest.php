@@ -7,7 +7,7 @@
  * (c) Jordi Boggiano <j.boggiano@seld.be>
  */
 
-namespace Monolog\Handler;
+namespace Scheb\Tombstone\Test\Handler;
 
 use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Handler\StreamHandler;
@@ -48,6 +48,7 @@ class StreamHandlerTest extends TestCase
     {
         $handler = new StreamHandler('php://memory');
         $handler->log($this->getRecord());
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -59,6 +60,7 @@ class StreamHandlerTest extends TestCase
         $temp = sys_get_temp_dir().DIRECTORY_SEPARATOR.'monolog_locked_log';
         $handler = new StreamHandler($temp, null, true);
         $handler->log($this->getRecord());
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -121,6 +123,7 @@ class StreamHandlerTest extends TestCase
     {
         $handler = new StreamHandler(sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
         $handler->log($this->getRecord());
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -131,6 +134,7 @@ class StreamHandlerTest extends TestCase
     {
         $handler = new StreamHandler('file://'.sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
         $handler->log($this->getRecord());
+        $this->expectNotToPerformAssertions();
     }
 
     /**
