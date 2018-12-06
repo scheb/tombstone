@@ -90,15 +90,18 @@ implementing `Scheb\Tombstone\Handler\HandlerInterface` and `Scheb\Tombstone\For
 
 ### Handlers
 
-- `AnalyzerLogHandler`: Writes multiple log files to a directory, that are used for [report generation](https://github.com/scheb/tombstone-analyzer).
+- `AnalyzerLogHandler`: Writes multiple log files to a directory. This format is used by default for
+  [report generation](https://github.com/scheb/tombstone-analyzer), but if you don't like, you can have your own handler.
 - `PsrLoggerHandler`: Connects a PSR-3 logger with the bundle.
 - `StreamHandler`: Take a stream resource, stream identifier (`file://`, `ftp://`, etc.) or a file path as the target.
 
-The `AnalyzerLogHandler` takes an optional size limit to pretend log files from taking too much space. In the end it doesn't make a difference if a tombstone was called 100 or a million times.
+The `AnalyzerLogHandler` takes an optional size limit to pretend log files from taking too much space. In the end, it
+doesn't make a difference if a tombstone was called 100 or a million times.
 
 ### Formatters
 
-- `AnalyzerLogFormatter`: Machine-readable log-format, which is used for [report generation](https://github.com/scheb/tombstone-analyzer).
+- `AnalyzerLogFormatter`: Machine-readable log-format, which is by default understood by the
+  [report generator](https://github.com/scheb/tombstone-analyzer).
 - `JsonFormatter`: Compact JSON string.
 - `LineFormatter`: Human-readable log entry.
 
@@ -115,7 +118,8 @@ files written by `AnalyzerLogHandler`. The data is used to generate reports abou
 Acknowledgments
 ---------------
 
-Thanks to [Jordi Boggiano](https://github.com/Seldaek) for creating [Monolog](https://github.com/Seldaek/monolog), from where I lend the handler/formatter concept.
+Thanks to [Jordi Boggiano](https://github.com/Seldaek) for creating [Monolog](https://github.com/Seldaek/monolog), from
+where I lend the handler/formatter concept.
 
 License
 -------
