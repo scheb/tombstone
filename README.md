@@ -6,9 +6,10 @@ Implements the concept of **Tombstones for PHP**.
 Report generation provided by [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer).
 
 [![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/scheb/tombstone/badge.svg)](https://travis-ci.org/scheb/tombstone)
-[![Coverage Status](https://coveralls.io/repos/scheb/tombstone/badge.svg?branch=master&service=github)](https://coveralls.io/github/scheb/tombstone?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/scheb/tombstone/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
+[![Total Downloads](https://poser.pugx.org/scheb/tombstone/downloads)](https://packagist.org/packages/scheb/tombstone)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
