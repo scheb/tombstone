@@ -1,7 +1,7 @@
 {
     "name": "scheb/tombstone",
     "description": "Dead code detection with tombstones for PHP",
-    "keywords": ["tombstone", "dead code"],
+    "keywords": ["tombstone", "dead code removal", "static code analysis", "dynamic code analysis"],
     "homepage": "https://github.com/scheb/tombstone",
     "license": "MIT",
     "authors": [
