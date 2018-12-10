@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\AnalyzerResult;

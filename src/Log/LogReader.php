@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\VampireIndex;
@@ -27,8 +28,8 @@ class LogReader
      */
     public function aggregateLog($file)
     {
-        $handle = fopen($file, "r");
-        while(!feof($handle)){
+        $handle = fopen($file, 'r');
+        while (!feof($handle)) {
             $line = fgets($handle);
             $vampire = AnalyzerLogFormat::logToVampire($line);
             if ($vampire) {

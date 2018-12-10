@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Tombstone;
@@ -61,6 +62,7 @@ class TombstoneIndex implements \Countable, \Iterator
 
     /**
      * @param string $method
+     *
      * @return Tombstone[]
      */
     public function getInMethod($method)
@@ -74,7 +76,8 @@ class TombstoneIndex implements \Countable, \Iterator
 
     /**
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return Tombstone
      */
     public function getInFileAndLine($file, $line)
@@ -100,6 +103,7 @@ class TombstoneIndex implements \Countable, \Iterator
     private function normalizeAndRelativePath($path)
     {
         $path = PathNormalizer::normalizeDirectorySeparator($path);
+
         return PathNormalizer::makeRelativeTo($path, $this->sourceDir);
     }
 

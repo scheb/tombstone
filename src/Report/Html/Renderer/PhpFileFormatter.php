@@ -1,7 +1,8 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
-/**
+/*
  * Originally part of PHP_CodeCoverage
  * https://github.com/sebastianbergmann/php-code-coverage
  *
@@ -35,22 +36,23 @@ class PhpFileFormatter
 {
     /**
      * @param string $file
+     *
      * @return array
      */
     public static function loadFile($file)
     {
-        $buffer              = file_get_contents($file);
-        $tokens              = token_get_all($buffer);
-        $result              = array('');
-        $i                   = 0;
-        $stringFlag          = false;
-        $fileEndsWithNewLine = substr($buffer, -1) == "\n";
+        $buffer = file_get_contents($file);
+        $tokens = token_get_all($buffer);
+        $result = array('');
+        $i = 0;
+        $stringFlag = false;
+        $fileEndsWithNewLine = "\n" == substr($buffer, -1);
 
         unset($buffer);
 
         foreach ($tokens as $j => $token) {
             if (is_string($token)) {
-                if ($token === '"' && $tokens[$j - 1] !== '\\') {
+                if ('"' === $token && '\\' !== $tokens[$j - 1]) {
                     $result[$i] .= sprintf(
                         '<span class="string">%s</span>',
                         htmlspecialchars($token)
@@ -67,7 +69,7 @@ class PhpFileFormatter
                 continue;
             }
 
-            list ($token, $value) = $token;
+            list($token, $value) = $token;
 
             $value = str_replace(
                 array("\t", ' '),
@@ -75,7 +77,7 @@ class PhpFileFormatter
                 htmlspecialchars($value, ENT_COMPAT)
             );
 
-            if ($value === "\n") {
+            if ("\n" === $value) {
                 $result[++$i] = '';
             } else {
                 $lines = explode("\n", $value);
@@ -83,7 +85,7 @@ class PhpFileFormatter
                 foreach ($lines as $jj => $line) {
                     $line = trim($line);
 
-                    if ($line !== '') {
+                    if ('' !== $line) {
                         if ($stringFlag) {
                             $colour = 'string';
                         } else {
@@ -176,7 +178,7 @@ class PhpFileFormatter
         }
 
         if ($fileEndsWithNewLine) {
-            unset($result[count($result)-1]);
+            unset($result[count($result) - 1]);
         }
 
         return $result;

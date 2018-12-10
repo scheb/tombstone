@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
@@ -92,10 +93,12 @@ class ResultDirectory
      * @param $filePath
      * @param AnalyzerFileResult $fileResult
      */
-    public function addFileResult($filePath, AnalyzerFileResult $fileResult) {
+    public function addFileResult($filePath, AnalyzerFileResult $fileResult)
+    {
         $firstSlash = strpos($filePath, '/');
-        if ($firstSlash === false) {
+        if (false === $firstSlash) {
             $this->files[$filePath] = $fileResult;
+
             return;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
@@ -58,12 +59,13 @@ class FileRenderer implements ReportGeneratorInterface
     /**
      * @param AnalyzerFileResult $fileResult
      */
-    private function renderFile(AnalyzerFileResult $fileResult) {
+    private function renderFile(AnalyzerFileResult $fileResult)
+    {
         $tombstonesList = $this->renderTombstonesList($fileResult);
         $sourceCode = $this->formatSourceCode($fileResult);
         $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
         $this->fileTemplate->setVar(array(
-            'path_to_root' => './' . str_repeat('../', substr_count($relativeFilePath, '/')),
+            'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
             'full_path' => $fileResult->getFile(),
             'breadcrumb' => $this->renderBreadcrumb($relativeFilePath),
             'tombstones_list' => $tombstonesList,
@@ -72,7 +74,7 @@ class FileRenderer implements ReportGeneratorInterface
             'version' => Application::VERSION,
         ));
 
-        $reportFile = $this->reportDir . DIRECTORY_SEPARATOR . $relativeFilePath . '.html';
+        $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$relativeFilePath.'.html';
         $reportDir = dirname($reportFile);
         if (!is_dir($reportDir)) {
             mkdir($reportDir, 0777, true);
@@ -107,7 +109,7 @@ class FileRenderer implements ReportGeneratorInterface
 
     /**
      * @param Tombstone $tombstone
-     * @param string $class
+     * @param string    $class
      *
      * @return string
      */
@@ -149,7 +151,7 @@ class FileRenderer implements ReportGeneratorInterface
             $class = 'default';
             if (in_array($i, $undeadLines)) {
                 $class = 'danger icon-vampire';
-            } else if (in_array($i, $deadLines)) {
+            } elseif (in_array($i, $deadLines)) {
                 $class = 'success icon-cross';
             }
 
@@ -168,14 +170,14 @@ class FileRenderer implements ReportGeneratorInterface
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);
-        $breadcrumbString = '<li><a href="./' . str_repeat('../', $numParts - 1) . 'index.html">' . $this->sourceDir . '</a></li> ';
+        $breadcrumbString = '<li><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.$this->sourceDir.'</a></li> ';
 
         $folderUp = $numParts - 2;
         while ($label = array_shift($parts)) {
             if (!$parts) {
-                $breadcrumbString .= '<li class="active">' . $label . '</li> ';
+                $breadcrumbString .= '<li class="active">'.$label.'</li> ';
             } else {
-                $link = './' . str_repeat('../', $folderUp) . 'index.html';
+                $link = './'.str_repeat('../', $folderUp).'index.html';
                 $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
             }
             --$folderUp;

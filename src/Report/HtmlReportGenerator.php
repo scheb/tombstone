@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
@@ -32,7 +33,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     {
         $this->reportDir = $reportDir;
         $this->sourceDir = $sourceDir;
-        $this->templateDir = __DIR__ . '/Html/Template';
+        $this->templateDir = __DIR__.'/Html/Template';
     }
 
     /**
@@ -55,9 +56,9 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     private function copySkeleton()
     {
         $this->createDirectory($this->reportDir);
-        $this->copyDirectoryFiles($this->templateDir . DIRECTORY_SEPARATOR . 'css', $this->reportDir . DIRECTORY_SEPARATOR . 'css');
-        $this->copyDirectoryFiles($this->templateDir . DIRECTORY_SEPARATOR . 'fonts', $this->reportDir . DIRECTORY_SEPARATOR . 'fonts');
-        $this->copyDirectoryFiles($this->templateDir . DIRECTORY_SEPARATOR . 'img', $this->reportDir . DIRECTORY_SEPARATOR . 'img');
+        $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'css', $this->reportDir.DIRECTORY_SEPARATOR.'css');
+        $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'fonts', $this->reportDir.DIRECTORY_SEPARATOR.'fonts');
+        $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'img', $this->reportDir.DIRECTORY_SEPARATOR.'img');
     }
 
     /**
@@ -71,12 +72,12 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         $this->createDirectory($reportDir);
         $handle = opendir($templateDir);
         while ($file = readdir($handle)) {
-            if ($file == '.' || $file == '..') {
+            if ('.' == $file || '..' == $file) {
                 continue;
             }
 
-            $templateFile = $templateDir . DIRECTORY_SEPARATOR . $file;
-            $reportFile = $reportDir . DIRECTORY_SEPARATOR . $file;
+            $templateFile = $templateDir.DIRECTORY_SEPARATOR.$file;
+            $reportFile = $reportDir.DIRECTORY_SEPARATOR.$file;
 
             if (is_dir($templateFile)) {
                 $this->copyDirectoryFiles($templateFile, $reportFile);
@@ -84,7 +85,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
             }
 
             if (!@copy($templateFile, $reportFile)) {
-                throw new HtmlReportException('Could not copy ' . $templateFile . ' to ' . $reportFile);
+                throw new HtmlReportException('Could not copy '.$templateFile.' to '.$reportFile);
             }
         }
         closedir($handle);
@@ -95,13 +96,14 @@ class HtmlReportGenerator implements ReportGeneratorInterface
      *
      * @throws HtmlReportException
      */
-    private function createDirectory($dir) {
+    private function createDirectory($dir)
+    {
         if (!is_dir($dir)) {
             if (!@mkdir($dir, 0777, true)) {
-                throw new HtmlReportException('Could not create directory ' . $dir);
+                throw new HtmlReportException('Could not create directory '.$dir);
             }
-        } else if (!is_writable($dir)) {
-            throw new HtmlReportException('Directory ' . $dir . ' has to be writable');
+        } elseif (!is_writable($dir)) {
+            throw new HtmlReportException('Directory '.$dir.' has to be writable');
         }
     }
 }

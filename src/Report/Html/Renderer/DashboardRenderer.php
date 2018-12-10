@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
@@ -6,7 +7,6 @@ use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Analyzer\Report\PathTools;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Tracing\PathNormalizer;
@@ -99,7 +99,7 @@ class DashboardRenderer implements ReportGeneratorInterface
             'version' => Application::VERSION,
             'date' => date('r'),
         ));
-        $this->dashboardTemplate->renderTo($this->reportDir . DIRECTORY_SEPARATOR . 'dashboard.html');
+        $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
     }
 
     /**
@@ -134,9 +134,9 @@ class DashboardRenderer implements ReportGeneratorInterface
         foreach ($fileResult->getDead() as $tombstone) {
             $date = $tombstone->getTombstoneDate();
             if ($age = TimePeriodFormatter::formatAge($date)) {
-                $deadSince = 'for ' . $age;
+                $deadSince = 'for '.$age;
             } else {
-                $deadSince = 'since ' . $date;
+                $deadSince = 'since '.$date;
             }
             $this->deadTemplate->setVar(array(
                 'path_to_root' => './',
@@ -256,13 +256,14 @@ class DashboardRenderer implements ReportGeneratorInterface
     /**
      * @param string $label
      * @param string $fileName
-     * @param int $line
+     * @param int    $line
      *
      * @return string
      */
     private function linkTombstoneSource($label, $fileName, $line)
     {
         $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->sourceDir);
+
         return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, $label);
     }
 }

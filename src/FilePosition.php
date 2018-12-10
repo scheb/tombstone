@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 class FilePosition
@@ -11,6 +12,6 @@ class FilePosition
      */
     public static function createPosition($file, $line)
     {
-        return $file . ':' . $line;
+        return $file.':'.$line;
     }
 }

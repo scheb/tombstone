@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report;
 
 class PathTools
@@ -8,8 +9,9 @@ class PathTools
      *
      * @return bool
      */
-    public static function isAbsolutePath($path) {
-        return $path && ($path[0] === '/' || preg_match('#^[a-zA-Z]:#', $path));
+    public static function isAbsolutePath($path)
+    {
+        return $path && ('/' === $path[0] || preg_match('#^[a-zA-Z]:#', $path));
     }
 
     /**
@@ -18,7 +20,8 @@ class PathTools
      *
      * @return string
      */
-    public static function makePathAbsolute($path, $rootDir) {
+    public static function makePathAbsolute($path, $rootDir)
+    {
         if (self::isAbsolutePath($path)) {
             return $path;
         }
@@ -27,6 +30,7 @@ class PathTools
             '/' => DIRECTORY_SEPARATOR,
             '\\' => DIRECTORY_SEPARATOR,
         );
-        return $rootDir . ($path ? DIRECTORY_SEPARATOR . strtr($path, $directorySeparatorReplacement) : '');
+
+        return $rootDir.($path ? DIRECTORY_SEPARATOR.strtr($path, $directorySeparatorReplacement) : '');
     }
 }

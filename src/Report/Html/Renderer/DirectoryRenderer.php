@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
@@ -84,17 +85,17 @@ class DirectoryRenderer implements ReportGeneratorInterface
         $filesList = '';
         foreach ($directory->getDirectories() as $subDir) {
             $name = $subDir->getName();
-            $link = './' . $subDir->getName() . '/index.html';
+            $link = './'.$subDir->getName().'/index.html';
             $filesList .= $this->renderDirectoryItem($name, $link, $subDir);
         }
         foreach ($directory->getFiles() as $fileResult) {
             $name = basename($fileResult->getFile());
-            $link = './' . $name . '.html';
+            $link = './'.$name.'.html';
             $filesList .= $this->renderDirectoryItem($name, $link, $fileResult);
         }
 
         $this->directoryTemplate->setVar(array(
-            'path_to_root' => './' . str_repeat('../', substr_count($directoryPath, '/') + ($directoryPath ? 1 : 0)),
+            'path_to_root' => './'.str_repeat('../', substr_count($directoryPath, '/') + ($directoryPath ? 1 : 0)),
             'full_path' => PathTools::makePathAbsolute($directoryPath, $this->sourceDir),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
@@ -102,7 +103,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
             'version' => Application::VERSION,
         ));
 
-        $reportFile = $this->reportDir . DIRECTORY_SEPARATOR . $directoryPath . '/index.html';
+        $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$directoryPath.'/index.html';
         $reportDir = dirname($reportFile);
         if (!is_dir($reportDir)) {
             mkdir($reportDir, 0777, true);
@@ -111,8 +112,8 @@ class DirectoryRenderer implements ReportGeneratorInterface
     }
 
     /**
-     * @param string $name
-     * @param string $link
+     * @param string                             $name
+     * @param string                             $link
      * @param AnalyzerFileResult|ResultDirectory $result
      *
      * @return string
@@ -160,6 +161,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
             'level' => 'success',
             'percent' => round($numDead / $total * 100, 2),
         ));
+
         return $this->barTemplate->render();
     }
 
@@ -171,19 +173,19 @@ class DirectoryRenderer implements ReportGeneratorInterface
     private function renderBreadcrumb($directoryPath)
     {
         if (!$directoryPath) {
-            return '<li class="active">' . $this->sourceDir . '</li> ';
+            return '<li class="active">'.$this->sourceDir.'</li> ';
         }
 
         $parts = explode('/', $directoryPath);
         $numParts = count($parts);
-        $breadcrumbString = '<li><a href="./' . str_repeat('../', $numParts) . 'index.html">' . $this->sourceDir . '</a></li> ';
+        $breadcrumbString = '<li><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->sourceDir.'</a></li> ';
 
         $folderUp = $numParts - 1;
         while ($label = array_shift($parts)) {
             if (!$parts) {
-                $breadcrumbString .= '<li class="active">' . $label . '</li> ';
+                $breadcrumbString .= '<li class="active">'.$label.'</li> ';
             } else {
-                $link = './' . str_repeat('../', $folderUp) . 'index.html';
+                $link = './'.str_repeat('../', $folderUp).'index.html';
                 $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
             }
             --$folderUp;

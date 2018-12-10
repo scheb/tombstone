@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Tombstone;
@@ -98,6 +99,7 @@ class AnalyzerResult
     public function getPerFile()
     {
         ksort($this->perFile);
+
         return $this->perFile;
     }
 

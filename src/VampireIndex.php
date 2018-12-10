@@ -1,11 +1,11 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Vampire;
 
 class VampireIndex implements \Countable, \Iterator
 {
-
     /**
      * @var Vampire[]
      */

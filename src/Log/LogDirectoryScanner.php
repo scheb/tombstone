@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\VampireIndex;
@@ -18,7 +19,7 @@ class LogDirectoryScanner
 
     /**
      * @param LogReader $logReader
-     * @param string $logDir
+     * @param string    $logDir
      */
     public function __construct(LogReader $logReader, $logDir)
     {

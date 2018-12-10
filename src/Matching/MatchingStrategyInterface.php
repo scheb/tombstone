@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Matching;
 
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
@@ -8,7 +9,7 @@ use Scheb\Tombstone\Vampire;
 interface MatchingStrategyInterface
 {
     /**
-     * @param Vampire $vampire
+     * @param Vampire        $vampire
      * @param TombstoneIndex $tombstoneIndex
      *
      * @return Tombstone|null

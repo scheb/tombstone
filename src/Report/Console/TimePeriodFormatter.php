@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Console;
 
 class TimePeriodFormatter
@@ -25,9 +26,9 @@ class TimePeriodFormatter
         $weeksPassed = floor($daysPassed / 7);
         $daysPassed = $daysPassed % 7;
 
-        $timePassed = $daysPassed . ' days';
+        $timePassed = $daysPassed.' days';
         if ($weeksPassed) {
-            $timePassed = $weeksPassed . ' weeks and ' . $timePassed;
+            $timePassed = $weeksPassed.' weeks and '.$timePassed;
         }
 
         return $timePassed;

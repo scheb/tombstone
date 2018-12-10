@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Test;
 
 use Scheb\Tombstone\Analyzer\FilePosition;

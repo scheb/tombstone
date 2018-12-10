@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
@@ -22,19 +23,20 @@ class Analyzer
 
     /**
      * @param TombstoneIndex $tombstoneIndex
-     * @param VampireIndex $vampireIndex
+     * @param VampireIndex   $vampireIndex
      *
      * @return AnalyzerResult
      */
     public function getResult(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex)
     {
         $unmatched = $this->match($tombstoneIndex, $vampireIndex);
+
         return $this->createResult($tombstoneIndex, $unmatched);
     }
 
     /**
      * @param TombstoneIndex $tombstoneIndex
-     * @param VampireIndex $vampireIndex
+     * @param VampireIndex   $vampireIndex
      *
      * @return Vampire[]
      */
@@ -57,7 +59,7 @@ class Analyzer
     }
 
     /**
-     * @param Vampire $vampire
+     * @param Vampire        $vampire
      * @param TombstoneIndex $tombstoneIndex
      *
      * @return Tombstone|null
@@ -75,7 +77,7 @@ class Analyzer
 
     /**
      * @param TombstoneIndex $tombstoneIndex
-     * @param array $unmatchedVampires
+     * @param array          $unmatchedVampires
      *
      * @return AnalyzerResult
      */

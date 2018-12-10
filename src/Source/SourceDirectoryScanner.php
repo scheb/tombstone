@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Source;
 
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
@@ -18,8 +19,8 @@ class SourceDirectoryScanner
 
     /**
      * @param TombstoneExtractor $tombstoneExtractor
-     * @param string $sourcePath
-     * @param array $regularExpressions Match source files against passed patterns. Defaults to ['*.php']
+     * @param string             $sourcePath
+     * @param array              $regularExpressions Match source files against passed patterns. Defaults to ['*.php']
      */
     public function __construct(TombstoneExtractor $tombstoneExtractor, $sourcePath, $regularExpressions = array('*.php'))
     {

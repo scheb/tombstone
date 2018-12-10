@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
@@ -27,7 +28,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
     /**
      * @param OutputInterface $output
-     * @param string $sourceDir
+     * @param string          $sourceDir
      */
     public function __construct(OutputInterface $output, $sourceDir)
     {
@@ -93,7 +94,8 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     /**
      * @param Vampire[] $result
      */
-    private function displayDeleted($result) {
+    private function displayDeleted($result)
+    {
         foreach ($result as $vampire) {
             $this->output->newLine();
             $this->output->printTombstone($vampire->getTombstone(), 'Deleted');

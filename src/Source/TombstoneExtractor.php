@@ -1,9 +1,9 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Source;
 
 use PhpParser\Error;
 use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor;
 use PhpParser\Parser;
 use Scheb\Tombstone\Analyzer\Exception\TombstoneExtractionException;
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
@@ -26,8 +26,8 @@ class TombstoneExtractor
     private $visitor;
 
     /**
-     * @param Parser $parser
-     * @param NodeTraverser $traverser
+     * @param Parser           $parser
+     * @param NodeTraverser    $traverser
      * @param TombstoneVisitor $visitor
      */
     public function __construct(Parser $parser, NodeTraverser $traverser, TombstoneVisitor $visitor)
@@ -43,10 +43,11 @@ class TombstoneExtractor
      *
      * @throws TombstoneExtractionException
      */
-    public function extractTombstones($filePath) {
+    public function extractTombstones($filePath)
+    {
         $this->visitor->setCurrentFile($filePath);
         if (!is_readable($filePath)) {
-            throw new TombstoneExtractionException('File "' . $filePath . '" is not readable.');
+            throw new TombstoneExtractionException('File "'.$filePath.'" is not readable.');
         }
 
         try {
@@ -54,7 +55,7 @@ class TombstoneExtractor
             $stmts = $this->parser->parse($code);
             $this->traverser->traverse($stmts);
         } catch (Error $e) {
-            throw new TombstoneExtractionException('PHP code in "' . $filePath . '" could not be parsed.', null, $e);
+            throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', null, $e);
         }
     }
 

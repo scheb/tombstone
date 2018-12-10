@@ -1,7 +1,7 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Cli;
 
-use PhpParser\Lexer;
 use Scheb\Tombstone\Analyzer\Analyzer;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Log\LogDirectoryScanner;
@@ -45,12 +45,14 @@ class Command extends AbstractCommand
         $sourceDir = realpath($input->getArgument('source-dir'));
         if (!$sourceDir) {
             $output->writeln('Argument "source-dir" is not a valid directory');
+
             return 1;
         }
 
         $logDir = realpath($input->getArgument('log-dir'));
         if (!$logDir) {
             $output->writeln('Argument "log-dir" is not a valid directory');
+
             return 1;
         }
 
@@ -71,7 +73,8 @@ class Command extends AbstractCommand
      *
      * @return AnalyzerResult
      */
-    private function createResult($sourceDir, $logDir, $regexExpressions) {
+    private function createResult($sourceDir, $logDir, $regexExpressions)
+    {
         $this->output->writeln('');
         $this->output->writeln('Scan source code ...');
         $sourceScanner = new SourceDirectoryScanner(
@@ -83,7 +86,7 @@ class Command extends AbstractCommand
         );
 
         $progress = $this->createProgressBar($sourceScanner->getNumFiles());
-        $tombstoneIndex = $sourceScanner->getTombstones(function() use ($progress) {
+        $tombstoneIndex = $sourceScanner->getTombstones(function () use ($progress) {
             $progress->advance();
         });
 
@@ -94,7 +97,7 @@ class Command extends AbstractCommand
         $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), $logDir);
 
         $progress = $this->createProgressBar($logScanner->getNumFiles());
-        $vampireIndex = $logScanner->getVampires(function() use ($progress) {
+        $vampireIndex = $logScanner->getVampires(function () use ($progress) {
             $progress->advance();
         });
         $this->output->writeln('');
@@ -108,8 +111,8 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param string $reportDir
-     * @param string $sourceDir
+     * @param string         $reportDir
+     * @param string         $sourceDir
      * @param AnalyzerResult $result
      */
     protected function generateHtmlReport($reportDir, $sourceDir, AnalyzerResult $result)

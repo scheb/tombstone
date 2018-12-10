@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Report\Console;
 
 use Scheb\Tombstone\Tombstone;
@@ -49,7 +50,8 @@ class FormattedConsoleOutput
     /**
      * @param string[] $invokers
      */
-    public function printCalledBy(array $invokers) {
+    public function printCalledBy(array $invokers)
+    {
         foreach ($invokers as $invoker) {
             $this->output->writeln(sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));
         }

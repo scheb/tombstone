@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Symfony\Component\Console\Application as AbstractApplication;
@@ -23,7 +24,8 @@ class Application extends AbstractApplication
     protected function getDefaultCommands()
     {
         $defaultCommands = AbstractApplication::getDefaultCommands();
-        $defaultCommands[] = new Command;
+        $defaultCommands[] = new Command();
+
         return $defaultCommands;
     }
 
@@ -31,12 +33,13 @@ class Application extends AbstractApplication
     {
         $inputDefinition = AbstractApplication::getDefinition();
         $inputDefinition->setArguments();
+
         return $inputDefinition;
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Tombstone Analyzer ' . $this->getVersion());
+        $output->writeln('Tombstone Analyzer '.$this->getVersion());
         if (!$input->getFirstArgument()) {
             $input = new ArrayInput(array('--help'));
         }

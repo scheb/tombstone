@@ -1,9 +1,9 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer\Source;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
-use PhpParser\Node\Scalar;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -57,7 +57,7 @@ class TombstoneVisitor extends NameResolver
             $this->currentClass = (string) $node->namespacedName;
         }
         if ($node instanceof ClassMethod) {
-            $methodName = $this->currentClass . ($node->isStatic() ? '::' : '->') . $node->name;
+            $methodName = $this->currentClass.($node->isStatic() ? '::' : '->').$node->name;
             $this->currentMethod[] = $methodName;
         }
         if ($node instanceof Function_) {
@@ -94,7 +94,8 @@ class TombstoneVisitor extends NameResolver
     {
         if (isset($node->name->parts)) {
             $nameParts = $node->name->parts;
-            return count($nameParts) == 1 && $nameParts[0] == "tombstone";
+
+            return 1 == count($nameParts) && 'tombstone' == $nameParts[0];
         }
 
         return false;
@@ -106,6 +107,7 @@ class TombstoneVisitor extends NameResolver
     private function getCurrentMethodName()
     {
         end($this->currentMethod);
+
         return $this->currentMethod ? $this->currentMethod[key($this->currentMethod)] : null;
     }
 

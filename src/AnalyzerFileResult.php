@@ -1,4 +1,5 @@
 <?php
+
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Tombstone;
@@ -61,7 +62,8 @@ class AnalyzerFileResult
     /**
      * @param Vampire $vampire
      */
-    public function addDeleted(Vampire $vampire) {
+    public function addDeleted(Vampire $vampire)
+    {
         $this->deleted[] = $vampire;
     }
 
