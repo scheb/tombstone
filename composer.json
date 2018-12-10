@@ -11,15 +11,15 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "scheb/tombstone": "0.8.0",
-        "symfony/console": "~2.7|~3.0",
-        "nikic/php-parser": "~2.0|~3.0",
-        "sebastian/finder-facade": "~1.2",
-        "phpunit/php-text-template": "~1.2"
+        "php": "^7.1.3",
+        "scheb/tombstone": "^0.9.0",
+        "symfony/console": "^2.7|^3.0|^4.0",
+        "nikic/php-parser": "^4.0",
+        "sebastian/finder-facade": "^1.2",
+        "phpunit/php-text-template": "^1.2.1"
     },
     "require-dev": {
-        "satooshi/php-coveralls": "~1.0"
+        "phpunit/phpunit": "^7.4"
     },
     "bin": [
         "tombstone"
@@ -28,5 +28,13 @@
         "psr-4": {
             "Scheb\\Tombstone\\Analyzer\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Scheb\\Tombstone\\Analyzer\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }
