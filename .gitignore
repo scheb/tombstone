@@ -3,6 +3,8 @@
 .project
 .buildpath
 bin
+tests/_report
+tests/_logs
 # PhpStorm
 .idea/
 vendor/
