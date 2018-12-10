@@ -31,7 +31,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Scheb\\Tombstone\\Analyzer\\Tests\\": "tests/"
+            "Scheb\\Tombstone\\Analyzer\\Test\\": "tests/"
         }
     },
     "config": {

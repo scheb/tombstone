@@ -1,6 +1,6 @@
 <?php
 
-namespace Scheb\Tombstone\Analyzer\Tests;
+namespace Scheb\Tombstone\Analyzer\Test;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
