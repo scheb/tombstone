@@ -14,7 +14,7 @@ class AnalyzerLogHandlerTest extends TestCase
      */
     private $logDir;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->logDir = __DIR__.'/../_logs/';
         $this->clearLogFiles();
