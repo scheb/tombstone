@@ -42,6 +42,10 @@ class PathNormalizerTest extends TestCase
             ['/path/to/directory/file.php', '/path/to/'],
             ['C:\\path\\to\\directory\\file.php', 'C:\\path\\to'],
             ['C:\\path\\to\\directory\\file.php', 'C:\\path\\to\\'],
+            ['C:\\path\\to\\directory\\file.php', 'C:\\path/to'],
+            ['C:\\path\\to\\directory\\file.php', 'C:\\path/to\\'],
+            ['C:\\path\\to\\directory\\file.php', 'C:\\path/to/'],
+            ['C:\\path\\to\\directory/file.php', 'C:/path/to'],
         ];
     }
 

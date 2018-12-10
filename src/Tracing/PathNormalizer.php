@@ -11,12 +11,19 @@ class PathNormalizer
 
     public static function makeRelativeTo(string $path, ?string $baseDir): string
     {
-        if ($baseDir && self::startsWith($path, $baseDir)) {
-            $path = substr($path, strlen($baseDir));
-            $path = PathNormalizer::normalizeDirectorySeparator($path);
-            if ('/' === $path[0]) {
-                $path = substr($path, 1);
+        if (!$baseDir) {
+            return $path;
+        }
+
+        $normalizedBaseDir = PathNormalizer::normalizeDirectorySeparator($baseDir);
+        $normalizedPath = PathNormalizer::normalizeDirectorySeparator($path);
+        if (self::startsWith($normalizedPath, $normalizedBaseDir)) {
+            $normalizedPath = substr($normalizedPath, strlen($normalizedBaseDir));
+            if ('/' === $normalizedPath[0]) {
+                $normalizedPath = substr($normalizedPath, 1);
             }
+
+            return $normalizedPath;
         }
 
         return $path;
