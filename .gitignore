@@ -1,4 +1,11 @@
-/.idea
-/vendor
-/report
-/composer.lock
+# Eclipse
+.settings/
+.project
+.buildpath
+bin
+# PhpStorm
+.idea/
+vendor/
+composer.lock
+# PHPCS Fixer
+.php_cs.cache
