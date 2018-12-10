@@ -39,6 +39,7 @@ class TombstoneVisitor extends NameResolver
      */
     public function __construct(TombstoneIndex $tombstoneIndex)
     {
+        parent::__construct();
         $this->tombstoneIndex = $tombstoneIndex;
     }
 
