@@ -25,7 +25,7 @@ class LogReader
     {
         $handle = fopen($file, 'r');
         if (false === $handle) {
-            throw new LogReaderException('Could not read log file ' . $file);
+            throw new LogReaderException('Could not read log file '.$file);
         }
 
         while (!feof($handle)) {
