@@ -20,23 +20,17 @@ class FormattedConsoleOutput
         $this->output = $output;
     }
 
-    /**
-     * @param $text
-     */
-    public function writeln($text)
+    public function writeln($text): void
     {
         $this->output->writeln($text);
     }
 
-    public function newLine()
+    public function newLine(): void
     {
         $this->writeln('');
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function printTombstone($tombstone, $prefix)
+    public function printTombstone(Tombstone $tombstone, string $prefix): void
     {
         $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
         $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
@@ -50,7 +44,7 @@ class FormattedConsoleOutput
     /**
      * @param string[] $invokers
      */
-    public function printCalledBy(array $invokers)
+    public function printCalledBy(array $invokers): void
     {
         foreach ($invokers as $invoker) {
             $this->output->writeln(sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));

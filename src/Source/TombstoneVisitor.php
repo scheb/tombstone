@@ -43,10 +43,7 @@ class TombstoneVisitor extends NameResolver
         $this->tombstoneIndex = $tombstoneIndex;
     }
 
-    /**
-     * @param string $file
-     */
-    public function setCurrentFile($file)
+    public function setCurrentFile(string $file): void
     {
         $this->file = $file;
     }
@@ -86,12 +83,7 @@ class TombstoneVisitor extends NameResolver
         }
     }
 
-    /**
-     * @param FuncCall $node
-     *
-     * @return bool
-     */
-    private function isTombstoneFunction(FuncCall $node)
+    private function isTombstoneFunction(FuncCall $node): bool
     {
         if (isset($node->name->parts)) {
             $nameParts = $node->name->parts;
@@ -102,20 +94,14 @@ class TombstoneVisitor extends NameResolver
         return false;
     }
 
-    /**
-     * @return null
-     */
-    private function getCurrentMethodName()
+    private function getCurrentMethodName(): ?string
     {
         end($this->currentMethod);
 
         return $this->currentMethod ? $this->currentMethod[key($this->currentMethod)] : null;
     }
 
-    /**
-     * @return TombstoneIndex
-     */
-    public function getTombstones()
+    public function getTombstones(): TombstoneIndex
     {
         return $this->tombstoneIndex;
     }
@@ -125,7 +111,7 @@ class TombstoneVisitor extends NameResolver
      *
      * @return string[]
      */
-    private function extractParameters(FuncCall $node)
+    private function extractParameters(FuncCall $node): array
     {
         $params = array();
         foreach ($node->args as $arg) {

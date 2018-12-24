@@ -8,13 +8,7 @@ use Scheb\Tombstone\Vampire;
 
 class MethodNameStrategy implements MatchingStrategyInterface
 {
-    /**
-     * @param Vampire        $vampire
-     * @param TombstoneIndex $tombstoneIndex
-     *
-     * @return Tombstone|null
-     */
-    public function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex)
+    public function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex): ?Tombstone
     {
         if ($matchingTombstones = $tombstoneIndex->getInMethod($vampire->getMethod())) {
             foreach ($matchingTombstones as $matchingTombstone) {

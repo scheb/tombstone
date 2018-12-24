@@ -4,14 +4,9 @@ namespace Scheb\Tombstone\Analyzer\Report\Console;
 
 class TimePeriodFormatter
 {
-    const SECONDS_PER_DAY = 86400;
+    private const SECONDS_PER_DAY = 86400;
 
-    /**
-     * @param string $date
-     *
-     * @return string
-     */
-    public static function formatAge($date)
+    public static function formatAge(string $date): string
     {
         $tombstoneDate = strtotime($date);
         if (!$tombstoneDate) {

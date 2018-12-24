@@ -32,18 +32,12 @@ class TombstoneIndex implements \Countable, \Iterator
      */
     private $methodIndex = array();
 
-    /**
-     * @param string $sourceDir
-     */
-    public function __construct($sourceDir)
+    public function __construct(string $sourceDir)
     {
         $this->sourceDir = PathNormalizer::normalizeDirectorySeparator($sourceDir);
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function addTombstone(Tombstone $tombstone)
+    public function addTombstone(Tombstone $tombstone): void
     {
         $this->tombstones[] = $tombstone;
 
@@ -65,22 +59,16 @@ class TombstoneIndex implements \Countable, \Iterator
      *
      * @return Tombstone[]
      */
-    public function getInMethod($method)
+    public function getInMethod(string $method): array
     {
         if (isset($this->methodIndex[$method])) {
             return $this->methodIndex[$method];
         }
 
-        return null;
+        return [];
     }
 
-    /**
-     * @param string $file
-     * @param int    $line
-     *
-     * @return Tombstone
-     */
-    public function getInFileAndLine($file, $line)
+    public function getInFileAndLine(string $file, int $line): ?Tombstone
     {
         $pos = FilePosition::createPosition($file, $line);
         if (isset($this->fileLineIndex[$pos])) {
@@ -95,29 +83,18 @@ class TombstoneIndex implements \Countable, \Iterator
         return null;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    private function normalizeAndRelativePath($path)
+    private function normalizeAndRelativePath(string $path): string
     {
         $path = PathNormalizer::normalizeDirectorySeparator($path);
 
         return PathNormalizer::makeRelativeTo($path, $this->sourceDir);
     }
 
-    /**
-     * @return int
-     */
     public function count()
     {
         return count($this->fileLineIndex);
     }
 
-    /**
-     * @return Tombstone
-     */
     public function current()
     {
         return current($this->tombstones);
@@ -128,17 +105,11 @@ class TombstoneIndex implements \Countable, \Iterator
         next($this->tombstones);
     }
 
-    /**
-     * @return int
-     */
     public function key()
     {
         return key($this->tombstones);
     }
 
-    /**
-     * @return bool
-     */
     public function valid()
     {
         return isset($this->tombstones[$this->key()]);

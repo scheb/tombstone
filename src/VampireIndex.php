@@ -16,10 +16,7 @@ class VampireIndex implements \Countable, \Iterator
      */
     private $maxDatePerPosition;
 
-    /**
-     * @param Vampire $vampire
-     */
-    public function addVampire(Vampire $vampire)
+    public function addVampire(Vampire $vampire): void
     {
         $position = FilePosition::createPosition($vampire->getFile(), $vampire->getLine());
         $logDate = strtotime($vampire->getInvocationDate());
@@ -29,17 +26,11 @@ class VampireIndex implements \Countable, \Iterator
         }
     }
 
-    /**
-     * @return int
-     */
     public function count()
     {
         return count($this->vampires);
     }
 
-    /**
-     * @return Vampire
-     */
     public function current()
     {
         return current($this->vampires);
@@ -50,17 +41,11 @@ class VampireIndex implements \Countable, \Iterator
         next($this->vampires);
     }
 
-    /**
-     * @return int
-     */
     public function key()
     {
         return key($this->vampires);
     }
 
-    /**
-     * @return bool
-     */
     public function valid()
     {
         return isset($this->vampires[$this->key()]);

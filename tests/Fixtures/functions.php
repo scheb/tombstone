@@ -1,6 +1,6 @@
 <?php
 
-function deadCodeFunction()
+function deadCodeFunction(): void
 {
     if (false) {
         // This should be detected as dead

@@ -37,11 +37,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
      */
     private $barTemplate;
 
-    /**
-     * @param string $reportDir
-     * @param string $sourceDir
-     */
-    public function __construct($reportDir, $sourceDir)
+    public function __construct(string $reportDir, string $sourceDir)
     {
         $this->reportDir = $reportDir;
         $this->sourceDir = $sourceDir;
@@ -50,10 +46,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
         $this->barTemplate = TemplateFactory::getTemplate('percentage_bar.html');
     }
 
-    /**
-     * @param AnalyzerResult $result
-     */
-    public function generate(AnalyzerResult $result)
+    public function generate(AnalyzerResult $result): void
     {
         $tree = new ResultDirectory();
         $files = $result->getPerFile();
@@ -65,10 +58,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
         $this->renderDirectoryRecursively($tree);
     }
 
-    /**
-     * @param ResultDirectory $directory
-     */
-    private function renderDirectoryRecursively(ResultDirectory $directory)
+    private function renderDirectoryRecursively(ResultDirectory $directory): void
     {
         $this->renderDirectory($directory);
         foreach ($directory->getDirectories() as $subDir) {
@@ -76,10 +66,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
         }
     }
 
-    /**
-     * @param ResultDirectory $directory
-     */
-    private function renderDirectory(ResultDirectory $directory)
+    private function renderDirectory(ResultDirectory $directory): void
     {
         $directoryPath = $directory->getPath();
         $filesList = '';
@@ -118,7 +105,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
      *
      * @return string
      */
-    private function renderDirectoryItem($name, $link, $result)
+    private function renderDirectoryItem(string $name, string $link, $result): string
     {
         $deadCount = $result->getDeadCount();
         $undeadCount = $result->getUndeadCount();
@@ -149,13 +136,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
         return $this->directoryItemTemplate->render();
     }
 
-    /**
-     * @param int $numDead
-     * @param int $total
-     *
-     * @return string
-     */
-    private function renderBar($numDead, $total)
+    private function renderBar(int $numDead, int $total): string
     {
         $this->barTemplate->setVar(array(
             'level' => 'success',
@@ -165,12 +146,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
         return $this->barTemplate->render();
     }
 
-    /**
-     * @param string $directoryPath
-     *
-     * @return string
-     */
-    private function renderBreadcrumb($directoryPath)
+    private function renderBreadcrumb(string $directoryPath): string
     {
         if (!$directoryPath) {
             return '<li class="active">'.$this->sourceDir.'</li> ';

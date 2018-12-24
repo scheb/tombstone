@@ -9,37 +9,9 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
  * Copyright (c) 2009-2015, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  */
-
-// @codeCoverageIgnoreStart
-if (!defined('T_TRAIT')) {
-    define('T_TRAIT', 1001);
-}
-
-if (!defined('T_INSTEADOF')) {
-    define('T_INSTEADOF', 1002);
-}
-
-if (!defined('T_CALLABLE')) {
-    define('T_CALLABLE', 1003);
-}
-
-if (!defined('T_FINALLY')) {
-    define('T_FINALLY', 1004);
-}
-
-if (!defined('T_YIELD')) {
-    define('T_YIELD', 1005);
-}
-// @codeCoverageIgnoreEnd
-
 class PhpFileFormatter
 {
-    /**
-     * @param string $file
-     *
-     * @return array
-     */
-    public static function loadFile($file)
+    public static function loadFile(string $file): array
     {
         $buffer = file_get_contents($file);
         $tokens = token_get_all($buffer);

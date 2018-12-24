@@ -22,19 +22,14 @@ class SourceDirectoryScanner
      * @param string             $sourcePath
      * @param array              $regularExpressions Match source files against passed patterns. Defaults to ['*.php']
      */
-    public function __construct(TombstoneExtractor $tombstoneExtractor, $sourcePath, $regularExpressions = array('*.php'))
+    public function __construct(TombstoneExtractor $tombstoneExtractor, string $sourcePath, array $regularExpressions = array('*.php'))
     {
         $this->tombstoneExtractor = $tombstoneExtractor;
         $finder = new FinderFacade(array($sourcePath), array(), $regularExpressions);
         $this->files = $finder->findFiles();
     }
 
-    /**
-     * @param callable $onProgress
-     *
-     * @return TombstoneIndex
-     */
-    public function getTombstones(callable $onProgress)
+    public function getTombstones(callable $onProgress): TombstoneIndex
     {
         foreach ($this->files as $file) {
             $this->tombstoneExtractor->extractTombstones($file);
@@ -44,10 +39,7 @@ class SourceDirectoryScanner
         return $this->tombstoneExtractor->getTombstones();
     }
 
-    /**
-     * @return int
-     */
-    public function getNumFiles()
+    public function getNumFiles(): int
     {
         return count($this->files);
     }

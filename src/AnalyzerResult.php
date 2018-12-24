@@ -27,20 +27,14 @@ class AnalyzerResult
      */
     private $deleted = array();
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function addDead(Tombstone $tombstone)
+    public function addDead(Tombstone $tombstone): void
     {
         $this->dead[] = $tombstone;
         $this->initFileIndex($tombstone->getFile());
         $this->perFile[$tombstone->getFile()]->addDead($tombstone);
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function addUndead(Tombstone $tombstone)
+    public function addUndead(Tombstone $tombstone): void
     {
         $this->undead[] = $tombstone;
         $this->initFileIndex($tombstone->getFile());
@@ -50,7 +44,7 @@ class AnalyzerResult
     /**
      * @param Vampire[] $deleted
      */
-    public function setDeleted(array $deleted)
+    public function setDeleted(array $deleted): void
     {
         $this->deleted = $deleted;
         foreach ($deleted as $vampire) {
@@ -59,10 +53,7 @@ class AnalyzerResult
         }
     }
 
-    /**
-     * @param string $file
-     */
-    private function initFileIndex($file)
+    private function initFileIndex(string $file): void
     {
         if (!isset($this->perFile[$file])) {
             $this->perFile[$file] = new AnalyzerFileResult($file);
@@ -70,25 +61,25 @@ class AnalyzerResult
     }
 
     /**
-     * @return \Scheb\Tombstone\Tombstone[]
+     * @return Tombstone[]
      */
-    public function getDead()
+    public function getDead(): array
     {
         return $this->dead;
     }
 
     /**
-     * @return \Scheb\Tombstone\Tombstone[]
+     * @return Tombstone[]
      */
-    public function getUndead()
+    public function getUndead(): array
     {
         return $this->undead;
     }
 
     /**
-     * @return \Scheb\Tombstone\Vampire[]
+     * @return Vampire[]
      */
-    public function getDeleted()
+    public function getDeleted(): array
     {
         return $this->deleted;
     }
@@ -96,33 +87,24 @@ class AnalyzerResult
     /**
      * @return AnalyzerFileResult[]
      */
-    public function getPerFile()
+    public function getPerFile(): array
     {
         ksort($this->perFile);
 
         return $this->perFile;
     }
 
-    /**
-     * @return int
-     */
-    public function getDeadCount()
+    public function getDeadCount(): int
     {
         return count($this->dead);
     }
 
-    /**
-     * @return int
-     */
-    public function getUndeadCount()
+    public function getUndeadCount(): int
     {
         return count($this->undead);
     }
 
-    /**
-     * @return int
-     */
-    public function getDeletedCount()
+    public function getDeletedCount(): int
     {
         return count($this->deleted);
     }

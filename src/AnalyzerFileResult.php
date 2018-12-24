@@ -27,90 +27,66 @@ class AnalyzerFileResult
      */
     private $deleted = array();
 
-    /**
-     * @param string $file
-     */
-    public function __construct($file)
+    public function __construct(string $file)
     {
         $this->file = $file;
     }
 
-    /**
-     * @return string
-     */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function addDead(Tombstone $tombstone)
+    public function addDead(Tombstone $tombstone): void
     {
         $this->dead[] = $tombstone;
     }
 
-    /**
-     * @param Tombstone $tombstone
-     */
-    public function addUndead(Tombstone $tombstone)
+    public function addUndead(Tombstone $tombstone): void
     {
         $this->undead[] = $tombstone;
     }
 
-    /**
-     * @param Vampire $vampire
-     */
-    public function addDeleted(Vampire $vampire)
+    public function addDeleted(Vampire $vampire): void
     {
         $this->deleted[] = $vampire;
     }
 
     /**
-     * @return \Scheb\Tombstone\Tombstone[]
+     * @return Tombstone[]
      */
-    public function getDead()
+    public function getDead(): array
     {
         return $this->dead;
     }
 
     /**
-     * @return \Scheb\Tombstone\Tombstone[]
+     * @return Tombstone[]
      */
-    public function getUndead()
+    public function getUndead(): array
     {
         return $this->undead;
     }
 
     /**
-     * @return \Scheb\Tombstone\Vampire[]
+     * @return Vampire[]
      */
-    public function getDeleted()
+    public function getDeleted(): array
     {
         return $this->deleted;
     }
 
-    /**
-     * @return int
-     */
-    public function getDeadCount()
+    public function getDeadCount(): int
     {
         return count($this->dead);
     }
 
-    /**
-     * @return int
-     */
-    public function getUndeadCount()
+    public function getUndeadCount(): int
     {
         return count($this->undead);
     }
 
-    /**
-     * @return int
-     */
-    public function getDeletedCount()
+    public function getDeletedCount(): int
     {
         return count($this->deleted);
     }

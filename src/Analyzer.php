@@ -14,20 +14,14 @@ class Analyzer
     private $matchingStrategies;
 
     /**
-     * @param array $matchingStrategies
+     * @param MatchingStrategyInterface[] $matchingStrategies
      */
     public function __construct(array $matchingStrategies)
     {
         $this->matchingStrategies = $matchingStrategies;
     }
 
-    /**
-     * @param TombstoneIndex $tombstoneIndex
-     * @param VampireIndex   $vampireIndex
-     *
-     * @return AnalyzerResult
-     */
-    public function getResult(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex)
+    public function getResult(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex): AnalyzerResult
     {
         $unmatched = $this->match($tombstoneIndex, $vampireIndex);
 
@@ -40,7 +34,7 @@ class Analyzer
      *
      * @return Vampire[]
      */
-    private function match(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex)
+    private function match(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex): array
     {
         $unmatched = array();
 
@@ -58,13 +52,7 @@ class Analyzer
         return $unmatched;
     }
 
-    /**
-     * @param Vampire        $vampire
-     * @param TombstoneIndex $tombstoneIndex
-     *
-     * @return Tombstone|null
-     */
-    private function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex)
+    private function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex): ?Tombstone
     {
         foreach ($this->matchingStrategies as $strategy) {
             if ($matchingTombstone = $strategy->matchVampireToTombstone($vampire, $tombstoneIndex)) {
@@ -77,11 +65,11 @@ class Analyzer
 
     /**
      * @param TombstoneIndex $tombstoneIndex
-     * @param array          $unmatchedVampires
+     * @param Vampire[]      $unmatchedVampires
      *
      * @return AnalyzerResult
      */
-    private function createResult(TombstoneIndex $tombstoneIndex, array $unmatchedVampires)
+    private function createResult(TombstoneIndex $tombstoneIndex, array $unmatchedVampires): AnalyzerResult
     {
         $result = new AnalyzerResult();
         $result->setDeleted($unmatchedVampires);

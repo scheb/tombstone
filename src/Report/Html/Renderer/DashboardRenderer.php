@@ -53,11 +53,7 @@ class DashboardRenderer implements ReportGeneratorInterface
      */
     private $invokerTemplate;
 
-    /**
-     * @param string $reportDir
-     * @param $sourceDir
-     */
-    public function __construct($reportDir, $sourceDir)
+    public function __construct(string $reportDir, string $sourceDir)
     {
         $this->reportDir = $reportDir;
         $this->sourceDir = $sourceDir;
@@ -69,10 +65,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         $this->invokerTemplate = TemplateFactory::getTemplate('dashboard_invoker.html.dist');
     }
 
-    /**
-     * @param AnalyzerResult $result
-     */
-    public function generate(AnalyzerResult $result)
+    public function generate(AnalyzerResult $result): void
     {
         $tombstonesView = $this->renderTombstonesView($result);
         $deletedView = $this->renderDeletedView($result);
@@ -102,12 +95,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
     }
 
-    /**
-     * @param AnalyzerResult $result
-     *
-     * @return string
-     */
-    private function renderTombstonesView(AnalyzerResult $result)
+    private function renderTombstonesView(AnalyzerResult $result): string
     {
         $tombstonesView = '';
         foreach ($result->getPerFile() as $fileResult) {
@@ -123,12 +111,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $tombstonesView;
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     *
-     * @return string
-     */
-    private function renderDeadTombstones(AnalyzerFileResult $fileResult)
+    private function renderDeadTombstones(AnalyzerFileResult $fileResult): string
     {
         $itemList = '';
         foreach ($fileResult->getDead() as $tombstone) {
@@ -151,12 +134,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $itemList;
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     *
-     * @return string
-     */
-    private function renderUndeadTombstones(AnalyzerFileResult $fileResult)
+    private function renderUndeadTombstones(AnalyzerFileResult $fileResult): string
     {
         $itemList = '';
         foreach ($fileResult->getUndead() as $tombstone) {
@@ -174,12 +152,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $itemList;
     }
 
-    /**
-     * @param AnalyzerResult $result
-     *
-     * @return string
-     */
-    private function renderDeletedView(AnalyzerResult $result)
+    private function renderDeletedView(AnalyzerResult $result): string
     {
         $deletedView = '';
         foreach ($result->getPerFile() as $fileResult) {
@@ -192,12 +165,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $deletedView;
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     *
-     * @return string
-     */
-    private function renderDeletedTombstones(AnalyzerFileResult $fileResult)
+    private function renderDeletedTombstones(AnalyzerFileResult $fileResult): string
     {
         $itemList = '';
         foreach ($fileResult->getDeleted() as $vampire) {
@@ -214,13 +182,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $itemList;
     }
 
-    /**
-     * @param string $fileName
-     * @param string $itemList
-     *
-     * @return string
-     */
-    private function renderFile($fileName, $itemList)
+    private function renderFile(string $fileName, string $itemList): string
     {
         $this->fileTemplate->setVar(array(
             'file' => $fileName,
@@ -230,12 +192,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $this->fileTemplate->render();
     }
 
-    /**
-     * @param Tombstone $tombstone
-     *
-     * @return string
-     */
-    private function renderInvokers(Tombstone $tombstone)
+    private function renderInvokers(Tombstone $tombstone): string
     {
         $invokers = array();
         foreach ($tombstone->getVampires() as $vampire) {
@@ -253,14 +210,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         return $invokersString;
     }
 
-    /**
-     * @param string $label
-     * @param string $fileName
-     * @param int    $line
-     *
-     * @return string
-     */
-    private function linkTombstoneSource($label, $fileName, $line)
+    private function linkTombstoneSource(string $label, string $fileName, int $line): string
     {
         $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->sourceDir);
 

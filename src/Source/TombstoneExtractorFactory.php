@@ -9,12 +9,7 @@ use Scheb\Tombstone\Analyzer\TombstoneIndex;
 
 class TombstoneExtractorFactory
 {
-    /**
-     * @param TombstoneIndex $tombstoneIndex
-     *
-     * @return TombstoneExtractor
-     */
-    public static function create(TombstoneIndex $tombstoneIndex)
+    public static function create(TombstoneIndex $tombstoneIndex): TombstoneExtractor
     {
         $visitor = new TombstoneVisitor($tombstoneIndex);
         $traverser = new NodeTraverser();

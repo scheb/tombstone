@@ -4,13 +4,7 @@ namespace Scheb\Tombstone\Analyzer;
 
 class FilePosition
 {
-    /**
-     * @param string $file
-     * @param string $line
-     *
-     * @return string
-     */
-    public static function createPosition($file, $line)
+    public static function createPosition(string $file, int $line): string
     {
         return $file.':'.$line;
     }

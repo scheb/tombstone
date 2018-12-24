@@ -4,23 +4,12 @@ namespace Scheb\Tombstone\Analyzer\Report;
 
 class PathTools
 {
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
-    public static function isAbsolutePath($path)
+    public static function isAbsolutePath(string $path): bool
     {
         return $path && ('/' === $path[0] || preg_match('#^[a-zA-Z]:#', $path));
     }
 
-    /**
-     * @param string $path
-     * @param string $rootDir
-     *
-     * @return string
-     */
-    public static function makePathAbsolute($path, $rootDir)
+    public static function makePathAbsolute(string $path, string $rootDir): string
     {
         if (self::isAbsolutePath($path)) {
             return $path;

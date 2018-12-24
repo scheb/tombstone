@@ -8,11 +8,5 @@ use Scheb\Tombstone\Vampire;
 
 interface MatchingStrategyInterface
 {
-    /**
-     * @param Vampire        $vampire
-     * @param TombstoneIndex $tombstoneIndex
-     *
-     * @return Tombstone|null
-     */
-    public function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex);
+    public function matchVampireToTombstone(Vampire $vampire, TombstoneIndex $tombstoneIndex): ?Tombstone;
 }

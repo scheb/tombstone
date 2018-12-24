@@ -32,11 +32,7 @@ class FileRenderer implements ReportGeneratorInterface
      */
     private $tombstoneTemplate;
 
-    /**
-     * @param string $reportDir
-     * @param string $sourceDir
-     */
-    public function __construct($reportDir, $sourceDir)
+    public function __construct(string $reportDir, string $sourceDir)
     {
         $this->reportDir = $reportDir;
         $this->sourceDir = $sourceDir;
@@ -44,10 +40,7 @@ class FileRenderer implements ReportGeneratorInterface
         $this->tombstoneTemplate = TemplateFactory::getTemplate('file_tombstone.html');
     }
 
-    /**
-     * @param AnalyzerResult $result
-     */
-    public function generate(AnalyzerResult $result)
+    public function generate(AnalyzerResult $result): void
     {
         foreach ($result->getPerFile() as $file => $fileResult) {
             if ($fileResult->getDeadCount() || $fileResult->getUndeadCount()) {
@@ -56,10 +49,7 @@ class FileRenderer implements ReportGeneratorInterface
         }
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     */
-    private function renderFile(AnalyzerFileResult $fileResult)
+    private function renderFile(AnalyzerFileResult $fileResult): void
     {
         $tombstonesList = $this->renderTombstonesList($fileResult);
         $sourceCode = $this->formatSourceCode($fileResult);
@@ -82,12 +72,7 @@ class FileRenderer implements ReportGeneratorInterface
         $this->fileTemplate->renderTo($reportFile);
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     *
-     * @return string
-     */
-    private function renderTombstonesList(AnalyzerFileResult $fileResult)
+    private function renderTombstonesList(AnalyzerFileResult $fileResult): string
     {
         $tombstoneList = array();
 
@@ -107,13 +92,7 @@ class FileRenderer implements ReportGeneratorInterface
         return implode($tombstoneList);
     }
 
-    /**
-     * @param Tombstone $tombstone
-     * @param string    $class
-     *
-     * @return string
-     */
-    private function renderTombstoneItem(Tombstone $tombstone, $class)
+    private function renderTombstoneItem(Tombstone $tombstone, string $class): string
     {
         $this->tombstoneTemplate->setVar(array(
             'tombstone' => (string) $tombstone,
@@ -125,12 +104,7 @@ class FileRenderer implements ReportGeneratorInterface
         return $this->tombstoneTemplate->render();
     }
 
-    /**
-     * @param AnalyzerFileResult $fileResult
-     *
-     * @return string
-     */
-    private function formatSourceCode(AnalyzerFileResult $fileResult)
+    private function formatSourceCode(AnalyzerFileResult $fileResult): string
     {
         $deadLines = array();
         $undeadLines = array();
@@ -161,12 +135,7 @@ class FileRenderer implements ReportGeneratorInterface
         return $formattedCode;
     }
 
-    /**
-     * @param string $relativeFilePath
-     *
-     * @return string
-     */
-    private function renderBreadcrumb($relativeFilePath)
+    private function renderBreadcrumb(string $relativeFilePath): string
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);

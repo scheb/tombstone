@@ -26,18 +26,14 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
      */
     private $now;
 
-    /**
-     * @param OutputInterface $output
-     * @param string          $sourceDir
-     */
-    public function __construct(OutputInterface $output, $sourceDir)
+    public function __construct(OutputInterface $output, string $sourceDir)
     {
         $this->output = new FormattedConsoleOutput($output);
         $this->sourceDir = $sourceDir;
         $this->now = time();
     }
 
-    public function generate(AnalyzerResult $result)
+    public function generate(AnalyzerResult $result): void
     {
         $numUndead = $result->getUndeadCount();
         $numDead = $result->getDeadCount();
@@ -61,7 +57,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     /**
      * @param Tombstone[] $result
      */
-    private function displayVampires($result)
+    private function displayVampires(array $result): void
     {
         foreach ($result as $tombstone) {
             $this->output->newLine();
@@ -77,7 +73,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     /**
      * @param Tombstone[] $result
      */
-    private function displayTombstones($result)
+    private function displayTombstones(array $result): void
     {
         foreach ($result as $tombstone) {
             $this->output->newLine();
@@ -94,7 +90,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     /**
      * @param Vampire[] $result
      */
-    private function displayDeleted($result)
+    private function displayDeleted(array $result): void
     {
         foreach ($result as $vampire) {
             $this->output->newLine();

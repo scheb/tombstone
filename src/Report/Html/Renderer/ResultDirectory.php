@@ -24,7 +24,7 @@ class ResultDirectory
     /**
      * @param string[] $path
      */
-    public function __construct($path = array())
+    public function __construct(array $path = array())
     {
         $this->path = $path;
     }
@@ -32,7 +32,7 @@ class ResultDirectory
     /**
      * @return ResultDirectory[]
      */
-    public function getDirectories()
+    public function getDirectories(): array
     {
         return $this->directories;
     }
@@ -40,31 +40,22 @@ class ResultDirectory
     /**
      * @return AnalyzerFileResult[]
      */
-    public function getFiles()
+    public function getFiles(): array
     {
         return $this->files;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->path[count($this->path) - 1];
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return implode('/', $this->path);
     }
 
-    /**
-     * @return int
-     */
-    public function getDeadCount()
+    public function getDeadCount(): int
     {
         $count = 0;
         /** @var ResultDirectory|AnalyzerFileResult $element */
@@ -75,10 +66,7 @@ class ResultDirectory
         return $count;
     }
 
-    /**
-     * @return int
-     */
-    public function getUndeadCount()
+    public function getUndeadCount(): int
     {
         $count = 0;
         /** @var ResultDirectory|AnalyzerFileResult $element */
@@ -89,11 +77,7 @@ class ResultDirectory
         return $count;
     }
 
-    /**
-     * @param $filePath
-     * @param AnalyzerFileResult $fileResult
-     */
-    public function addFileResult($filePath, AnalyzerFileResult $fileResult)
+    public function addFileResult($filePath, AnalyzerFileResult $fileResult): void
     {
         $firstSlash = strpos($filePath, '/');
         if (false === $firstSlash) {

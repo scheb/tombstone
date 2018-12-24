@@ -21,19 +21,14 @@ class LogDirectoryScanner
      * @param LogReader $logReader
      * @param string    $logDir
      */
-    public function __construct(LogReader $logReader, $logDir)
+    public function __construct(LogReader $logReader, string $logDir)
     {
         $this->logReader = $logReader;
         $finder = new FinderFacade(array($logDir), array(), array('*.tombstone'));
         $this->files = $finder->findFiles();
     }
 
-    /**
-     * @param callable $onProgress
-     *
-     * @return VampireIndex
-     */
-    public function getVampires(callable $onProgress)
+    public function getVampires(callable $onProgress): VampireIndex
     {
         foreach ($this->files as $file) {
             $this->logReader->aggregateLog($file);
@@ -43,10 +38,7 @@ class LogDirectoryScanner
         return $this->logReader->getVampires();
     }
 
-    /**
-     * @return int
-     */
-    public function getNumFiles()
+    public function getNumFiles(): int
     {
         return count($this->files);
     }

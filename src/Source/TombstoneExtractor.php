@@ -25,11 +25,6 @@ class TombstoneExtractor
      */
     private $visitor;
 
-    /**
-     * @param Parser           $parser
-     * @param NodeTraverser    $traverser
-     * @param TombstoneVisitor $visitor
-     */
     public function __construct(Parser $parser, NodeTraverser $traverser, TombstoneVisitor $visitor)
     {
         $this->parser = $parser;
@@ -38,12 +33,7 @@ class TombstoneExtractor
         $this->traverser->addVisitor($visitor);
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @throws TombstoneExtractionException
-     */
-    public function extractTombstones($filePath)
+    public function extractTombstones(string $filePath): void
     {
         $this->visitor->setCurrentFile($filePath);
         if (!is_readable($filePath)) {
@@ -59,10 +49,7 @@ class TombstoneExtractor
         }
     }
 
-    /**
-     * @return TombstoneIndex
-     */
-    public function getTombstones()
+    public function getTombstones(): TombstoneIndex
     {
         return $this->visitor->getTombstones();
     }

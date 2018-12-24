@@ -67,13 +67,7 @@ class Command extends AbstractCommand
         return 0;
     }
 
-    /**
-     * @param string $sourceDir
-     * @param string $logDir
-     *
-     * @return AnalyzerResult
-     */
-    private function createResult($sourceDir, $logDir, $regexExpressions)
+    private function createResult(string $sourceDir, string $logDir, array $regexExpressions): AnalyzerResult
     {
         $this->output->writeln('');
         $this->output->writeln('Scan source code ...');
@@ -110,12 +104,7 @@ class Command extends AbstractCommand
         return $analyzer->getResult($tombstoneIndex, $vampireIndex);
     }
 
-    /**
-     * @param string         $reportDir
-     * @param string         $sourceDir
-     * @param AnalyzerResult $result
-     */
-    protected function generateHtmlReport($reportDir, $sourceDir, AnalyzerResult $result)
+    protected function generateHtmlReport(string $reportDir, string $sourceDir, AnalyzerResult $result): void
     {
         $this->output->writeln('');
         $this->output->write('Generate HTML report... ');
@@ -129,12 +118,7 @@ class Command extends AbstractCommand
         }
     }
 
-    /**
-     * @param int $width
-     *
-     * @return ProgressBar
-     */
-    private function createProgressBar($width)
+    private function createProgressBar(int $width): ProgressBar
     {
         $progress = new ProgressBar($this->output, $width);
         $progress->setBarWidth(50);

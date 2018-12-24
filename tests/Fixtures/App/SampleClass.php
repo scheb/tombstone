@@ -4,7 +4,7 @@ namespace Scheb\Tombstone\Analyzer\Test\Fixtures\App;
 
 class SampleClass
 {
-    public function deadCodeMethod()
+    public function deadCodeMethod(): void
     {
         if (false) {
             // This should be detected as dead

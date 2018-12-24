@@ -51,7 +51,7 @@ class TombstoneAnalyzerIntegrationTest extends TestCase
      * @test
      * @coversNothing
      */
-    public function generate_logsAndSourceGiven_createHtmlReport()
+    public function generate_logsAndSourceGiven_createHtmlReport(): void
     {
         $this->runTestApplication();
         $this->generateReport();

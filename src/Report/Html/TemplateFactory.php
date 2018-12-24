@@ -4,12 +4,7 @@ namespace Scheb\Tombstone\Analyzer\Report\Html;
 
 class TemplateFactory
 {
-    /**
-     * @param string $file
-     *
-     * @return \Text_Template
-     */
-    public static function getTemplate($file)
+    public static function getTemplate(string $file): \Text_Template
     {
         return new \Text_Template(__DIR__.'/Template/'.$file, '{{', '}}');
     }

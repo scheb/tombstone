@@ -4,7 +4,6 @@ namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\VampireIndex;
 use Scheb\Tombstone\Logging\AnalyzerLogFormat;
-use Scheb\Tombstone\Vampire;
 
 class LogReader
 {
@@ -21,12 +20,7 @@ class LogReader
         $this->vampires = $vampires;
     }
 
-    /**
-     * @param string $file
-     *
-     * @return Vampire[]
-     */
-    public function aggregateLog($file)
+    public function aggregateLog(string $file): void
     {
         $handle = fopen($file, 'r');
         while (!feof($handle)) {
@@ -39,10 +33,7 @@ class LogReader
         fclose($handle);
     }
 
-    /**
-     * @return VampireIndex
-     */
-    public function getVampires()
+    public function getVampires(): VampireIndex
     {
         return $this->vampires;
     }

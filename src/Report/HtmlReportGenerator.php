@@ -25,21 +25,14 @@ class HtmlReportGenerator implements ReportGeneratorInterface
      */
     private $templateDir;
 
-    /**
-     * @param string $reportDir
-     * @param string $sourceDir
-     */
-    public function __construct($reportDir, $sourceDir)
+    public function __construct(string $reportDir, string $sourceDir)
     {
         $this->reportDir = $reportDir;
         $this->sourceDir = $sourceDir;
         $this->templateDir = __DIR__.'/Html/Template';
     }
 
-    /**
-     * @param AnalyzerResult $result
-     */
-    public function generate(AnalyzerResult $result)
+    public function generate(AnalyzerResult $result): void
     {
         $this->copySkeleton();
 
@@ -53,7 +46,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         $fileRenderer->generate($result);
     }
 
-    private function copySkeleton()
+    private function copySkeleton(): void
     {
         $this->createDirectory($this->reportDir);
         $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'css', $this->reportDir.DIRECTORY_SEPARATOR.'css');
@@ -61,13 +54,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'img', $this->reportDir.DIRECTORY_SEPARATOR.'img');
     }
 
-    /**
-     * @param string $templateDir
-     * @param string $reportDir
-     *
-     * @throws HtmlReportException
-     */
-    private function copyDirectoryFiles($templateDir, $reportDir)
+    private function copyDirectoryFiles(string $templateDir, string $reportDir): void
     {
         $this->createDirectory($reportDir);
         $handle = opendir($templateDir);
@@ -91,12 +78,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         closedir($handle);
     }
 
-    /**
-     * @param string $dir
-     *
-     * @throws HtmlReportException
-     */
-    private function createDirectory($dir)
+    private function createDirectory(string $dir): void
     {
         if (!is_dir($dir)) {
             if (!@mkdir($dir, 0777, true)) {
