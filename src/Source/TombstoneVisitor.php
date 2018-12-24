@@ -52,26 +52,43 @@ class TombstoneVisitor extends NameResolver
     {
         parent::enterNode($node);
         if ($node instanceof Class_) {
-            $this->currentClass = (string) $node->namespacedName;
+            $this->visitClassNode($node);
+        } elseif ($node instanceof ClassMethod) {
+            $this->visitMethodNode($node);
+        } elseif ($node instanceof Function_) {
+            $this->visitFunctionNode($node);
+        } elseif ($node instanceof FuncCall) {
+            $this->visitFunctionCallNode($node);
         }
-        if ($node instanceof ClassMethod) {
-            $methodName = $this->currentClass.($node->isStatic() ? '::' : '->').$node->name;
-            $this->currentMethod[] = $methodName;
-        }
-        if ($node instanceof Function_) {
-            $this->currentMethod[] = (string) $node->namespacedName;
-        }
-        if ($node instanceof FuncCall) {
-            if ($this->isTombstoneFunction($node)) {
-                $line = $node->getLine();
-                $methodName = $this->getCurrentMethodName();
-                $params = $this->extractParameters($node);
-                $date = isset($params[0]) ? $params[0] : null;
-                $author = isset($params[1]) ? $params[1] : null;
-                $label = isset($params[2]) ? $params[2] : null;
-                $tombstone = new Tombstone($date, $author, $label, $this->file, $line, $methodName);
-                $this->tombstoneIndex->addTombstone($tombstone);
-            }
+    }
+
+    private function visitClassNode(Class_ $node): void
+    {
+        $this->currentClass = (string) $node->namespacedName;
+    }
+
+    private function visitMethodNode(ClassMethod $node): void
+    {
+        $methodName = $this->currentClass.($node->isStatic() ? '::' : '->').$node->name;
+        $this->currentMethod[] = $methodName;
+    }
+
+    private function visitFunctionNode(Function_ $node): void
+    {
+        $this->currentMethod[] = (string) $node->namespacedName;
+    }
+
+    private function visitFunctionCallNode(FuncCall $node): void
+    {
+        if ($this->isTombstoneFunction($node)) {
+            $line = $node->getLine();
+            $methodName = $this->getCurrentMethodName();
+            $params = $this->extractParameters($node);
+            $date = isset($params[0]) ? $params[0] : null;
+            $author = isset($params[1]) ? $params[1] : null;
+            $label = isset($params[2]) ? $params[2] : null;
+            $tombstone = new Tombstone($date, $author, $label, $this->file, $line, $methodName);
+            $this->tombstoneIndex->addTombstone($tombstone);
         }
     }
 
