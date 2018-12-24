@@ -116,10 +116,13 @@ class DashboardRenderer implements ReportGeneratorInterface
         $itemList = '';
         foreach ($fileResult->getDead() as $tombstone) {
             $date = $tombstone->getTombstoneDate();
-            if ($age = TimePeriodFormatter::formatAge($date)) {
-                $deadSince = 'for '.$age;
-            } else {
-                $deadSince = 'since '.$date;
+            $deadSince = '';
+            if ($date) {
+                if ($age = TimePeriodFormatter::formatAge($date)) {
+                    $deadSince = 'for '.$age;
+                } else {
+                    $deadSince = 'since '.$date;
+                }
             }
             $this->deadTemplate->setVar([
                 'path_to_root' => './',

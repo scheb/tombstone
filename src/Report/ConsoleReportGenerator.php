@@ -79,10 +79,12 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
             $this->output->newLine();
             $this->output->printTombstone($tombstone, 'RIP');
             $date = $tombstone->getTombstoneDate();
-            if ($age = TimePeriodFormatter::formatAge($date)) {
-                $this->output->writeln(sprintf('    was not called for %s', $age));
-            } else {
-                $this->output->writeln(sprintf('    was not called since %s', $date));
+            if ($date) {
+                if ($age = TimePeriodFormatter::formatAge($date)) {
+                    $this->output->writeln(sprintf('    was not called for %s', $age));
+                } else {
+                    $this->output->writeln(sprintf('    was not called since %s', $date));
+                }
             }
         }
     }
