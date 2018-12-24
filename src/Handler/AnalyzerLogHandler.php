@@ -44,6 +44,11 @@ class AnalyzerLogHandler extends AbstractHandler
     public function __destruct()
     {
         parent::__destruct();
+        $this->close();
+    }
+
+    public function close(): void
+    {
         foreach ($this->logStreams as $stream) {
             $stream->close();
         }
