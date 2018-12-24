@@ -58,6 +58,10 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     {
         $this->createDirectory($reportDir);
         $handle = opendir($templateDir);
+        if (!$handle) {
+            throw new HtmlReportException('Could not read template files from '.$templateDir);
+        }
+
         while ($file = readdir($handle)) {
             if ('.' == $file || '..' == $file) {
                 continue;
