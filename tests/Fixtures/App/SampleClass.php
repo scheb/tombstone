@@ -1,15 +1,10 @@
 <?php
 
-namespace Scheb\Tombstone\Analyzer\Test\Fixtures;
+namespace Scheb\Tombstone\Analyzer\Test\Fixtures\App;
 
 class SampleClass
 {
-    public function publicMethod()
-    {
-        $this->deadCodeMethod();
-    }
-
-    private function deadCodeMethod()
+    public function deadCodeMethod()
     {
         if (false) {
             // This should be detected as dead

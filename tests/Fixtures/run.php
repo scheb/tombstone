@@ -1,6 +1,6 @@
 <?php
 
-use Scheb\Tombstone\Analyzer\Test\Fixtures\SampleClass;
+use Scheb\Tombstone\Analyzer\Test\Fixtures\App\Application;
 use Scheb\Tombstone\GraveyardProvider;
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 
@@ -12,5 +12,6 @@ $streamHandler = new AnalyzerLogHandler(__DIR__.'/../_logs');
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 GraveyardProvider::getGraveyard()->setSourceDir(__DIR__);
 
-deadCodeFunction();
-(new SampleClass())->publicMethod();
+(new Application())->run();
+
+unset($streamHandler); //Destruct to free resources
