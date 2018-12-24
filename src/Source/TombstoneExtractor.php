@@ -43,6 +43,10 @@ class TombstoneExtractor
         try {
             $code = file_get_contents($filePath);
             $stmts = $this->parser->parse($code);
+            if (null === $stmts) {
+                throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.');
+            }
+
             $this->traverser->traverse($stmts);
         } catch (Error $e) {
             throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', null, $e);
