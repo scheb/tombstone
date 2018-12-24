@@ -25,7 +25,7 @@
         "psr-4": {
             "Scheb\\Tombstone\\": "src/"
         },
-        "files": ["tombstone.php"]
+        "files": ["src/tombstoneFunction.php"]
     },
     "autoload-dev": {
         "psr-4": {

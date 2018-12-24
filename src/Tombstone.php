@@ -5,7 +5,7 @@ namespace Scheb\Tombstone;
 class Tombstone
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $tombstoneDate;
 
@@ -39,7 +39,7 @@ class Tombstone
      */
     private $vampires = [];
 
-    public function __construct(string $tombstoneDate, ?string $author, ?string $label, string $file, int $line, ?string $method)
+    public function __construct(?string $tombstoneDate, ?string $author, ?string $label, string $file, int $line, ?string $method)
     {
         $this->tombstoneDate = $tombstoneDate;
         $this->author = $author;
@@ -66,7 +66,7 @@ class Tombstone
         return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() === $this->tombstoneDate && $tombstone->getLabel() === $this->label;
     }
 
-    public function getTombstoneDate(): string
+    public function getTombstoneDate(): ?string
     {
         return $this->tombstoneDate;
     }

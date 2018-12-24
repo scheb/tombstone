@@ -85,7 +85,7 @@ class Vampire
         $this->tombstone = $tombstone;
     }
 
-    public function getTombstoneDate(): string
+    public function getTombstoneDate(): ?string
     {
         return $this->tombstone->getTombstoneDate();
     }
