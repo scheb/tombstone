@@ -62,7 +62,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         foreach ($result as $tombstone) {
             $this->output->newLine();
             $this->output->printTombstone($tombstone, 'Vampire');
-            $invokers = array();
+            $invokers = [];
             foreach ($tombstone->getVampires() as $vampire) {
                 $invokers[] = $vampire->getInvoker();
             }

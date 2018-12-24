@@ -10,22 +10,22 @@ class AnalyzerResult
     /**
      * @var AnalyzerFileResult[]
      */
-    private $perFile = array();
+    private $perFile = [];
 
     /**
      * @var Tombstone[]
      */
-    private $dead = array();
+    private $dead = [];
 
     /**
      * @var Tombstone[]
      */
-    private $undead = array();
+    private $undead = [];
 
     /**
      * @var Vampire[]
      */
-    private $deleted = array();
+    private $deleted = [];
 
     public function addDead(Tombstone $tombstone): void
     {

@@ -15,7 +15,7 @@ class PhpFileFormatter
     {
         $buffer = file_get_contents($file);
         $tokens = token_get_all($buffer);
-        $result = array('');
+        $result = [''];
         $i = 0;
         $stringFlag = false;
         $fileEndsWithNewLine = "\n" == substr($buffer, -1);
@@ -44,8 +44,8 @@ class PhpFileFormatter
             list($token, $value) = $token;
 
             $value = str_replace(
-                array("\t", ' '),
-                array('&nbsp;&nbsp;&nbsp;&nbsp;', '&nbsp;'),
+                ["\t", ' '],
+                ['&nbsp;&nbsp;&nbsp;&nbsp;', '&nbsp;'],
                 htmlspecialchars($value, ENT_COMPAT)
             );
 

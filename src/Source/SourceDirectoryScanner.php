@@ -22,10 +22,10 @@ class SourceDirectoryScanner
      * @param string             $sourcePath
      * @param array              $regularExpressions Match source files against passed patterns. Defaults to ['*.php']
      */
-    public function __construct(TombstoneExtractor $tombstoneExtractor, string $sourcePath, array $regularExpressions = array('*.php'))
+    public function __construct(TombstoneExtractor $tombstoneExtractor, string $sourcePath, array $regularExpressions = ['*.php'])
     {
         $this->tombstoneExtractor = $tombstoneExtractor;
-        $finder = new FinderFacade(array($sourcePath), array(), $regularExpressions);
+        $finder = new FinderFacade([$sourcePath], [], $regularExpressions);
         $this->files = $finder->findFiles();
     }
 

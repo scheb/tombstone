@@ -15,17 +15,17 @@ class AnalyzerFileResult
     /**
      * @var Tombstone[]
      */
-    private $dead = array();
+    private $dead = [];
 
     /**
      * @var Tombstone[]
      */
-    private $undead = array();
+    private $undead = [];
 
     /**
      * @var Vampire[]
      */
-    private $deleted = array();
+    private $deleted = [];
 
     public function __construct(string $file)
     {

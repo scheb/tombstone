@@ -14,17 +14,17 @@ class ResultDirectory
     /**
      * @var ResultDirectory[]
      */
-    private $directories = array();
+    private $directories = [];
 
     /**
      * @var AnalyzerFileResult[]
      */
-    private $files = array();
+    private $files = [];
 
     /**
      * @param string[] $path
      */
-    public function __construct(array $path = array())
+    public function __construct(array $path = [])
     {
         $this->path = $path;
     }
@@ -90,7 +90,7 @@ class ResultDirectory
         if (isset($this->directories[$dirName])) {
             $directory = $this->directories[$dirName];
         } else {
-            $directory = new ResultDirectory(array_merge($this->path, array($dirName)));
+            $directory = new ResultDirectory(array_merge($this->path, [$dirName]));
             $this->directories[$dirName] = $directory;
         }
 

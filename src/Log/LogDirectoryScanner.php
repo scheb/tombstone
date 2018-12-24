@@ -24,7 +24,7 @@ class LogDirectoryScanner
     public function __construct(LogReader $logReader, string $logDir)
     {
         $this->logReader = $logReader;
-        $finder = new FinderFacade(array($logDir), array(), array('*.tombstone'));
+        $finder = new FinderFacade([$logDir], [], ['*.tombstone']);
         $this->files = $finder->findFiles();
     }
 

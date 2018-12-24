@@ -22,7 +22,7 @@ class TombstoneVisitor extends NameResolver
     /**
      * @var string[]
      */
-    private $currentMethod = array();
+    private $currentMethod = [];
 
     /**
      * @var string
@@ -113,7 +113,7 @@ class TombstoneVisitor extends NameResolver
      */
     private function extractParameters(FuncCall $node): array
     {
-        $params = array();
+        $params = [];
         foreach ($node->args as $arg) {
             if ($arg->value instanceof String_) {
                 $params[] = $arg->value->value;

@@ -54,7 +54,7 @@ class FileRenderer implements ReportGeneratorInterface
         $tombstonesList = $this->renderTombstonesList($fileResult);
         $sourceCode = $this->formatSourceCode($fileResult);
         $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
-        $this->fileTemplate->setVar(array(
+        $this->fileTemplate->setVar([
             'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
             'full_path' => $fileResult->getFile(),
             'breadcrumb' => $this->renderBreadcrumb($relativeFilePath),
@@ -62,7 +62,7 @@ class FileRenderer implements ReportGeneratorInterface
             'source_code' => $sourceCode,
             'date' => date('r'),
             'version' => Application::VERSION,
-        ));
+        ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$relativeFilePath.'.html';
         $reportDir = dirname($reportFile);
@@ -74,7 +74,7 @@ class FileRenderer implements ReportGeneratorInterface
 
     private function renderTombstonesList(AnalyzerFileResult $fileResult): string
     {
-        $tombstoneList = array();
+        $tombstoneList = [];
 
         /** @var Tombstone[] $renderTombstones */
         $renderTombstones = array_merge($fileResult->getDead(), $fileResult->getUndead());
@@ -94,20 +94,20 @@ class FileRenderer implements ReportGeneratorInterface
 
     private function renderTombstoneItem(Tombstone $tombstone, string $class): string
     {
-        $this->tombstoneTemplate->setVar(array(
+        $this->tombstoneTemplate->setVar([
             'tombstone' => (string) $tombstone,
             'line' => $tombstone->getLine(),
             'method' => $tombstone->getMethod(),
             'level' => $class,
-        ));
+        ]);
 
         return $this->tombstoneTemplate->render();
     }
 
     private function formatSourceCode(AnalyzerFileResult $fileResult): string
     {
-        $deadLines = array();
-        $undeadLines = array();
+        $deadLines = [];
+        $undeadLines = [];
         foreach ($fileResult->getDead() as $tombstone) {
             $deadLines[] = $tombstone->getLine();
         }

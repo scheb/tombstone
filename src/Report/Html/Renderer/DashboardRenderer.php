@@ -78,7 +78,7 @@ class DashboardRenderer implements ReportGeneratorInterface
         $deadPercent = $total ? $numDead / $total * 100 : 0;
         $undeadPercent = $total ? $numUndead / $total * 100 : 0;
 
-        $this->dashboardTemplate->setVar(array(
+        $this->dashboardTemplate->setVar([
             'path_to_root' => './',
             'tombstones_count' => $total,
             'dead_count' => $numDead,
@@ -91,7 +91,7 @@ class DashboardRenderer implements ReportGeneratorInterface
             'full_path' => $this->sourceDir,
             'version' => Application::VERSION,
             'date' => date('r'),
-        ));
+        ]);
         $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
     }
 
@@ -121,13 +121,13 @@ class DashboardRenderer implements ReportGeneratorInterface
             } else {
                 $deadSince = 'since '.$date;
             }
-            $this->deadTemplate->setVar(array(
+            $this->deadTemplate->setVar([
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => $tombstone->getMethod(),
                 'dead_since' => $deadSince,
-            ));
+            ]);
             $itemList .= $this->deadTemplate->render();
         }
 
@@ -139,13 +139,13 @@ class DashboardRenderer implements ReportGeneratorInterface
         $itemList = '';
         foreach ($fileResult->getUndead() as $tombstone) {
             $invocation = $this->renderInvokers($tombstone);
-            $this->undeadTemplate->setVar(array(
+            $this->undeadTemplate->setVar([
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => $tombstone->getMethod(),
                 'invocation' => $invocation,
-            ));
+            ]);
             $itemList .= $this->undeadTemplate->render();
         }
 
@@ -169,13 +169,13 @@ class DashboardRenderer implements ReportGeneratorInterface
     {
         $itemList = '';
         foreach ($fileResult->getDeleted() as $vampire) {
-            $this->deletedTemplate->setVar(array(
+            $this->deletedTemplate->setVar([
                 'path_to_root' => './',
                 'tombstone' => (string) $vampire->getTombstone(),
                 'line' => $vampire->getLine(),
                 'method' => $vampire->getMethod(),
                 'last_call' => TimePeriodFormatter::formatAge($vampire->getInvocationDate()),
-            ));
+            ]);
             $itemList .= $this->deletedTemplate->render();
         }
 
@@ -184,26 +184,26 @@ class DashboardRenderer implements ReportGeneratorInterface
 
     private function renderFile(string $fileName, string $itemList): string
     {
-        $this->fileTemplate->setVar(array(
+        $this->fileTemplate->setVar([
             'file' => $fileName,
             'item_list' => $itemList,
-        ));
+        ]);
 
         return $this->fileTemplate->render();
     }
 
     private function renderInvokers(Tombstone $tombstone): string
     {
-        $invokers = array();
+        $invokers = [];
         foreach ($tombstone->getVampires() as $vampire) {
             $invokers[] = $vampire->getInvoker();
         }
         $invokers = array_unique($invokers);
         $invokersString = '';
         foreach ($invokers as $invoker) {
-            $this->invokerTemplate->setVar(array(
+            $this->invokerTemplate->setVar([
                 'invoker' => $invoker ?: 'global scope',
-            ));
+            ]);
             $invokersString .= $this->invokerTemplate->render();
         }
 

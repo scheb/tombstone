@@ -36,7 +36,7 @@ class Analyzer
      */
     private function match(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex): array
     {
-        $unmatched = array();
+        $unmatched = [];
 
         /** @var Vampire $vampire */
         foreach ($vampireIndex as $vampire) {

@@ -41,7 +41,7 @@ class Application extends AbstractApplication
     {
         $output->writeln('Tombstone Analyzer '.$this->getVersion());
         if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(array('--help'));
+            $input = new ArrayInput(['--help']);
         }
         AbstractApplication::doRun($input, $output);
     }

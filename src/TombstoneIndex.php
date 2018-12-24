@@ -15,22 +15,22 @@ class TombstoneIndex implements \Countable, \Iterator
     /**
      * @var Tombstone[]
      */
-    private $tombstones = array();
+    private $tombstones = [];
 
     /**
      * @var Tombstone[]
      */
-    private $fileLineIndex = array();
+    private $fileLineIndex = [];
 
     /**
      * @var Tombstone[]
      */
-    private $relativeFileLineIndex = array();
+    private $relativeFileLineIndex = [];
 
     /**
      * @var Tombstone[][]
      */
-    private $methodIndex = array();
+    private $methodIndex = [];
 
     public function __construct(string $sourceDir)
     {
@@ -49,7 +49,7 @@ class TombstoneIndex implements \Countable, \Iterator
 
         $methodName = $tombstone->getMethod();
         if (!isset($this->methodIndex[$methodName])) {
-            $this->methodIndex[$methodName] = array();
+            $this->methodIndex[$methodName] = [];
         }
         $this->methodIndex[$methodName][] = $tombstone;
     }

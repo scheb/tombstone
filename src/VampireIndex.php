@@ -9,7 +9,7 @@ class VampireIndex implements \Countable, \Iterator
     /**
      * @var Vampire[]
      */
-    private $vampires = array();
+    private $vampires = [];
 
     /**
      * @var int[]

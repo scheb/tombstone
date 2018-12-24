@@ -81,14 +81,14 @@ class DirectoryRenderer implements ReportGeneratorInterface
             $filesList .= $this->renderDirectoryItem($name, $link, $fileResult);
         }
 
-        $this->directoryTemplate->setVar(array(
+        $this->directoryTemplate->setVar([
             'path_to_root' => './'.str_repeat('../', substr_count($directoryPath, '/') + ($directoryPath ? 1 : 0)),
             'full_path' => PathTools::makePathAbsolute($directoryPath, $this->sourceDir),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
             'date' => date('r'),
             'version' => Application::VERSION,
-        ));
+        ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$directoryPath.'/index.html';
         $reportDir = dirname($reportFile);
@@ -122,7 +122,7 @@ class DirectoryRenderer implements ReportGeneratorInterface
 
         $bar = $this->renderBar($deadCount, $totalCount);
 
-        $this->directoryItemTemplate->setVar(array(
+        $this->directoryItemTemplate->setVar([
             'name' => $name,
             'icon' => $result instanceof AnalyzerFileResult ? 'file' : 'folder-open',
             'link' => $link,
@@ -131,17 +131,17 @@ class DirectoryRenderer implements ReportGeneratorInterface
             'total' => $totalCount,
             'numDead' => $deadCount,
             'numUndead' => $undeadCount,
-        ));
+        ]);
 
         return $this->directoryItemTemplate->render();
     }
 
     private function renderBar(int $numDead, int $total): string
     {
-        $this->barTemplate->setVar(array(
+        $this->barTemplate->setVar([
             'level' => 'success',
             'percent' => round($numDead / $total * 100, 2),
-        ));
+        ]);
 
         return $this->barTemplate->render();
     }

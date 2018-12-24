@@ -15,10 +15,10 @@ class PathTools
             return $path;
         }
 
-        $directorySeparatorReplacement = array(
+        $directorySeparatorReplacement = [
             '/' => DIRECTORY_SEPARATOR,
             '\\' => DIRECTORY_SEPARATOR,
-        );
+        ];
 
         return $rootDir.($path ? DIRECTORY_SEPARATOR.strtr($path, $directorySeparatorReplacement) : '');
     }
