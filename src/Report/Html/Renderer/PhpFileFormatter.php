@@ -41,7 +41,7 @@ class PhpFileFormatter
                 continue;
             }
 
-            list($token, $value) = $token;
+            [$token, $value] = $token;
 
             $value = str_replace(
                 ["\t", ' '],
