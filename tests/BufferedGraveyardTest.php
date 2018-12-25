@@ -39,11 +39,8 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
-    public function flush_tombstonesBuffered_addTombstonesAndFlush(): void
+    public function flush_tombstonesBuffered_addBufferedTombstonesAndFlush(): void
     {
-        $this->graveyard->tombstone('2018-01-01', 'author1', 'label1', ['trace1']);
-        $this->graveyard->tombstone('2018-02-01', 'author2', 'label2', ['trace2']);
-
         $this->innerGraveyard
             ->expects($this->exactly(2))
             ->method('tombstone')
@@ -53,9 +50,13 @@ class BufferedGraveyardTest extends TestCase
             );
 
         $this->innerGraveyard
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('flush');
 
+        $this->graveyard->tombstone('2018-01-01', 'author1', 'label1', ['trace1']);
+        $this->graveyard->flush();
+
+        $this->graveyard->tombstone('2018-02-01', 'author2', 'label2', ['trace2']);
         $this->graveyard->flush();
     }
 }

@@ -29,6 +29,7 @@ class BufferedGraveyard implements GraveyardInterface
         foreach ($this->tombstoneCalls as $args) {
             $this->graveyard->tombstone(... $args);
         }
+        $this->tombstoneCalls = [];
         $this->graveyard->flush();
     }
 }
