@@ -6,7 +6,7 @@ use Scheb\Tombstone\Handler\HandlerInterface;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 use Scheb\Tombstone\Tracing\TraceProvider;
 
-class Graveyard
+class Graveyard implements GraveyardInterface
 {
     /**
      * @var HandlerInterface[]

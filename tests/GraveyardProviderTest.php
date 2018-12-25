@@ -3,6 +3,7 @@
 namespace Scheb\Tombstone\Test;
 
 use Scheb\Tombstone\Graveyard;
+use Scheb\Tombstone\GraveyardInterface;
 use Scheb\Tombstone\GraveyardProvider;
 
 class GraveyardProviderTest extends TestCase
@@ -21,7 +22,7 @@ class GraveyardProviderTest extends TestCase
      */
     public function setGraveyard_newGraveyard_exchangeGraveyard(): void
     {
-        $graveyard = $this->createMock(Graveyard::class);
+        $graveyard = $this->createMock(GraveyardInterface::class);
         GraveyardProvider::setGraveyard($graveyard);
         $returnValue = GraveyardProvider::getGraveyard();
         $this->assertSame($graveyard, $returnValue);

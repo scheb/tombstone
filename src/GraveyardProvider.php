@@ -5,11 +5,11 @@ namespace Scheb\Tombstone;
 class GraveyardProvider
 {
     /**
-     * @var Graveyard
+     * @var GraveyardInterface
      */
     private static $graveyard;
 
-    public static function getGraveyard(): Graveyard
+    public static function getGraveyard(): GraveyardInterface
     {
         if (null === self::$graveyard) {
             self::$graveyard = new Graveyard();
@@ -18,7 +18,7 @@ class GraveyardProvider
         return self::$graveyard;
     }
 
-    public static function setGraveyard(Graveyard $graveyard): void
+    public static function setGraveyard(GraveyardInterface $graveyard): void
     {
         self::$graveyard = $graveyard;
     }
