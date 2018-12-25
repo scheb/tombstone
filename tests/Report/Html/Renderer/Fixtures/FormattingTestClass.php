@@ -5,7 +5,7 @@ namespace Scheb\Tombstone\Analyzer\Test\Report\Html\Renderer\Fixtures;
 class FormattingTestClass
 {
     /** PHPDoc */
-    public function test()
+    public function test(string $arg): void
     {
         // Comment
         echo "foo";
