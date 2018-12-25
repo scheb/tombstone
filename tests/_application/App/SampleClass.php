@@ -1,6 +1,6 @@
 <?php
 
-namespace Scheb\Tombstone\Analyzer\Test\Fixtures\App;
+namespace Scheb\Tombstone\Analyzer\TestApplication\App;
 
 class SampleClass
 {

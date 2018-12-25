@@ -1,24 +1,17 @@
 <?php
 
-namespace Scheb\Tombstone\Analyzer\Test;
+namespace Scheb\Tombstone\Analyzer\Test\Cli;
 
-use Scheb\Tombstone\Analyzer\Analyzer;
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Log\LogDirectoryScanner;
-use Scheb\Tombstone\Analyzer\Log\LogReader;
-use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
-use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
-use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
-use Scheb\Tombstone\Analyzer\Source\SourceDirectoryScanner;
-use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
-use Scheb\Tombstone\Analyzer\TombstoneIndex;
-use Scheb\Tombstone\Analyzer\VampireIndex;
+use Scheb\Tombstone\Analyzer\Cli\Command;
+use Scheb\Tombstone\Analyzer\Test\TestCase;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 
-class TombstoneAnalyzerIntegrationTest extends TestCase
+class CommandTest extends TestCase
 {
-    private const SOURCE_DIR = __DIR__.'/Fixtures';
-    private const LOG_DIR = __DIR__.'/_logs';
-    private const REPORT_DIR = __DIR__.'/_report';
+    private const SOURCE_DIR = __DIR__.'/../_application';
+    private const LOG_DIR = __DIR__.'/../_logs';
+    private const REPORT_DIR = __DIR__.'/../_report';
     private const EXPECTED_REPORT_FILES = [
         '.gitkeep',
         'App',
@@ -43,47 +36,44 @@ class TombstoneAnalyzerIntegrationTest extends TestCase
     ];
 
     /**
-     * @var AnalyzerResult
-     */
-    private $analyzerResult;
-
-    /**
      * @test
-     * @coversNothing
+     * @covers \Scheb\Tombstone\Analyzer\Cli\Command
      */
     public function generate_logsAndSourceGiven_createHtmlReport(): void
     {
         $this->runTestApplication();
         $this->generateReport();
         $this->assertReportFileStructure();
-        $this->assertReportResult();
     }
 
     private function runTestApplication(): void
     {
-        require_once __DIR__.'/Fixtures/run.php';
+        exec('php '.__DIR__.'/../_application/run.php');
     }
 
     private function generateReport(): void
     {
-        $sourceScanner = new SourceDirectoryScanner(
-            TombstoneExtractorFactory::create(
-                new TombstoneIndex(self::SOURCE_DIR)
-            ),
-            self::SOURCE_DIR,
-            ['*.php']
-        );
-        $tombstoneIndex = $sourceScanner->getTombstones(function () {});
-        $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), self::LOG_DIR);
-        $vampireIndex = $logScanner->getVampires(function () {});
-        $analyzer = new Analyzer([
-            new MethodNameStrategy(),
-            new PositionStrategy(),
-        ]);
-        $this->analyzerResult = $analyzer->getResult($tombstoneIndex, $vampireIndex);
+        $input = $this->createMock(InputInterface::class);
+        $output = new BufferedOutput();
 
-        $report = new HtmlReportGenerator(self::REPORT_DIR, self::SOURCE_DIR);
-        $report->generate($this->analyzerResult);
+        $input
+            ->expects($this->any())
+            ->method('getArgument')
+            ->willReturnMap([
+                ['log-dir', self::LOG_DIR],
+                ['source-dir', self::SOURCE_DIR],
+            ]);
+
+        $input
+            ->expects($this->any())
+            ->method('getOption')
+            ->willReturnMap([
+                ['report-html', self::REPORT_DIR],
+                ['source-match', ['*.php']],
+            ]);
+
+        $command = new Command();
+        $command->run($input, $output);
     }
 
     private function assertReportFileStructure(): void
@@ -98,7 +88,7 @@ class TombstoneAnalyzerIntegrationTest extends TestCase
             new \RecursiveDirectoryIterator(self::REPORT_DIR, \RecursiveDirectoryIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::CHILD_FIRST
         );
-        $relativePathStart = strlen(self::REPORT_DIR) + 1;
+        $relativePathStart = strlen(realpath(self::REPORT_DIR)) + 1;
         $files = [];
         foreach ($iterator as $fileInfo) {
             $files[] = str_replace('\\', '/', substr($fileInfo->getRealPath(), $relativePathStart));
@@ -106,13 +96,6 @@ class TombstoneAnalyzerIntegrationTest extends TestCase
         sort($files);
 
         return $files;
-    }
-
-    private function assertReportResult(): void
-    {
-        $this->assertEquals(2, $this->analyzerResult->getDeadCount());
-        $this->assertEquals(4, $this->analyzerResult->getUndeadCount());
-        $this->assertEquals(0, $this->analyzerResult->getDeletedCount());
     }
 
     public function tearDown()
