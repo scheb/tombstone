@@ -46,6 +46,27 @@ $streamHandler = new StreamHandler("$logDir/tombstones.log");
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 ```
 
+### Buffered graveyard
+
+The default `Graveyard` class is writing tombstones to the handlers right away. If you want to delay the write - e.g.
+for performance reasons - and flush the tombstones at a later point, use the `BufferedGraveyard`.
+
+```
+use Scheb\Tombstone\BufferedGraveyard;
+use Scheb\Tombstone\GraveyardProvider;
+
+$bufferedGraveyard = new BufferedGraveyard(GraveyardProvider::getGraveyard());
+GraveyardProvider::setGraveyard($bufferedGraveyard);
+
+// Call the flush manually
+$bufferedGraveyard->flush();
+
+// Or flush in the shutdown handler
+register_shutdown_function(function () use ($bufferedGraveyard) {
+    $bufferedGraveyard->flush();
+});
+```
+
 [Read more about handlers and formatters below](#handlers-formatters).
 
 ### Relative Path Logs
