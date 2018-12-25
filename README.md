@@ -51,7 +51,7 @@ GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 The default `Graveyard` class is writing tombstones to the handlers right away. If you want to delay the write - e.g.
 for performance reasons - and flush the tombstones at a later point, use the `BufferedGraveyard`.
 
-```
+```php
 use Scheb\Tombstone\BufferedGraveyard;
 use Scheb\Tombstone\GraveyardProvider;
 
