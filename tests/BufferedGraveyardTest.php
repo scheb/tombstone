@@ -57,6 +57,5 @@ class BufferedGraveyardTest extends TestCase
             ->method('flush');
 
         $this->graveyard->flush();
-
     }
 }
