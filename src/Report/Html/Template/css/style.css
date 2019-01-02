@@ -2,8 +2,16 @@ body {
     padding-top: 10px;
 }
 
+.progress {
+    height: 24px;
+}
+
+.dashboard h3 {
+    margin-top: 0.8em;
+}
+
 .tombstone-list {
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
 .tombstone-list img {
@@ -12,6 +20,7 @@ body {
 
 .tombstone-list h4 {
     margin-top: 0;
+    font-size: 1em;
 }
 
 .tombstone-list .list-group-item-danger {
@@ -35,6 +44,17 @@ body {
     width: 100%;
 }
 
+.octicon {
+    display: inline-block;
+    vertical-align: baseline;
+    fill: currentColor;
+}
+
+h3 .octicon {
+    height: 32px;
+    vertical-align: text-bottom;
+}
+
 .icon-vampire td.number {
     background: url('../img/vampire.png') left center no-repeat;
 }
@@ -52,6 +72,11 @@ body {
 .tombstones-distribution {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.tombstones-total .progress-bar,
+.tombstones-distribution .progress-bar {
+    font-size: 1.2em;
 }
 
 .tombstone-detail {

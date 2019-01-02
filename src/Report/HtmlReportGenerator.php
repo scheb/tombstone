@@ -50,7 +50,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     {
         $this->createDirectory($this->reportDir);
         $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'css', $this->reportDir.DIRECTORY_SEPARATOR.'css');
-        $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'fonts', $this->reportDir.DIRECTORY_SEPARATOR.'fonts');
+        $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'icons', $this->reportDir.DIRECTORY_SEPARATOR.'icons');
         $this->copyDirectoryFiles($this->templateDir.DIRECTORY_SEPARATOR.'img', $this->reportDir.DIRECTORY_SEPARATOR.'img');
     }
 

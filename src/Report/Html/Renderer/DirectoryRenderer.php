@@ -69,20 +69,21 @@ class DirectoryRenderer implements ReportGeneratorInterface
     private function renderDirectory(ResultDirectory $directory): void
     {
         $directoryPath = $directory->getPath();
+        $pathToRoot = './'.str_repeat('../', substr_count($directoryPath, '/') + ($directoryPath ? 1 : 0));
         $filesList = '';
         foreach ($directory->getDirectories() as $subDir) {
             $name = $subDir->getName();
             $link = './'.$subDir->getName().'/index.html';
-            $filesList .= $this->renderDirectoryItem($name, $link, $subDir);
+            $filesList .= $this->renderDirectoryItem($name, $link, $subDir, $pathToRoot);
         }
         foreach ($directory->getFiles() as $fileResult) {
             $name = basename($fileResult->getFile());
             $link = './'.$name.'.html';
-            $filesList .= $this->renderDirectoryItem($name, $link, $fileResult);
+            $filesList .= $this->renderDirectoryItem($name, $link, $fileResult, $pathToRoot);
         }
 
         $this->directoryTemplate->setVar([
-            'path_to_root' => './'.str_repeat('../', substr_count($directoryPath, '/') + ($directoryPath ? 1 : 0)),
+            'path_to_root' => $pathToRoot,
             'full_path' => PathTools::makePathAbsolute($directoryPath, $this->sourceDir),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
@@ -102,10 +103,11 @@ class DirectoryRenderer implements ReportGeneratorInterface
      * @param string                             $name
      * @param string                             $link
      * @param AnalyzerFileResult|ResultDirectory $result
+     * @param string                             $pathToRoot
      *
      * @return string
      */
-    private function renderDirectoryItem(string $name, string $link, $result): string
+    private function renderDirectoryItem(string $name, string $link, $result, string $pathToRoot): string
     {
         $deadCount = $result->getDeadCount();
         $undeadCount = $result->getUndeadCount();
@@ -124,7 +126,8 @@ class DirectoryRenderer implements ReportGeneratorInterface
 
         $this->directoryItemTemplate->setVar([
             'name' => $name,
-            'icon' => $result instanceof AnalyzerFileResult ? 'file' : 'folder-open',
+            'path_to_root' => $pathToRoot,
+            'icon' => $result instanceof AnalyzerFileResult ? 'code' : 'directory',
             'link' => $link,
             'class' => $class,
             'bar' => $bar,
@@ -149,20 +152,20 @@ class DirectoryRenderer implements ReportGeneratorInterface
     private function renderBreadcrumb(string $directoryPath): string
     {
         if (!$directoryPath) {
-            return '<li class="active">'.$this->sourceDir.'</li> ';
+            return '<li class="breadcrumb-item">'.$this->sourceDir.'</li> ';
         }
 
         $parts = explode('/', $directoryPath);
         $numParts = count($parts);
-        $breadcrumbString = '<li><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->sourceDir.'</a></li> ';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->sourceDir.'</a></li> ';
 
         $folderUp = $numParts - 1;
         while ($label = array_shift($parts)) {
             if (!$parts) {
-                $breadcrumbString .= '<li class="active">'.$label.'</li> ';
+                $breadcrumbString .= '<li class="breadcrumb-item active">'.$label.'</li> ';
             } else {
                 $link = './'.str_repeat('../', $folderUp).'index.html';
-                $breadcrumbString .= sprintf('<li><a href="%s">%s</a></li> ', $link, $label);
+                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, $label);
             }
             --$folderUp;
         }
