@@ -40,10 +40,10 @@ class Graveyard implements GraveyardInterface
         $this->handlers[] = $handler;
     }
 
-    public function tombstone(string $date, ?string $author, ?string $label, array $trace): void
+    public function tombstone(array $arguments, array $trace): void
     {
         $trace = $this->traceRelativePath($trace);
-        $vampire = Vampire::createFromCall($date, $author, $label, $trace);
+        $vampire = Vampire::createFromCall($arguments, $trace);
         foreach ($this->handlers as $handler) {
             $handler->log($vampire);
         }

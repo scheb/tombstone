@@ -27,11 +27,10 @@ $ composer require scheb/tombstone
 
 2) Define a `tombstone()` function
 
-You have to define a function `tombstone($date, $author, $label = null)`. The library is shipped with a default
-implementation. Simply include `tombstone.php` from the libraries root directory in your bootstrap.
-
-If you don't like the default implementation, you can implement the function on your own, as long as the signature is
-the same (important for code analysis).
+You have to define a function `tombstone(string ...$arguments): void`. The library is shipped with a default
+implementation. Include `tombstone.php` from the libraries root directory in your bootstrap. If you don't like the
+default implementation, you can implement the function on your own, only have a list of string as arguments (important
+for code analysis).
 
 3) Configure the graveyard
 

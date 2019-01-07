@@ -2,10 +2,10 @@
 
 namespace Scheb\Tombstone\Test\Handler;
 
-use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 use Scheb\Tombstone\Test\Fixtures\VampireFixture;
 use Scheb\Tombstone\Test\Logging\AnalyzerLogFormatTest;
+use Scheb\Tombstone\Test\TestCase;
 
 class AnalyzerLogHandlerTest extends TestCase
 {
@@ -88,7 +88,7 @@ class AnalyzerLogHandlerTest extends TestCase
     public function log_logWritten_isAnalyzerLogFormat(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
-        $handler->log(VampireFixture::getVampire());
+        $handler->log(VampireFixture::getVampire(...AnalyzerLogFormatTest::TOMBSTONE_ARGUMENTS));
 
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);

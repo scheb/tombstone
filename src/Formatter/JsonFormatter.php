@@ -9,9 +9,7 @@ class JsonFormatter implements FormatterInterface
     public function format(Vampire $vampire): string
     {
         return json_encode([
-            'tombstoneDate' => $vampire->getTombstoneDate(),
-            'author' => $vampire->getAuthor(),
-            'label' => $vampire->getLabel(),
+            'arguments' => $vampire->getArguments(),
             'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),

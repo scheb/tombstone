@@ -2,15 +2,13 @@
 
 if (!function_exists('tombstone')) {
     /**
-     * @param string      $date   Any date format strtotime() understands
-     * @param string|null $author Your name
-     * @param string|null $label  An optional label for the tombstone
+     * @param string ...$arguments
      */
-    function tombstone(string $date, ?string $author = null, ?string $label = null)
+    function tombstone(string ...$arguments): void
     {
         try {
             $trace = \Scheb\Tombstone\Tracing\TraceProvider::getTraceHere();
-            \Scheb\Tombstone\GraveyardProvider::getGraveyard()->tombstone($date, $author, $label, $trace);
+            \Scheb\Tombstone\GraveyardProvider::getGraveyard()->tombstone($arguments, $trace);
         } catch (\Exception $e) {
         }
     }

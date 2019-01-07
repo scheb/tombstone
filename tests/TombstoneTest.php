@@ -8,33 +8,40 @@ use Scheb\Tombstone\Vampire;
 class TombstoneTest extends TestCase
 {
     /**
-     * @param string $date
-     * @param string $author
-     * @param string $label
+     * @param string[] $arguments
      *
      * @return Tombstone
      */
-    private function createTombstone(string $date = '2015-08-19', ?string $author = 'author', ?string $label = 'label'): Tombstone
+    private function createTombstone(string ...$arguments): Tombstone
     {
-        return new Tombstone($date, $author, $label, 'file', 123, 'method');
+        return new Tombstone($arguments, 'file', 123, 'method');
     }
 
     /**
      * @test
      */
-    public function toString_withLabel_returnString(): void
+    public function toString_argumentsGiven_returnString(): void
     {
-        $tombstone = $this->createTombstone();
-        $this->assertEquals('tombstone("2015-08-19", "author", "label")', (string) $tombstone);
-    }
-
-    /**
-     * @test
-     */
-    public function toString_withoutLabel_returnString(): void
-    {
-        $tombstone = $this->createTombstone('2015-08-19', 'author', null);
+        $tombstone = $this->createTombstone('2015-08-19', 'author');
         $this->assertEquals('tombstone("2015-08-19", "author")', (string) $tombstone);
+    }
+
+    /**
+     * @test
+     */
+    public function toString_dateArgumentGiven_returnFirstDetectedTombstoneDate(): void
+    {
+        $tombstone = $this->createTombstone('label', '123', '2015-02-02', '2015-03-03');
+        $this->assertEquals('2015-02-02', $tombstone->getTombstoneDate());
+    }
+
+    /**
+     * @test
+     */
+    public function toString_noDateArgument_returnNull(): void
+    {
+        $tombstone = $this->createTombstone('label', '123');
+        $this->assertNull($tombstone->getTombstoneDate());
     }
 
     /**
@@ -44,7 +51,7 @@ class TombstoneTest extends TestCase
     {
         $tombstone = $this->createTombstone();
         $hash = $tombstone->getHash();
-        $this->assertEquals('25538d2a7fcf16500d7e4feb075ff8bb', $hash);
+        $this->assertEquals('f5825bfeac4236f671b94bab85752767', $hash);
     }
 
     /**

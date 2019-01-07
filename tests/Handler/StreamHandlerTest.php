@@ -9,20 +9,17 @@
 
 namespace Scheb\Tombstone\Test\Handler;
 
-use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Handler\StreamHandler;
 use Scheb\Tombstone\Test\Fixtures\VampireFixture;
 use Scheb\Tombstone\Test\Stubs\LabelFormatter;
+use Scheb\Tombstone\Test\TestCase;
 use Scheb\Tombstone\Vampire;
 
 class StreamHandlerTest extends TestCase
 {
-    /**
-     * @return Vampire
-     */
     public function getRecord($label = 'label'): Vampire
     {
-        return VampireFixture::getVampire('2015-08-19', 'scheb', $label);
+        return VampireFixture::getVampire($label);
     }
 
     /**

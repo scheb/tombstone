@@ -8,14 +8,12 @@ class LineFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        $template = '%s - Vampire detected: tombstone("%s", "%s"%s), in file %s:%s, in function %s, invoked by %s'."\n";
+        $template = '%s - Vampire detected: %s, in file %s:%s, in function %s, invoked by %s'."\n";
 
         return sprintf(
             $template,
             $vampire->getInvocationDate(),
-            $vampire->getTombstoneDate(),
-            $vampire->getAuthor(),
-            $vampire->getLabel() ? ', "'.$vampire->getLabel().'"' : '',
+            (string) $vampire->getTombstone(),
             $vampire->getFile(),
             $vampire->getLine(),
             $vampire->getMethod(),

@@ -33,7 +33,7 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->never())
             ->method($this->anything());
 
-        $this->graveyard->tombstone('2018-01-01', 'author1', 'label1', ['trace1']);
+        $this->graveyard->tombstone(['args'], ['trace1']);
     }
 
     /**
@@ -45,18 +45,18 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->exactly(2))
             ->method('tombstone')
             ->withConsecutive(
-                ['2018-01-01', 'author1', 'label1', ['trace1']],
-                ['2018-02-01', 'author2', 'label2', ['trace2']]
+                [['args'], ['trace1']],
+                [['args'], ['trace2']]
             );
 
         $this->innerGraveyard
             ->expects($this->exactly(2))
             ->method('flush');
 
-        $this->graveyard->tombstone('2018-01-01', 'author1', 'label1', ['trace1']);
+        $this->graveyard->tombstone(['args'], ['trace1']);
         $this->graveyard->flush();
 
-        $this->graveyard->tombstone('2018-02-01', 'author2', 'label2', ['trace2']);
+        $this->graveyard->tombstone(['args'], ['trace2']);
         $this->graveyard->flush();
     }
 }

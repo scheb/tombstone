@@ -9,6 +9,6 @@ class LabelFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        return $vampire->getLabel() ?? '';
+        return implode(',', $vampire->getArguments());
     }
 }

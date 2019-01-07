@@ -7,15 +7,13 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogFormat
 {
-    private const CURRENT_VERSION = 1;
+    private const CURRENT_VERSION = 2;
 
     public static function vampireToLog(Vampire $vampire): string
     {
         return json_encode([
             'v' => self::CURRENT_VERSION,
-            'd' => $vampire->getTombstoneDate(),
-            'a' => $vampire->getAuthor(),
-            'l' => $vampire->getLabel(),
+            'a' => $vampire->getArguments(),
             'f' => $vampire->getFile(),
             'n' => $vampire->getLine(),
             'm' => $vampire->getMethod(),
@@ -32,8 +30,8 @@ class AnalyzerLogFormat
         }
         $version = (int) $data['v'];
 
-        if (1 === $version) {
-            return new Vampire($data['id'], $data['im'], new Tombstone($data['d'], $data['a'], $data['l'], $data['f'], $data['n'], $data['m']));
+        if (self::CURRENT_VERSION === $version) {
+            return new Vampire($data['id'], $data['im'], new Tombstone($data['a'], $data['f'], $data['n'], $data['m']));
         }
 
         return null;

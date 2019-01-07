@@ -2,10 +2,11 @@
 
 namespace Scheb\Tombstone\Test\Handler;
 
-use Scheb\Tombstone\Test\TestCase;
+use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Handler\PsrLoggerHandler;
 use Scheb\Tombstone\Test\Fixtures\VampireFixture;
 use Scheb\Tombstone\Test\Stubs\LabelFormatter;
+use Scheb\Tombstone\Test\TestCase;
 
 class PsrLoggerHandlerTest extends TestCase
 {
@@ -14,7 +15,7 @@ class PsrLoggerHandlerTest extends TestCase
      */
     public function log_logMessageGiven_forwardToPsrLogger(): void
     {
-        $logger = $this->createMock('Psr\Log\LoggerInterface');
+        $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->once())
             ->method('log')
@@ -23,6 +24,6 @@ class PsrLoggerHandlerTest extends TestCase
         $handler = new PsrLoggerHandler($logger, 'level');
         $handler->setFormatter(new LabelFormatter());
 
-        $handler->log(VampireFixture::getVampire());
+        $handler->log(VampireFixture::getVampire('label'));
     }
 }

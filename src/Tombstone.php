@@ -5,19 +5,14 @@ namespace Scheb\Tombstone;
 class Tombstone
 {
     /**
+     * @var string[]
+     */
+    private $arguments;
+
+    /**
      * @var string|null
      */
     private $tombstoneDate;
-
-    /**
-     * @var string|null
-     */
-    private $author;
-
-    /**
-     * @var string|null
-     */
-    private $label;
 
     /**
      * @var string
@@ -39,46 +34,54 @@ class Tombstone
      */
     private $vampires = [];
 
-    public function __construct(?string $tombstoneDate, ?string $author, ?string $label, string $file, int $line, ?string $method)
+    public function __construct(array $arguments, string $file, int $line, ?string $method)
     {
-        $this->tombstoneDate = $tombstoneDate;
-        $this->author = $author;
+        $this->arguments = $arguments;
+        $this->tombstoneDate = $this->findDate($arguments);
         $this->file = $file;
         $this->line = $line;
         $this->method = $method;
-        $this->label = $label;
     }
 
     public function __toString(): string
     {
-        $label = $this->label ? ', "'.$this->label.'"' : '';
+        $argumentsList = '';
+        if (count($this->arguments)) {
+            $argumentsList = '"'.implode('", "', $this->arguments).'"';
+        }
 
-        return sprintf('tombstone("%s", "%s"%s)', $this->tombstoneDate, $this->author, $label);
+        return 'tombstone('.$argumentsList.')';
     }
 
     public function getHash(): string
     {
-        return md5($this->tombstoneDate."\n".$this->author."\n".$this->label."\n".$this->file."\n".$this->line);
+        return md5($this->file."\n".$this->line."\n".implode(',', $this->arguments));
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool
     {
-        return $tombstone->getAuthor() === $this->author && $tombstone->getTombstoneDate() === $this->tombstoneDate && $tombstone->getLabel() === $this->label;
+        return $tombstone->getArguments() === $this->arguments;
+    }
+
+    private function findDate(array $arguments): ?string
+    {
+        foreach ($arguments as $argument) {
+            if (is_scalar($argument) && false !== strtotime($argument)) {
+                return $argument;
+            }
+        }
+
+        return null;
+    }
+
+    public function getArguments(): array
+    {
+        return $this->arguments;
     }
 
     public function getTombstoneDate(): ?string
     {
         return $this->tombstoneDate;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
     }
 
     public function getFile(): string
