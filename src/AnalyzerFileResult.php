@@ -5,7 +5,7 @@ namespace Scheb\Tombstone\Analyzer;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
-class AnalyzerFileResult
+class AnalyzerFileResult implements ResultAggregateInterface
 {
     /**
      * @var string

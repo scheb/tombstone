@@ -8,6 +8,7 @@ use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Analyzer\Report\PathTools;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
+use Scheb\Tombstone\Analyzer\ResultAggregateInterface;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class DirectoryRenderer implements ReportGeneratorInterface
@@ -102,12 +103,12 @@ class DirectoryRenderer implements ReportGeneratorInterface
     /**
      * @param string                             $name
      * @param string                             $link
-     * @param AnalyzerFileResult|ResultDirectory $result
+     * @param ResultAggregateInterface $result
      * @param string                             $pathToRoot
      *
      * @return string
      */
-    private function renderDirectoryItem(string $name, string $link, $result, string $pathToRoot): string
+    private function renderDirectoryItem(string $name, string $link, ResultAggregateInterface $result, string $pathToRoot): string
     {
         $deadCount = $result->getDeadCount();
         $undeadCount = $result->getUndeadCount();

@@ -3,8 +3,9 @@
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
+use Scheb\Tombstone\Analyzer\ResultAggregateInterface;
 
-class ResultDirectory
+class ResultDirectory implements ResultAggregateInterface
 {
     /**
      * @var string[]
@@ -58,7 +59,7 @@ class ResultDirectory
     public function getDeadCount(): int
     {
         $count = 0;
-        /** @var ResultDirectory|AnalyzerFileResult $element */
+        /** @var ResultAggregateInterface $element */
         foreach (array_merge($this->directories, $this->files) as $element) {
             $count += $element->getDeadCount();
         }
@@ -69,9 +70,20 @@ class ResultDirectory
     public function getUndeadCount(): int
     {
         $count = 0;
-        /** @var ResultDirectory|AnalyzerFileResult $element */
+        /** @var ResultAggregateInterface $element */
         foreach (array_merge($this->directories, $this->files) as $element) {
             $count += $element->getUndeadCount();
+        }
+
+        return $count;
+    }
+
+    public function getDeletedCount(): int
+    {
+        $count = 0;
+        /** @var ResultAggregateInterface $element */
+        foreach (array_merge($this->directories, $this->files) as $element) {
+            $count += $element->getDeletedCount();
         }
 
         return $count;
