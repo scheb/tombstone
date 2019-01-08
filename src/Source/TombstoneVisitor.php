@@ -84,10 +84,7 @@ class TombstoneVisitor extends NameResolver
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
             $params = $this->extractParameters($node);
-            $date = isset($params[0]) ? $params[0] : null;
-            $author = isset($params[1]) ? $params[1] : null;
-            $label = isset($params[2]) ? $params[2] : null;
-            $tombstone = new Tombstone($date, $author, $label, $this->file, $line, $methodName);
+            $tombstone = new Tombstone($params, $this->file, $line, $methodName);
             $this->tombstoneIndex->addTombstone($tombstone);
         }
     }
