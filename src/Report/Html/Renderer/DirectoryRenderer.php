@@ -75,12 +75,16 @@ class DirectoryRenderer implements ReportGeneratorInterface
         foreach ($directory->getDirectories() as $subDir) {
             $name = $subDir->getName();
             $link = './'.$subDir->getName().'/index.html';
-            $filesList .= $this->renderDirectoryItem($name, $link, $subDir, $pathToRoot);
+            if ($subDir->getDeadCount() || $subDir->getUndeadCount()) {
+                $filesList .= $this->renderDirectoryItem($name, $link, $subDir, $pathToRoot);
+            }
         }
         foreach ($directory->getFiles() as $fileResult) {
             $name = basename($fileResult->getFile());
             $link = './'.$name.'.html';
-            $filesList .= $this->renderDirectoryItem($name, $link, $fileResult, $pathToRoot);
+            if ($fileResult->getDeadCount() || $fileResult->getUndeadCount()) {
+                $filesList .= $this->renderDirectoryItem($name, $link, $fileResult, $pathToRoot);
+            }
         }
 
         $this->directoryTemplate->setVar([
