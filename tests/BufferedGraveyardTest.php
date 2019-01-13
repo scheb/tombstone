@@ -33,7 +33,7 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->never())
             ->method($this->anything());
 
-        $this->graveyard->tombstone(['args'], ['trace1']);
+        $this->graveyard->tombstone(['args'], ['trace1'], ['metaField' => 'metaValue']);
     }
 
     /**
@@ -45,18 +45,18 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->exactly(2))
             ->method('tombstone')
             ->withConsecutive(
-                [['args'], ['trace1']],
-                [['args'], ['trace2']]
+                [['args'], ['trace1'], ['metaField' => 'metaValue1']],
+                [['args'], ['trace2'], ['metaField' => 'metaValue2']]
             );
 
         $this->innerGraveyard
             ->expects($this->exactly(2))
             ->method('flush');
 
-        $this->graveyard->tombstone(['args'], ['trace1']);
+        $this->graveyard->tombstone(['args'], ['trace1'], ['metaField' => 'metaValue1']);
         $this->graveyard->flush();
 
-        $this->graveyard->tombstone(['args'], ['trace2']);
+        $this->graveyard->tombstone(['args'], ['trace2'], ['metaField' => 'metaValue2']);
         $this->graveyard->flush();
     }
 }

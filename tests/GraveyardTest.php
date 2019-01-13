@@ -45,7 +45,7 @@ class GraveyardTest extends TestCase
             ->with($this->isInstanceOf(Vampire::class));
 
         $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->tombstone(['label'], $trace);
+        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
@@ -59,7 +59,7 @@ class GraveyardTest extends TestCase
             ->with($this->isInstanceOf(Vampire::class));
 
         $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->tombstone(['label'], $trace);
+        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
@@ -76,7 +76,7 @@ class GraveyardTest extends TestCase
 
         $trace = TraceFixture::getTraceFixture();
         $this->graveyard->setSourceDir('/path/to');
-        $this->graveyard->tombstone(['label'], $trace);
+        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
@@ -93,7 +93,7 @@ class GraveyardTest extends TestCase
 
         $trace = TraceFixture::getTraceFixture();
         $this->graveyard->setSourceDir('/other/path');
-        $this->graveyard->tombstone(['label'], $trace);
+        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**

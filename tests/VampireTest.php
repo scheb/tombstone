@@ -14,7 +14,8 @@ class VampireTest extends TestCase
     public function createFromCall_dataGiven_returnCorrectlyConstructedVampire(): void
     {
         $stackTrace = TraceFixture::getTraceFixture();
-        $vampire = Vampire::createFromCall(['label', '2015-08-19'], $stackTrace);
+        $metadata = ['metaField' => 'metaValue'];
+        $vampire = Vampire::createFromCall(['label', '2015-08-19'], $stackTrace, $metadata);
 
         $this->assertInstanceOf(Vampire::class, $vampire);
         $this->assertInstanceOf(Tombstone::class, $vampire->getTombstone());
@@ -22,6 +23,7 @@ class VampireTest extends TestCase
         $this->assertEquals('2015-08-19', $vampire->getTombstoneDate());
         $this->assertEquals('/path/to/file1.php', $vampire->getFile());
         $this->assertEquals(11, $vampire->getLine());
+        $this->assertEquals($metadata, $vampire->getMetadata());
         $this->assertEquals('containingMethodName', $vampire->getMethod());
         $this->assertEquals('invokerMethodName', $vampire->getInvoker());
 

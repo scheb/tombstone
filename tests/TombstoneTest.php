@@ -14,7 +14,7 @@ class TombstoneTest extends TestCase
      */
     private function createTombstone(string ...$arguments): Tombstone
     {
-        return new Tombstone($arguments, 'file', 123, 'method');
+        return new Tombstone($arguments, 'file', 123, 'method', ['metaField' => 'metaValue']);
     }
 
     /**

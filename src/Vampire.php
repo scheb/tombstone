@@ -31,7 +31,7 @@ class Vampire
         $this->tombstone = $tombstone;
     }
 
-    public static function createFromCall(array $arguments, array $trace): Vampire
+    public static function createFromCall(array $arguments, array $trace, array $metadata): Vampire
     {
         // This is the call to the tombstone
         $tombstoneCall = $trace[0];
@@ -50,7 +50,7 @@ class Vampire
             $invoker = self::getMethodFromTrace($trace[2]);
         }
 
-        $tombstone = new Tombstone($arguments, $file, $line, $method);
+        $tombstone = new Tombstone($arguments, $file, $line, $method, $metadata);
 
         return new self(date('c'), $invoker, $tombstone);
     }
@@ -88,6 +88,11 @@ class Vampire
     public function getArguments(): array
     {
         return $this->tombstone->getArguments();
+    }
+
+    public function getMetadata(): array
+    {
+        return $this->tombstone->getMetadata();
     }
 
     public function getTombstoneDate(): ?string

@@ -19,7 +19,7 @@ class BufferedGraveyard implements GraveyardInterface
         $this->graveyard = $graveyard;
     }
 
-    public function tombstone(array $arguments, array $trace): void
+    public function tombstone(array $arguments, array $trace, array $metadata): void
     {
         $this->tombstoneCalls[] = func_get_args();
     }

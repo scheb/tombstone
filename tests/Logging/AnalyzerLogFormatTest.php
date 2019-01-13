@@ -9,7 +9,7 @@ use Scheb\Tombstone\Test\TestCase;
 class AnalyzerLogFormatTest extends TestCase
 {
     public const TOMBSTONE_ARGUMENTS = ['2014-01-01', 'label'];
-    public const LOG_RECORD = '{"v":2,"a":["2014-01-01","label"],"f":"file","n":123,"m":"method","id":"2015-01-01","im":"invoker"}';
+    public const LOG_RECORD = '{"v":3,"a":["2014-01-01","label"],"f":"file","n":123,"m":"method","d":{"metaField":"metaValue"},"id":"2015-01-01","im":"invoker"}';
 
     /**
      * @test

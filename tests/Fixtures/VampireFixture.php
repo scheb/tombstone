@@ -9,7 +9,7 @@ class VampireFixture
 {
     public static function getVampire(string ...$arguments): Vampire
     {
-        $tombstone = new Tombstone($arguments, 'file', 123, 'method');
+        $tombstone = new Tombstone($arguments, 'file', 123, 'method', ['metaField' => 'metaValue']);
 
         return new Vampire('2015-01-01', 'invoker', $tombstone);
     }
