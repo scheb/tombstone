@@ -85,7 +85,7 @@ class Vampire
         $this->tombstone = $tombstone;
     }
 
-    public function getArguments()
+    public function getArguments(): array
     {
         return $this->tombstone->getArguments();
     }
