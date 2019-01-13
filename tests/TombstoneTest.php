@@ -29,7 +29,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function toString_dateArgumentGiven_returnFirstDetectedTombstoneDate(): void
+    public function getTombstoneDate_dateArgumentGiven_returnFirstDetectedTombstoneDate(): void
     {
         $tombstone = $this->createTombstone('label', '123', '2015-02-02', '2015-03-03');
         $this->assertEquals('2015-02-02', $tombstone->getTombstoneDate());
@@ -38,7 +38,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
-    public function toString_noDateArgument_returnNull(): void
+    public function getTombstoneDate_noDateArgument_returnNull(): void
     {
         $tombstone = $this->createTombstone('label', '123');
         $this->assertNull($tombstone->getTombstoneDate());
