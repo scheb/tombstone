@@ -29,8 +29,8 @@ $ composer require scheb/tombstone
 
 You have to define a function `tombstone(string ...$arguments): void`. The library is shipped with a default
 implementation. Include `tombstone.php` from the libraries root directory in your bootstrap. If you don't like the
-default implementation, you can implement the function on your own, only have a list of string as arguments (important
-for code analysis).
+default implementation, you can implement the function on your own. The only requirement is to have strings as arguments
+(important for code analysis in the tombstone-analyzer library).
 
 3) Configure the graveyard
 
