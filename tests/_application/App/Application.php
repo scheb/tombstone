@@ -8,5 +8,6 @@ class Application
     {
         deadCodeFunction();
         (new SampleClass())->deadCodeMethod();
+        (new DeletedTombstoneClass())->invokeDeletedTombstone();
     }
 }
