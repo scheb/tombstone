@@ -45,6 +45,8 @@ $streamHandler = new StreamHandler("$logDir/tombstones.log");
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);
 ```
 
+[Read more about handlers and formatters below](#handlers-and-formatters).
+
 ### Buffered graveyard
 
 The default `Graveyard` class is writing tombstones to the handlers right away. If you want to delay the write - e.g.
@@ -65,8 +67,6 @@ register_shutdown_function(function () use ($bufferedGraveyard) {
     $bufferedGraveyard->flush();
 });
 ```
-
-[Read more about handlers and formatters below](#handlers-and-formatters).
 
 ### Relative Path Logs
 
