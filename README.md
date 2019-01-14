@@ -66,7 +66,7 @@ register_shutdown_function(function () use ($bufferedGraveyard) {
 });
 ```
 
-[Read more about handlers and formatters below](#handlers-formatters).
+[Read more about handlers and formatters below](#handlers-and-formatters).
 
 ### Relative Path Logs
 
@@ -99,7 +99,7 @@ class SomeClass {
 }
 ```
 
-<a name="handlers-formatters"></a>Handlers and Formatters
+Handlers and Formatters
 -----------------------
 
 Handlers write the information that was received from a tombstone to a target system (e.g. file system). Formatters are
