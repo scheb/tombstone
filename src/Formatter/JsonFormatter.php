@@ -13,8 +13,10 @@ class JsonFormatter implements FormatterInterface
             'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
+            'stackTrace' => $vampire->getStackTrace(),
+            'metadata' => $vampire->getMetadata(),
             'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
-            ])."\n";
+        ])."\n";
     }
 }
