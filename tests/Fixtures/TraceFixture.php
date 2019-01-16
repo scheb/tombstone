@@ -4,6 +4,8 @@ namespace Scheb\Tombstone\Test\Fixtures;
 
 class TraceFixture
 {
+    public const NUMBER_OF_FRAMES = 4;
+
     public static function getTraceFixture(): array
     {
         return [
@@ -21,6 +23,13 @@ class TraceFixture
                 'file' => '/path/to/file3.php',
                 'line' => 33,
                 'function' => 'invokerMethodName',
+            ],
+            [
+                'file' => '/path/to/file4.php',
+                'line' => 44,
+                'class' => 'ClassName',
+                'type' => '->',
+                'function' => 'invokerInvokerMethodName',
             ],
         ];
     }

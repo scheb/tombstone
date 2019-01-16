@@ -104,7 +104,7 @@ class TombstoneTest extends TestCase
     public function hasVampires_vampireAdded_returnTrue(): void
     {
         $tombstone = $this->createTombstone();
-        $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', $tombstone));
+        $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', [], $tombstone));
         $this->assertTrue($tombstone->hasVampires());
     }
 }

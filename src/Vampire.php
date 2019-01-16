@@ -15,19 +15,20 @@ class Vampire
     private $invoker;
 
     /**
+     * @var array
+     */
+    private $stackTrace;
+
+    /**
      * @var Tombstone
      */
     private $tombstone;
 
-    /**
-     * @param string      $invocationDate
-     * @param string|null $invoker
-     * @param Tombstone   $tombstone
-     */
-    public function __construct(string $invocationDate, ?string $invoker, Tombstone $tombstone)
+    public function __construct(string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone)
     {
         $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
+        $this->stackTrace = $stackTrace;
         $this->tombstone = $tombstone;
     }
 
@@ -41,23 +42,38 @@ class Vampire
         // This is the method with the tombstone contained
         $method = null;
         if (isset($trace[1]) && is_array($trace[1])) {
-            $method = self::getMethodFromTrace($trace[1]);
+            $method = self::getMethodFromFrame($trace[1]);
         }
 
         // This is the method that called the method with the tombstone
         $invoker = null;
         if (isset($trace[2]) && is_array($trace[2])) {
-            $invoker = self::getMethodFromTrace($trace[2]);
+            $invoker = self::getMethodFromFrame($trace[2]);
         }
 
         $tombstone = new Tombstone($arguments, $file, $line, $method, $metadata);
+        $stackTrace = self::createStackTrace($trace);
 
-        return new self(date('c'), $invoker, $tombstone);
+        return new self(date('c'), $invoker, $stackTrace, $tombstone);
     }
 
-    private static function getMethodFromTrace(array $frame): string
+    private static function getMethodFromFrame(array $frame): string
     {
         return (isset($frame['class']) ? $frame['class'].$frame['type'] : '').$frame['function'];
+    }
+
+    private static function createStackTrace(array $trace): array
+    {
+        $stackTrace = [];
+        foreach ($trace as $traceElement) {
+            $stackTrace[] = [
+                'file' => $traceElement['file'],
+                'line' => $traceElement['line'],
+                'method' => self::getMethodFromFrame($traceElement),
+            ];
+        }
+
+        return $stackTrace;
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool
@@ -113,5 +129,10 @@ class Vampire
     public function getMethod(): ?string
     {
         return $this->tombstone->getMethod();
+    }
+
+    public function getStackTrace(): array
+    {
+        return $this->stackTrace;
     }
 }

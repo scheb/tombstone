@@ -23,10 +23,16 @@ class Graveyard implements GraveyardInterface
      */
     private $sourceDir;
 
-    public function __construct(array $handlers = [], $sourceDir = null)
+    /**
+     * @var int|null
+     */
+    private $stackTraceDepth;
+
+    public function __construct(array $handlers = [], ?string $sourceDir = null, ?int $stackTraceDepth = null)
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider();
+        $this->stackTraceDepth = $stackTraceDepth;
         $this->setSourceDir($sourceDir);
     }
 
@@ -42,6 +48,7 @@ class Graveyard implements GraveyardInterface
 
     public function tombstone(array $arguments, array $trace, array $metadata): void
     {
+        $trace = $this->sliceTrace($trace);
         $trace = $this->traceRelativePath($trace);
         $vampire = Vampire::createFromCall($arguments, $trace, $metadata);
         foreach ($this->handlers as $handler) {
@@ -59,6 +66,15 @@ class Graveyard implements GraveyardInterface
             if (isset($frame['file'])) {
                 $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->sourceDir);
             }
+        }
+
+        return $trace;
+    }
+
+    private function sliceTrace(array $trace): array
+    {
+        if ($this->stackTraceDepth > 0) {
+            return array_slice($trace, 0, $this->stackTraceDepth);
         }
 
         return $trace;

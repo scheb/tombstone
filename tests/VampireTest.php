@@ -27,6 +27,16 @@ class VampireTest extends TestCase
         $this->assertEquals('containingMethodName', $vampire->getMethod());
         $this->assertEquals('invokerMethodName', $vampire->getInvoker());
 
+        $stackTrace = $vampire->getStackTrace();
+        $this->assertCount(TraceFixture::NUMBER_OF_FRAMES, $stackTrace);
+
+        $expectedFrame = [
+            'file' => '/path/to/file4.php',
+            'line' => 44,
+            'method' => 'ClassName->invokerInvokerMethodName',
+        ];
+        $this->assertEquals($expectedFrame, $stackTrace[3]);
+
         $invocationDate = strtotime($vampire->getInvocationDate());
         $this->assertEquals(time(), $invocationDate, '', 5);
     }
