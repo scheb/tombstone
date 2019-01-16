@@ -15,7 +15,7 @@ class VampireFixture
                 'file' => '/path/to/file1.php',
                 'line' => 11,
                 'function' => 'ClassName->method',
-            ]
+            ],
         ];
 
         return new Vampire('2015-01-01', 'invoker', $stackTrace, $tombstone);

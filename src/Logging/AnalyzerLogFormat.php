@@ -43,7 +43,7 @@ class AnalyzerLogFormat
         $data = json_decode($log, true);
         $version = (int) $data['v'] ?? null;
 
-        if ($version === self::CURRENT_VERSION) {
+        if (self::CURRENT_VERSION === $version) {
             return new Vampire(
                 $data['id'] ?? null,
                 $data['im'] ?? null,
@@ -61,7 +61,8 @@ class AnalyzerLogFormat
         return null;
     }
 
-    private static function decodeStackTrace(array $stackTrace): array {
+    private static function decodeStackTrace(array $stackTrace): array
+    {
         $decodedTrace = [];
         foreach ($stackTrace as $frame) {
             $decodedTrace[] = [

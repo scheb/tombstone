@@ -110,7 +110,7 @@ class GraveyardTest extends TestCase
             ->expects($this->once())
             ->method('log')
             ->with($this->callback(function ($vampire) {
-                /** @var Vampire $vampire */
+                /* @var Vampire $vampire */
                 $this->assertInstanceOf(Vampire::class, $vampire);
                 $this->assertCount(self::MAX_STACK_TRACE_DEPTH, $vampire->getStackTrace(), 'Stack trace must be limited to '.self::MAX_STACK_TRACE_DEPTH.' frames');
 
