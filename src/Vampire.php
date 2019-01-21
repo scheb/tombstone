@@ -67,8 +67,8 @@ class Vampire
         $stackTrace = [];
         foreach ($trace as $traceElement) {
             $stackTrace[] = [
-                'file' => $traceElement['file'],
-                'line' => $traceElement['line'],
+                'file' => $traceElement['file'] ?? null,
+                'line' => $traceElement['line'] ?? null,
                 'method' => self::getMethodFromFrame($traceElement),
             ];
         }
