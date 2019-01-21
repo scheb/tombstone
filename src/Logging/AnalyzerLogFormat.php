@@ -61,7 +61,7 @@ class AnalyzerLogFormat
                 $data[self::F_INVOKER] ?? null,
                 self::decodeStackTrace($data[self::F_STACKTRACE] ?? []),
                 new Tombstone(
-                    $data[self::F_ARGUMENTS] ?? null,
+                    $data[self::F_ARGUMENTS] ?? [],
                     $data[self::F_FILE] ?? self::FILE_DEFAULT_VALUE,
                     $data[self::F_LINE] ?? 0,
                     $data[self::F_METHOD] ?? null,
