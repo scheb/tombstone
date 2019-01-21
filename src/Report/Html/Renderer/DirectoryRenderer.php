@@ -4,7 +4,6 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Analyzer\Report\PathTools;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
@@ -93,7 +92,6 @@ class DirectoryRenderer implements ReportGeneratorInterface
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
             'date' => date('r'),
-            'version' => Application::VERSION,
         ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$directoryPath.'/index.html';

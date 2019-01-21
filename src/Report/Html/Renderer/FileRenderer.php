@@ -4,7 +4,6 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Tombstone;
@@ -61,7 +60,6 @@ class FileRenderer implements ReportGeneratorInterface
             'tombstones_list' => $tombstonesList,
             'source_code' => $sourceCode,
             'date' => date('r'),
-            'version' => Application::VERSION,
         ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$relativeFilePath.'.html';

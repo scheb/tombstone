@@ -9,11 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends AbstractApplication
 {
-    const VERSION = 'dev-master';
-
     public function __construct()
     {
-        AbstractApplication::__construct('cli', self::VERSION);
+        parent::__construct('cli', '');
     }
 
     protected function getCommandName(InputInterface $input)
@@ -39,7 +37,7 @@ class Application extends AbstractApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Tombstone Analyzer '.$this->getVersion());
+        $output->writeln('Tombstone Analyzer');
         if (!$input->getFirstArgument()) {
             $input = new ArrayInput(['--help']);
         }

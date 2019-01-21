@@ -4,7 +4,6 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
@@ -89,7 +88,6 @@ class DashboardRenderer implements ReportGeneratorInterface
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
             'full_path' => $this->sourceDir,
-            'version' => Application::VERSION,
             'date' => date('r'),
         ]);
         $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
