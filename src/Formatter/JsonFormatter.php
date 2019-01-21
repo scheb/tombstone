@@ -2,6 +2,7 @@
 
 namespace Scheb\Tombstone\Formatter;
 
+use Scheb\Tombstone\StackTraceFrame;
 use Scheb\Tombstone\Vampire;
 
 class JsonFormatter implements FormatterInterface
@@ -13,10 +14,21 @@ class JsonFormatter implements FormatterInterface
             'file' => $vampire->getFile(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
-            'stackTrace' => $vampire->getStackTrace(),
+            'stackTrace' => $this->getStackTraceValues($vampire->getStackTrace()),
             'metadata' => $vampire->getMetadata(),
             'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
         ])."\n";
+    }
+
+    private function getStackTraceValues(array $stackTrace): array
+    {
+        return array_map(function (StackTraceFrame $frame): array {
+            return [
+                'file' => $frame->getFile(),
+                'line' => $frame->getLine(),
+                'method' => $frame->getMethod(),
+            ];
+        }, $stackTrace);
     }
 }

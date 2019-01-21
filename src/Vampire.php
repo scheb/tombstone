@@ -66,11 +66,11 @@ class Vampire
     {
         $stackTrace = [];
         foreach ($trace as $traceElement) {
-            $stackTrace[] = [
-                'file' => $traceElement['file'] ?? null,
-                'line' => $traceElement['line'] ?? null,
-                'method' => self::getMethodFromFrame($traceElement),
-            ];
+            $stackTrace[] = new StackTraceFrame(
+                $traceElement['file'] ?? null,
+                $traceElement['line'] ?? null,
+                self::getMethodFromFrame($traceElement)
+            );
         }
 
         return $stackTrace;
@@ -131,6 +131,9 @@ class Vampire
         return $this->tombstone->getMethod();
     }
 
+    /**
+     * @return StackTraceFrame[]
+     */
     public function getStackTrace(): array
     {
         return $this->stackTrace;

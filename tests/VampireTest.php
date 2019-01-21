@@ -2,6 +2,7 @@
 
 namespace Scheb\Tombstone\Test;
 
+use Scheb\Tombstone\StackTraceFrame;
 use Scheb\Tombstone\Test\Fixtures\TraceFixture;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
@@ -30,11 +31,7 @@ class VampireTest extends TestCase
         $stackTrace = $vampire->getStackTrace();
         $this->assertCount(TraceFixture::NUMBER_OF_FRAMES, $stackTrace);
 
-        $expectedFrame = [
-            'file' => '/path/to/file4.php',
-            'line' => 44,
-            'method' => 'ClassName->invokerInvokerMethodName',
-        ];
+        $expectedFrame = new StackTraceFrame('/path/to/file4.php', 44, 'ClassName->invokerInvokerMethodName');
         $this->assertEquals($expectedFrame, $stackTrace[3]);
 
         $invocationDate = strtotime($vampire->getInvocationDate());

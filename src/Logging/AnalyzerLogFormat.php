@@ -2,6 +2,7 @@
 
 namespace Scheb\Tombstone\Logging;
 
+use Scheb\Tombstone\StackTraceFrame;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 
@@ -29,9 +30,9 @@ class AnalyzerLogFormat
         $encodedTrace = [];
         foreach ($stackTrace as $frame) {
             $encodedTrace[] = [
-                'f' => $frame['file'],
-                'l' => $frame['line'],
-                'm' => $frame['method'],
+                'f' => $frame->getFile(),
+                'l' => $frame->getLine(),
+                'm' => $frame->getMethod(),
             ];
         }
 
@@ -65,11 +66,11 @@ class AnalyzerLogFormat
     {
         $decodedTrace = [];
         foreach ($stackTrace as $frame) {
-            $decodedTrace[] = [
-                'file' => $frame['f'],
-                'line' => $frame['l'],
-                'method' => $frame['m'],
-            ];
+            $decodedTrace[] = new StackTraceFrame(
+                $frame['f'] ?? null,
+                $frame['l'] ?? null,
+                $frame['m'] ?? null
+            );
         }
 
         return $decodedTrace;
