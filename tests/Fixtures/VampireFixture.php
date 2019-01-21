@@ -14,7 +14,7 @@ class VampireFixture
             [
                 'file' => '/path/to/file1.php',
                 'line' => 11,
-                'function' => 'ClassName->method',
+                'method' => 'ClassName->method',
             ],
         ];
 

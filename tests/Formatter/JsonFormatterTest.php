@@ -16,7 +16,7 @@ class JsonFormatterTest extends TestCase
         $vampire = VampireFixture::getVampire('label');
         $formatter = new JsonFormatter();
         $returnValue = $formatter->format($vampire);
-        $expectedLog = '{"arguments":["label"],"file":"file","line":123,"method":"method","stackTrace":[{"file":"\/path\/to\/file1.php","line":11,"function":"ClassName->method"}],"metadata":{"metaField":"metaValue"},"invocationDate":"2015-01-01","invoker":"invoker"}';
+        $expectedLog = '{"arguments":["label"],"file":"file","line":123,"method":"method","stackTrace":[{"file":"\/path\/to\/file1.php","line":11,"method":"ClassName->method"}],"metadata":{"metaField":"metaValue"},"invocationDate":"2015-01-01","invoker":"invoker"}';
         $this->assertEquals($expectedLog."\n", $returnValue);
     }
 }

@@ -31,7 +31,7 @@ class AnalyzerLogFormat
             $encodedTrace[] = [
                 'f' => $frame['file'],
                 'l' => $frame['line'],
-                'm' => $frame['function'],
+                'm' => $frame['method'],
             ];
         }
 
@@ -68,7 +68,7 @@ class AnalyzerLogFormat
             $decodedTrace[] = [
                 'file' => $frame['f'],
                 'line' => $frame['l'],
-                'function' => $frame['m'],
+                'method' => $frame['m'],
             ];
         }
 
