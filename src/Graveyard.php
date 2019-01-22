@@ -21,24 +21,24 @@ class Graveyard implements GraveyardInterface
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var int|null
      */
     private $stackTraceDepth;
 
-    public function __construct(array $handlers = [], ?string $sourceDir = null, ?int $stackTraceDepth = null)
+    public function __construct(array $handlers = [], ?string $rootDir = null, ?int $stackTraceDepth = null)
     {
         $this->handlers = $handlers;
         $this->traceProvider = new TraceProvider();
         $this->stackTraceDepth = $stackTraceDepth;
-        $this->setSourceDir($sourceDir);
+        $this->setRootDir($rootDir);
     }
 
-    public function setSourceDir($sourceDir): void
+    public function setRootDir($rootDir): void
     {
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
     }
 
     public function addHandler(HandlerInterface $handler): void
@@ -58,13 +58,13 @@ class Graveyard implements GraveyardInterface
 
     private function traceRelativePath(array $trace): array
     {
-        if (!$this->sourceDir) {
+        if (!$this->rootDir) {
             return $trace;
         }
 
         foreach ($trace as $key => &$frame) {
             if (isset($frame['file'])) {
-                $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->sourceDir);
+                $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->rootDir);
             }
         }
 

@@ -71,12 +71,12 @@ register_shutdown_function(function () use ($bufferedGraveyard) {
 ### Relative Path Logs
 
 By default the absolute file path is used in the logs. This can be in problem in some environments (e.g. when your 
-deployment process creates a new directory for every release). If you tell the source root to the graveyard, it will log
+deployment process creates a new directory for every release). If you tell the root path to the graveyard, it will log
 the relative file path instead. This makes log files exchangeable between different servers/environments/installation
 paths.
 
 ```php
-GraveyardProvider::getGraveyard()->setSourceDir('/path/to/src');
+GraveyardProvider::getGraveyard()->setRootDir('/path/to/src');
 ```
 
 It is especially useful, if you want to collect logs files from multiple production servers to run an overall analysis

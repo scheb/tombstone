@@ -67,7 +67,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function tombstone_sourceDirSet_logRelativePath(): void
+    public function tombstone_rootDirSet_logRelativePath(): void
     {
         $this->handler
             ->expects($this->once())
@@ -77,14 +77,14 @@ class GraveyardTest extends TestCase
             }));
 
         $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->setSourceDir('/path/to');
+        $this->graveyard->setRootDir('/path/to');
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
      * @test
      */
-    public function tombstone_sourceDirNotMatchedFilePath_logAbsolutePath(): void
+    public function tombstone_rootDirNotMatchedFilePath_logAbsolutePath(): void
     {
         $this->handler
             ->expects($this->once())
@@ -94,7 +94,7 @@ class GraveyardTest extends TestCase
             }));
 
         $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->setSourceDir('/other/path');
+        $this->graveyard->setRootDir('/other/path');
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
