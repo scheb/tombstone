@@ -2,9 +2,10 @@
 
 namespace Scheb\Tombstone\Analyzer\Report;
 
+use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
 use Symfony\Component\Console\Output\OutputInterface;
