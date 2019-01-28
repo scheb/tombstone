@@ -2,20 +2,20 @@
 
 namespace Scheb\Tombstone\Analyzer\Report\Console;
 
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Tombstone;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class FormattedConsoleOutput
 {
     /**
-     * @var OutputInterface
+     * @var ConsoleOutput
      */
     private $output;
 
     /**
-     * @param OutputInterface $output
+     * @param ConsoleOutput $output
      */
-    public function __construct(OutputInterface $output)
+    public function __construct(ConsoleOutput $output)
     {
         $this->output = $output;
     }

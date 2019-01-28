@@ -32,6 +32,11 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         $this->templateDir = __DIR__.'/Html/Template';
     }
 
+    public function getName(): string
+    {
+        return 'HTML';
+    }
+
     public function generate(AnalyzerResult $result): void
     {
         $this->copySkeleton();

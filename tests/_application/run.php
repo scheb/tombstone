@@ -6,10 +6,11 @@ use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../../vendor/scheb/tombstone/tombstone.php';
-require_once __DIR__.'/functions.php';
-require_once __DIR__.'/App/Application.php';
-require_once __DIR__.'/App/DeletedTombstoneClass.php';
-require_once __DIR__.'/App/SampleClass.php';
+
+require_once __DIR__.'/src/functions.php';
+require_once __DIR__.'/src/App/Application.php';
+require_once __DIR__.'/src/App/DeletedTombstoneClass.php';
+require_once __DIR__.'/src/App/SampleClass.php';
 
 $streamHandler = new AnalyzerLogHandler(__DIR__.'/../_logs');
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);

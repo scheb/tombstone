@@ -8,8 +8,7 @@ class FormattingTestClass
     public function test(string $arg): void
     {
         // Comment
-        echo "foo";
-        ?>
+        echo 'foo'; ?>
         <p>Some inline HTML</p>
         <?php
     }

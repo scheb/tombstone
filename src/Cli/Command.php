@@ -3,20 +3,21 @@
 namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Scheb\Tombstone\Analyzer\Analyzer;
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Log\LogDirectoryScanner;
-use Scheb\Tombstone\Analyzer\Log\LogReader;
+use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
+use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
+use Scheb\Tombstone\Analyzer\Log\LogReaderFactory;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
-use Scheb\Tombstone\Analyzer\Source\SourceDirectoryScanner;
+use Scheb\Tombstone\Analyzer\Report\PhpReportGenerator;
+use Scheb\Tombstone\Analyzer\Report\ReportExporter;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
+use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorInterface;
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\VampireIndex;
+use SebastianBergmann\FinderFacade\FinderFacade;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +25,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Command extends AbstractCommand
 {
     /**
-     * @var OutputInterface
+     * @var InputInterface
+     */
+    private $input;
+
+    /**
+     * @var ConsoleOutput
      */
     private $output;
 
@@ -32,98 +38,98 @@ class Command extends AbstractCommand
     {
         $this
             ->setName('tombstone')
-            ->addArgument('source-dir', InputArgument::REQUIRED, 'Path to PHP source files')
-            ->addArgument('log-dir', InputArgument::REQUIRED, 'Path to the log files')
-            ->addOption('report-html', 'rh', InputOption::VALUE_REQUIRED, 'Generate HTML report to a directory')
-            ->addOption('source-match', 'm', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Match source files with these patterns (multiple possible)', ['*.php']);
+            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to config file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->output = $output;
-        $htmlReportDir = $input->getOption('report-html');
-        $sourceDir = realpath($input->getArgument('source-dir'));
-        if (!$sourceDir) {
-            $output->writeln('Argument "source-dir" is not a valid directory');
+        $this->input = $input;
+        $this->output = new ConsoleOutput($output);
 
-            return 1;
-        }
+        try {
+            $this->doExecute();
+        } catch (\Exception $e) {
+            $output->writeln($e->getMessage());
 
-        $logDir = realpath($input->getArgument('log-dir'));
-        if (!$logDir) {
-            $output->writeln('Argument "log-dir" is not a valid directory');
-
-            return 1;
-        }
-
-        $result = $this->createResult($sourceDir, $logDir, $input->getOption('source-match'));
-        $report = new ConsoleReportGenerator($output, $sourceDir);
-        $report->generate($result);
-
-        if ($htmlReportDir) {
-            $this->generateHtmlReport($htmlReportDir, $sourceDir, $result);
+            return $e->getCode() ?: 1;
         }
 
         return 0;
     }
 
-    private function createResult(string $sourceDir, string $logDir, array $regexExpressions): AnalyzerResult
+    private function doExecute(): void
     {
-        $this->output->writeln('');
+        $configFile = $this->input->getOption('config') ?? getcwd().DIRECTORY_SEPARATOR.'tombstone.yml';
+        if (!file_exists($configFile)) {
+            throw new \InvalidArgumentException('Could not find configuration file '.$configFile);
+        }
+
+        $this->output->debug('Load config from '.$configFile);
+        $configLoader = ConfigurationLoader::create();
+        $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
+        $rootDir = $config['rootDir'];
+
+        $tombstoneIndex = new TombstoneIndex($rootDir);
+        $vampireIndex = new VampireIndex();
+        $tombstoneExtractor = TombstoneExtractorFactory::create($config, $tombstoneIndex, $this->output);
+        $logReader = LogReaderFactory::create($config, $vampireIndex, $this->output);
+        $analyzer = $this->createAnalyzer();
+
         $this->output->writeln('Scan source code ...');
-        $sourceScanner = new SourceDirectoryScanner(
-            TombstoneExtractorFactory::create(
-                new TombstoneIndex($sourceDir)
-            ),
-            $sourceDir,
-            $regexExpressions
-        );
-
-        $progress = $this->createProgressBar($sourceScanner->getNumFiles());
-        $tombstoneIndex = $sourceScanner->getTombstones(function () use ($progress) {
-            $progress->advance();
-        });
-
-        $this->output->writeln('');
-        $this->output->writeln('');
+        $files = $this->collectSourceFiles($config);
+        $this->extractTombstones($files, $tombstoneExtractor);
 
         $this->output->writeln('Read log files ...');
-        $logScanner = new LogDirectoryScanner(new LogReader(new VampireIndex()), $logDir);
+        $logReader->collectVampires();
 
-        $progress = $this->createProgressBar($logScanner->getNumFiles());
-        $vampireIndex = $logScanner->getVampires(function () use ($progress) {
-            $progress->advance();
-        });
-        $this->output->writeln('');
+        $this->output->writeln('Analyze tombstones ...');
+        $result = $analyzer->getResult($tombstoneIndex, $vampireIndex);
 
-        $analyzer = new Analyzer([
+        $reportGenerators = [];
+        if ($config['report']['console']) {
+            $reportGenerators[] = new ConsoleReportGenerator($this->output, $rootDir);
+        }
+        if ($config['report']['html']) {
+            $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);
+        }
+        if ($config['report']['php']) {
+            $reportGenerators[] = new PhpReportGenerator($config['report']['php']);
+        }
+
+        $reportExporter = new ReportExporter($this->output, $reportGenerators);
+        $reportExporter->generate($result);
+    }
+
+    private function createAnalyzer(): Analyzer
+    {
+        $matchingStrategies = [
             new MethodNameStrategy(),
             new PositionStrategy(),
-        ]);
+        ];
 
-        return $analyzer->getResult($tombstoneIndex, $vampireIndex);
+        return new Analyzer($matchingStrategies);
     }
 
-    protected function generateHtmlReport(string $reportDir, string $sourceDir, AnalyzerResult $result): void
+    private function collectSourceFiles(array $config): array
     {
-        $this->output->writeln('');
-        $this->output->write('Generate HTML report... ');
-        try {
-            $report = new HtmlReportGenerator($reportDir, $sourceDir);
-            $report->generate($result);
-            $this->output->writeln('Done');
-        } catch (\Exception $e) {
-            $this->output->writeln('Failed');
-            $this->output->writeln('Could not generate HTML report: '.$e->getMessage());
+        $finder = new FinderFacade(
+            $config['source']['directories'],
+            $config['source']['excludes'],
+            $config['source']['names'],
+            $config['source']['notNames']
+        );
+
+        return $finder->findFiles();
+    }
+
+    private function extractTombstones(array $files, TombstoneExtractorInterface $tombstoneExtractor): void
+    {
+        $progress = $this->output->createProgressBar(count($files));
+        foreach ($files as $file) {
+            $this->output->debug($file);
+            $tombstoneExtractor->extractTombstones($file);
+            $progress->advance();
         }
-    }
-
-    private function createProgressBar(int $width): ProgressBar
-    {
-        $progress = new ProgressBar($this->output, $width);
-        $progress->setBarWidth(50);
-        $progress->display();
-
-        return $progress;
+        $this->output->writeln();
     }
 }

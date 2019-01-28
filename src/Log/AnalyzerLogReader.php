@@ -6,7 +6,7 @@ use Scheb\Tombstone\Analyzer\Exception\LogReaderException;
 use Scheb\Tombstone\Analyzer\VampireIndex;
 use Scheb\Tombstone\Logging\AnalyzerLogFormat;
 
-class LogReader
+class AnalyzerLogReader
 {
     /**
      * @var VampireIndex
@@ -36,10 +36,5 @@ class LogReader
             }
         }
         fclose($handle);
-    }
-
-    public function getVampires(): VampireIndex
-    {
-        return $this->vampires;
     }
 }

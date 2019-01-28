@@ -3,12 +3,12 @@
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Vampire;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleReportGenerator implements ReportGeneratorInterface
 {
@@ -27,11 +27,16 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
      */
     private $now;
 
-    public function __construct(OutputInterface $output, string $sourceDir)
+    public function __construct(ConsoleOutput $output, string $sourceDir)
     {
         $this->output = new FormattedConsoleOutput($output);
         $this->sourceDir = $sourceDir;
         $this->now = time();
+    }
+
+    public function getName(): string
+    {
+        return 'Console';
     }
 
     public function generate(AnalyzerResult $result): void

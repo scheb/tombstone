@@ -6,11 +6,10 @@ use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Tombstone;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
-class DashboardRenderer implements ReportGeneratorInterface
+class DashboardRenderer
 {
     /**
      * @var string

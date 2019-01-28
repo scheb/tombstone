@@ -6,11 +6,10 @@ use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Analyzer\ResultAggregateInterface;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
-class DirectoryRenderer implements ReportGeneratorInterface
+class DirectoryRenderer
 {
     /**
      * @var string
@@ -103,10 +102,10 @@ class DirectoryRenderer implements ReportGeneratorInterface
     }
 
     /**
-     * @param string                             $name
-     * @param string                             $link
+     * @param string                   $name
+     * @param string                   $link
      * @param ResultAggregateInterface $result
-     * @param string                             $pathToRoot
+     * @param string                   $pathToRoot
      *
      * @return string
      */

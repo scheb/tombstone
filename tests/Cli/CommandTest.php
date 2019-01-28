@@ -14,14 +14,10 @@ class CommandTest extends TestCase
     private const REPORT_DIR = __DIR__.'/../_report';
     private const EXPECTED_REPORT_FILES = [
         '.gitkeep',
-        'App',
-        'App/SampleClass.php.html',
-        'App/index.html',
         'css',
         'css/bootstrap.min.css',
         'css/style.css',
         'dashboard.html',
-        'functions.php.html',
         'icons',
         'icons/file-code.svg',
         'icons/file-directory.svg',
@@ -30,7 +26,24 @@ class CommandTest extends TestCase
         'img/deleted.png',
         'img/vampire.png',
         'index.html',
+        'src',
+        'src/App',
+        'src/App/SampleClass.php.html',
+        'src/App/index.html',
+        'src/functions.php.html',
+        'src/index.html',
+        'tombstone-report.php',
     ];
+
+    protected function setUp()
+    {
+        $this->clean();
+    }
+
+    protected function tearDown()
+    {
+        $this->clean();
+    }
 
     /**
      * @test
@@ -55,18 +68,9 @@ class CommandTest extends TestCase
 
         $input
             ->expects($this->any())
-            ->method('getArgument')
-            ->willReturnMap([
-                ['log-dir', self::LOG_DIR],
-                ['source-dir', self::SOURCE_DIR],
-            ]);
-
-        $input
-            ->expects($this->any())
             ->method('getOption')
             ->willReturnMap([
-                ['report-html', self::REPORT_DIR],
-                ['source-match', ['*.php']],
+                ['config', self::SOURCE_DIR.'/tombstone.yml'],
             ]);
 
         $command = new Command();
@@ -95,7 +99,7 @@ class CommandTest extends TestCase
         return $files;
     }
 
-    public function tearDown()
+    private function clean(): void
     {
         $this->clearDirectory(self::LOG_DIR);
         $this->clearDirectory(self::REPORT_DIR);

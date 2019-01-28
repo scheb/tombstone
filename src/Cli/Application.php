@@ -3,7 +3,6 @@
 namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Symfony\Component\Console\Application as AbstractApplication;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -38,9 +37,6 @@ class Application extends AbstractApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Tombstone Analyzer');
-        if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(['--help']);
-        }
         AbstractApplication::doRun($input, $output);
     }
 }

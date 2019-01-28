@@ -6,9 +6,8 @@ use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\Parser;
 use Scheb\Tombstone\Analyzer\Exception\TombstoneExtractionException;
-use Scheb\Tombstone\Analyzer\TombstoneIndex;
 
-class TombstoneExtractor
+class TombstoneExtractor implements TombstoneExtractorInterface
 {
     /**
      * @var Parser
@@ -51,10 +50,5 @@ class TombstoneExtractor
         } catch (Error $e) {
             throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', null, $e);
         }
-    }
-
-    public function getTombstones(): TombstoneIndex
-    {
-        return $this->visitor->getTombstones();
     }
 }
