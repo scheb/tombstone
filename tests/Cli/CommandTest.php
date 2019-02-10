@@ -58,7 +58,7 @@ class CommandTest extends TestCase
 
     private function runTestApplication(): void
     {
-        exec('php '.__DIR__.'/../_application/run.php');
+        exec('php '.self::SOURCE_DIR.'/run.php');
     }
 
     private function generateReport(): void
