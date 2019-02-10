@@ -4,5 +4,5 @@ namespace Scheb\Tombstone\Analyzer\Config;
 
 interface ConfigProviderInterface
 {
-    public function readConfig(): array;
+    public function readConfiguration(): array;
 }

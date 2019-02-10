@@ -17,7 +17,7 @@ class YamlConfigProvider implements ConfigProviderInterface
         $this->configFile = $configFile;
     }
 
-    public function readConfig(): array
+    public function readConfiguration(): array
     {
         $config = Yaml::parseFile($this->configFile);
 

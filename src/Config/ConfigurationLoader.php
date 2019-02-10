@@ -37,7 +37,7 @@ class ConfigurationLoader
     {
         $rawConfig = [];
         foreach ($configProviders as $configProvider) {
-            $rawConfig = array_replace_recursive($rawConfig, $configProvider->readConfig());
+            $rawConfig = array_replace_recursive($rawConfig, $configProvider->readConfiguration());
         }
 
         return $this->processor->processConfiguration($this->configuration, [Configuration::CONFIG_ROOT => $rawConfig]);
