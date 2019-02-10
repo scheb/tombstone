@@ -1,0 +1,16 @@
+source:
+    directories:
+        - src
+    excludes:
+        - tests
+    names:
+        - "*.php"
+    notNames:
+        - "*.js"
+rootDir: root
+logs:
+    directory: logs
+report:
+    php: report/tombstone-report.php
+    html: report
+    console: true
