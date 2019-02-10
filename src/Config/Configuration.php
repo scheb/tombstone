@@ -22,6 +22,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('source')
                     ->children()
                         ->arrayNode('directories')
+                            ->isRequired()
+                            ->requiresAtLeastOneElement()
                             ->scalarPrototype()
                                 ->validate()
                                     ->ifTrue($this->isNoDirectory())
@@ -51,6 +53,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('directory')
                             ->isRequired()
+                            ->cannotBeEmpty()
                             ->validate()
                                 ->ifTrue($this->isNoDirectory())
                                 ->thenInvalid('Must be a valid directory path, given: %s')
@@ -63,7 +66,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('php')
                             ->defaultNull()
                             ->validate()
-                                ->ifTrue($this->isNotWritable())
+                                ->ifTrue($this->isNotWritableFile())
                                 ->thenInvalid('Must be a writable file path, given: %s')
                             ->end()
                         ->end()
@@ -85,26 +88,29 @@ class Configuration implements ConfigurationInterface
 
     private function isNoDirectory(): callable
     {
-        return function (string $path): bool {
+        return function ($path): bool {
             $path = realpath($path);
 
             return !(false !== $path && is_dir($path));
         };
     }
 
-    private function isNotWritable(): callable
+    private function isNotWritableFile(): callable
     {
-        return function (string $path): bool {
-            $directory = dirname($path);
-            $directory = realpath($directory);
+        return function ($path): bool {
+            $fileRealPath = realpath($path);
+            $fileDirectory = realpath(dirname($path));
 
-            return !(false !== $directory && is_writeable($directory));
+            return !(
+                (false !== $fileDirectory && is_writeable($fileDirectory)) // Path is within a writable directory
+                && (false === $fileRealPath || (!is_dir($fileRealPath) && is_writeable($fileRealPath))) // Path is a writable file or non-existent
+            );
         };
     }
 
     private function isNoWritableDirectory(): callable
     {
-        return function (string $path): bool {
+        return function ($path): bool {
             $path = realpath($path);
 
             return !(false !== $path && is_dir($path) && is_writeable($path));
