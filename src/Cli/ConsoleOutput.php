@@ -12,15 +12,9 @@ class ConsoleOutput
      */
     private $output;
 
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
     public function __construct(OutputInterface $output)
     {
         $this->output = $output;
-        $this->isDebug = $output->isDebug();
     }
 
     public function write(string $string): void
@@ -35,7 +29,7 @@ class ConsoleOutput
 
     public function debug($string): void
     {
-        if ($this->isDebug) {
+        if ($this->output->isDebug()) {
             $this->writeln($string);
         }
     }
