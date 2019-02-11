@@ -7,7 +7,7 @@ use Scheb\Tombstone\Analyzer\Test\TestCase;
 
 class YamlConfigProviderTest extends TestCase
 {
-    private const CONFIG_DIR = __DIR__ . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR;
+    private const CONFIG_DIR = __DIR__.DIRECTORY_SEPARATOR.'configs'.DIRECTORY_SEPARATOR;
 
     protected function readConfiguration(string $file): array
     {
@@ -26,12 +26,12 @@ class YamlConfigProviderTest extends TestCase
         $expectedConfig = [
             'source' => [
                 'directories' => [
-                    self::CONFIG_DIR .'src',
-                ]
+                    self::CONFIG_DIR.'src',
+                ],
             ],
             'logs' => [
-                'directory' => self::CONFIG_DIR .'logs'
-            ]
+                'directory' => self::CONFIG_DIR.'logs',
+            ],
         ];
 
         $this->assertEquals($expectedConfig, $config);
@@ -47,7 +47,7 @@ class YamlConfigProviderTest extends TestCase
         $expectedConfig = [
             'source' => [
                 'directories' => [
-                    self::CONFIG_DIR .'src',
+                    self::CONFIG_DIR.'src',
                 ],
                 'excludes' => [
                     'tests',
@@ -59,19 +59,19 @@ class YamlConfigProviderTest extends TestCase
                     '*.js',
                 ],
             ],
-            'rootDir' => self::CONFIG_DIR .'root',
+            'rootDir' => self::CONFIG_DIR.'root',
             'logs' => [
-                'directory' => self::CONFIG_DIR .'logs',
+                'directory' => self::CONFIG_DIR.'logs',
                 'custom' => [
                     'file' => self::CONFIG_DIR.'src'.DIRECTORY_SEPARATOR.'Tombstone'.DIRECTORY_SEPARATOR.'LogProvider.php',
                     'class' => 'Scheb\Tombstone\Analyzer\TestApplication\Tombstone\LogProvider',
-                ]
+                ],
             ],
             'report' => [
                 'php' => self::CONFIG_DIR.'report'.DIRECTORY_SEPARATOR.'tombstone-report.php',
                 'html' => self::CONFIG_DIR.'report',
                 'console' => true,
-            ]
+            ],
         ];
 
         $this->assertEquals($expectedConfig, $config);

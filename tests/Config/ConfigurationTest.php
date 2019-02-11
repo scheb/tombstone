@@ -26,7 +26,7 @@ class ConfigurationTest extends TestCase
             'custom' => [
                 'file' => self::CUSTOM_LOG_PROVIDER,
                 'class' => 'LogProvider',
-            ]
+            ],
         ],
         'report' => [
             'php' => self::REPORT_DIR.'/report.php',
