@@ -38,6 +38,10 @@ class YamlConfigProvider implements ConfigProviderInterface
             $config['logs']['directory'] = PathTools::makePathAbsolute($config['logs']['directory'], $configFileDir);
         }
 
+        if (isset($config['logs']['custom']['file'])) {
+            $config['logs']['custom']['file'] = PathTools::makePathAbsolute($config['logs']['custom']['file'], $configFileDir);
+        }
+
         if (isset($config['report']['php'])) {
             $config['report']['php'] = PathTools::makePathAbsolute($config['report']['php'], $configFileDir);
         }

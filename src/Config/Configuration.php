@@ -64,6 +64,18 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Must be a valid directory path, given: %s')
                             ->end()
                         ->end()
+                        ->arrayNode('custom')
+                            ->children()
+                                ->scalarNode('file')
+                                    ->isRequired()
+                                    ->validate()
+                                        ->ifTrue($this->isNoFile())
+                                        ->thenInvalid('Must be a valid file path, given: %s')
+                                    ->end()
+                                ->end()
+                                ->scalarNode('class')->isRequired()->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('report')
@@ -89,6 +101,15 @@ class Configuration implements ConfigurationInterface
         ;
 
         return $treeBuilder;
+    }
+
+    private function isNoFile(): callable
+    {
+        return function ($path): bool {
+            $path = realpath($path);
+
+            return !(false !== $path && !is_dir($path));
+        };
     }
 
     private function isNoDirectory(): callable
