@@ -10,12 +10,11 @@ scheb/tombstone-analyzer
 [![Total Downloads](https://poser.pugx.org/scheb/tombstone-analyzer/downloads)](https://packagist.org/packages/scheb/tombstone-analyzer)
 [![License](https://poser.pugx.org/scheb/tombstone-analyzer/license.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
 
+[![Dashboard view](doc/dashboard-small.png)](doc/dashboard.png) [![Code view](doc/code-small.png)](doc/code.png)
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
 
 Inspired by: http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code
-
-WARNING: The library is still work in progress. BC breaks will certainly happen as long as there is no stable release.
-
 
 Installation
 ------------
