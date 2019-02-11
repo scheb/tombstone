@@ -30,8 +30,8 @@ Composer automatically creates an executable binary `vendor/bin/tombstone`.
 Usage
 -----
 
-Provide a YAML config file to the tombstone-analyzer. Providing the config file is optional, by default it is looks for
-a file named `tombstone.yml` in the current working directory.
+Provide a YAML config file to the tombstone-analyzer. Providing the config file is optional, by default it looks for a
+file named `tombstone.yml` in the current working directory.
 
 ```bash
 $ tombstone -c tombstone.yml
