@@ -95,6 +95,32 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    public function getConfigTreeBuilder_emptySourceDirectory_throwsException()
+    {
+        $config = self::VALID_CONFIG;
+        $config['source']['directories'] = [];
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('should have at least 1 element(s) defined');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_invalidSourceDirectory_throwsException()
+    {
+        $config = self::VALID_CONFIG;
+        $config['source']['directories'] = ['invalid'];
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
     public function getConfigTreeBuilder_missingLogNode_throwsException()
     {
         $config = self::VALID_CONFIG;
@@ -121,19 +147,6 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_emptySourceDirectory_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        $config['source']['directories'] = [];
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('should have at least 1 element(s) defined');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
     public function getConfigTreeBuilder_emptyLogDirectory_throwsException()
     {
         $config = self::VALID_CONFIG;
@@ -141,19 +154,6 @@ class ConfigurationTest extends TestCase
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('cannot contain an empty value, but got null');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_invalidSourceDirectory_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        $config['source']['directories'] = ['invalid'];
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
         $this->processConfiguration($config);
     }
 
