@@ -69,6 +69,19 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    public function getConfigTreeBuilder_missingSourceNode_throwsException()
+    {
+        $config = self::VALID_CONFIG;
+        unset($config['source']);
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child node "source" at path "root" must be configured.');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
     public function getConfigTreeBuilder_missingSourceDirectory_throwsException()
     {
         $config = self::VALID_CONFIG;
@@ -82,13 +95,26 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_missingLogDirectory_throwsException()
+    public function getConfigTreeBuilder_missingLogNode_throwsException()
+    {
+        $config = self::VALID_CONFIG;
+        unset($config['logs']);
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child node "logs" at path "root" must be configured.');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_missingLogProvider_throwsException()
     {
         $config = self::VALID_CONFIG;
         unset($config['logs']['directory']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('must be configured');
+        $this->expectExceptionMessage('Must have at least one log provider configured');
         $this->processConfiguration($config);
     }
 
