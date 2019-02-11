@@ -10,12 +10,12 @@ class TimePeriodFormatter
     {
         $tombstoneDate = strtotime($date);
         if (!$tombstoneDate) {
-            return '';
+            return 'unknown';
         }
 
         $daysPassed = floor((time() - $tombstoneDate) / self::SECONDS_PER_DAY);
         if ($daysPassed <= 0) {
-            return '';
+            return 'less than 1 day';
         }
 
         $weeksPassed = floor($daysPassed / 7);
