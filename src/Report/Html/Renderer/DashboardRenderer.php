@@ -19,7 +19,7 @@ class DashboardRenderer
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var \Text_Template
@@ -51,10 +51,10 @@ class DashboardRenderer
      */
     private $invokerTemplate;
 
-    public function __construct(string $reportDir, string $sourceDir)
+    public function __construct(string $reportDir, string $rootDir)
     {
         $this->reportDir = $reportDir;
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
         $this->dashboardTemplate = TemplateFactory::getTemplate('dashboard.html');
         $this->fileTemplate = TemplateFactory::getTemplate('dashboard_file.html');
         $this->deadTemplate = TemplateFactory::getTemplate('dashboard_dead.html');
@@ -86,7 +86,7 @@ class DashboardRenderer
             'undead_percent' => $undeadPercent,
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
-            'full_path' => $this->sourceDir,
+            'full_path' => $this->rootDir,
             'date' => date('r'),
         ]);
         $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
@@ -100,7 +100,7 @@ class DashboardRenderer
                 $itemList = $this->renderUndeadTombstones($fileResult);
                 $itemList .= $this->renderDeadTombstones($fileResult);
 
-                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
                 $tombstonesView .= $this->renderFile($fileName, $itemList);
             }
         }
@@ -157,7 +157,7 @@ class DashboardRenderer
         $deletedView = '';
         foreach ($result->getPerFile() as $fileResult) {
             if ($fileResult->getDeletedCount()) {
-                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
                 $deletedView .= $this->renderFile($fileName, $this->renderDeletedTombstones($fileResult));
             }
         }
@@ -212,7 +212,7 @@ class DashboardRenderer
 
     private function linkTombstoneSource(string $label, string $fileName, int $line): string
     {
-        $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->sourceDir);
+        $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->rootDir);
 
         return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, $label);
     }

@@ -20,17 +20,17 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var int
      */
     private $now;
 
-    public function __construct(ConsoleOutput $output, string $sourceDir)
+    public function __construct(ConsoleOutput $output, string $rootDir)
     {
         $this->output = new FormattedConsoleOutput($output);
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
         $this->now = time();
     }
 
@@ -51,7 +51,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
         foreach ($result->getPerFile() as $file => $fileResult) {
             $this->output->newLine();
-            $absoluteFilePath = PathTools::makePathAbsolute($file, $this->sourceDir);
+            $absoluteFilePath = PathTools::makePathAbsolute($file, $this->rootDir);
 
             $this->output->writeln($absoluteFilePath);
             $this->displayVampires($fileResult->getUndead());

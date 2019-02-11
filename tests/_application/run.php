@@ -14,6 +14,6 @@ require_once __DIR__.'/src/App/SampleClass.php';
 
 $streamHandler = new AnalyzerLogHandler(__DIR__.'/../_logs');
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);
-GraveyardProvider::getGraveyard()->setSourceDir(__DIR__);
+GraveyardProvider::getGraveyard()->setRootDir(__DIR__);
 
 (new Application())->run();

@@ -18,7 +18,7 @@ class FileRenderer
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var \Text_Template
@@ -30,10 +30,10 @@ class FileRenderer
      */
     private $tombstoneTemplate;
 
-    public function __construct(string $reportDir, string $sourceDir)
+    public function __construct(string $reportDir, string $rootDir)
     {
         $this->reportDir = $reportDir;
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
         $this->fileTemplate = TemplateFactory::getTemplate('file.html');
         $this->tombstoneTemplate = TemplateFactory::getTemplate('file_tombstone.html');
     }
@@ -51,7 +51,7 @@ class FileRenderer
     {
         $tombstonesList = $this->renderTombstonesList($fileResult);
         $sourceCode = $this->formatSourceCode($fileResult);
-        $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+        $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
         $this->fileTemplate->setVar([
             'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
             'full_path' => $fileResult->getFile(),
@@ -136,7 +136,7 @@ class FileRenderer
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.$this->sourceDir.'</a></li> ';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.$this->rootDir.'</a></li> ';
 
         $folderUp = $numParts - 2;
         while ($label = array_shift($parts)) {

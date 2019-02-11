@@ -18,17 +18,17 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var string
      */
     private $templateDir;
 
-    public function __construct(string $reportDir, string $sourceDir)
+    public function __construct(string $reportDir, string $rootDir)
     {
         $this->reportDir = $reportDir;
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
         $this->templateDir = __DIR__.'/Html/Template';
     }
 
@@ -41,13 +41,13 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     {
         $this->copySkeleton();
 
-        $dashboardRenderer = new DashboardRenderer($this->reportDir, $this->sourceDir);
+        $dashboardRenderer = new DashboardRenderer($this->reportDir, $this->rootDir);
         $dashboardRenderer->generate($result);
 
-        $directoryRenderer = new DirectoryRenderer($this->reportDir, $this->sourceDir);
+        $directoryRenderer = new DirectoryRenderer($this->reportDir, $this->rootDir);
         $directoryRenderer->generate($result);
 
-        $fileRenderer = new FileRenderer($this->reportDir, $this->sourceDir);
+        $fileRenderer = new FileRenderer($this->reportDir, $this->rootDir);
         $fileRenderer->generate($result);
     }
 

@@ -10,7 +10,7 @@ class TombstoneIndex implements \Countable, \Iterator
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var Tombstone[]
@@ -32,9 +32,9 @@ class TombstoneIndex implements \Countable, \Iterator
      */
     private $methodIndex = [];
 
-    public function __construct(string $sourceDir)
+    public function __construct(string $rootDir)
     {
-        $this->sourceDir = PathNormalizer::normalizeDirectorySeparator($sourceDir);
+        $this->rootDir = PathNormalizer::normalizeDirectorySeparator($rootDir);
     }
 
     public function addTombstone(Tombstone $tombstone): void
@@ -87,7 +87,7 @@ class TombstoneIndex implements \Countable, \Iterator
     {
         $path = PathNormalizer::normalizeDirectorySeparator($path);
 
-        return PathNormalizer::makeRelativeTo($path, $this->sourceDir);
+        return PathNormalizer::makeRelativeTo($path, $this->rootDir);
     }
 
     public function count()

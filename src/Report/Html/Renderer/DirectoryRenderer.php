@@ -19,7 +19,7 @@ class DirectoryRenderer
     /**
      * @var string
      */
-    private $sourceDir;
+    private $rootDir;
 
     /**
      * @var \Text_Template
@@ -36,10 +36,10 @@ class DirectoryRenderer
      */
     private $barTemplate;
 
-    public function __construct(string $reportDir, string $sourceDir)
+    public function __construct(string $reportDir, string $rootDir)
     {
         $this->reportDir = $reportDir;
-        $this->sourceDir = $sourceDir;
+        $this->rootDir = $rootDir;
         $this->directoryTemplate = TemplateFactory::getTemplate('directory.html');
         $this->directoryItemTemplate = TemplateFactory::getTemplate('directory_item.html');
         $this->barTemplate = TemplateFactory::getTemplate('percentage_bar.html');
@@ -50,7 +50,7 @@ class DirectoryRenderer
         $tree = new ResultDirectory();
         $files = $result->getPerFile();
         foreach ($files as $fileResult) {
-            $relativePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->sourceDir);
+            $relativePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
             $tree->addFileResult($relativePath, $fileResult);
         }
 
@@ -87,7 +87,7 @@ class DirectoryRenderer
 
         $this->directoryTemplate->setVar([
             'path_to_root' => $pathToRoot,
-            'full_path' => PathTools::makePathAbsolute($directoryPath, $this->sourceDir),
+            'full_path' => PathTools::makePathAbsolute($directoryPath, $this->rootDir),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
             'date' => date('r'),
@@ -154,12 +154,12 @@ class DirectoryRenderer
     private function renderBreadcrumb(string $directoryPath): string
     {
         if (!$directoryPath) {
-            return '<li class="breadcrumb-item">'.$this->sourceDir.'</li> ';
+            return '<li class="breadcrumb-item">'.$this->rootDir.'</li> ';
         }
 
         $parts = explode('/', $directoryPath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->sourceDir.'</a></li> ';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->rootDir.'</a></li> ';
 
         $folderUp = $numParts - 1;
         while ($label = array_shift($parts)) {
