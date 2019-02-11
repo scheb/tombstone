@@ -28,7 +28,8 @@ body {
 }
 
 .tombstone-list .list-group-item-success {
-    background-color: #f1faed;
+    color: #2e2e2e;
+    background-color: #f5f5f5;
 }
 
 .directory-list .glyphicon {
@@ -111,6 +112,10 @@ h3 .octicon {
 
 .table tbody tr.danger, .table tbody td.danger, li.danger, span.danger {
     background-color: #f2dede;
+}
+
+.table tbody tr.success, .table tbody td.success, li.success, span.success {
+    background-color: #eeeeee;
 }
 
 td.codeLine {
