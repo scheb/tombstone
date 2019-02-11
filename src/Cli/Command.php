@@ -5,7 +5,8 @@ namespace Scheb\Tombstone\Analyzer\Cli;
 use Scheb\Tombstone\Analyzer\Analyzer;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
-use Scheb\Tombstone\Analyzer\Log\LogReaderFactory;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
+use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
@@ -72,15 +73,17 @@ class Command extends AbstractCommand
         $tombstoneIndex = new TombstoneIndex($rootDir);
         $vampireIndex = new VampireIndex();
         $tombstoneExtractor = TombstoneExtractorFactory::create($config, $tombstoneIndex, $this->output);
-        $logReader = LogReaderFactory::create($config, $vampireIndex, $this->output);
+        $logReaders = $this->createLogReaders($config);
         $analyzer = $this->createAnalyzer();
 
         $this->output->writeln('Scan source code ...');
         $files = $this->collectSourceFiles($config);
         $this->extractTombstones($files, $tombstoneExtractor);
 
-        $this->output->writeln('Read log files ...');
-        $logReader->collectVampires();
+        $this->output->writeln('Read logs ...');
+        foreach ($logReaders as $logReader) {
+            $logReader->collectVampires($vampireIndex);
+        }
 
         $this->output->writeln('Analyze tombstones ...');
         $result = $analyzer->getResult($tombstoneIndex, $vampireIndex);
@@ -108,6 +111,29 @@ class Command extends AbstractCommand
         ];
 
         return new Analyzer($matchingStrategies);
+    }
+
+    /**
+     * @param array $config
+     * @return LogReaderInterface[]
+     */
+    private function createLogReaders(array $config): array
+    {
+        $logReaders = [];
+        if (isset($config['logs']['directory'])) {
+            $logReaders[] = AnalyzerLogDirectoryReader::create($config['logs']['directory'], $this->output);
+        }
+        if (isset($config['logs']['custom'])) {
+            require_once $config['logs']['custom']['file'];
+            $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
+            if (!$reflectionClass->implementsInterface(LogReaderInterface::class)) {
+                throw new \Exception('Class '.$config['logs']['custom']['class'].' must implement '.LogReaderInterface::class);
+            }
+
+            $logReaders[] = $reflectionClass->newInstance();
+        }
+
+        return $logReaders;
     }
 
     private function collectSourceFiles(array $config): array

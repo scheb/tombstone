@@ -10,6 +10,9 @@ source:
         - "*.js"
 logs:
     directory: ../_logs
+    custom:
+        file: "src/Tombstone/LogProvider.php"
+        class: 'Scheb\Tombstone\Analyzer\TestApplication\Tombstone\LogProvider'
 report:
     php: ../_report/tombstone-report.php
     html: ../_report
