@@ -8,7 +8,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public const CONFIG_ROOT = 'analyzer';
+    public const CONFIG_ROOT = 'root';
 
     public function getConfigTreeBuilder()
     {

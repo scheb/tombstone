@@ -4,6 +4,7 @@ namespace Scheb\Tombstone\Analyzer\Test\Config;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Config\ConfigProviderInterface;
+use Scheb\Tombstone\Analyzer\Config\Configuration;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Test\TestCase;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -23,7 +24,7 @@ class ConfigurationLoaderTest extends TestCase
         $processor = $this->createMock(Processor::class);
 
         $expectedMergedConfig = [
-            'analyzer' => [ // Analyzer root node is added for configuration processing
+            Configuration::CONFIG_ROOT => [ // Analyzer root node is added for configuration processing
                 'option1' => [
                     'subNode1' => 'differentSubValue1',
                     'subNode2' => 'subValue2',
