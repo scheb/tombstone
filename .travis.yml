@@ -4,7 +4,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - nightly
+  - 7.4snapshot
 
 matrix:
   fast_finish: true
@@ -12,14 +12,11 @@ matrix:
     - php: 7.1
       env: COMPOSER_FLAGS="--prefer-lowest"
   allow_failures:
-    - php: nightly
+    - php: 7.4snapshot
 
 cache:
   directories:
     - $COMPOSER_CACHE_DIR
-
-before_install:
-  - composer selfupdate
 
 install:
   - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
