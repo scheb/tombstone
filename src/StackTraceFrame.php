@@ -2,6 +2,8 @@
 
 namespace Scheb\Tombstone;
 
+use Scheb\Tombstone\Tracing\PathNormalizer;
+
 class StackTraceFrame
 {
     /**
@@ -21,7 +23,7 @@ class StackTraceFrame
 
     public function __construct(?string $file, ?int $line, ?string $method)
     {
-        $this->file = $file;
+        $this->file = $file ? PathNormalizer::normalizeDirectorySeparator($file) : null;
         $this->line = $line;
         $this->method = $method;
     }

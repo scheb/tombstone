@@ -25,7 +25,7 @@ class TraceFixture
                 'function' => 'invokerMethodName',
             ],
             [
-                'file' => '/path/to/file4.php',
+                'file' => 'C:\\path\\to\\file4.php',
                 'line' => 44,
                 'class' => 'ClassName',
                 'type' => '->',

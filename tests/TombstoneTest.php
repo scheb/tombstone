@@ -8,13 +8,23 @@ use Scheb\Tombstone\Vampire;
 class TombstoneTest extends TestCase
 {
     /**
-     * @param string[] $arguments
+     * @param string $file
+     * @param string ...$arguments
      *
      * @return Tombstone
      */
-    private function createTombstone(string ...$arguments): Tombstone
+    private function createTombstone(string $file, string ...$arguments): Tombstone
     {
-        return new Tombstone($arguments, 'file', 123, 'method', ['metaField' => 'metaValue']);
+        return new Tombstone($arguments, $file, 123, 'method', ['metaField' => 'metaValue']);
+    }
+
+    /**
+     * @test
+     */
+    public function toString_windowsFilePath_normalizeFilePath(): void
+    {
+        $tombstone = $this->createTombstone('C:\\file', '2015-08-19', 'author');
+        $this->assertEquals('C:/file', $tombstone->getFile());
     }
 
     /**
@@ -22,7 +32,7 @@ class TombstoneTest extends TestCase
      */
     public function toString_argumentsGiven_returnString(): void
     {
-        $tombstone = $this->createTombstone('2015-08-19', 'author');
+        $tombstone = $this->createTombstone('file', '2015-08-19', 'author');
         $this->assertEquals('tombstone("2015-08-19", "author")', (string) $tombstone);
     }
 
@@ -31,7 +41,7 @@ class TombstoneTest extends TestCase
      */
     public function getTombstoneDate_dateArgumentGiven_returnFirstDetectedTombstoneDate(): void
     {
-        $tombstone = $this->createTombstone('label', '123', '2015-02-02', '2015-03-03');
+        $tombstone = $this->createTombstone('file', 'label', '123', '2015-02-02', '2015-03-03');
         $this->assertEquals('2015-02-02', $tombstone->getTombstoneDate());
     }
 
@@ -40,7 +50,7 @@ class TombstoneTest extends TestCase
      */
     public function getTombstoneDate_noDateArgument_returnNull(): void
     {
-        $tombstone = $this->createTombstone('label', '123');
+        $tombstone = $this->createTombstone('file', 'label', '123');
         $this->assertNull($tombstone->getTombstoneDate());
     }
 
@@ -49,7 +59,7 @@ class TombstoneTest extends TestCase
      */
     public function getHash_valuesSet_returnCorrectHash(): void
     {
-        $tombstone = $this->createTombstone();
+        $tombstone = $this->createTombstone('file');
         $hash = $tombstone->getHash();
         $this->assertEquals('f5825bfeac4236f671b94bab85752767', $hash);
     }
@@ -59,8 +69,8 @@ class TombstoneTest extends TestCase
      */
     public function inscriptionEquals_sameValues_returnTrue(): void
     {
-        $tombstone1 = $this->createTombstone();
-        $tombstone2 = $this->createTombstone();
+        $tombstone1 = $this->createTombstone('file');
+        $tombstone2 = $this->createTombstone('file');
         $result = $tombstone1->inscriptionEquals($tombstone2);
         $this->assertTrue($result);
     }
@@ -77,10 +87,10 @@ class TombstoneTest extends TestCase
 
     public function provideTombstonesToCompare(): array
     {
-        $reference = $this->createTombstone('2015-01-01', 'author', 'label');
-        $tombstone1 = $this->createTombstone('2015-01-02', 'author', 'label');
-        $tombstone2 = $this->createTombstone('2015-01-01', 'otherAuthor', 'label');
-        $tombstone3 = $this->createTombstone('2015-01-01', 'author', 'otherLabel');
+        $reference = $this->createTombstone('file', '2015-01-01', 'author', 'label');
+        $tombstone1 = $this->createTombstone('file', '2015-01-02', 'author', 'label');
+        $tombstone2 = $this->createTombstone('file', '2015-01-01', 'otherAuthor', 'label');
+        $tombstone3 = $this->createTombstone('file', '2015-01-01', 'author', 'otherLabel');
 
         return [
             [$reference, $tombstone1],
@@ -94,7 +104,7 @@ class TombstoneTest extends TestCase
      */
     public function hasVampires_noVampiresSet_returnFalse(): void
     {
-        $tombstone = $this->createTombstone();
+        $tombstone = $this->createTombstone('file');
         $this->assertFalse($tombstone->hasVampires());
     }
 
@@ -103,7 +113,7 @@ class TombstoneTest extends TestCase
      */
     public function hasVampires_vampireAdded_returnTrue(): void
     {
-        $tombstone = $this->createTombstone();
+        $tombstone = $this->createTombstone('file');
         $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', [], $tombstone));
         $this->assertTrue($tombstone->hasVampires());
     }

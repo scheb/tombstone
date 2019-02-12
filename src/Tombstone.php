@@ -2,6 +2,8 @@
 
 namespace Scheb\Tombstone;
 
+use Scheb\Tombstone\Tracing\PathNormalizer;
+
 class Tombstone
 {
     /**
@@ -42,7 +44,7 @@ class Tombstone
     {
         $this->arguments = $arguments;
         $this->tombstoneDate = $this->findDate($arguments);
-        $this->file = $file;
+        $this->file = PathNormalizer::normalizeDirectorySeparator($file);
         $this->line = $line;
         $this->method = $method;
         $this->metadata = $metadata;

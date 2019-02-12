@@ -31,7 +31,7 @@ class VampireTest extends TestCase
         $stackTrace = $vampire->getStackTrace();
         $this->assertCount(TraceFixture::NUMBER_OF_FRAMES, $stackTrace);
 
-        $expectedFrame = new StackTraceFrame('/path/to/file4.php', 44, 'ClassName->invokerInvokerMethodName');
+        $expectedFrame = new StackTraceFrame('C:/path/to/file4.php', 44, 'ClassName->invokerInvokerMethodName');
         $this->assertEquals($expectedFrame, $stackTrace[3]);
 
         $invocationDate = strtotime($vampire->getInvocationDate());
