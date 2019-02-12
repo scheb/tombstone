@@ -34,6 +34,8 @@ class VampireTest extends TestCase
         $expectedFrame = new StackTraceFrame('C:/path/to/file4.php', 44, 'ClassName->invokerInvokerMethodName');
         $this->assertEquals($expectedFrame, $stackTrace[3]);
 
+        $this->assertEquals('e5596f50384552bf050040bcf28763d8fdd87c72', $vampire->getStackTraceHash());
+
         $invocationDate = strtotime($vampire->getInvocationDate());
         $this->assertEquals(time(), $invocationDate, '', 5);
     }

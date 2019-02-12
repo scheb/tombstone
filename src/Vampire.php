@@ -138,4 +138,9 @@ class Vampire
     {
         return $this->stackTrace;
     }
+
+    public function getStackTraceHash(): string
+    {
+        return sha1(serialize($this->stackTrace));
+    }
 }
