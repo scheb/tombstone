@@ -50,7 +50,8 @@ class Command extends AbstractCommand
         try {
             $this->doExecute();
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
+            $this->output->writeln($e->getMessage());
+            $this->output->debug($e->getTraceAsString());
 
             return $e->getCode() ?: 1;
         }

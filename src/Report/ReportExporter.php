@@ -38,6 +38,7 @@ class ReportExporter
                 $this->output->writeln('Done');
             } catch (\Exception $e) {
                 $this->output->writeln('Could not generate '.$generatorName.' report: '.$e->getMessage());
+                $this->output->debug($e->getTraceAsString());
             }
         }
     }
