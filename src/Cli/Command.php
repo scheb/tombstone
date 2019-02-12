@@ -91,7 +91,7 @@ class Command extends AbstractCommand
 
         $reportGenerators = [];
         if ($config['report']['console']) {
-            $reportGenerators[] = new ConsoleReportGenerator($this->output, $rootDir);
+            $reportGenerators[] = new ConsoleReportGenerator($this->output);
         }
         if ($config['report']['html']) {
             $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);

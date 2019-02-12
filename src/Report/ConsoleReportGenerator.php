@@ -4,7 +4,6 @@ namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
-use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Tombstone;
@@ -18,19 +17,13 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private $output;
 
     /**
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * @var int
      */
     private $now;
 
-    public function __construct(ConsoleOutput $output, string $rootDir)
+    public function __construct(ConsoleOutput $output)
     {
         $this->output = new FormattedConsoleOutput($output);
-        $this->rootDir = $rootDir;
         $this->now = time();
     }
 
@@ -51,9 +44,8 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
         foreach ($result->getPerFile() as $file => $fileResult) {
             $this->output->newLine();
-            $absoluteFilePath = PathTools::makePathAbsolute($file, $this->rootDir);
 
-            $this->output->writeln($absoluteFilePath);
+            $this->output->writeln($file);
             $this->displayVampires($fileResult->getUndead());
             $this->displayTombstones($fileResult->getDead());
             $this->displayDeleted($fileResult->getDeleted());
