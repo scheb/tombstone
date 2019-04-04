@@ -99,8 +99,9 @@ Place tombstones in your application where you suspect dead code. A tombstone ca
 it's recommended to stick to some pattern within your application. A good practise is to set the date when the tombstone
 was added and an identifier who added it.
 
-Please note, that the arguments are used by tombstone-analyzer to match tombstones in the code. The more unique the
-combination is within a file/method, the more reliable the matching is.
+Please note, that the arguments are used by tombstone-analyzer to match tombstones in the code. Therefore, once set, you
+should not change the values of a tombstone. The more unique the combination is within a file/method, the more reliable
+the matching will be.
 
 The first string that can be interpreted as a date (every date format `strtotime()` understands) will be taken as the
 tombstones date, which is used to calculate the age of a tombstone. 
