@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Symfony\Component\Console\Application as AbstractApplication;

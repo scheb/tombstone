@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
@@ -24,6 +26,8 @@ class PhpReportGenerator implements ReportGeneratorInterface
     public function generate(AnalyzerResult $result): void
     {
         $serialized = str_replace("'", "\\'", serialize($result));
-        file_put_contents($this->filePath, "<?php return unserialize('".$serialized."');");
+        file_put_contents($this->filePath, "<?php
+
+declare(strict_types=1); return unserialize('".$serialized."');");
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function deadCodeFunction(): void
 {
     if (false) {

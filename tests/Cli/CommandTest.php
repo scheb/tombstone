@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Analyzer\Test\Cli;
 
 use Scheb\Tombstone\Analyzer\Cli\Command;

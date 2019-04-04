@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\Exception\LogReaderException;
@@ -15,8 +17,7 @@ class AnalyzerLogFileReader
             throw new LogReaderException('Could not read log file '.$file);
         }
 
-        while (!feof($handle)) {
-            $line = fgets($handle);
+        while (false !== ($line = fgets($handle))) {
             $vampire = AnalyzerLogFormat::logToVampire($line);
             if ($vampire) {
                 $vampireIndex->addVampire($vampire);

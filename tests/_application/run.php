@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Scheb\Tombstone\Analyzer\TestApplication\App\Application;
 use Scheb\Tombstone\GraveyardProvider;
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
