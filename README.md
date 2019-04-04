@@ -1,8 +1,6 @@
 scheb/tombstone-analyzer
 ========================
 
-**Report generation** for the **Tombstones** created with the [scheb/tombstone](https://github.com/scheb/tombstone) library.
-
 [![Build Status](https://travis-ci.org/scheb/tombstone-analyzer.svg?branch=master)](https://travis-ci.org/scheb/tombstone-analyzer)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/?branch=master)
@@ -10,11 +8,9 @@ scheb/tombstone-analyzer
 [![Total Downloads](https://poser.pugx.org/scheb/tombstone-analyzer/downloads)](https://packagist.org/packages/scheb/tombstone-analyzer)
 [![License](https://poser.pugx.org/scheb/tombstone-analyzer/license.svg)](https://packagist.org/packages/scheb/tombstone-analyzer)
 
+**Report generation** for the tombstones created with the [scheb/tombstone](https://github.com/scheb/tombstone) library.
+
 [![Dashboard view](doc/dashboard-small.png)](doc/dashboard.png) [![Code view](doc/code-small.png)](doc/code.png)
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
-
-Inspired by: http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code
 
 Installation
 ------------
@@ -105,6 +101,7 @@ creating a pull requests or feature request in the issues section. For pull requ
 
 - Symfony code style
 - PHP7.1 type hints for everything (including: return types, `void`, nullable types)
+- `declare(strict_types=1)` must be used
 - Please add/update test cases
 - Test methods should be named `[method]_[scenario]_[expected result]`
 
@@ -112,6 +109,8 @@ To run the test suite install the dependencies with `composer install` and then 
 
 Acknowledgments
 ---------------
+
+The library is heavly inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code) of the tombstone concept.
 
 Thanks to [Sebastian Bergmann](https://github.com/sebastianbergmann) for letting me re-use parts of his code and the template files.
 
