@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Handler;
 
-use Scheb\Tombstone\Formatter\FormatterInterface;
 use Scheb\Tombstone\Formatter\AnalyzerLogFormatter;
+use Scheb\Tombstone\Formatter\FormatterInterface;
 use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogHandler extends AbstractHandler
@@ -88,7 +90,7 @@ class AnalyzerLogHandler extends AbstractHandler
             return false;
         }
 
-        clearstatcache(null, $logFile);
+        clearstatcache(false, $logFile);
 
         return filesize($logFile) >= $this->sizeLimit;
     }

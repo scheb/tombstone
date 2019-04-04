@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * Based on the StreamHandler from Monolog
  * https://github.com/Seldaek/monolog

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Logging;
 
 use Scheb\Tombstone\StackTraceFrame;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Test\Formatter;
 
 use Scheb\Tombstone\Formatter\LineFormatter;

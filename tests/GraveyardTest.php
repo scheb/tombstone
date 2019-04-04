@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Scheb\Tombstone\Test;
 
 use PHPUnit\Framework\MockObject\MockObject;
