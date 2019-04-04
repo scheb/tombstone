@@ -26,7 +26,7 @@ class Vampire
      */
     private $tombstone;
 
-    public function __construct(string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone)
+    public function __construct(?string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone)
     {
         $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
@@ -83,7 +83,7 @@ class Vampire
         return $this->tombstone->inscriptionEquals($tombstone);
     }
 
-    public function getInvocationDate(): string
+    public function getInvocationDate(): ?string
     {
         return $this->invocationDate;
     }
