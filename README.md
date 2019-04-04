@@ -1,16 +1,16 @@
 scheb/tombstone
 ===============
 
-Implements the concept of **tombstones for dead code detection in PHP**. If you're not familiar with that concept, read below.
-
-This library provides you with a toolbox to place and track tombstones in your code. [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) can be used for report generation.
-
 [![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
 [![Total Downloads](https://poser.pugx.org/scheb/tombstone/downloads)](https://packagist.org/packages/scheb/tombstone)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
+
+Implements the concept of **tombstones for dead code detection in PHP**. If you're not familiar with that concept, read below.
+
+This library provides you with a toolbox to place and track tombstones in your code. [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) can be used for report generation.
 
 What are Tombstones?
 --------------------
