@@ -1,9 +1,9 @@
 scheb/tombstone
 ===============
 
-Implements the concept of **Tombstones for PHP**.
+Implements the concept of **tombstones for dead code detection in PHP**. If you're not familiar with that concept, read below.
 
-Report generation provided by [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer).
+This library provides you with a toolbox to place and track tombstones in your code. [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) can be used for report generation.
 
 [![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
@@ -12,9 +12,19 @@ Report generation provided by [scheb/tombstone-analyzer](https://github.com/sche
 [![Total Downloads](https://poser.pugx.org/scheb/tombstone/downloads)](https://packagist.org/packages/scheb/tombstone)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
 
+What are Tombstones?
+--------------------
+
+To get the basic idea, watch David Schnepper's 5 minute talk from Velocity Santa Clara 2014.
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank"><img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" border="10" /></a>
 
-Inspired by: http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code
+When you want to identify and clean-up dead code in a project, static code analysis tools are the weapon of choice. But these tools have some limitions, especially in a dynamic language like PHP:
+
+- They can only tell you, if a piece of code is referenced, not if it's actually used.
+- They cannot resolve dynamic or generated call paths.
+
+Tombstones provide a way to track if a piece of code is actually invoked. **They are executable markers in your code**, that you can place where you suspect dead code. Then, you collect tombstone invocations on production. After a while, the logs will tell you, which tombstones are dead and which ones aren't (the so called "vampires").
 
 Installation
 ------------
@@ -156,6 +166,8 @@ To run the test suite install the dependencies with `composer install` and then 
 
 Acknowledgments
 ---------------
+
+The library is heavly inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code) of the tombstone concept.
 
 Thanks to [Jordi Boggiano](https://github.com/Seldaek) for creating [Monolog](https://github.com/Seldaek/monolog), from
 where I lend the handler/formatter concept.
