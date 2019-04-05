@@ -16,14 +16,28 @@ class BufferedGraveyard implements GraveyardInterface
      */
     private $tombstoneCalls = [];
 
+    /**
+     * @var bool
+     */
+    private $autoFlush = false;
+
     public function __construct(GraveyardInterface $graveyard)
     {
         $this->graveyard = $graveyard;
     }
 
+    public function setAutoFlush(bool $autoFlush): void
+    {
+        $this->autoFlush = $autoFlush;
+    }
+
     public function tombstone(array $arguments, array $trace, array $metadata): void
     {
-        $this->tombstoneCalls[] = func_get_args();
+        if ($this->autoFlush) {
+            $this->graveyard->tombstone($arguments, $trace, $metadata);
+        } else {
+            $this->tombstoneCalls[] = func_get_args();
+        }
     }
 
     public function flush(): void

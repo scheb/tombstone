@@ -41,6 +41,20 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
+    public function tombstone_autoFlushEnabled_directlyAddToInnerGraveyard(): void
+    {
+        $this->innerGraveyard
+            ->expects($this->once())
+            ->method('tombstone')
+            ->with(['args'], ['trace1'], ['metaField' => 'metaValue']);
+
+        $this->graveyard->setAutoFlush(true);
+        $this->graveyard->tombstone(['args'], ['trace1'], ['metaField' => 'metaValue']);
+    }
+
+    /**
+     * @test
+     */
     public function flush_tombstonesBuffered_addBufferedTombstonesAndFlush(): void
     {
         $this->innerGraveyard
