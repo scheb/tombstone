@@ -65,9 +65,9 @@ class ConfigurationTest extends TestCase
         $config = self::VALID_CONFIG;
         $expectedProcessedConfig = $config;
         $expectedProcessedConfig['source']['excludes'] = [];
-        $expectedProcessedConfig['source']['names'] = [];
+        $expectedProcessedConfig['source']['names'] = ['*.php'];
         $expectedProcessedConfig['source']['notNames'] = [];
-        $expectedProcessedConfig['report']['console'] = false;
+        $expectedProcessedConfig['report']['console'] = true;
 
         $processedConfig = $this->processConfiguration($config);
         $this->assertEquals($expectedProcessedConfig, $processedConfig);

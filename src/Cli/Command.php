@@ -92,13 +92,13 @@ class Command extends AbstractCommand
         $result = $analyzer->getResult($tombstoneIndex, $vampireIndex);
 
         $reportGenerators = [];
-        if ($config['report']['console']) {
+        if (isset($config['report']['console'])) {
             $reportGenerators[] = new ConsoleReportGenerator($this->output);
         }
-        if ($config['report']['html']) {
+        if (isset($config['report']['html'])) {
             $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);
         }
-        if ($config['report']['php']) {
+        if (isset($config['report']['php'])) {
             $reportGenerators[] = new PhpReportGenerator($config['report']['php']);
         }
 
