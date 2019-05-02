@@ -45,7 +45,9 @@ default implementation, you can implement the function on your own. The only req
 3) Configure the graveyard
 
 All tombstones are sent to a "graveyard". By default the graveyard isn't doing anything with the tombstones. You have to
-register a handler. What you usually want is the `StreamHandler`, which writes human-readable information to a log file.
+register a handler. What you usually want is the `StreamHandler`, which writes human-readable information to a log file,
+or `AnalyzerLogHandler`, which writes log files compatible to
+[scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer).
 
 ```php
 use Scheb\Tombstone\GraveyardProvider;
@@ -53,6 +55,9 @@ use Scheb\Tombstone\Handler\StreamHandler;
 
 $streamHandler = new StreamHandler("$logDir/tombstones.log");
 GraveyardProvider::getGraveyard()->addHandler($streamHandler);
+
+$analyzerLogHandler = new AnalyzerLogHandler($logDir);
+GraveyardProvider::getGraveyard()->addHandler($analyzerLogHandler);
 ```
 
 [Read more about handlers and formatters below](#handlers-and-formatters).
