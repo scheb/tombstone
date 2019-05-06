@@ -50,7 +50,7 @@ class TombstoneExtractor implements TombstoneExtractorInterface
 
             $this->traverser->traverse($stmts);
         } catch (Error $e) {
-            throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', null, $e);
+            throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', 0, $e);
         }
     }
 }
