@@ -1,6 +1,9 @@
 scheb/tombstone-analyzer
 ========================
 
+**Please note, that tombstone-analyzer is currently being reworked and versions >= 0.4.0 are very unstable. If you want
+to use it, use 0.3.0 or wait until there's a 1.0.0** 
+
 [![Build Status](https://travis-ci.org/scheb/tombstone-analyzer.svg?branch=master)](https://travis-ci.org/scheb/tombstone-analyzer)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone-analyzer/?branch=master)
