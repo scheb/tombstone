@@ -88,7 +88,7 @@ class DashboardRenderer
             'undead_percent' => $undeadPercent,
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
-            'full_path' => $this->rootDir,
+            'full_path' => htmlspecialchars($this->rootDir),
             'date' => date('r'),
         ]);
         $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
@@ -127,7 +127,7 @@ class DashboardRenderer
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => $tombstone->getMethod(),
+                'method' => htmlspecialchars($tombstone->getMethod()),
                 'dead_since' => $deadSince,
             ]);
             $itemList .= $this->deadTemplate->render();
@@ -145,7 +145,7 @@ class DashboardRenderer
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => $tombstone->getMethod(),
+                'method' => htmlspecialchars($tombstone->getMethod()),
                 'invocation' => $invocation,
             ]);
             $itemList .= $this->undeadTemplate->render();
@@ -173,9 +173,9 @@ class DashboardRenderer
         foreach ($fileResult->getDeleted() as $vampire) {
             $this->deletedTemplate->setVar([
                 'path_to_root' => './',
-                'tombstone' => (string) $vampire->getTombstone(),
+                'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
                 'line' => $vampire->getLine(),
-                'method' => $vampire->getMethod(),
+                'method' => htmlspecialchars($vampire->getMethod()),
                 'last_call' => TimePeriodFormatter::formatAge($vampire->getInvocationDate()),
             ]);
             $itemList .= $this->deletedTemplate->render();
@@ -204,7 +204,7 @@ class DashboardRenderer
         $invokersString = '';
         foreach ($invokers as $invoker) {
             $this->invokerTemplate->setVar([
-                'invoker' => $invoker ?: 'global scope',
+                'invoker' => htmlspecialchars($invoker) ?: 'global scope',
             ]);
             $invokersString .= $this->invokerTemplate->render();
         }
@@ -216,6 +216,6 @@ class DashboardRenderer
     {
         $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->rootDir);
 
-        return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, $label);
+        return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, htmlspecialchars($label));
     }
 }

@@ -56,7 +56,7 @@ class FileRenderer
         $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
         $this->fileTemplate->setVar([
             'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
-            'full_path' => $fileResult->getFile(),
+            'full_path' => htmlspecialchars($fileResult->getFile()),
             'breadcrumb' => $this->renderBreadcrumb($relativeFilePath),
             'tombstones_list' => $tombstonesList,
             'source_code' => $sourceCode,
@@ -94,9 +94,9 @@ class FileRenderer
     private function renderTombstoneItem(Tombstone $tombstone, string $class): string
     {
         $this->tombstoneTemplate->setVar([
-            'tombstone' => (string) $tombstone,
+            'tombstone' => htmlspecialchars((string) $tombstone),
             'line' => $tombstone->getLine(),
-            'method' => $tombstone->getMethod(),
+            'method' => htmlspecialchars($tombstone->getMethod()),
             'level' => $class,
         ]);
 
@@ -138,7 +138,7 @@ class FileRenderer
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.$this->rootDir.'</a></li> ';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.htmlspecialchars($this->rootDir).'</a></li> ';
 
         $folderUp = $numParts - 2;
         while ($label = array_shift($parts)) {
@@ -146,7 +146,7 @@ class FileRenderer
                 $breadcrumbString .= '<li class="breadcrumb-item active">'.$label.'</li> ';
             } else {
                 $link = './'.str_repeat('../', $folderUp).'index.html';
-                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, $label);
+                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, htmlspecialchars($label));
             }
             --$folderUp;
         }

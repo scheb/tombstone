@@ -89,7 +89,7 @@ class DirectoryRenderer
 
         $this->directoryTemplate->setVar([
             'path_to_root' => $pathToRoot,
-            'full_path' => PathTools::makePathAbsolute($directoryPath, $this->rootDir),
+            'full_path' => htmlspecialchars(PathTools::makePathAbsolute($directoryPath, $this->rootDir)),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
             'date' => date('r'),
@@ -129,7 +129,7 @@ class DirectoryRenderer
         $bar = $this->renderBar($deadCount, $totalCount);
 
         $this->directoryItemTemplate->setVar([
-            'name' => $name,
+            'name' => htmlspecialchars($name),
             'path_to_root' => $pathToRoot,
             'icon' => $result instanceof AnalyzerFileResult ? 'code' : 'directory',
             'link' => $link,
@@ -161,7 +161,7 @@ class DirectoryRenderer
 
         $parts = explode('/', $directoryPath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.$this->rootDir.'</a></li> ';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.htmlspecialchars($this->rootDir).'</a></li> ';
 
         $folderUp = $numParts - 1;
         while ($label = array_shift($parts)) {
@@ -169,7 +169,7 @@ class DirectoryRenderer
                 $breadcrumbString .= '<li class="breadcrumb-item active">'.$label.'</li> ';
             } else {
                 $link = './'.str_repeat('../', $folderUp).'index.html';
-                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, $label);
+                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, htmlspecialchars($label));
             }
             --$folderUp;
         }
