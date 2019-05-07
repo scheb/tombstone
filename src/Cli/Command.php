@@ -71,7 +71,7 @@ class Command extends AbstractCommand
         $this->output->debug('Load config from '.$configFile);
         $configLoader = ConfigurationLoader::create();
         $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
-        $rootDir = $config['rootDir'];
+        $rootDir = $config['rootDir'] ?? null;
 
         $tombstoneIndex = new TombstoneIndex($rootDir);
         $vampireIndex = new VampireIndex();
