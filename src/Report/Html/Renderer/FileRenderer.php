@@ -138,7 +138,8 @@ class FileRenderer
     {
         $parts = explode('/', $relativeFilePath);
         $numParts = count($parts);
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.htmlspecialchars($this->rootDir).'</a></li> ';
+        $rootDirName = $this->rootDir ?? '.';
+        $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.htmlspecialchars($rootDirName).'</a></li> ';
 
         $folderUp = $numParts - 2;
         while ($label = array_shift($parts)) {
