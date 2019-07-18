@@ -6,12 +6,14 @@ namespace Scheb\Tombstone\Tracing;
 
 class PathNormalizer
 {
+    private const NORMALIZED_DIRECTORY_SEPARATOR = '/';
+
     public static function normalizeDirectorySeparator(string $path): string
     {
-        return str_replace('\\', '/', $path);
+        return str_replace('\\', self::NORMALIZED_DIRECTORY_SEPARATOR, $path);
     }
 
-    public static function makeRelativeTo(string $path, ?string $baseDir): string
+    public static function tryMakeRelativeTo(string $path, ?string $baseDir): string
     {
         if (!$baseDir) {
             return $path;
@@ -21,7 +23,7 @@ class PathNormalizer
         $normalizedPath = PathNormalizer::normalizeDirectorySeparator($path);
         if (self::startsWith($normalizedPath, $normalizedBaseDir)) {
             $normalizedPath = substr($normalizedPath, strlen($normalizedBaseDir));
-            if ('/' === $normalizedPath[0]) {
+            if (self::NORMALIZED_DIRECTORY_SEPARATOR === $normalizedPath[0]) {
                 $normalizedPath = substr($normalizedPath, 1);
             }
 
