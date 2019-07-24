@@ -113,9 +113,12 @@ To run the test suite install the dependencies with `composer install` and then 
 Acknowledgments
 ---------------
 
-The library is heavly inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code) of the tombstone concept.
+The library is heavly inspired by
+[Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code)
+of the tombstone concept.
 
-Thanks to [Sebastian Bergmann](https://github.com/sebastianbergmann) for letting me re-use parts of his code and the template files.
+Thanks to [Sebastian Bergmann](https://github.com/sebastianbergmann) for letting me re-use parts of his code and the
+template files.
 
 License
 -------
