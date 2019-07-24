@@ -24,7 +24,7 @@ Install via composer
 $ composer require scheb/tombstone-analyzer
 ```
 
-Composer automatically creates an executable binary `vendor/bin/tombstone`.
+Composer automatically creates an executable binary `vendor/bin/tombstone-analyzer`.
 
 Usage
 -----
@@ -33,7 +33,7 @@ Provide a YAML config file to the tombstone-analyzer. Providing the config file 
 file named `tombstone.yml` in the current working directory.
 
 ```bash
-$ tombstone -c tombstone.yml
+$ tombstone-analyzer -c tombstone.yml
 ```
 
 Configuration
