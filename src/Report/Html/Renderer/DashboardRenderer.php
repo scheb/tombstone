@@ -204,7 +204,7 @@ class DashboardRenderer
         $invokersString = '';
         foreach ($invokers as $invoker) {
             $this->invokerTemplate->setVar([
-                'invoker' => htmlspecialchars($invoker) ?: 'global scope',
+                'invoker' => $invoker ? htmlspecialchars($invoker) : 'global scope',
             ]);
             $invokersString .= $this->invokerTemplate->render();
         }

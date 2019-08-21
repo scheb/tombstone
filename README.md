@@ -52,6 +52,8 @@ source:
         - src  
 logs:
     directory: logs
+
+rootDir: root
 ```
 
 All configuration options:
