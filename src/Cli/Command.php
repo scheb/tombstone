@@ -65,7 +65,7 @@ class Command extends AbstractCommand
     {
         $configFile = $this->input->getOption('config') ?? getcwd().DIRECTORY_SEPARATOR.'tombstone.yml';
         if (!file_exists($configFile)) {
-            throw new \InvalidArgumentException('Could not find configuration file '.$configFile);
+            throw new \InvalidArgumentException(sprintf('Could not find configuration file %s', $configFile));
         }
 
         $this->output->debug('Load config from '.$configFile);
@@ -130,7 +130,7 @@ class Command extends AbstractCommand
             require_once $config['logs']['custom']['file'];
             $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
             if (!$reflectionClass->implementsInterface(LogReaderInterface::class)) {
-                throw new \Exception('Class '.$config['logs']['custom']['class'].' must implement '.LogReaderInterface::class);
+                throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogReaderInterface::class));
             }
 
             $logReaders[] = $reflectionClass->newInstance();

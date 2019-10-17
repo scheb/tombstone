@@ -25,7 +25,7 @@ class PhpFileFormatter
         $tokens = token_get_all($buffer);
         $result = [''];
         $i = 0;
-        $fileEndsWithNewLine = "\n" == substr($buffer, -1);
+        $fileEndsWithNewLine = "\n" === substr($buffer, -1);
         unset($buffer);
 
         foreach ($tokens as $token) {

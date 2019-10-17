@@ -104,7 +104,7 @@ class TombstoneVisitor extends NameResolver
         if (isset($node->name->parts)) {
             $nameParts = $node->name->parts;
 
-            return 1 == count($nameParts) && 'tombstone' == $nameParts[0];
+            return 1 === count($nameParts) && 'tombstone' === $nameParts[0];
         }
 
         return false;

@@ -38,19 +38,19 @@ class TombstoneExtractor implements TombstoneExtractorInterface
     {
         $this->visitor->setCurrentFile($filePath);
         if (!is_readable($filePath)) {
-            throw new TombstoneExtractionException('File "'.$filePath.'" is not readable.');
+            throw new TombstoneExtractionException(sprintf('File "%s" is not readable.', $filePath));
         }
 
         try {
             $code = file_get_contents($filePath);
             $stmts = $this->parser->parse($code);
             if (null === $stmts) {
-                throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.');
+                throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $filePath));
             }
 
             $this->traverser->traverse($stmts);
         } catch (Error $e) {
-            throw new TombstoneExtractionException('PHP code in "'.$filePath.'" could not be parsed.', 0, $e);
+            throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $filePath), 0, $e);
         }
     }
 }

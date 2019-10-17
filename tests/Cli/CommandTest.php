@@ -114,7 +114,7 @@ class CommandTest extends TestCase
             \RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($files as $fileInfo) {
-            if ('.gitkeep' == $fileInfo->getBaseName()) {
+            if ('.gitkeep' === $fileInfo->getBaseName()) {
                 continue;
             }
             $cmd = ($fileInfo->isDir() ? 'rmdir' : 'unlink');

@@ -1,7 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
+//phpcs:disable Squiz.Functions.GlobalFunction.Found
 function deadCodeFunction(): void
 {
     if (false) {

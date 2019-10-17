@@ -14,7 +14,7 @@ class AnalyzerLogFileReader
     {
         $handle = fopen($file, 'r');
         if (false === $handle) {
-            throw new LogReaderException('Could not read log file '.$file);
+            throw new LogReaderException(sprintf('Could not read log file %s', $file));
         }
 
         while (false !== ($line = fgets($handle))) {

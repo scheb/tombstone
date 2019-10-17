@@ -66,11 +66,11 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         $this->createDirectory($reportDir);
         $handle = opendir($templateDir);
         if (!$handle) {
-            throw new HtmlReportException('Could not read template files from '.$templateDir);
+            throw new HtmlReportException(sprintf('Could not read template files from %s', $templateDir));
         }
 
         while ($file = readdir($handle)) {
-            if ('.' == $file || '..' == $file) {
+            if ('.' === $file || '..' === $file) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
             }
 
             if (!@copy($templateFile, $reportFile)) {
-                throw new HtmlReportException('Could not copy '.$templateFile.' to '.$reportFile);
+                throw new HtmlReportException(sprintf('Could not copy %s to %s', $templateFile, $reportFile));
             }
         }
         closedir($handle);
@@ -93,10 +93,10 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     {
         if (!is_dir($dir)) {
             if (!@mkdir($dir, 0777, true)) {
-                throw new HtmlReportException('Could not create directory '.$dir);
+                throw new HtmlReportException(sprintf('Could not create directory %s', $dir));
             }
         } elseif (!is_writable($dir)) {
-            throw new HtmlReportException('Directory '.$dir.' has to be writable');
+            throw new HtmlReportException(sprintf('Directory %s has to be writable', $dir));
         }
     }
 }
