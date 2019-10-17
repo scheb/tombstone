@@ -163,7 +163,7 @@ Contribute
 You're welcome to [contribute](https://github.com/scheb/tombstone/graphs/contributors) to this library by creating a
 pull requests or feature request in the issues section. For pull requests, please follow these guidelines:
 
-- Symfony code style
+- Symfony code style (use `php_cs.xml` to configure the code style in your IDE)
 - PHP7.1 type hints for everything (including: return types, `void`, nullable types)
 - `declare(strict_types=1)` must be used
 - Please add/update test cases

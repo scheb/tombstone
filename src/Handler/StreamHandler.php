@@ -70,7 +70,7 @@ class StreamHandler extends AbstractHandler
             if (!is_resource($this->stream)) {
                 $this->stream = null;
                 throw new \UnexpectedValueException(
-                    sprintf('The stream or file "%s" could not be opened: '.$this->errorMessage, $this->url)
+                    sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url)
                 );
             }
         }
@@ -116,7 +116,7 @@ class StreamHandler extends AbstractHandler
             restore_error_handler();
             if (false === $status) {
                 throw new \UnexpectedValueException(
-                    sprintf('There is no existing directory at "%s" and its not buildable: '.$this->errorMessage, $dir)
+                    sprintf('There is no existing directory at "%s" and its not buildable: %s', $this->errorMessage, $dir)
                 );
             }
         }

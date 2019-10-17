@@ -39,7 +39,7 @@ class AnalyzerLogHandlerTest extends TestCase
         $handle = opendir($this->logDir);
         $logFiles = [];
         while ($file = readdir($handle)) {
-            if ('.' == $file || '..' == $file || '.gitkeep' == $file) {
+            if ('.' === $file || '..' === $file || '.gitkeep' === $file) {
                 continue;
             }
 
