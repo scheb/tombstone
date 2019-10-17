@@ -76,7 +76,7 @@ source:
     notNames:
         - "*.js"
 
-# Optional, the root directory is used to make paths from the scanned sources relative. This is important, if you made
+# The root directory is used to make paths from the scanned sources relative. This is important, if you made
 # the paths in your logs relative to a root directory.
 rootDir: root
 
