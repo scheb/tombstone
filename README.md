@@ -1,9 +1,9 @@
 scheb/tombstone
 ===============
 
-[![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=master)](https://travis-ci.org/scheb/tombstone)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=master)
+[![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=0.x)](https://travis-ci.org/scheb/tombstone)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=0.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=0.x)
+[![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=0.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=0.x)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
 [![Total Downloads](https://poser.pugx.org/scheb/tombstone/downloads)](https://packagist.org/packages/scheb/tombstone)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
@@ -85,7 +85,7 @@ register_shutdown_function(function () use ($bufferedGraveyard) {
 
 ### Relative Path Logs
 
-By default the absolute file path is used in the logs. This can be in problem in some environments (e.g. when your 
+By default the absolute file path is used in the logs. This can be in problem in some environments (e.g. when your
 deployment process creates a new directory for every release). If you tell the root path to the graveyard, it will log
 the relative file path instead. This makes log files exchangeable between different servers/environments/installation
 paths.
@@ -109,7 +109,7 @@ should not change the values of a tombstone. The more unique the combination is 
 the matching will be.
 
 The first string that can be interpreted as a date (every date format `strtotime()` understands) will be taken as the
-tombstones date, which is used to calculate the age of a tombstone. 
+tombstones date, which is used to calculate the age of a tombstone.
 
 ```php
 <?php
@@ -148,7 +148,7 @@ doesn't make a difference if a tombstone was called 100 or a million times.
 - `JsonFormatter`: Compact JSON string.
 - `LineFormatter`: Human-readable log entry.
 
-Handlers have a default formatter. The formatter can be changed by calling `setFormatter()`. 
+Handlers have a default formatter. The formatter can be changed by calling `setFormatter()`.
 
 Report Generation
 -----------------
@@ -156,7 +156,7 @@ Report Generation
 [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) is a library to analyze the code and the log
 files written by `AnalyzerLogHandler`. The data is used to generate reports about dead and undead code in your project.
 
-[Read more about report generation](https://github.com/scheb/tombstone-analyzer/blob/master/README.md).
+[Read more about report generation](https://github.com/scheb/tombstone-analyzer/blob/0.x/README.md).
 
 Contribute
 ----------
