@@ -1,0 +1,8 @@
+<li class="list-group-item list-group-item-success">
+    <h4><img src="{{path_to_root}}img/cross.png" title="Dead" /> <samp>{{tombstone}}</samp></h4>
+    <div class="tombstone-detail">
+        in line <samp>{{line}}</samp><br/>
+        in method <samp>{{method}}</samp><br/>
+        was <strong>not called {{dead_since}}</strong>
+    </div>
+</li>

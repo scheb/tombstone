@@ -1,0 +1,7 @@
+<tr>
+    <td width="1" class="{{level}}">
+        <div align="right"><a href="#{{line}}">{{line}}</a></div>
+    </td>
+    <td class="{{level}}"><a href="#{{line}}">{{tombstone}}</a></td>
+    <td class="{{level}}"><samp>{{method}}</samp></td>
+</tr>

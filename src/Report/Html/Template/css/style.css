@@ -1,0 +1,152 @@
+body {
+    padding-top: 10px;
+}
+
+.progress {
+    height: 24px;
+}
+
+.dashboard h3 {
+    margin-top: 0.8em;
+}
+
+.tombstone-list {
+    margin-left: 20px;
+}
+
+.tombstone-list img {
+    vertical-align: bottom;
+}
+
+.tombstone-list h4 {
+    margin-top: 0;
+    font-size: 1em;
+}
+
+.tombstone-list .list-group-item-danger {
+    background-color: #f7eded;
+}
+
+.tombstone-list .list-group-item-success {
+    color: #2e2e2e;
+    background-color: #f5f5f5;
+}
+
+.directory-list .glyphicon {
+    margin-right: 0.25em;
+}
+
+.source-code td.number {
+    min-width: 60px;
+    padding-left: 20px;
+}
+
+.source-code td.codeLine {
+    width: 100%;
+}
+
+.octicon {
+    display: inline-block;
+    vertical-align: baseline;
+    fill: currentColor;
+}
+
+h3 .octicon {
+    height: 32px;
+    vertical-align: text-bottom;
+}
+
+.icon-vampire td.number {
+    background: url('../img/vampire.png') left center no-repeat;
+}
+
+.icon-cross td.number {
+    background: url('../img/cross.png') left center no-repeat;
+}
+
+.tombstones-total {
+    margin-bottom: 1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tombstones-distribution {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.tombstones-total .progress-bar,
+.tombstones-distribution .progress-bar {
+    font-size: 1.2em;
+}
+
+.tombstone-detail {
+    margin-left: 25px;
+}
+
+.table-bordered > thead > tr > td {
+    border-bottom-width: 1px;
+}
+
+.table tbody > tr > td, .table thead > tr > td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.table-condensed tbody > tr > td {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.progress {
+    background-color: #d9534f;
+}
+
+.table .progress {
+    margin-bottom: inherit;
+}
+
+.table-borderless th, .table-borderless td {
+    border: 0 !important;
+}
+
+.table tbody tr.danger, .table tbody td.danger, li.danger, span.danger {
+    background-color: #f2dede;
+}
+
+.table tbody tr.success, .table tbody td.success, li.success, span.success {
+    background-color: #eeeeee;
+}
+
+td.codeLine {
+    font-family: monospace;
+    white-space: pre;
+}
+
+td span.comment {
+    color: #888a85;
+}
+
+td span.default {
+    color: #2e3436;
+}
+
+td span.html {
+    color: #888a85;
+}
+
+td span.keyword {
+    color: #2e3436;
+    font-weight: bold;
+}
+
+pre span.string {
+    color: #2e3436;
+}
+
+span.success, span.warning, span.danger {
+    margin-right: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}

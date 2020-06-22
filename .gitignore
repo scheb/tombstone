@@ -1,0 +1,13 @@
+# Eclipse
+.settings/
+.project
+.buildpath
+bin
+tests/_report
+tests/_logs
+# PhpStorm
+.idea/
+vendor/
+composer.lock
+# PHPCS Fixer
+.php_cs.cache
