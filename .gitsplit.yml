@@ -1,0 +1,11 @@
+splits:
+    - prefix: "src/analyzer"
+      target: "https://${GH_TOKEN}@github.com/scheb/tombstone-analyzer.git"
+    - prefix: "src/logger"
+      target: "https://${GH_TOKEN}@github.com/scheb/tombstone-logger.git"
+
+origins:
+    # Not 0.x (branch and tags)
+    - ^[1-9]\.x$
+    - ^v[1-9]\.\d+$
+    - ^v[1-9]\.\d+\.\d+.*$

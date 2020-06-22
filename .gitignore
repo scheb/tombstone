@@ -1,0 +1,16 @@
+# Eclipse
+.settings/
+.project
+.buildpath
+bin
+# PhpStorm
+.idea/
+vendor/
+composer.lock
+# PHPCS Fixer
+.php_cs.cache
+# PHPUnit
+.phpunit.result.cache
+# Tests
+app/logs/
+app/report/
