@@ -19,8 +19,8 @@ What are Tombstones?
 
 To get the basic idea, watch David Schnepper's 5 minute talk from Velocity Santa Clara 2014.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=29UXzfQWOhQ" target="_blank">
-    <img src="http://img.youtube.com/vi/29UXzfQWOhQ/0.jpg" alt="Tombstone Youtube Video" width="240" height="180" />
+<a href="https://www.youtube.com/watch?v=29UXzfQWOhQ" target="_blank">
+    <img src="https://i.ytimg.com/vi/29UXzfQWOhQ/maxresdefault.jpg" alt="Tombstone Youtube Video" width="256" height="144" />
 </a>
 
 When you want to identify and clean-up dead code in a project, static code analysis tools are the weapon of choice. But
