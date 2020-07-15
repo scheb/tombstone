@@ -11,5 +11,10 @@
 	<rule ref="Symfony.Files.AlphanumericFilename">
 		<exclude-pattern>*/src/logger/tombstone-function.php</exclude-pattern>
 	</rule>
+	<rule ref="Zend.NamingConventions.ValidVariableName.MemberVarContainsNumbers">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Generic.PHP.RequireStrictTypes" />
 	<exclude-pattern>*/src/analyzer/Report/Html/Template/*</exclude-pattern>
+	<exclude-pattern>*/tests/*/Fixtures/*</exclude-pattern>
 </ruleset>
