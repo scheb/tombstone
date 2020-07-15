@@ -30,7 +30,7 @@ class VampireIndex implements \Countable, \Iterator
 
     public function count()
     {
-        return count($this->vampires);
+        return \count($this->vampires);
     }
 
     public function current()

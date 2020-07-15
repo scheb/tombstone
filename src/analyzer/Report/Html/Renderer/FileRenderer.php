@@ -64,7 +64,7 @@ class FileRenderer
         ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$relativeFilePath.'.html';
-        $reportDir = dirname($reportFile);
+        $reportDir = \dirname($reportFile);
         if (!is_dir($reportDir)) {
             mkdir($reportDir, 0777, true);
         }
@@ -122,9 +122,9 @@ class FileRenderer
             ++$i;
 
             $class = 'default';
-            if (in_array($i, $undeadLines)) {
+            if (\in_array($i, $undeadLines)) {
                 $class = 'danger icon-vampire';
-            } elseif (in_array($i, $deadLines)) {
+            } elseif (\in_array($i, $deadLines)) {
                 $class = 'success icon-cross';
             }
 
@@ -137,7 +137,7 @@ class FileRenderer
     private function renderBreadcrumb(string $relativeFilePath): string
     {
         $parts = explode('/', $relativeFilePath);
-        $numParts = count($parts);
+        $numParts = \count($parts);
         $rootDirName = $this->rootDir ?? '.';
         $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts - 1).'index.html">'.htmlspecialchars($rootDirName).'</a></li> ';
 

@@ -22,7 +22,7 @@ class PathNormalizer
         $normalizedBaseDir = PathNormalizer::normalizeDirectorySeparator($baseDir);
         $normalizedPath = PathNormalizer::normalizeDirectorySeparator($path);
         if (self::startsWith($normalizedPath, $normalizedBaseDir)) {
-            $normalizedPath = substr($normalizedPath, strlen($normalizedBaseDir));
+            $normalizedPath = substr($normalizedPath, \strlen($normalizedBaseDir));
             if (self::NORMALIZED_DIRECTORY_SEPARATOR === $normalizedPath[0]) {
                 $normalizedPath = substr($normalizedPath, 1);
             }
@@ -35,6 +35,6 @@ class PathNormalizer
 
     private static function startsWith(string $haystack, string $needle): bool
     {
-        return '' === $needle || false !== strrpos($haystack, $needle, -strlen($haystack));
+        return '' === $needle || false !== strrpos($haystack, $needle, -\strlen($haystack));
     }
 }

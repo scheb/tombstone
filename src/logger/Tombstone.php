@@ -55,7 +55,7 @@ class Tombstone
     public function __toString(): string
     {
         $argumentsList = '';
-        if (count($this->arguments)) {
+        if (\count($this->arguments)) {
             $argumentsList = '"'.implode('", "', $this->arguments).'"';
         }
 

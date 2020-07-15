@@ -32,8 +32,6 @@ class ConfigurationLoader
 
     /**
      * @param ConfigProviderInterface[] $configProviders
-     *
-     * @return array
      */
     public function loadConfiguration(array $configProviders): array
     {

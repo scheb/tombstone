@@ -31,9 +31,9 @@ class StreamHandler extends AbstractHandler
      */
     public function __construct($stream, int $filePermission = null, $useLocking = false)
     {
-        if (is_resource($stream)) {
+        if (\is_resource($stream)) {
             $this->stream = $stream;
-        } elseif (is_string($stream)) {
+        } elseif (\is_string($stream)) {
             $this->url = $stream;
         } else {
             throw new \InvalidArgumentException('A stream must either be a resource or a string.');
@@ -44,7 +44,7 @@ class StreamHandler extends AbstractHandler
 
     public function close(): void
     {
-        if (is_resource($this->stream)) {
+        if (\is_resource($this->stream)) {
             fclose($this->stream);
         }
         $this->stream = null;
@@ -53,11 +53,9 @@ class StreamHandler extends AbstractHandler
     public function log(Vampire $vampire): void
     {
         $formatted = $this->getFormatter()->format($vampire);
-        if (!is_resource($this->stream)) {
+        if (!\is_resource($this->stream)) {
             if (!$this->url) {
-                throw new \LogicException(
-                    'Missing stream url, the stream can not be opened. This may be caused by a premature call to close().'
-                );
+                throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
             $this->createDir();
             $this->errorMessage = null;
@@ -67,11 +65,9 @@ class StreamHandler extends AbstractHandler
                 @chmod($this->url, $this->filePermission);
             }
             restore_error_handler();
-            if (!is_resource($this->stream)) {
+            if (!\is_resource($this->stream)) {
                 $this->stream = null;
-                throw new \UnexpectedValueException(
-                    sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url)
-                );
+                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url));
             }
         }
         if ($this->useLocking) {
@@ -93,10 +89,10 @@ class StreamHandler extends AbstractHandler
     {
         $pos = strpos($stream, '://');
         if (false === $pos) {
-            return dirname($stream);
+            return \dirname($stream);
         }
         if ('file://' === substr($stream, 0, 7)) {
-            return dirname(substr($stream, 7));
+            return \dirname(substr($stream, 7));
         }
 
         return null;
@@ -115,9 +111,7 @@ class StreamHandler extends AbstractHandler
             $status = mkdir($dir, 0777, true);
             restore_error_handler();
             if (false === $status) {
-                throw new \UnexpectedValueException(
-                    sprintf('There is no existing directory at "%s" and its not buildable: %s', $this->errorMessage, $dir)
-                );
+                throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and its not buildable: %s', $this->errorMessage, $dir));
             }
         }
         $this->dirCreated = true;

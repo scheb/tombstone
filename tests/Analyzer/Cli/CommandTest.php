@@ -92,7 +92,7 @@ class CommandTest extends TestCase
             new \RecursiveDirectoryIterator(self::REPORT_DIR, \RecursiveDirectoryIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::CHILD_FIRST
         );
-        $relativePathStart = strlen(realpath(self::REPORT_DIR)) + 1;
+        $relativePathStart = \strlen(realpath(self::REPORT_DIR)) + 1;
         $files = [];
         foreach ($iterator as $fileInfo) {
             $files[] = str_replace('\\', '/', substr($fileInfo->getRealPath(), $relativePathStart));

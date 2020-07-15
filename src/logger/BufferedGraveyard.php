@@ -36,7 +36,7 @@ class BufferedGraveyard implements GraveyardInterface
         if ($this->autoFlush) {
             $this->graveyard->tombstone($arguments, $trace, $metadata);
         } else {
-            $this->tombstoneCalls[] = func_get_args();
+            $this->tombstoneCalls[] = \func_get_args();
         }
     }
 

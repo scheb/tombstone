@@ -43,13 +43,13 @@ class Vampire
 
         // This is the method with the tombstone contained
         $method = null;
-        if (isset($trace[1]) && is_array($trace[1])) {
+        if (isset($trace[1]) && \is_array($trace[1])) {
             $method = self::getMethodFromFrame($trace[1]);
         }
 
         // This is the method that called the method with the tombstone
         $invoker = null;
-        if (isset($trace[2]) && is_array($trace[2])) {
+        if (isset($trace[2]) && \is_array($trace[2])) {
             $invoker = self::getMethodFromFrame($trace[2]);
         }
 

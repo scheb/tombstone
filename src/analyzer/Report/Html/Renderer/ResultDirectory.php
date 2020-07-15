@@ -50,7 +50,7 @@ class ResultDirectory implements ResultAggregateInterface
 
     public function getName(): string
     {
-        return $this->path[count($this->path) - 1];
+        return $this->path[\count($this->path) - 1];
     }
 
     public function getPath(): string

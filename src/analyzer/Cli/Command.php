@@ -117,7 +117,6 @@ class Command extends AbstractCommand
     }
 
     /**
-     * @param array $config
      * @return LogReaderInterface[]
      */
     private function createLogReaders(array $config): array
@@ -153,7 +152,7 @@ class Command extends AbstractCommand
 
     private function extractTombstones(array $files, TombstoneExtractorInterface $tombstoneExtractor): void
     {
-        $progress = $this->output->createProgressBar(count($files));
+        $progress = $this->output->createProgressBar(\count($files));
         foreach ($files as $file) {
             $this->output->debug($file);
             $tombstoneExtractor->extractTombstones($file);

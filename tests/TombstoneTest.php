@@ -10,10 +10,7 @@ use Scheb\Tombstone\Vampire;
 class TombstoneTest extends TestCase
 {
     /**
-     * @param string $file
      * @param string ...$arguments
-     *
-     * @return Tombstone
      */
     private function createTombstone(string $file, string ...$arguments): Tombstone
     {

@@ -76,7 +76,7 @@ class Graveyard implements GraveyardInterface
     private function sliceTrace(array $trace): array
     {
         if ($this->stackTraceDepth > 0) {
-            return array_slice($trace, 0, $this->stackTraceDepth);
+            return \array_slice($trace, 0, $this->stackTraceDepth);
         }
 
         return $trace;

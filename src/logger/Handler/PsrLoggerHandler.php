@@ -20,7 +20,6 @@ class PsrLoggerHandler extends AbstractHandler
     private $level;
 
     /**
-     * @param LoggerInterface $logger
      * @param mixed           $level
      */
     public function __construct(LoggerInterface $logger, $level)

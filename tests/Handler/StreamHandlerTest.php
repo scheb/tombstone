@@ -144,7 +144,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteNonExistingAndNotCreatablePath(): void
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
         $handler = new StreamHandler('/foo/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
@@ -159,7 +159,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteNonExistingAndNotCreatableFileResource(): void
     {
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
+        if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
         $handler = new StreamHandler('file:///foo/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));

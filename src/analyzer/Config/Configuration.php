@@ -134,7 +134,7 @@ class Configuration implements ConfigurationInterface
     {
         return function ($path): bool {
             $fileRealPath = realpath($path);
-            $fileDirectory = realpath(dirname($path));
+            $fileDirectory = realpath(\dirname($path));
 
             return !(
                 (false !== $fileDirectory && is_writeable($fileDirectory)) // Path is within a writable directory

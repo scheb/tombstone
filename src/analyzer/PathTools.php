@@ -13,7 +13,7 @@ class PathTools
         }
 
         // Path is root
-        if (!strlen($path) || '.' === $path) {
+        if (!\strlen($path) || '.' === $path) {
             return self::normalizeDirectorySeparator($rootDir);
         }
 
@@ -35,12 +35,12 @@ class PathTools
 
     private static function isAbsolutePath(string $path): bool
     {
-        if (!strlen($path)) {
+        if (!\strlen($path)) {
             return false;
         }
 
         return '/' === $path[0]
             || '\\' === $path[0]
-            || (strlen($path) >= 3 && preg_match('#^[a-zA-Z]:[/\\\\]#', substr($path, 0, 3)));
+            || (\strlen($path) >= 3 && preg_match('#^[a-zA-Z]:[/\\\\]#', substr($path, 0, 3)));
     }
 }

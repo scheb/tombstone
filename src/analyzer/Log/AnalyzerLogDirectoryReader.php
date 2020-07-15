@@ -42,7 +42,7 @@ class AnalyzerLogDirectoryReader implements LogReaderInterface
         $finder = new FinderFacade([$this->logDir], [], ['*.tombstone']);
         $files = $finder->findFiles();
 
-        $progress = $this->output->createProgressBar(count($files));
+        $progress = $this->output->createProgressBar(\count($files));
         foreach ($files as $file) {
             $this->logReader->aggregateLog($file, $vampireIndex);
             $progress->advance();

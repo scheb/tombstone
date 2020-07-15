@@ -57,8 +57,6 @@ class TombstoneIndex implements \Countable, \Iterator
     }
 
     /**
-     * @param string $method
-     *
      * @return Tombstone[]
      */
     public function getInMethod(string $method): array
@@ -94,7 +92,7 @@ class TombstoneIndex implements \Countable, \Iterator
 
     public function count()
     {
-        return count($this->fileLineIndex);
+        return \count($this->fileLineIndex);
     }
 
     public function current()

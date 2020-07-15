@@ -98,16 +98,16 @@ class AnalyzerResult
 
     public function getDeadCount(): int
     {
-        return count($this->dead);
+        return \count($this->dead);
     }
 
     public function getUndeadCount(): int
     {
-        return count($this->undead);
+        return \count($this->undead);
     }
 
     public function getDeletedCount(): int
     {
-        return count($this->deleted);
+        return \count($this->deleted);
     }
 }

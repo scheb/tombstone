@@ -31,9 +31,6 @@ class Analyzer
     }
 
     /**
-     * @param TombstoneIndex $tombstoneIndex
-     * @param VampireIndex   $vampireIndex
-     *
      * @return Vampire[]
      */
     private function match(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex): array
@@ -66,10 +63,7 @@ class Analyzer
     }
 
     /**
-     * @param TombstoneIndex $tombstoneIndex
      * @param Vampire[]      $unmatchedVampires
-     *
-     * @return AnalyzerResult
      */
     private function createResult(TombstoneIndex $tombstoneIndex, array $unmatchedVampires): AnalyzerResult
     {

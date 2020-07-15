@@ -30,7 +30,7 @@ class PhpFileFormatter
 
         foreach ($tokens as $token) {
             // Handle plain string tokens
-            if (is_string($token)) {
+            if (\is_string($token)) {
                 $result[$i] .= self::formatValue($token, self::COLOR_KEYWORD);
                 continue;
             }
@@ -59,7 +59,7 @@ class PhpFileFormatter
         }
 
         if ($fileEndsWithNewLine) {
-            unset($result[count($result) - 1]);
+            unset($result[\count($result) - 1]);
         }
 
         return $result;

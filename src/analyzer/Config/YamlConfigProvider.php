@@ -24,7 +24,7 @@ class YamlConfigProvider implements ConfigProviderInterface
         $config = Yaml::parseFile($this->configFile);
 
         // Make all paths relative to config file path
-        $configFileDir = dirname(realpath($this->configFile));
+        $configFileDir = \dirname(realpath($this->configFile));
 
         if (isset($config['rootDir'])) {
             $config['rootDir'] = PathTools::makePathAbsolute($config['rootDir'], $configFileDir);

@@ -55,7 +55,7 @@ class AnalyzerLogFormat
     public static function logToVampire(string $log): ?Vampire
     {
         $data = json_decode($log, true);
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             return null;
         }
 

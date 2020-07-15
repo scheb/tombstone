@@ -70,9 +70,9 @@ class DashboardRenderer
         $tombstonesView = $this->renderTombstonesView($result);
         $deletedView = $this->renderDeletedView($result);
 
-        $numUndead = count($result->getUndead());
-        $numDead = count($result->getDead());
-        $numDeleted = count($result->getDeleted());
+        $numUndead = \count($result->getUndead());
+        $numDead = \count($result->getDead());
+        $numDeleted = \count($result->getDeleted());
         $total = $numDead + $numUndead;
 
         $deadPercent = $total ? $numDead / $total * 100 : 0;

@@ -96,21 +96,13 @@ class DirectoryRenderer
         ]);
 
         $reportFile = $this->reportDir.DIRECTORY_SEPARATOR.$directoryPath.'/index.html';
-        $reportDir = dirname($reportFile);
+        $reportDir = \dirname($reportFile);
         if (!is_dir($reportDir)) {
             mkdir($reportDir, 0777, true);
         }
         $this->directoryTemplate->renderTo($reportFile);
     }
 
-    /**
-     * @param string                   $name
-     * @param string                   $link
-     * @param ResultAggregateInterface $result
-     * @param string                   $pathToRoot
-     *
-     * @return string
-     */
     private function renderDirectoryItem(string $name, string $link, ResultAggregateInterface $result, string $pathToRoot): string
     {
         $deadCount = $result->getDeadCount();
@@ -160,7 +152,7 @@ class DirectoryRenderer
         }
 
         $parts = explode('/', $directoryPath);
-        $numParts = count($parts);
+        $numParts = \count($parts);
         $rootDirName = $this->rootDir ?? '.';
         $breadcrumbString = '<li class="breadcrumb-item"><a href="./'.str_repeat('../', $numParts).'index.html">'.htmlspecialchars($rootDirName).'</a></li> ';
 

@@ -14,9 +14,6 @@ class FormattedConsoleOutput
      */
     private $output;
 
-    /**
-     * @param ConsoleOutput $output
-     */
     public function __construct(ConsoleOutput $output)
     {
         $this->output = $output;

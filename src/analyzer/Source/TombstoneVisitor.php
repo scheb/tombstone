@@ -36,9 +36,6 @@ class TombstoneVisitor extends NameResolver
      */
     private $tombstoneIndex;
 
-    /**
-     * @param TombstoneIndex $tombstoneIndex
-     */
     public function __construct(TombstoneIndex $tombstoneIndex)
     {
         parent::__construct();
@@ -104,7 +101,7 @@ class TombstoneVisitor extends NameResolver
         if (isset($node->name->parts)) {
             $nameParts = $node->name->parts;
 
-            return 1 === count($nameParts) && 'tombstone' === $nameParts[0];
+            return 1 === \count($nameParts) && 'tombstone' === $nameParts[0];
         }
 
         return false;
@@ -123,8 +120,6 @@ class TombstoneVisitor extends NameResolver
     }
 
     /**
-     * @param FuncCall $node
-     *
      * @return string[]
      */
     private function extractParameters(FuncCall $node): array

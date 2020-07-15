@@ -9,8 +9,6 @@ interface HandlerInterface
 {
     /**
      * Log a vampire.
-     *
-     * @param Vampire $vampire
      */
     public function log(Vampire $vampire);
 
@@ -21,15 +19,11 @@ interface HandlerInterface
 
     /**
      * Sets the formatter.
-     *
-     * @param FormatterInterface $formatter
      */
     public function setFormatter(FormatterInterface $formatter);
 
     /**
      * Gets the formatter.
-     *
-     * @return FormatterInterface
      */
     public function getFormatter(): FormatterInterface;
 }
