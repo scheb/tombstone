@@ -26,8 +26,8 @@ To get the basic idea, watch David Schnepper's 5 minute talk from Velocity Santa
 When you want to identify and clean-up dead code in a project, static code analysis tools are the weapon of choice. But
 these tools have some limitations, especially in a dynamic language like PHP:
 
-- They can only tell you, if a piece of code is referenced, not if it's actually used.
-- They cannot resolve dynamic or generated call paths.
+- They can only tell you, if a piece of code is referenced, not if it's actually used
+- They cannot resolve dynamic or generated call paths
 
 Tombstones provide a way to track if a piece of code is actually invoked. **They are executable markers in your code**,
 that you can place where you suspect dead code. Then, you collect tombstone invocations on production. After a while,
