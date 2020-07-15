@@ -39,6 +39,7 @@ class VampireTest extends TestCase
         $this->assertEquals('e5596f50384552bf050040bcf28763d8fdd87c72', $vampire->getStackTraceHash());
 
         $invocationDate = strtotime($vampire->getInvocationDate());
-        $this->assertEquals(time(), $invocationDate, '', 5);
+        $this->assertEquals(time(), $invocationDate);
+        $this->assertEqualsWithDelta(time(), $invocationDate, 5);
     }
 }

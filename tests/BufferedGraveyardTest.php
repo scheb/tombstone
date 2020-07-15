@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\BufferedGraveyard;
 use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\GraveyardInterface;
@@ -11,7 +12,7 @@ use Scheb\Tombstone\GraveyardInterface;
 class BufferedGraveyardTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject|GraveyardInterface
      */
     private $innerGraveyard;
 
@@ -20,7 +21,7 @@ class BufferedGraveyardTest extends TestCase
      */
     private $graveyard;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->innerGraveyard = $this->createMock(GraveyardInterface::class);
         $this->graveyard = new BufferedGraveyard($this->innerGraveyard);

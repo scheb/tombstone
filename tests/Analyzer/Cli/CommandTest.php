@@ -38,12 +38,12 @@ class CommandTest extends TestCase
         'tombstone-report.php',
     ];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->clean();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->clean();
     }

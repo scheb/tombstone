@@ -63,23 +63,23 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException \LogicException
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteMissingResource(): void
     {
+        $this->expectException('LogicException');
         $handler = new StreamHandler(null);
         $handler->log($this->getRecord());
     }
 
     /**
      * @dataProvider provideInvalidArguments
-     * @expectedException \InvalidArgumentException
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      */
     public function testWriteInvalidArgument($invalidArgument): void
     {
+        $this->expectException('InvalidArgumentException');
         new StreamHandler($invalidArgument);
     }
 
@@ -93,23 +93,23 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteInvalidResource(): void
     {
+        $this->expectException('UnexpectedValueException');
         $handler = new StreamHandler('bogus://url');
         $handler->log($this->getRecord());
     }
 
     /**
-     * @expectedException \UnexpectedValueException
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingResource(): void
     {
+        $this->expectException('UnexpectedValueException');
         $handler = new StreamHandler('ftp://foo/bar/baz/'.rand(0, 10000));
         $handler->log($this->getRecord());
     }
@@ -137,13 +137,13 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessageRegExp /There is no existing directory at/
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingAndNotCreatablePath(): void
     {
+        $this->expectException('Exception');
+        $this->expectExceptionMessageRegExp('/There is no existing directory at/');
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
@@ -152,13 +152,13 @@ class StreamHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessageRegExp /There is no existing directory at/
      * @covers \Scheb\Tombstone\Handler\StreamHandler::__construct
      * @covers \Scheb\Tombstone\Handler\StreamHandler::log
      */
     public function testWriteNonExistingAndNotCreatableFileResource(): void
     {
+        $this->expectException('Exception');
+        $this->expectExceptionMessageRegExp('/There is no existing directory at/');
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }

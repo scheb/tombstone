@@ -18,7 +18,7 @@ class TraceProviderTest extends TestCase
         $thisClass = __CLASS__;
 
         $trace = TraceProvider::getTraceHere();
-        $this->assertInternalType('array', $trace);
+        $this->assertIsArray($trace);
         $this->assertGreaterThanOrEqual(3, $trace);
         $this->assertEquals($thisMethod, $trace[0]['function']);
         $this->assertEquals($thisClass, $trace[0]['class']);

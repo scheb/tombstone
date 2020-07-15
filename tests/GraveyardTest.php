@@ -15,7 +15,7 @@ class GraveyardTest extends TestCase
     private const MAX_STACK_TRACE_DEPTH = 3;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject|HandlerInterface
      */
     private $handler;
 
@@ -24,7 +24,7 @@ class GraveyardTest extends TestCase
      */
     private $graveyard;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->handler = $this->getHandlerMock();
         $this->graveyard = new Graveyard([$this->handler], null, self::MAX_STACK_TRACE_DEPTH);

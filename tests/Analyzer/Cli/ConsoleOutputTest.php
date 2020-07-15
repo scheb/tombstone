@@ -22,7 +22,7 @@ class ConsoleOutputTest extends TestCase
      */
     private $consoleOutput;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $formatter = $this->createMock(OutputFormatterInterface::class);
         $formatter

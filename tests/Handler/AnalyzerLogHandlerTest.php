@@ -16,13 +16,13 @@ class AnalyzerLogHandlerTest extends TestCase
      */
     private $logDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logDir = __DIR__.'/../../app/logs/';
         $this->clearLogFiles();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->clearLogFiles();
     }
