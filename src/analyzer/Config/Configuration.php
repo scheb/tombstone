@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Config;
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,10 +18,14 @@ class Configuration implements ConfigurationInterface
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
+            /** @psalm-suppress UndefinedMethod */
             $rootNode = $treeBuilder->root(self::CONFIG_ROOT);
         }
 
-        /* @var ArrayNodeDefinition $rootNode */
+        /**
+         * @psalm-suppress PossiblyNullReference
+         * @psalm-suppress PossiblyUndefinedMethod
+         */
         $rootNode
             ->ignoreExtraKeys(false)
             ->children()
@@ -114,7 +117,7 @@ class Configuration implements ConfigurationInterface
 
     private function isNoFile(): callable
     {
-        return function ($path): bool {
+        return function (string $path): bool {
             $path = realpath($path);
 
             return !(false !== $path && !is_dir($path));
@@ -123,7 +126,7 @@ class Configuration implements ConfigurationInterface
 
     private function isNoDirectory(): callable
     {
-        return function ($path): bool {
+        return function (string $path): bool {
             $path = realpath($path);
 
             return !(false !== $path && is_dir($path));
@@ -132,7 +135,7 @@ class Configuration implements ConfigurationInterface
 
     private function isNotWritableFile(): callable
     {
-        return function ($path): bool {
+        return function (string $path): bool {
             $fileRealPath = realpath($path);
             $fileDirectory = realpath(\dirname($path));
 
@@ -145,7 +148,7 @@ class Configuration implements ConfigurationInterface
 
     private function isNoWritableDirectory(): callable
     {
-        return function ($path): bool {
+        return function (string $path): bool {
             $path = realpath($path);
 
             return !(false !== $path && is_dir($path) && is_writeable($path));

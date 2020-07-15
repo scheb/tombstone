@@ -59,7 +59,7 @@ class AnalyzerLogFormat
             return null;
         }
 
-        $version = (int) $data[self::F_VERSION] ?? null;
+        $version = isset($data[self::F_VERSION]) ? (int) $data[self::F_VERSION] : null;
 
         if (self::CURRENT_VERSION === $version) {
             return new Vampire(

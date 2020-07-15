@@ -9,7 +9,8 @@ use Scheb\Tombstone\Tracing\PathNormalizer;
 class Tombstone
 {
     /**
-     * @var string[]
+     * @var array
+     * @psalm-type list<string|null>
      */
     private $arguments;
 
@@ -29,7 +30,7 @@ class Tombstone
     private $line;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $method;
 
@@ -37,6 +38,7 @@ class Tombstone
      * @var Vampire[]
      */
     private $vampires = [];
+
     /**
      * @var array
      */
@@ -75,8 +77,8 @@ class Tombstone
     private function findDate(array $arguments): ?string
     {
         foreach ($arguments as $argument) {
-            if (is_scalar($argument) && false !== strtotime($argument)) {
-                return $argument;
+            if (is_scalar($argument) && false !== strtotime((string) $argument)) {
+                return (string) $argument;
             }
         }
 

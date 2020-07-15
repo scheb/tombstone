@@ -21,7 +21,7 @@ class Graveyard implements GraveyardInterface
     private $traceProvider;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $rootDir;
 
@@ -38,7 +38,7 @@ class Graveyard implements GraveyardInterface
         $this->setRootDir($rootDir);
     }
 
-    public function setRootDir($rootDir): void
+    public function setRootDir(?string $rootDir): void
     {
         $this->rootDir = $rootDir;
     }

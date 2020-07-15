@@ -14,12 +14,35 @@ use Scheb\Tombstone\Vampire;
  */
 class StreamHandler extends AbstractHandler
 {
+    /**
+     * @var resource|closed-resource|null
+     */
     protected $stream;
+
+    /**
+     * @var string|null
+     */
     protected $url;
+
+    /**
+     * @var string|null
+     */
     private $errorMessage;
+
+    /**
+     * @var int|null
+     */
     protected $filePermission;
+
+    /**
+     * @var bool
+     */
     protected $useLocking;
-    private $dirCreated;
+
+    /**
+     * @var bool
+     */
+    private $dirCreated = false;
 
     /**
      * @param resource|string $stream
@@ -29,15 +52,19 @@ class StreamHandler extends AbstractHandler
      * @throws \Exception                If a missing directory is not buildable
      * @throws \InvalidArgumentException If stream is not a resource or string
      */
-    public function __construct($stream, int $filePermission = null, $useLocking = false)
+    public function __construct($stream, ?int $filePermission = null, $useLocking = false)
     {
-        if (\is_resource($stream)) {
-            $this->stream = $stream;
-        } elseif (\is_string($stream)) {
-            $this->url = $stream;
-        } else {
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (!\is_resource($stream) && !\is_string($stream)) {
             throw new \InvalidArgumentException('A stream must either be a resource or a string.');
         }
+
+        if (\is_resource($stream)) {
+            $this->stream = $stream;
+        } else {
+            $this->url = $stream;
+        }
+
         $this->filePermission = $filePermission;
         $this->useLocking = $useLocking;
     }
@@ -59,6 +86,7 @@ class StreamHandler extends AbstractHandler
             }
             $this->createDir();
             $this->errorMessage = null;
+            /** @psalm-suppress InvalidArgument */
             set_error_handler([$this, 'customErrorHandler']);
             $this->stream = fopen($this->url, 'a');
             if (null !== $this->filePermission) {
@@ -67,6 +95,7 @@ class StreamHandler extends AbstractHandler
             restore_error_handler();
             if (!\is_resource($this->stream)) {
                 $this->stream = null;
+                /** @psalm-suppress NullArgument */
                 throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url));
             }
         }
@@ -80,7 +109,7 @@ class StreamHandler extends AbstractHandler
         }
     }
 
-    private function customErrorHandler($code, $msg): void
+    private function customErrorHandler(int $code, string $msg): void
     {
         $this->errorMessage = preg_replace('{^(fopen|mkdir)\(.*?\): }', '', $msg);
     }
@@ -104,14 +133,17 @@ class StreamHandler extends AbstractHandler
         if ($this->dirCreated) {
             return;
         }
+        /** @psalm-suppress PossiblyNullArgument */
         $dir = $this->getDirFromStream($this->url);
         if (null !== $dir && !is_dir($dir)) {
             $this->errorMessage = null;
+            /** @psalm-suppress InvalidArgument */
             set_error_handler([$this, 'customErrorHandler']);
             $status = mkdir($dir, 0777, true);
             restore_error_handler();
             if (false === $status) {
-                throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and its not buildable: %s', $this->errorMessage, $dir));
+                /** @psalm-suppress NullArgument */
+                throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and its not buildable: %s', $dir, $this->errorMessage));
             }
         }
         $this->dirCreated = true;

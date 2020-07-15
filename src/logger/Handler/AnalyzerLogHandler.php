@@ -26,16 +26,18 @@ class AnalyzerLogHandler extends AbstractHandler
      * @var int|null
      */
     private $sizeLimit;
+
     /**
-     * @var null
+     * @var int|null
      */
     private $filePermission;
+
     /**
      * @var bool
      */
     private $useLocking;
 
-    public function __construct(string $logDir, int $sizeLimit = null, $filePermission = null, $useLocking = false)
+    public function __construct(string $logDir, int $sizeLimit = null, ?int $filePermission = null, bool $useLocking = false)
     {
         $this->logDir = $logDir;
         $this->sizeLimit = $sizeLimit;

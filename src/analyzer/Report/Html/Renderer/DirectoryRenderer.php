@@ -19,7 +19,7 @@ class DirectoryRenderer
     private $reportDir;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $rootDir;
 
@@ -87,9 +87,14 @@ class DirectoryRenderer
             }
         }
 
+        $fullPath = $directoryPath;
+        if ($this->rootDir) {
+            $fullPath = PathTools::makePathAbsolute($directoryPath, $this->rootDir);
+        }
+
         $this->directoryTemplate->setVar([
             'path_to_root' => $pathToRoot,
-            'full_path' => htmlspecialchars(PathTools::makePathAbsolute($directoryPath, $this->rootDir)),
+            'full_path' => htmlspecialchars($fullPath),
             'breadcrumb' => $this->renderBreadcrumb($directoryPath),
             'files_list' => $filesList,
             'date' => date('r'),

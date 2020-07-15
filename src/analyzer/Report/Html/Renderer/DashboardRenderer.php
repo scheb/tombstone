@@ -127,7 +127,7 @@ class DashboardRenderer
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => htmlspecialchars($tombstone->getMethod()),
+                'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
                 'dead_since' => $deadSince,
             ]);
             $itemList .= $this->deadTemplate->render();
@@ -145,7 +145,7 @@ class DashboardRenderer
                 'path_to_root' => './',
                 'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => htmlspecialchars($tombstone->getMethod()),
+                'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
                 'invocation' => $invocation,
             ]);
             $itemList .= $this->undeadTemplate->render();
@@ -171,12 +171,17 @@ class DashboardRenderer
     {
         $itemList = '';
         foreach ($fileResult->getDeleted() as $vampire) {
+            $lastCalled = '';
+            if ($invocationDate = $vampire->getInvocationDate()) {
+                TimePeriodFormatter::formatAge($invocationDate);
+            }
+
             $this->deletedTemplate->setVar([
                 'path_to_root' => './',
                 'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
                 'line' => $vampire->getLine(),
-                'method' => htmlspecialchars($vampire->getMethod()),
-                'last_call' => TimePeriodFormatter::formatAge($vampire->getInvocationDate()),
+                'method' => htmlspecialchars($vampire->getMethod() ?? ''),
+                'last_call' => $lastCalled,
             ]);
             $itemList .= $this->deletedTemplate->render();
         }

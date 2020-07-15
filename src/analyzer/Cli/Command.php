@@ -29,22 +29,24 @@ class Command extends AbstractCommand
 {
     /**
      * @var InputInterface
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     private $input;
 
     /**
      * @var ConsoleOutput
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     private $output;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('tombstone')
             ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to config file');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = new ConsoleOutput($output);
@@ -55,7 +57,7 @@ class Command extends AbstractCommand
             $this->output->writeln($e->getMessage());
             $this->output->debug($e->getTraceAsString());
 
-            return $e->getCode() ?: 1;
+            return 1;
         }
 
         return 0;
@@ -63,6 +65,7 @@ class Command extends AbstractCommand
 
     private function doExecute(): void
     {
+        /** @var string $configFile */
         $configFile = $this->input->getOption('config') ?? getcwd().DIRECTORY_SEPARATOR.'tombstone.yml';
         if (!file_exists($configFile)) {
             throw new \InvalidArgumentException(sprintf('Could not find configuration file %s', $configFile));
@@ -126,13 +129,18 @@ class Command extends AbstractCommand
             $logReaders[] = AnalyzerLogDirectoryReader::create($config['logs']['directory'], $this->output);
         }
         if (isset($config['logs']['custom'])) {
-            require_once $config['logs']['custom']['file'];
+            if (isset($config['logs']['custom']['file'])) {
+                /** @psalm-suppress UnresolvableInclude */
+                require_once $config['logs']['custom']['file'];
+            }
             $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
             if (!$reflectionClass->implementsInterface(LogReaderInterface::class)) {
                 throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogReaderInterface::class));
             }
 
-            $logReaders[] = $reflectionClass->newInstance();
+            /** @var LogReaderInterface $logReader */
+            $logReader = $reflectionClass->newInstance();
+            $logReaders[] = $logReader;
         }
 
         return $logReaders;

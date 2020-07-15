@@ -7,9 +7,9 @@ namespace Scheb\Tombstone;
 class GraveyardProvider
 {
     /**
-     * @var GraveyardInterface
+     * @var GraveyardInterface|null
      */
-    private static $graveyard;
+    private static $graveyard = null;
 
     public static function getGraveyard(): GraveyardInterface
     {

@@ -10,16 +10,19 @@ class LineFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        $template = '%s - Vampire detected: %s, in file %s:%s, in function %s, invoked by %s'."\n";
+        $line = sprintf('Vampire detected: %s, in file %s:%s', (string) $vampire->getTombstone(), $vampire->getFile(), $vampire->getLine());
 
-        return sprintf(
-            $template,
-            $vampire->getInvocationDate(),
-            (string) $vampire->getTombstone(),
-            $vampire->getFile(),
-            $vampire->getLine(),
-            $vampire->getMethod(),
-            $vampire->getInvoker()
-        );
+        if (null !== $date = $vampire->getInvocationDate()) {
+            $line = $date.' - '.$line;
+        }
+
+        if (null !== $method = $vampire->getMethod()) {
+            $line .= ', in function '.$method;
+        }
+        if (null !== $invoker = $vampire->getInvoker()) {
+            $line .= ', invoked by '.$invoker;
+        }
+
+        return $line.PHP_EOL;
     }
 }

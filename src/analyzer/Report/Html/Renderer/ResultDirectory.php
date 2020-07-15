@@ -91,7 +91,7 @@ class ResultDirectory implements ResultAggregateInterface
         return $count;
     }
 
-    public function addFileResult($filePath, AnalyzerFileResult $fileResult): void
+    public function addFileResult(string $filePath, AnalyzerFileResult $fileResult): void
     {
         $firstSlash = strpos($filePath, '/');
         if (false === $firstSlash) {
@@ -100,6 +100,7 @@ class ResultDirectory implements ResultAggregateInterface
             return;
         }
 
+        /** @var string $dirName */
         $dirName = substr($filePath, 0, $firstSlash);
         if (isset($this->directories[$dirName])) {
             $directory = $this->directories[$dirName];

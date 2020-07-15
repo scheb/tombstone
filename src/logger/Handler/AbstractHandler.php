@@ -10,7 +10,7 @@ use Scheb\Tombstone\Formatter\LineFormatter;
 abstract class AbstractHandler implements HandlerInterface
 {
     /**
-     * @var FormatterInterface
+     * @var FormatterInterface|null
      */
     protected $formatter;
 
@@ -32,7 +32,7 @@ abstract class AbstractHandler implements HandlerInterface
         $this->formatter = $formatter;
     }
 
-    public function getFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
+    public function getFormatter(): FormatterInterface
     {
         if (!$this->formatter) {
             $this->formatter = $this->getDefaultFormatter();
@@ -41,7 +41,7 @@ abstract class AbstractHandler implements HandlerInterface
         return $this->formatter;
     }
 
-    protected function getDefaultFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
         return new LineFormatter();
     }

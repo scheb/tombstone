@@ -7,7 +7,7 @@ namespace Scheb\Tombstone;
 class Vampire
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $invocationDate;
 

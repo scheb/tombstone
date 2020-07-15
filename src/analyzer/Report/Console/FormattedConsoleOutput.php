@@ -19,7 +19,7 @@ class FormattedConsoleOutput
         $this->output = $output;
     }
 
-    public function writeln($text): void
+    public function writeln(string $text): void
     {
         $this->output->writeln($text);
     }
@@ -41,7 +41,7 @@ class FormattedConsoleOutput
     }
 
     /**
-     * @param string[] $invokers
+     * @psalm-type list<string|null>
      */
     public function printCalledBy(array $invokers): void
     {

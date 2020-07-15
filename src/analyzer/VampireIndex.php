@@ -16,12 +16,12 @@ class VampireIndex implements \Countable, \Iterator
     /**
      * @var int[]
      */
-    private $maxDatePerPosition;
+    private $maxDatePerPosition = [];
 
     public function addVampire(Vampire $vampire): void
     {
         $position = FilePosition::createPosition($vampire->getFile(), $vampire->getLine());
-        $logDate = strtotime($vampire->getInvocationDate());
+        $logDate = $vampire->getInvocationDate() ? strtotime($vampire->getInvocationDate()) : 0;
         if (!isset($this->vampires[$position]) || $logDate > $this->maxDatePerPosition[$position]) {
             $this->vampires[$position] = $vampire;
             $this->maxDatePerPosition[$position] = $logDate;

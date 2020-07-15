@@ -29,7 +29,7 @@ class ConsoleOutput
         $this->output->writeln($string ?? '');
     }
 
-    public function debug($string): void
+    public function debug(string $string): void
     {
         if ($this->output->isDebug()) {
             $this->writeln($string);

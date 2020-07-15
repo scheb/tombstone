@@ -10,7 +10,7 @@ use Scheb\Tombstone\Tracing\PathNormalizer;
 class TombstoneIndex implements \Countable, \Iterator
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $rootDir;
 
@@ -34,9 +34,11 @@ class TombstoneIndex implements \Countable, \Iterator
      */
     private $methodIndex = [];
 
-    public function __construct(string $rootDir)
+    public function __construct(?string $rootDir)
     {
-        $this->rootDir = PathNormalizer::normalizeDirectorySeparator($rootDir);
+        if (null !== $rootDir) {
+            $this->rootDir = PathNormalizer::normalizeDirectorySeparator($rootDir);
+        }
     }
 
     public function addTombstone(Tombstone $tombstone): void
@@ -50,10 +52,12 @@ class TombstoneIndex implements \Countable, \Iterator
         $this->relativeFileLineIndex[$relativePosition] = $tombstone;
 
         $methodName = $tombstone->getMethod();
-        if (!isset($this->methodIndex[$methodName])) {
-            $this->methodIndex[$methodName] = [];
+        if (null !== $methodName) {
+            if (!isset($this->methodIndex[$methodName])) {
+                $this->methodIndex[$methodName] = [];
+            }
+            $this->methodIndex[$methodName][] = $tombstone;
         }
-        $this->methodIndex[$methodName][] = $tombstone;
     }
 
     /**

@@ -27,7 +27,7 @@ class TombstoneVisitor extends NameResolver
     private $currentMethod = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     private $file;
 
@@ -63,7 +63,7 @@ class TombstoneVisitor extends NameResolver
 
     private function visitClassNode(Class_ $node): void
     {
-        $this->currentClass = (string) $node->namespacedName;
+        $this->currentClass = $this->getNamespacedName($node);
     }
 
     private function visitMethodNode(ClassMethod $node): void
@@ -74,7 +74,20 @@ class TombstoneVisitor extends NameResolver
 
     private function visitFunctionNode(Function_ $node): void
     {
-        $this->currentMethod[] = (string) $node->namespacedName;
+        $this->currentMethod[] = $this->getNamespacedName($node);
+    }
+
+    /**
+     * @param Class_|Function_ $node
+     */
+    private function getNamespacedName($node): string
+    {
+        if (!isset($node->namespacedName)) {
+            $nodeName = isset($node->name) ? (string) $node->name : '<anonymous>';
+            throw new \RuntimeException(sprintf('Node %s of type %s did not provide attribute namespacedName', $nodeName, \get_class($node)));
+        }
+
+        return (string) $node->namespacedName;
     }
 
     private function visitFunctionCallNode(FuncCall $node): void
@@ -83,6 +96,7 @@ class TombstoneVisitor extends NameResolver
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
             $params = $this->extractParameters($node);
+            /** @psalm-suppress PossiblyNullArgument */
             $tombstone = new Tombstone($params, $this->file, $line, $methodName);
             $this->tombstoneIndex->addTombstone($tombstone);
         }
@@ -120,14 +134,14 @@ class TombstoneVisitor extends NameResolver
     }
 
     /**
-     * @return string[]
+     * @return list<string|null>
      */
     private function extractParameters(FuncCall $node): array
     {
         $params = [];
         foreach ($node->args as $arg) {
             if ($arg->value instanceof String_) {
-                $params[] = $arg->value->value;
+                $params[] = (string) $arg->value->value;
             } else {
                 $params[] = null;
             }

@@ -18,7 +18,7 @@ class FileRenderer
     private $reportDir;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $rootDir;
 
@@ -96,7 +96,7 @@ class FileRenderer
         $this->tombstoneTemplate->setVar([
             'tombstone' => htmlspecialchars((string) $tombstone),
             'line' => $tombstone->getLine(),
-            'method' => htmlspecialchars($tombstone->getMethod()),
+            'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
             'level' => $class,
         ]);
 

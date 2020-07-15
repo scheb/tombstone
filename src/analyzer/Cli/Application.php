@@ -36,9 +36,11 @@ class Application extends AbstractApplication
         return $inputDefinition;
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Tombstone Analyzer');
         AbstractApplication::doRun($input, $output);
+
+        return 0;
     }
 }

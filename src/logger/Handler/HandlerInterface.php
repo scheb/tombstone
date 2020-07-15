@@ -12,7 +12,7 @@ interface HandlerInterface
     /**
      * Log a vampire.
      */
-    public function log(Vampire $vampire);
+    public function log(Vampire $vampire): void;
 
     /**
      * Flush everything.
@@ -22,7 +22,7 @@ interface HandlerInterface
     /**
      * Sets the formatter.
      */
-    public function setFormatter(FormatterInterface $formatter);
+    public function setFormatter(FormatterInterface $formatter): void;
 
     /**
      * Gets the formatter.
