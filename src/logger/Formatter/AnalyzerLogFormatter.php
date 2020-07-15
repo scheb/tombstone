@@ -11,6 +11,6 @@ class AnalyzerLogFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        return AnalyzerLogFormat::vampireToLog($vampire)."\n";
+        return AnalyzerLogFormat::vampireToLog($vampire).PHP_EOL;
     }
 }

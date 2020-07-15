@@ -20,7 +20,7 @@ class JsonFormatter implements FormatterInterface
             'metadata' => $vampire->getMetadata(),
             'invocationDate' => $vampire->getInvocationDate(),
             'invoker' => $vampire->getInvoker(),
-        ])."\n";
+        ]).PHP_EOL;
     }
 
     private function getStackTraceValues(array $stackTrace): array

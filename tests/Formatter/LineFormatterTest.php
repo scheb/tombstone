@@ -19,6 +19,6 @@ class LineFormatterTest extends TestCase
         $formatter = new LineFormatter();
         $returnValue = $formatter->format($vampire);
         $expectedLog = '2015-01-01 - Vampire detected: tombstone("2014-01-01", "label"), in file file:123, in function method, invoked by invoker';
-        $this->assertEquals($expectedLog."\n", $returnValue);
+        $this->assertEquals($expectedLog.PHP_EOL, $returnValue);
     }
 }

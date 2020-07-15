@@ -95,6 +95,6 @@ class AnalyzerLogHandlerTest extends TestCase
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);
         $logFileContent = file_get_contents($logFiles[0]);
-        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD."\n", $logFileContent);
+        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD.PHP_EOL, $logFileContent);
     }
 }

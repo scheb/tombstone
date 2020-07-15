@@ -19,6 +19,6 @@ class AnalyzerLogFormatterTest extends TestCase
         $vampire = VampireFixture::getVampire(...AnalyzerLogFormatTest::TOMBSTONE_ARGUMENTS);
         $formatter = new AnalyzerLogFormatter();
         $returnValue = $formatter->format($vampire);
-        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD."\n", $returnValue);
+        $this->assertEquals(AnalyzerLogFormatTest::LOG_RECORD.PHP_EOL, $returnValue);
     }
 }
