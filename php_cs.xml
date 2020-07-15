@@ -8,4 +8,8 @@
 	<rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
 		<exclude-pattern>*/tests/*</exclude-pattern>
 	</rule>
+	<rule ref="Symfony.Files.AlphanumericFilename">
+		<exclude-pattern>*/src/logger/tombstone-function.php</exclude-pattern>
+	</rule>
+	<exclude-pattern>*/src/analyzer/Report/Html/Template/*</exclude-pattern>
 </ruleset>
