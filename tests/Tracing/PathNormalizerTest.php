@@ -31,9 +31,9 @@ class PathNormalizerTest extends TestCase
      * @test
      * @dataProvider provideTestCasesForRelativePath
      */
-    public function tryMakeRelativeTo_pathBeginsWithBase_returnRelativePath(string $path, string $baseDir): void
+    public function makeRelativeTo_pathBeginsWithBase_returnRelativePath(string $path, string $baseDir): void
     {
-        $returnValue = PathNormalizer::tryMakeRelativeTo($path, $baseDir);
+        $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals('directory/file.php', $returnValue);
     }
 
@@ -55,9 +55,9 @@ class PathNormalizerTest extends TestCase
      * @test
      * @dataProvider provideTestCasesForKeepingPath
      */
-    public function tryMakeRelativeTo_pathHasDifferentBase_returnSamePath(string $path, ?string $baseDir): void
+    public function makeRelativeTo_pathHasDifferentBase_returnSamePath(string $path, ?string $baseDir): void
     {
-        $returnValue = PathNormalizer::tryMakeRelativeTo($path, $baseDir);
+        $returnValue = PathNormalizer::makeRelativeTo($path, $baseDir);
         $this->assertEquals($path, $returnValue);
     }
 

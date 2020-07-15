@@ -55,6 +55,10 @@ class AnalyzerLogFormat
     public static function logToVampire(string $log): ?Vampire
     {
         $data = json_decode($log, true);
+        if (!is_array($data)) {
+            return null;
+        }
+
         $version = (int) $data[self::F_VERSION] ?? null;
 
         if (self::CURRENT_VERSION === $version) {

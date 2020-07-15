@@ -24,11 +24,17 @@ class ConsoleOutputTest extends TestCase
 
     protected function setUp()
     {
+        $formatter = $this->createMock(OutputFormatterInterface::class);
+        $formatter
+            ->expects($this->any())
+            ->method('isDecorated')
+            ->willReturn(false);
+
         $this->outputInterface = $this->createMock(OutputInterface::class);
         $this->outputInterface
             ->expects($this->any())
             ->method('getFormatter')
-            ->willReturn($this->createMock(OutputFormatterInterface::class));
+            ->willReturn($formatter);
 
         $this->consoleOutput = new ConsoleOutput($this->outputInterface);
     }

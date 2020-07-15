@@ -13,7 +13,7 @@ class PathNormalizer
         return str_replace('\\', self::NORMALIZED_DIRECTORY_SEPARATOR, $path);
     }
 
-    public static function tryMakeRelativeTo(string $path, ?string $baseDir): string
+    public static function makeRelativeTo(string $path, ?string $baseDir): string
     {
         if (!$baseDir) {
             return $path;
