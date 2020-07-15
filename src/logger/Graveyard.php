@@ -50,7 +50,7 @@ class Graveyard implements GraveyardInterface
 
     public function tombstone(array $arguments, array $trace, array $metadata): void
     {
-        $trace = $this->sliceTrace($trace);
+        $trace = $this->truncateTrace($trace);
         $trace = $this->traceRelativePath($trace);
         $vampire = Vampire::createFromCall($arguments, $trace, $metadata);
         foreach ($this->handlers as $handler) {
@@ -73,7 +73,7 @@ class Graveyard implements GraveyardInterface
         return $trace;
     }
 
-    private function sliceTrace(array $trace): array
+    private function truncateTrace(array $trace): array
     {
         if ($this->stackTraceDepth > 0) {
             return \array_slice($trace, 0, $this->stackTraceDepth);
