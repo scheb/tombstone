@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tracing;
+namespace Scheb\Tombstone\Tests\Tracing;
 
 use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Tracing\PathNormalizer;
