@@ -65,9 +65,7 @@ class PathNormalizerTest extends TestCase
     {
         return [
             ['/path/to/file.php', '/other/base'],
-            ['/path/to/file.php', null],
             ['C:\\path\\to\\file.php', 'C:\\other\\path'],
-            ['C:\\path\\to\\file.php', null],
         ];
     }
 }

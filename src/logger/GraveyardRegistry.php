@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone;
 
-class GraveyardProvider
+class GraveyardRegistry
 {
     /**
      * @var GraveyardInterface|null
@@ -14,7 +14,7 @@ class GraveyardProvider
     public static function getGraveyard(): GraveyardInterface
     {
         if (null === self::$graveyard) {
-            self::$graveyard = new Graveyard();
+            self::$graveyard = (new GraveyardBuilder())->build();
         }
 
         return self::$graveyard;

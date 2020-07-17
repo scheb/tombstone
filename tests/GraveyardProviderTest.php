@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\GraveyardInterface;
-use Scheb\Tombstone\GraveyardProvider;
+use Scheb\Tombstone\GraveyardRegistry;
 
 class GraveyardProviderTest extends TestCase
 {
@@ -15,7 +15,7 @@ class GraveyardProviderTest extends TestCase
      */
     public function getGraveyard_notSet_returnDefaultGraveyard(): void
     {
-        $returnValue = GraveyardProvider::getGraveyard();
+        $returnValue = GraveyardRegistry::getGraveyard();
         $this->assertInstanceOf(Graveyard::class, $returnValue);
     }
 
@@ -25,8 +25,8 @@ class GraveyardProviderTest extends TestCase
     public function setGraveyard_newGraveyard_exchangeGraveyard(): void
     {
         $graveyard = $this->createMock(GraveyardInterface::class);
-        GraveyardProvider::setGraveyard($graveyard);
-        $returnValue = GraveyardProvider::getGraveyard();
+        GraveyardRegistry::setGraveyard($graveyard);
+        $returnValue = GraveyardRegistry::getGraveyard();
         $this->assertSame($graveyard, $returnValue);
     }
 }

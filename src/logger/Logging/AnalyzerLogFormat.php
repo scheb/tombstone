@@ -10,31 +10,31 @@ use Scheb\Tombstone\Vampire;
 
 class AnalyzerLogFormat
 {
-    private const F_VERSION = 'v';
-    private const F_ARGUMENTS = 'a';
-    private const F_FILE = 'f';
-    private const F_LINE = 'l';
-    private const F_METHOD = 'm';
-    private const F_METADATA = 'd';
-    private const F_STACKTRACE = 's';
-    private const F_INVOCATION_DATE = 'id';
-    private const F_INVOKER = 'im';
+    private const FIELD_VERSION = 'v';
+    private const FIELD_ARGUMENTS = 'a';
+    private const FIELD_FILE = 'f';
+    private const FIELD_LINE = 'l';
+    private const FIELD_METHOD = 'm';
+    private const FIELD_METADATA = 'd';
+    private const FIELD_STACKTRACE = 's';
+    private const FIELD_INVOCATION_DATE = 'id';
+    private const FIELD_INVOKER = 'im';
 
-    private const CURRENT_VERSION = 4;
+    private const CURRENT_VERSION = 10000; // 1.0.0
     private const FILE_DEFAULT_VALUE = 'unknown';
 
     public static function vampireToLog(Vampire $vampire): string
     {
         return json_encode([
-            self::F_VERSION => self::CURRENT_VERSION,
-            self::F_ARGUMENTS => $vampire->getArguments(),
-            self::F_FILE => $vampire->getFile(),
-            self::F_LINE => $vampire->getLine(),
-            self::F_METHOD => $vampire->getMethod(),
-            self::F_METADATA => $vampire->getMetadata(),
-            self::F_STACKTRACE => self::encodeStackTrace($vampire->getStackTrace()),
-            self::F_INVOCATION_DATE => $vampire->getInvocationDate(),
-            self::F_INVOKER => $vampire->getInvoker(),
+            self::FIELD_VERSION => self::CURRENT_VERSION,
+            self::FIELD_ARGUMENTS => $vampire->getArguments(),
+            self::FIELD_FILE => $vampire->getFile(),
+            self::FIELD_LINE => $vampire->getLine(),
+            self::FIELD_METHOD => $vampire->getMethod(),
+            self::FIELD_METADATA => $vampire->getMetadata(),
+            self::FIELD_STACKTRACE => self::encodeStackTrace($vampire->getStackTrace()),
+            self::FIELD_INVOCATION_DATE => $vampire->getInvocationDate(),
+            self::FIELD_INVOKER => $vampire->getInvoker(),
         ]);
     }
 
@@ -43,9 +43,9 @@ class AnalyzerLogFormat
         $encodedTrace = [];
         foreach ($stackTrace as $frame) {
             $encodedTrace[] = [
-                self::F_FILE => $frame->getFile(),
-                self::F_LINE => $frame->getLine(),
-                self::F_METHOD => $frame->getMethod(),
+                self::FIELD_FILE => $frame->getFile(),
+                self::FIELD_LINE => $frame->getLine(),
+                self::FIELD_METHOD => $frame->getMethod(),
             ];
         }
 
@@ -59,19 +59,19 @@ class AnalyzerLogFormat
             return null;
         }
 
-        $version = isset($data[self::F_VERSION]) ? (int) $data[self::F_VERSION] : null;
+        $version = isset($data[self::FIELD_VERSION]) ? (int) $data[self::FIELD_VERSION] : null;
 
         if (self::CURRENT_VERSION === $version) {
             return new Vampire(
-                $data[self::F_INVOCATION_DATE] ?? null,
-                $data[self::F_INVOKER] ?? null,
-                self::decodeStackTrace($data[self::F_STACKTRACE] ?? []),
+                $data[self::FIELD_INVOCATION_DATE],
+                $data[self::FIELD_INVOKER] ?? null,
+                self::decodeStackTrace($data[self::FIELD_STACKTRACE] ?? []),
                 new Tombstone(
-                    $data[self::F_ARGUMENTS] ?? [],
-                    $data[self::F_FILE] ?? self::FILE_DEFAULT_VALUE,
-                    $data[self::F_LINE] ?? 0,
-                    $data[self::F_METHOD] ?? null,
-                    $data[self::F_METADATA] ?? []
+                    $data[self::FIELD_ARGUMENTS] ?? [],
+                    $data[self::FIELD_FILE] ?? self::FILE_DEFAULT_VALUE,
+                    $data[self::FIELD_LINE] ?? 0,
+                    $data[self::FIELD_METHOD] ?? null,
+                    $data[self::FIELD_METADATA] ?? []
                 )
             );
         }
@@ -84,9 +84,9 @@ class AnalyzerLogFormat
         $decodedTrace = [];
         foreach ($stackTrace as $frame) {
             $decodedTrace[] = new StackTraceFrame(
-                $frame[self::F_FILE] ?? null,
-                $frame[self::F_LINE] ?? null,
-                $frame[self::F_METHOD] ?? null
+                $frame[self::FIELD_FILE] ?? null,
+                $frame[self::FIELD_LINE] ?? null,
+                $frame[self::FIELD_METHOD] ?? null
             );
         }
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Scheb\Tombstone\Handler\HandlerInterface;
-use Scheb\Tombstone\Tracing\PathNormalizer;
-use Scheb\Tombstone\Tracing\TraceProvider;
 
 class Graveyard implements GraveyardInterface
 {
@@ -16,70 +16,32 @@ class Graveyard implements GraveyardInterface
     private $handlers;
 
     /**
-     * @var TraceProvider
+     * @var VampireFactory
      */
-    private $traceProvider;
+    private $vampireFactory;
 
     /**
-     * @var string|null
+     * @var LoggerInterface
      */
-    private $rootDir;
+    private $logger;
 
-    /**
-     * @var int|null
-     */
-    private $stackTraceDepth;
-
-    public function __construct(array $handlers = [], ?string $rootDir = null, ?int $stackTraceDepth = null)
+    public function __construct(VampireFactory $vampireFactory, ?LoggerInterface $logger, array $handlers = [])
     {
+        $this->vampireFactory = $vampireFactory;
+        $this->logger = $logger ?? new NullLogger();
         $this->handlers = $handlers;
-        $this->traceProvider = new TraceProvider();
-        $this->stackTraceDepth = $stackTraceDepth;
-        $this->setRootDir($rootDir);
-    }
-
-    public function setRootDir(?string $rootDir): void
-    {
-        $this->rootDir = $rootDir;
-    }
-
-    public function addHandler(HandlerInterface $handler): void
-    {
-        $this->handlers[] = $handler;
     }
 
     public function tombstone(array $arguments, array $trace, array $metadata): void
     {
-        $trace = $this->truncateTrace($trace);
-        $trace = $this->traceRelativePath($trace);
-        $vampire = Vampire::createFromCall($arguments, $trace, $metadata);
-        foreach ($this->handlers as $handler) {
-            $handler->log($vampire);
-        }
-    }
-
-    private function traceRelativePath(array $trace): array
-    {
-        if (!$this->rootDir) {
-            return $trace;
-        }
-
-        foreach ($trace as $key => &$frame) {
-            if (isset($frame['file'])) {
-                $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->rootDir);
+        try {
+            $vampire = $this->vampireFactory->createFromCall($arguments, $trace, $metadata);
+            foreach ($this->handlers as $handler) {
+                $handler->log($vampire);
             }
+        } catch (\Throwable $e) {
+            $this->logger->error(sprintf('Exception while tracking a tombstone call: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
         }
-
-        return $trace;
-    }
-
-    private function truncateTrace(array $trace): array
-    {
-        if ($this->stackTraceDepth > 0) {
-            return \array_slice($trace, 0, $this->stackTraceDepth);
-        }
-
-        return $trace;
     }
 
     public function flush(): void

@@ -10,11 +10,13 @@ class LineFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        $line = sprintf('Vampire detected: %s, in file %s:%s', (string) $vampire->getTombstone(), $vampire->getFile(), $vampire->getLine());
-
-        if (null !== $date = $vampire->getInvocationDate()) {
-            $line = $date.' - '.$line;
-        }
+        $line = sprintf(
+            '%s - Vampire detected: %s, in file %s:%s',
+            $vampire->getInvocationDate(),
+            (string) $vampire->getTombstone(),
+            $vampire->getFile(),
+            $vampire->getLine()
+        );
 
         if (null !== $method = $vampire->getMethod()) {
             $line .= ', in function '.$method;

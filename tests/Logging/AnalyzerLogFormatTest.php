@@ -11,7 +11,7 @@ use Scheb\Tombstone\Tests\TestCase;
 class AnalyzerLogFormatTest extends TestCase
 {
     public const TOMBSTONE_ARGUMENTS = ['2014-01-01', 'label'];
-    public const LOG_RECORD = '{"v":4,"a":["2014-01-01","label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"\/path\/to\/file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}';
+    public const LOG_RECORD = '{"v":10000,"a":["2014-01-01","label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"\/path\/to\/file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}';
 
     /**
      * @test

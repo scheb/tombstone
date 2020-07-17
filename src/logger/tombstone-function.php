@@ -8,10 +8,7 @@ if (!function_exists('tombstone')) {
      */
     function tombstone(string ...$arguments): void
     {
-        try {
-            $trace = \Scheb\Tombstone\Tracing\TraceProvider::getTraceHere();
-            \Scheb\Tombstone\GraveyardProvider::getGraveyard()->tombstone($arguments, $trace, []);
-        } catch (\Exception $e) {
-        }
+        $trace = \Scheb\Tombstone\Tracing\TraceProvider::getTraceHere();
+        \Scheb\Tombstone\GraveyardRegistry::getGraveyard()->tombstone($arguments, $trace, []);
     }
 }

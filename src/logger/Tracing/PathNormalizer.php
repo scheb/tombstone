@@ -13,16 +13,14 @@ class PathNormalizer
         return str_replace('\\', self::NORMALIZED_DIRECTORY_SEPARATOR, $path);
     }
 
-    public static function makeRelativeTo(string $path, ?string $baseDir): string
+    public static function makeRelativeTo(string $path, string $baseDir): string
     {
-        if (!$baseDir) {
-            return $path;
-        }
-
         $normalizedBaseDir = PathNormalizer::normalizeDirectorySeparator($baseDir);
         $normalizedPath = PathNormalizer::normalizeDirectorySeparator($path);
         if (self::startsWith($normalizedPath, $normalizedBaseDir)) {
             $normalizedPath = substr($normalizedPath, \strlen($normalizedBaseDir));
+
+            // Remove any leading directory separators
             if (self::NORMALIZED_DIRECTORY_SEPARATOR === $normalizedPath[0]) {
                 $normalizedPath = substr($normalizedPath, 1);
             }
@@ -35,6 +33,8 @@ class PathNormalizer
 
     private static function startsWith(string $haystack, string $needle): bool
     {
-        return '' === $needle || false !== strrpos($haystack, $needle, -\strlen($haystack));
+        return $haystack[0] === $needle[0]
+            ? 0 === strncmp($haystack, $needle, \strlen($needle))
+            : false;
     }
 }

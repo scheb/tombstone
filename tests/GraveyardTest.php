@@ -9,10 +9,14 @@ use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\Handler\HandlerInterface;
 use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
 use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\VampireFactory;
 
 class GraveyardTest extends TestCase
 {
-    private const MAX_STACK_TRACE_DEPTH = 3;
+    /**
+     * @var MockObject|VampireFactory
+     */
+    private $vampireFactory;
 
     /**
      * @var MockObject|HandlerInterface
@@ -26,8 +30,9 @@ class GraveyardTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->vampireFactory = $this->createMock(VampireFactory::class);
         $this->handler = $this->getHandlerMock();
-        $this->graveyard = new Graveyard([$this->handler], null, self::MAX_STACK_TRACE_DEPTH);
+        $this->graveyard = new Graveyard($this->vampireFactory, null, [$this->handler]);
     }
 
     private function getHandlerMock(): MockObject
@@ -38,17 +43,16 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
-    public function addHandler_anotherHandler_isCalledOnTombstone(): void
+    public function tombstone_traceGiven_createVampire(): void
     {
-        $handler = $this->getHandlerMock();
-        $this->graveyard->addHandler($handler);
-
-        $this->handler
-            ->expects($this->once())
-            ->method('log')
-            ->with($this->isInstanceOf(Vampire::class));
-
         $trace = TraceFixture::getTraceFixture();
+
+        $this->vampireFactory
+            ->expects($this->once())
+            ->method('createFromCall')
+            ->with(['label'], $trace, ['metaField' => 'metaValue'])
+            ->willReturn($this->createMock(Vampire::class));
+
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
@@ -57,67 +61,16 @@ class GraveyardTest extends TestCase
      */
     public function tombstone_handlersRegistered_callAllHandlers(): void
     {
-        $this->handler
-            ->expects($this->once())
-            ->method('log')
-            ->with($this->isInstanceOf(Vampire::class));
-
-        $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
-    }
-
-    /**
-     * @test
-     */
-    public function tombstone_rootDirSet_logRelativePath(): void
-    {
-        $this->handler
-            ->expects($this->once())
-            ->method('log')
-            ->with($this->callback(function ($vampire) {
-                return $vampire instanceof Vampire && 'file1.php' === $vampire->getFile();
-            }));
-
-        $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->setRootDir('/path/to');
-        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
-    }
-
-    /**
-     * @test
-     */
-    public function tombstone_rootDirNotMatchedFilePath_logAbsolutePath(): void
-    {
-        $this->handler
-            ->expects($this->once())
-            ->method('log')
-            ->with($this->callback(function ($vampire) {
-                return $vampire instanceof Vampire && '/path/to/file1.php' === $vampire->getFile();
-            }));
-
-        $trace = TraceFixture::getTraceFixture();
-        $this->graveyard->setRootDir('/other/path');
-        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
-    }
-
-    /**
-     * @test
-     */
-    public function addHandler_largeTrace_limitStackTrace(): void
-    {
-        $handler = $this->getHandlerMock();
-        $this->graveyard->addHandler($handler);
+        $vampire = $this->createMock(Vampire::class);
+        $this->vampireFactory
+            ->expects($this->any())
+            ->method('createFromCall')
+            ->willReturn($vampire);
 
         $this->handler
             ->expects($this->once())
             ->method('log')
-            ->with($this->callback(function ($vampire) {
-                /* @var Vampire $vampire */
-                $this->assertInstanceOf(Vampire::class, $vampire);
-                $this->assertCount(self::MAX_STACK_TRACE_DEPTH, $vampire->getStackTrace(), 'Stack trace must be limited to '.self::MAX_STACK_TRACE_DEPTH.' frames');
-
-                return true;
-            }));
+            ->with($this->identicalTo($vampire));
 
         $trace = TraceFixture::getTraceFixture();
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
