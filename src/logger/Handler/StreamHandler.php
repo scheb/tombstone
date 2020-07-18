@@ -71,7 +71,7 @@ class StreamHandler extends AbstractHandler
 
     public function close(): void
     {
-        if (\is_resource($this->stream)) {
+        if ($this->url && \is_resource($this->stream)) {
             fclose($this->stream);
         }
         $this->stream = null;
@@ -81,7 +81,7 @@ class StreamHandler extends AbstractHandler
     {
         $formatted = $this->getFormatter()->format($vampire);
         if (!\is_resource($this->stream)) {
-            if (!$this->url) {
+            if (null === $this->url || '' === $this->url) {
                 throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
             $this->createDir();
@@ -109,9 +109,11 @@ class StreamHandler extends AbstractHandler
         }
     }
 
-    private function customErrorHandler(int $code, string $msg): void
+    private function customErrorHandler(int $code, string $msg): bool
     {
         $this->errorMessage = preg_replace('{^(fopen|mkdir)\(.*?\): }', '', $msg);
+
+        return true;
     }
 
     private function getDirFromStream(string $stream): ?string
@@ -141,7 +143,7 @@ class StreamHandler extends AbstractHandler
             set_error_handler([$this, 'customErrorHandler']);
             $status = mkdir($dir, 0777, true);
             restore_error_handler();
-            if (false === $status) {
+            if (false === $status && !is_dir($dir)) {
                 /** @psalm-suppress NullArgument */
                 throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and its not buildable: %s', $dir, $this->errorMessage));
             }
