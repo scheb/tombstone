@@ -8,7 +8,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Graveyard;
 use Scheb\Tombstone\Handler\HandlerInterface;
-use Scheb\Tombstone\Tests\Fixtures\TraceFixture;
+use Scheb\Tombstone\Tests\Fixtures\StackTraceFixture;
 use Scheb\Tombstone\Vampire;
 use Scheb\Tombstone\VampireFactory;
 
@@ -66,7 +66,7 @@ class GraveyardTest extends TestCase
      */
     public function tombstone_traceGiven_createVampire(): void
     {
-        $trace = TraceFixture::getTraceFixture();
+        $trace = StackTraceFixture::getTraceFixture();
 
         $this->vampireFactory
             ->expects($this->once())
@@ -89,7 +89,7 @@ class GraveyardTest extends TestCase
             ->method('log')
             ->with($this->identicalTo($vampire));
 
-        $trace = TraceFixture::getTraceFixture();
+        $trace = StackTraceFixture::getTraceFixture();
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
@@ -110,7 +110,7 @@ class GraveyardTest extends TestCase
             ->method('error')
             ->with('Exception while tracking a tombstone call: Exception message (123)');
 
-        $trace = TraceFixture::getTraceFixture();
+        $trace = StackTraceFixture::getTraceFixture();
         $this->graveyard->tombstone([], $trace, []);
     }
 

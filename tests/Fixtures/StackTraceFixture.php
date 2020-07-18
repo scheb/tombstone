@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Fixtures;
 
-class TraceFixture
+class StackTraceFixture
 {
+    public const ROOT_DIR = '/path/to';
     public const NUMBER_OF_FRAMES = 4;
 
     public static function getTraceFixture(): array
