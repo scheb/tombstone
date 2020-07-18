@@ -23,7 +23,7 @@ class Application extends AbstractApplication
     protected function getDefaultCommands()
     {
         $defaultCommands = AbstractApplication::getDefaultCommands();
-        $defaultCommands[] = new Command();
+        $defaultCommands[] = new AnalyzeCommand();
 
         return $defaultCommands;
     }

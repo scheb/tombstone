@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Cli;
 
-use Scheb\Tombstone\Analyzer\Cli\Command;
+use Scheb\Tombstone\Analyzer\Cli\AnalyzeCommand;
 use Scheb\Tombstone\Tests\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class CommandTest extends TestCase
+class AnalyzeCommandTest extends TestCase
 {
     private const ROOT_DIR = __DIR__.'/../../..';
     private const APPLICATION_DIR = self::ROOT_DIR.'/app';
@@ -50,7 +50,7 @@ class CommandTest extends TestCase
 
     /**
      * @test
-     * @covers \Scheb\Tombstone\Analyzer\Cli\Command
+     * @covers \Scheb\Tombstone\Analyzer\Cli\AnalyzeCommand
      */
     public function generate_logsAndSourceGiven_createHtmlReport(): void
     {
@@ -76,7 +76,7 @@ class CommandTest extends TestCase
                 ['config', self::APPLICATION_DIR.'/tombstone.yml'],
             ]);
 
-        $command = new Command();
+        $command = new AnalyzeCommand();
         $command->run($input, $output);
     }
 
