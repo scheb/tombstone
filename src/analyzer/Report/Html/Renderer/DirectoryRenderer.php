@@ -9,7 +9,6 @@ use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Model\ResultAggregateInterface;
 use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class DirectoryRenderer
 {
@@ -52,7 +51,7 @@ class DirectoryRenderer
         $tree = new ResultDirectory();
         $files = $result->getPerFile();
         foreach ($files as $fileResult) {
-            $relativePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+            $relativePath = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
             $tree->addFileResult($relativePath, $fileResult);
         }
 

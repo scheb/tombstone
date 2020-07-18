@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
+use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class TombstoneIndex implements \Countable, \Iterator
 {
@@ -37,7 +37,7 @@ class TombstoneIndex implements \Countable, \Iterator
     public function __construct(?string $rootDir)
     {
         if (null !== $rootDir) {
-            $this->rootDir = PathNormalizer::normalizeDirectorySeparator($rootDir);
+            $this->rootDir = PathTools::normalizeDirectorySeparator($rootDir);
         }
     }
 
@@ -89,9 +89,9 @@ class TombstoneIndex implements \Countable, \Iterator
 
     private function normalizeAndRelativePath(string $path): string
     {
-        $path = PathNormalizer::normalizeDirectorySeparator($path);
+        $path = PathTools::normalizeDirectorySeparator($path);
 
-        return PathNormalizer::makeRelativeTo($path, $this->rootDir);
+        return PathTools::makeRelativeTo($path, $this->rootDir);
     }
 
     public function count()

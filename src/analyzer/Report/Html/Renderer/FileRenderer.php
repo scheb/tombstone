@@ -6,9 +6,9 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class FileRenderer
 {
@@ -53,7 +53,7 @@ class FileRenderer
     {
         $tombstonesList = $this->renderTombstonesList($fileResult);
         $sourceCode = $this->formatSourceCode($fileResult);
-        $relativeFilePath = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+        $relativeFilePath = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
         $this->fileTemplate->setVar([
             'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
             'full_path' => htmlspecialchars($fileResult->getFile()),

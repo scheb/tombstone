@@ -6,10 +6,10 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class DashboardRenderer
 {
@@ -102,7 +102,7 @@ class DashboardRenderer
                 $itemList = $this->renderUndeadTombstones($fileResult);
                 $itemList .= $this->renderDeadTombstones($fileResult);
 
-                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+                $fileName = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
                 $tombstonesView .= $this->renderFile($fileName, $itemList);
             }
         }
@@ -159,7 +159,7 @@ class DashboardRenderer
         $deletedView = '';
         foreach ($result->getPerFile() as $fileResult) {
             if ($fileResult->getDeletedCount()) {
-                $fileName = PathNormalizer::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+                $fileName = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
                 $deletedView .= $this->renderFile($fileName, $this->renderDeletedTombstones($fileResult));
             }
         }
@@ -219,7 +219,7 @@ class DashboardRenderer
 
     private function linkTombstoneSource(string $label, string $fileName, int $line): string
     {
-        $relativePath = PathNormalizer::makeRelativeTo($fileName, $this->rootDir);
+        $relativePath = PathTools::makeRelativeTo($fileName, $this->rootDir);
 
         return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, htmlspecialchars($label));
     }
