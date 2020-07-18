@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report;
 
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 
 class PhpReportGenerator implements ReportGeneratorInterface
 {

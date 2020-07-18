@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report;
 
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Html\Exception\HtmlReportException;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;

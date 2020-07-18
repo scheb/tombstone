@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer;
+namespace Scheb\Tombstone\Analyzer\Model;
 
 use Scheb\Tombstone\Model\Vampire;
 

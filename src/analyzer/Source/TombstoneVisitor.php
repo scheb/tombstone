@@ -11,7 +11,7 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
-use Scheb\Tombstone\Analyzer\TombstoneIndex;
+use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Model\Tombstone;
 
 class TombstoneVisitor extends NameResolver

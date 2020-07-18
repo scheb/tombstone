@@ -8,7 +8,7 @@ use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
-use Scheb\Tombstone\Analyzer\TombstoneIndex;
+use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 
 class TombstoneExtractorFactory implements TombstoneExtractorFactoryInterface
 {

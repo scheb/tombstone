@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
-use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
-use Scheb\Tombstone\Analyzer\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
+use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
 use Scheb\Tombstone\Model\Tombstone;

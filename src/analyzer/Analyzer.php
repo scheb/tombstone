@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer;
 
 use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
+use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
+use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Model\Tombstone;
 use Scheb\Tombstone\Model\Vampire;
 
