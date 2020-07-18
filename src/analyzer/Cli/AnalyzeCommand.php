@@ -53,7 +53,7 @@ class AnalyzeCommand extends AbstractCommand
 
         try {
             $this->doExecute();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->output->writeln($e->getMessage());
             $this->output->debug($e->getTraceAsString());
 
