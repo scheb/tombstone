@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Graveyard;
+namespace Scheb\Tombstone\Logger\Graveyard;
 
 class BufferedGraveyard implements GraveyardInterface
 {

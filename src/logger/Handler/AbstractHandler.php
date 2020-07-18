@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Handler;
+namespace Scheb\Tombstone\Logger\Handler;
 
-use Scheb\Tombstone\Formatter\FormatterInterface;
-use Scheb\Tombstone\Formatter\LineFormatter;
+use Scheb\Tombstone\Logger\Formatter\FormatterInterface;
+use Scheb\Tombstone\Logger\Formatter\LineFormatter;
 
 abstract class AbstractHandler implements HandlerInterface
 {

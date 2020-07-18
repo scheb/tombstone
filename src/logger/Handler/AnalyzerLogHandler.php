@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Handler;
+namespace Scheb\Tombstone\Logger\Handler;
 
-use Scheb\Tombstone\Formatter\AnalyzerLogFormatter;
-use Scheb\Tombstone\Formatter\FormatterInterface;
-use Scheb\Tombstone\Model\Vampire;
+use LogicException;
+use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Logger\Formatter\AnalyzerLogFormatter;
+use Scheb\Tombstone\Logger\Formatter\FormatterInterface;
 
 class AnalyzerLogHandler extends AbstractHandler
 {
@@ -106,10 +107,10 @@ class AnalyzerLogHandler extends AbstractHandler
 
     public function setFormatter(FormatterInterface $formatter): void
     {
-        throw new \LogicException('Formatter of AnalyzerLogHandler cannot be changed.');
+        throw new LogicException('Formatter of AnalyzerLogHandler cannot be changed.');
     }
 
-    protected function getDefaultFormatter(): \Scheb\Tombstone\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
         return new AnalyzerLogFormatter();
     }

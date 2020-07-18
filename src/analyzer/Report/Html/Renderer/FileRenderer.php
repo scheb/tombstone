@@ -8,7 +8,7 @@ use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Tombstone;
 
 class FileRenderer
 {

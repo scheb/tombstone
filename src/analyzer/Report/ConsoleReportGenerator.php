@@ -8,8 +8,8 @@ use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
-use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 class ConsoleReportGenerator implements ReportGeneratorInterface
 {

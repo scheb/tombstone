@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Graveyard;
+namespace Scheb\Tombstone\Logger\Graveyard;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Scheb\Tombstone\Handler\HandlerInterface;
-use Scheb\Tombstone\Model\VampireFactory;
+use Scheb\Tombstone\Logger\Handler\HandlerInterface;
 
 class Graveyard implements GraveyardInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tracing;
+namespace Scheb\Tombstone\Logger\Tracing;
 
 class PathNormalizer
 {

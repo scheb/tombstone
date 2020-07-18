@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\Exception\LogReaderException;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
-use Scheb\Tombstone\Formatter\AnalyzerLogFormat;
+use Scheb\Tombstone\Core\Format\AnalyzerLogFormat;
 
 class AnalyzerLogFileReader
 {

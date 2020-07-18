@@ -29,8 +29,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Scheb\\Tombstone\\": "src/logger",
-            "Scheb\\Tombstone\\Analyzer\\": "src/analyzer"
+            "Scheb\\Tombstone\\Analyzer\\": "src/analyzer",
+            "Scheb\\Tombstone\\Core\\": "src/core",
+            "Scheb\\Tombstone\\Logger\\": "src/logger"
         }
     },
     "autoload-dev": {
@@ -41,6 +42,7 @@
     },
     "replace": {
         "scheb/tombstone-analyzer": "^1.0",
+        "scheb/tombstone-core": "^1.0",
         "scheb/tombstone-logger": "^1.0"
     }
 }

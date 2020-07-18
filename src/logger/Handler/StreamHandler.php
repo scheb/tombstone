@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Handler;
+namespace Scheb\Tombstone\Logger\Handler;
 
-use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 /*
  * Based on the StreamHandler from Monolog

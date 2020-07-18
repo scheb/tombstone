@@ -1,6 +1,8 @@
 splits:
     - prefix: "src/analyzer"
       target: "https://${GH_TOKEN}@github.com/scheb/tombstone-analyzer.git"
+    - prefix: "src/core"
+      target: "https://${GH_TOKEN}@github.com/scheb/tombstone-core.git"
     - prefix: "src/logger"
       target: "https://${GH_TOKEN}@github.com/scheb/tombstone-logger.git"
 

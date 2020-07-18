@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Report\Console;
 
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
-use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Tombstone;
 
 class FormattedConsoleOutput
 {

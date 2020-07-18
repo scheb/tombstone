@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
-use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 class VampireIndex implements \Countable, \Iterator
 {

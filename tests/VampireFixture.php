@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests;
 
-use Scheb\Tombstone\Model\StackTraceFrame;
-use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Core\Model\StackTraceFrame;
+use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 class VampireFixture
 {

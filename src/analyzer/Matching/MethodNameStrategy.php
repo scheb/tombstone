@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Matching;
 
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
-use Scheb\Tombstone\Model\Tombstone;
-use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 class MethodNameStrategy implements MatchingStrategyInterface
 {

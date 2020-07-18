@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Model;
 
 use Scheb\Tombstone\Analyzer\PathTools;
-use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Tombstone;
 
 class TombstoneIndex implements \Countable, \Iterator
 {
@@ -30,7 +30,7 @@ class TombstoneIndex implements \Countable, \Iterator
     private $relativeFileLineIndex = [];
 
     /**
-     * @var Tombstone[][]
+     * @var Tombstone[]
      */
     private $methodIndex = [];
 

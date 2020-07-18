@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Scheb\Tombstone\Formatter\JsonFormatter;
-use Scheb\Tombstone\Graveyard\GraveyardBuilder;
-use Scheb\Tombstone\Handler\AnalyzerLogHandler;
-use Scheb\Tombstone\Handler\StreamHandler;
+use Scheb\Tombstone\Logger\Formatter\JsonFormatter;
+use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilder;
+use Scheb\Tombstone\Logger\Handler\AnalyzerLogHandler;
+use Scheb\Tombstone\Logger\Handler\StreamHandler;
 use Scheb\Tombstone\TestApplication\App\Application;
 
 require_once __DIR__.'/../vendor/autoload.php';
