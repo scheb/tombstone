@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone;
+namespace Scheb\Tombstone\Model;
 
 use Scheb\Tombstone\Tracing\PathNormalizer;
 

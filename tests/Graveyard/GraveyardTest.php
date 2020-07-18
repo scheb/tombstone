@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Tests\Graveyard;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
-use Scheb\Tombstone\Graveyard;
+use Scheb\Tombstone\Graveyard\Graveyard;
 use Scheb\Tombstone\Handler\HandlerInterface;
-use Scheb\Tombstone\Tests\Fixtures\StackTraceFixture;
-use Scheb\Tombstone\Vampire;
-use Scheb\Tombstone\VampireFactory;
+use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Model\VampireFactory;
+use Scheb\Tombstone\Tests\StackTraceFixture;
+use Scheb\Tombstone\Tests\TestCase;
 
 class GraveyardTest extends TestCase
 {

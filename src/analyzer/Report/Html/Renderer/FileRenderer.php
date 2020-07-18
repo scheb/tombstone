@@ -7,7 +7,7 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 use Scheb\Tombstone\Analyzer\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
-use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Model\Tombstone;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class FileRenderer

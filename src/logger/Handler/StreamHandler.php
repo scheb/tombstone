@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Handler;
 
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Vampire;
 
 /*
  * Based on the StreamHandler from Monolog

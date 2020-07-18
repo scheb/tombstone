@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer;
 
-use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Model\Tombstone;
 use Scheb\Tombstone\Tracing\PathNormalizer;
 
 class TombstoneIndex implements \Countable, \Iterator

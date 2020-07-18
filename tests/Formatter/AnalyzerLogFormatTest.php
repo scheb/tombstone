@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests\Logging;
+namespace Scheb\Tombstone\Tests\Formatter;
 
-use Scheb\Tombstone\Logging\AnalyzerLogFormat;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
+use Scheb\Tombstone\Formatter\AnalyzerLogFormat;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\VampireFixture;
 
 class AnalyzerLogFormatTest extends TestCase
 {

@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\AnalyzerLogFormatter;
 use Scheb\Tombstone\Formatter\FormatterInterface;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Vampire;
 
 class AnalyzerLogHandler extends AbstractHandler
 {

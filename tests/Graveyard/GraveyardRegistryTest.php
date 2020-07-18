@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Tests\Graveyard;
 
-use Scheb\Tombstone\Graveyard;
-use Scheb\Tombstone\GraveyardInterface;
-use Scheb\Tombstone\GraveyardRegistry;
+use Scheb\Tombstone\Graveyard\Graveyard;
+use Scheb\Tombstone\Graveyard\GraveyardInterface;
+use Scheb\Tombstone\Graveyard\GraveyardRegistry;
+use Scheb\Tombstone\Tests\TestCase;
 
-class GraveyardProviderTest extends TestCase
+class GraveyardRegistryTest extends TestCase
 {
     /**
      * @test

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Logging;
+namespace Scheb\Tombstone\Formatter;
 
-use Scheb\Tombstone\StackTraceFrame;
-use Scheb\Tombstone\Tombstone;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\StackTraceFrame;
+use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Model\Vampire;
 
 class AnalyzerLogFormat
 {

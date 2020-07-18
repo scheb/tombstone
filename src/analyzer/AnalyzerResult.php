@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer;
 
-use Scheb\Tombstone\Tombstone;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Model\Vampire;
 
 class AnalyzerResult
 {

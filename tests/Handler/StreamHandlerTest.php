@@ -12,10 +12,9 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Handler;
 
 use Scheb\Tombstone\Handler\StreamHandler;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
-use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
+use Scheb\Tombstone\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Tests\VampireFixture;
 
 class StreamHandlerTest extends TestCase
 {

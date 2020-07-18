@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Handler;
 
 use Psr\Log\LoggerInterface;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Vampire;
 
 class PsrLoggerHandler extends AbstractHandler
 {

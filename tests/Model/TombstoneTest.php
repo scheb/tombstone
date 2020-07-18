@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Tests\Model;
 
-use Scheb\Tombstone\Tombstone;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Tests\TestCase;
 
 class TombstoneTest extends TestCase
 {

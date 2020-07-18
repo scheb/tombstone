@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests\Fixtures;
+namespace Scheb\Tombstone\Tests;
 
 class StackTraceFixture
 {

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Tests\Model;
 
-use Scheb\Tombstone\StackTraceFrame;
-use Scheb\Tombstone\Tests\Fixtures\StackTraceFixture;
-use Scheb\Tombstone\Tombstone;
-use Scheb\Tombstone\Vampire;
-use Scheb\Tombstone\VampireFactory;
+use Scheb\Tombstone\Model\StackTraceFrame;
+use Scheb\Tombstone\Model\Tombstone;
+use Scheb\Tombstone\Model\Vampire;
+use Scheb\Tombstone\Model\VampireFactory;
+use Scheb\Tombstone\Tests\StackTraceFixture;
+use Scheb\Tombstone\Tests\TestCase;
 
 class VampireFactoryTest extends TestCase
 {
@@ -41,7 +42,7 @@ class VampireFactoryTest extends TestCase
         $expectedFrame = new StackTraceFrame('C:/path/to/file4.php', 44, 'ClassName->invokerInvokerMethodName');
         $this->assertEquals($expectedFrame, $stackTrace[3]);
 
-        $this->assertEquals('e5596f50384552bf050040bcf28763d8fdd87c72', $vampire->getStackTraceHash());
+        $this->assertEquals('3b5bcf293cabca79ca8f7b9e64643c2c0bedae41', $vampire->getStackTraceHash());
 
         $invocationDate = strtotime($vampire->getInvocationDate());
         $this->assertEquals(time(), $invocationDate);

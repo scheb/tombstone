@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
 use Scheb\Tombstone\Analyzer\TombstoneIndex;
-use Scheb\Tombstone\Tombstone;
+use Scheb\Tombstone\Model\Tombstone;
 
 class TombstoneVisitor extends NameResolver
 {

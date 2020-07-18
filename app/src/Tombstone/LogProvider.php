@@ -6,8 +6,8 @@ namespace Scheb\Tombstone\TestApplication\Tombstone;
 
 use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
 use Scheb\Tombstone\Analyzer\VampireIndex;
+use Scheb\Tombstone\Model\Vampire;
 use Scheb\Tombstone\Tracing\TraceProvider;
-use Scheb\Tombstone\Vampire;
 
 class LogProvider implements LogReaderInterface
 {

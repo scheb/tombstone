@@ -6,9 +6,8 @@ namespace Scheb\Tombstone\Tests\Handler;
 
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Handler\PsrLoggerHandler;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
-use Scheb\Tombstone\Tests\Stubs\LabelFormatter;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\VampireFixture;
 
 class PsrLoggerHandlerTest extends TestCase
 {

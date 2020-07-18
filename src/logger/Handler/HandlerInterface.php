@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Handler;
 
 use Scheb\Tombstone\Formatter\FormatterInterface;
-use Scheb\Tombstone\Vampire;
+use Scheb\Tombstone\Model\Vampire;
 
 interface HandlerInterface
 {

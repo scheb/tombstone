@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests;
+namespace Scheb\Tombstone\Tests\Graveyard;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Scheb\Tombstone\BufferedGraveyard;
-use Scheb\Tombstone\Graveyard;
-use Scheb\Tombstone\GraveyardInterface;
+use Scheb\Tombstone\Graveyard\BufferedGraveyard;
+use Scheb\Tombstone\Graveyard\Graveyard;
+use Scheb\Tombstone\Graveyard\GraveyardInterface;
+use Scheb\Tombstone\Tests\TestCase;
 
 class BufferedGraveyardTest extends TestCase
 {

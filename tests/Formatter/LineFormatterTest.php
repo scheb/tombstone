@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Formatter;
 
 use Scheb\Tombstone\Formatter\LineFormatter;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\VampireFixture;
 
 class LineFormatterTest extends TestCase
 {

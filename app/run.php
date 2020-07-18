@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Scheb\Tombstone\Formatter\JsonFormatter;
-use Scheb\Tombstone\GraveyardBuilder;
+use Scheb\Tombstone\Graveyard\GraveyardBuilder;
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
 use Scheb\Tombstone\Handler\StreamHandler;
 use Scheb\Tombstone\TestApplication\App\Application;

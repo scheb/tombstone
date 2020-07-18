@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone;
+namespace Scheb\Tombstone\Graveyard;
 
 class GraveyardRegistry
 {

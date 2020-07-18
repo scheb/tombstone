@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Handler;
 
 use Scheb\Tombstone\Handler\AnalyzerLogHandler;
-use Scheb\Tombstone\Tests\Fixtures\VampireFixture;
-use Scheb\Tombstone\Tests\Logging\AnalyzerLogFormatTest;
+use Scheb\Tombstone\Tests\Formatter\AnalyzerLogFormatTest;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\VampireFixture;
 
 class AnalyzerLogHandlerTest extends TestCase
 {
