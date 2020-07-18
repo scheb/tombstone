@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Formatter;
 
+use Scheb\Tombstone\Exception\AnalyzerLogFormatException;
 use Scheb\Tombstone\Model\StackTraceFrame;
 use Scheb\Tombstone\Model\Tombstone;
 use Scheb\Tombstone\Model\Vampire;
@@ -21,7 +22,6 @@ class AnalyzerLogFormat
     private const FIELD_INVOKER = 'im';
 
     private const CURRENT_VERSION = 10000; // 1.0.0
-    private const FILE_DEFAULT_VALUE = 'unknown';
 
     public static function vampireToLog(Vampire $vampire): string
     {
@@ -61,31 +61,51 @@ class AnalyzerLogFormat
 
         $version = isset($data[self::FIELD_VERSION]) ? (int) $data[self::FIELD_VERSION] : null;
 
-        if (self::CURRENT_VERSION === $version) {
-            return new Vampire(
-                $data[self::FIELD_INVOCATION_DATE],
-                $data[self::FIELD_INVOKER] ?? null,
-                self::decodeStackTrace($data[self::FIELD_STACKTRACE] ?? []),
-                new Tombstone(
-                    $data[self::FIELD_ARGUMENTS] ?? [],
-                    $data[self::FIELD_FILE] ?? self::FILE_DEFAULT_VALUE,
-                    $data[self::FIELD_LINE] ?? 0,
-                    $data[self::FIELD_METHOD] ?? null,
-                    $data[self::FIELD_METADATA] ?? []
-                )
-            );
+        if (self::CURRENT_VERSION !== $version) {
+            throw AnalyzerLogFormatException::createIncompatibleDataException(self::CURRENT_VERSION, $version);
         }
 
-        return null;
+        $requiredFields = [
+            self::FIELD_INVOCATION_DATE,
+            self::FIELD_ARGUMENTS,
+            self::FIELD_FILE,
+            self::FIELD_LINE,
+        ];
+
+        if ($missingData = array_diff($requiredFields, array_keys($data))) {
+            throw AnalyzerLogFormatException::createMissingDataException($missingData);
+        }
+
+        return new Vampire(
+            $data[self::FIELD_INVOCATION_DATE],
+            $data[self::FIELD_INVOKER] ?? null,
+            self::decodeStackTrace($data[self::FIELD_STACKTRACE] ?? []),
+            new Tombstone(
+                $data[self::FIELD_ARGUMENTS],
+                $data[self::FIELD_FILE],
+                $data[self::FIELD_LINE],
+                $data[self::FIELD_METHOD] ?? null,
+                $data[self::FIELD_METADATA] ?? []
+            )
+        );
     }
 
     private static function decodeStackTrace(array $stackTrace): array
     {
+        $requiredFields = [
+            self::FIELD_FILE,
+            self::FIELD_LINE,
+        ];
+
         $decodedTrace = [];
         foreach ($stackTrace as $frame) {
+            if ($missingData = array_diff($requiredFields, array_keys($frame))) {
+                break; // Stack trace is incomplete, gracefully truncate at this point
+            }
+
             $decodedTrace[] = new StackTraceFrame(
-                $frame[self::FIELD_FILE] ?? null,
-                $frame[self::FIELD_LINE] ?? null,
+                $frame[self::FIELD_FILE],
+                $frame[self::FIELD_LINE],
                 $frame[self::FIELD_METHOD] ?? null
             );
         }

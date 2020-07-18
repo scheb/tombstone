@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Formatter;
 
+use Scheb\Tombstone\Exception\AnalyzerLogFormatException;
 use Scheb\Tombstone\Formatter\AnalyzerLogFormat;
 use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Tests\VampireFixture;
@@ -26,10 +27,33 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
-    public function logToVampire_invalidLog_returnNull(): void
+    public function logToVampire_invalidVersion_throwException(): void
     {
-        $returnValue = AnalyzerLogFormat::logToVampire('invalid');
-        $this->assertNull($returnValue);
+        $this->expectException(AnalyzerLogFormatException::class);
+        $this->expectExceptionCode(AnalyzerLogFormatException::INCOMPATIBLE_VERSION);
+
+        AnalyzerLogFormat::logToVampire('{"v":1}');
+    }
+
+    /**
+     * @test
+     */
+    public function logToVampire_missingData_throwException(): void
+    {
+        $this->expectException(AnalyzerLogFormatException::class);
+        $this->expectExceptionCode(AnalyzerLogFormatException::MISSING_DATA);
+
+        AnalyzerLogFormat::logToVampire('{"v":10000}');
+    }
+
+    /**
+     * @test
+     */
+    public function logToVampire_missingDataInStackTrace_truncateStackTrace(): void
+    {
+        $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}');
+
+        $this->assertCount(1, $returnValue->getStackTrace());
     }
 
     /**
