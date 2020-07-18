@@ -21,7 +21,7 @@ class AnalyzerLogFormatTest extends TestCase
     {
         $vampire = VampireFixture::getVampire(...self::TOMBSTONE_ARGUMENTS);
         $returnValue = AnalyzerLogFormat::vampireToLog($vampire);
-        $this->assertEquals($returnValue, self::LOG_RECORD);
+        $this->assertEquals(self::LOG_RECORD, $returnValue);
     }
 
     /**
