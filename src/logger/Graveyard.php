@@ -46,8 +46,12 @@ class Graveyard implements GraveyardInterface
 
     public function flush(): void
     {
-        foreach ($this->handlers as $handler) {
-            $handler->flush();
+        try {
+            foreach ($this->handlers as $handler) {
+                $handler->flush();
+            }
+        } catch (\Throwable $e) {
+            $this->logger->error(sprintf('Exception while flushing tombstones: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
         }
     }
 }

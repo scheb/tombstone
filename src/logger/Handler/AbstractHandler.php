@@ -16,11 +16,7 @@ abstract class AbstractHandler implements HandlerInterface
 
     public function __destruct()
     {
-        try {
-            $this->flush();
-        } catch (\Exception $e) {
-            // do nothing
-        }
+        $this->flush();
     }
 
     public function flush(): void
