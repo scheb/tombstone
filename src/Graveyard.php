@@ -66,7 +66,7 @@ class Graveyard implements GraveyardInterface
 
         foreach ($trace as $key => &$frame) {
             if (isset($frame['file'])) {
-                $frame['file'] = PathNormalizer::tryMakeRelativeTo($frame['file'], $this->rootDir);
+                $frame['file'] = PathNormalizer::makeRelativeTo($frame['file'], $this->rootDir);
             }
         }
 
