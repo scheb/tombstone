@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Graveyard\BufferedGraveyard;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilder;
+use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilderException;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry;
 use Scheb\Tombstone\Logger\Handler\HandlerInterface;
 use Scheb\Tombstone\Tests\StackTraceFixture;
@@ -46,10 +47,24 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    public function build_noRootPathSet_throwException(): void
+    {
+        $this->expectException(GraveyardBuilderException::class);
+        $this->expectExceptionMessage('rootDir');
+
+        $this->builder->build();
+    }
+
+    /**
+     * @test
+     */
     public function build_withHandler_logTombstonesToHandler(): void
     {
         $handler = $this->createMock(HandlerInterface::class);
-        $graveyard = $this->builder->withHandler($handler)->build();
+        $graveyard = $this->builder
+            ->rootDir(__DIR__)
+            ->withHandler($handler)
+            ->build();
 
         $handler
             ->expects($this->once())
@@ -71,6 +86,7 @@ class GraveyardBuilderTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
         $graveyard = $this->builder
+            ->rootDir(__DIR__)
             ->withHandler($handler)
             ->withLogger($logger)
             ->build();
@@ -94,6 +110,7 @@ class GraveyardBuilderTest extends TestCase
             ->with($this->callback($this->assertStackTraceLength(2)));
 
         $graveyard = $this->builder
+            ->rootDir(__DIR__)
             ->withHandler($handler)
             ->stackTraceDepth(2)
             ->build();
@@ -113,8 +130,8 @@ class GraveyardBuilderTest extends TestCase
             ->with($this->callback($this->assertRelativeFilePath()));
 
         $graveyard = $this->builder
-            ->withHandler($handler)
             ->rootDir(StackTraceFixture::ROOT_DIR)
+            ->withHandler($handler)
             ->build();
 
         $graveyard->tombstone([], StackTraceFixture::getTraceFixture(), []);
@@ -125,7 +142,10 @@ class GraveyardBuilderTest extends TestCase
      */
     public function build_buffered_buildBufferedGraveyard(): void
     {
-        $graveyard = $this->builder->buffered()->build();
+        $graveyard = $this->builder
+            ->rootDir(__DIR__)
+            ->buffered()
+            ->build();
 
         $this->assertInstanceOf(BufferedGraveyard::class, $graveyard);
     }
@@ -135,7 +155,10 @@ class GraveyardBuilderTest extends TestCase
      */
     public function build_autoRegister_setToGraveyardRegistry(): void
     {
-        $graveyard = $this->builder->autoRegister()->build();
+        $graveyard = $this->builder
+            ->rootDir(__DIR__)
+            ->autoRegister()
+            ->build();
 
         $this->assertSame($graveyard, GraveyardRegistry::getGraveyard());
     }

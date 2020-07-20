@@ -52,7 +52,7 @@ class GraveyardBuilder
     /**
      * Root dir of the project. File paths will be logged relative to that directory (if possible).
      */
-    public function rootDir(?string $rootDir): self
+    public function rootDir(string $rootDir): self
     {
         $this->rootDir = $rootDir;
 
@@ -124,6 +124,10 @@ class GraveyardBuilder
 
     private function buildVampireFactory(): VampireFactory
     {
+        if (null === $this->rootDir) {
+            throw new GraveyardBuilderException('You must configure a rootDir for your graveyard.');
+        }
+
         return new VampireFactory($this->rootDir, $this->stackTraceDepth);
     }
 }
