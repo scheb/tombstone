@@ -108,7 +108,7 @@ class GraveyardBuilderTest extends TestCase
     {
         $handler = $this->createMock(HandlerInterface::class);
         $handler
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('log')
             ->with($this->callback($this->assertRelativeFilePath()));
 
