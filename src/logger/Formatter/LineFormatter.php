@@ -14,7 +14,7 @@ class LineFormatter implements FormatterInterface
             '%s - Vampire detected: %s, in file %s:%s',
             $vampire->getInvocationDate(),
             (string) $vampire->getTombstone(),
-            $vampire->getFile(),
+            $vampire->getFile()->getReferencePath(),
             $vampire->getLine()
         );
 

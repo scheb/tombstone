@@ -74,7 +74,7 @@ class Vampire
         return $this->tombstone->getTombstoneDate();
     }
 
-    public function getFile(): string
+    public function getFile(): FilePathInterface
     {
         return $this->tombstone->getFile();
     }

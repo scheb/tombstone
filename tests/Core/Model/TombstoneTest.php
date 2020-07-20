@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
 
 class TombstoneTest extends TestCase
 {
+    private const ROOT_DIR = '/path/to';
+
     /**
      * @param string ...$arguments
      */
     private function createTombstone(string $file, string ...$arguments): Tombstone
     {
-        return new Tombstone($arguments, $file, 123, 'method', ['metaField' => 'metaValue']);
+        $rootPath = new RootPath(self::ROOT_DIR);
+
+        return new Tombstone($arguments, $rootPath->createFilePath($file), 123, 'method', ['metaField' => 'metaValue']);
     }
 
     /**
@@ -62,6 +67,17 @@ class TombstoneTest extends TestCase
     {
         $tombstone1 = $this->createTombstone('file');
         $tombstone2 = $this->createTombstone('file');
+        $result = $tombstone1->inscriptionEquals($tombstone2);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @test
+     */
+    public function inscriptionEquals_absolutePathVsRelativePath_returnTrue(): void
+    {
+        $tombstone1 = $this->createTombstone('file');
+        $tombstone2 = $this->createTombstone('/path/to/file');
         $result = $tombstone1->inscriptionEquals($tombstone2);
         $this->assertTrue($result);
     }

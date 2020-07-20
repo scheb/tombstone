@@ -18,7 +18,7 @@ class Tombstone
     private $tombstoneDate;
 
     /**
-     * @var string
+     * @var FilePathInterface
      */
     private $file;
 
@@ -42,7 +42,7 @@ class Tombstone
      */
     private $metadata;
 
-    public function __construct(array $arguments, string $file, int $line, ?string $method, array $metadata = [])
+    public function __construct(array $arguments, FilePathInterface $file, int $line, ?string $method, array $metadata = [])
     {
         $this->arguments = $arguments;
         $this->tombstoneDate = $this->findDate($arguments);
@@ -64,7 +64,7 @@ class Tombstone
 
     public function getHash(): string
     {
-        return md5($this->file."\n".$this->line."\n".implode(',', $this->arguments));
+        return md5($this->file->getReferencePath()."\n".$this->line."\n".implode(',', $this->arguments));
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool
@@ -93,7 +93,7 @@ class Tombstone
         return $this->tombstoneDate;
     }
 
-    public function getFile(): string
+    public function getFile(): FilePathInterface
     {
         return $this->file;
     }

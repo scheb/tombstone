@@ -13,7 +13,7 @@ class JsonFormatter implements FormatterInterface
     {
         return json_encode([
             'arguments' => $vampire->getArguments(),
-            'file' => $vampire->getFile(),
+            'file' => $vampire->getFile()->getReferencePath(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
             'stackTrace' => $this->getStackTraceValues($vampire->getStackTrace()),
@@ -27,7 +27,7 @@ class JsonFormatter implements FormatterInterface
     {
         return array_map(function (StackTraceFrame $frame): array {
             return [
-                'file' => $frame->getFile(),
+                'file' => $frame->getFile()->getReferencePath(),
                 'line' => $frame->getLine(),
                 'method' => $frame->getMethod(),
             ];

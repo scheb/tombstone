@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Logger\Graveyard;
 
 use Psr\Log\LoggerInterface;
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Logger\Handler\HandlerInterface;
 
 class GraveyardBuilder
@@ -128,6 +129,6 @@ class GraveyardBuilder
             throw new GraveyardBuilderException('You must configure a rootDir for your graveyard.');
         }
 
-        return new VampireFactory($this->rootDir, $this->stackTraceDepth);
+        return new VampireFactory(new RootPath($this->rootDir), $this->stackTraceDepth);
     }
 }

@@ -38,7 +38,7 @@ class GraveyardBuilderTest extends TestCase
     private function assertRelativeFilePath(): \Closure
     {
         return function (Vampire $vampire): bool {
-            $this->assertEquals('file1.php', $vampire->getFile());
+            $this->assertEquals('file1.php', $vampire->getFile()->getReferencePath());
 
             return true;
         };

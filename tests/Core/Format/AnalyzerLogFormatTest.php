@@ -6,6 +6,7 @@ namespace Scheb\Tombstone\Tests\Core\Format;
 
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormat;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Tests\VampireFixture;
 
@@ -32,7 +33,7 @@ class AnalyzerLogFormatTest extends TestCase
         $this->expectException(AnalyzerLogFormatException::class);
         $this->expectExceptionCode(AnalyzerLogFormatException::INCOMPATIBLE_VERSION);
 
-        AnalyzerLogFormat::logToVampire('{"v":1}');
+        AnalyzerLogFormat::logToVampire('{"v":1}', new RootPath(__DIR__));
     }
 
     /**
@@ -43,7 +44,7 @@ class AnalyzerLogFormatTest extends TestCase
         $this->expectException(AnalyzerLogFormatException::class);
         $this->expectExceptionCode(AnalyzerLogFormatException::MISSING_DATA);
 
-        AnalyzerLogFormat::logToVampire('{"v":10000}');
+        AnalyzerLogFormat::logToVampire('{"v":10000}', new RootPath(__DIR__));
     }
 
     /**
@@ -51,7 +52,7 @@ class AnalyzerLogFormatTest extends TestCase
      */
     public function logToVampire_missingDataInStackTrace_truncateStackTrace(): void
     {
-        $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}');
+        $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}', new RootPath(__DIR__));
 
         $this->assertCount(1, $returnValue->getStackTrace());
     }
@@ -61,7 +62,7 @@ class AnalyzerLogFormatTest extends TestCase
      */
     public function logToVampire_validLog_returnVampire(): void
     {
-        $returnValue = AnalyzerLogFormat::logToVampire(self::LOG_RECORD);
+        $returnValue = AnalyzerLogFormat::logToVampire(self::LOG_RECORD, new RootPath(VampireFixture::ROOT_DIR));
         $expectedVampire = VampireFixture::getVampire(...self::TOMBSTONE_ARGUMENTS);
         $this->assertEquals($expectedVampire, $returnValue);
     }

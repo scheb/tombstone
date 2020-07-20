@@ -7,7 +7,7 @@ namespace Scheb\Tombstone\Core\Model;
 class StackTraceFrame
 {
     /**
-     * @var string
+     * @var FilePathInterface
      */
     private $file;
 
@@ -21,14 +21,14 @@ class StackTraceFrame
      */
     private $method;
 
-    public function __construct(string $file, int $line, ?string $method)
+    public function __construct(FilePathInterface $file, int $line, ?string $method)
     {
         $this->file = $file;
         $this->line = $line;
         $this->method = $method;
     }
 
-    public function getFile(): string
+    public function getFile(): FilePathInterface
     {
         return $this->file;
     }

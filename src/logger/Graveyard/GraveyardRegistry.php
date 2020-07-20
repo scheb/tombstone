@@ -13,11 +13,11 @@ class GraveyardRegistry
 
     public static function getGraveyard(): GraveyardInterface
     {
-        if (null === self::$graveyard) {
-            self::$graveyard = (new GraveyardBuilder())->build();
+        if (null !== self::$graveyard) {
+            return self::$graveyard;
         }
 
-        return self::$graveyard;
+        throw new GraveyardNotSetException('A graveyard has not been set. Please create one with GraveyardBuilder and register it to GraveyardRegistry.');
     }
 
     public static function setGraveyard(GraveyardInterface $graveyard): void

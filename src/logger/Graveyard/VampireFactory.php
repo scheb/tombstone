@@ -4,35 +4,26 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Logger\Graveyard;
 
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
-use Scheb\Tombstone\Logger\Tracing\PathNormalizer;
 
 class VampireFactory
 {
     /**
-     * @var string|null
+     * @var RootPath
      */
-    private $rootDir;
+    private $rootPath;
 
     /**
      * @var int
      */
     private $stackTraceDepth;
 
-    public function __construct(?string $rootDir, int $stackTraceDepth)
+    public function __construct(RootPath $rootPath, int $stackTraceDepth)
     {
-        if (null !== $rootDir) {
-            $this->rootDir = $rootDir;
-
-            // Use the real path if possible
-            $rootDirRealPath = realpath($this->rootDir);
-            if ($rootDirRealPath) {
-                $this->rootDir = $rootDirRealPath;
-            }
-        }
-
+        $this->rootPath = $rootPath;
         $this->stackTraceDepth = $stackTraceDepth;
     }
 
@@ -40,7 +31,7 @@ class VampireFactory
     {
         // This is the call to the tombstone
         $tombstoneCall = $trace[0];
-        $file = $this->normalizeAndRelativePath($tombstoneCall['file']);
+        $file = $this->rootPath->createFilePath($tombstoneCall['file']);
         $line = $tombstoneCall['line'];
 
         // This is the method containing the tombstone
@@ -76,23 +67,12 @@ class VampireFactory
         $stackTrace = [];
         foreach ($trace as $frame) {
             $stackTrace[] = new StackTraceFrame(
-                $this->normalizeAndRelativePath($frame['file']),
+                $this->rootPath->createFilePath($frame['file']),
                 $frame['line'],
                 self::getMethodFromFrame($frame)
             );
         }
 
         return $stackTrace;
-    }
-
-    private function normalizeAndRelativePath(string $path): string
-    {
-        $path = PathNormalizer::normalizeDirectorySeparator($path);
-
-        if (null === $this->rootDir) {
-            return $path;
-        }
-
-        return PathNormalizer::makeRelativeTo($path, $this->rootDir);
     }
 }
