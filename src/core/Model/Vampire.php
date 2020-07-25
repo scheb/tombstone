@@ -26,12 +26,18 @@ class Vampire
      */
     private $tombstone;
 
-    public function __construct(string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone)
+    /**
+     * @var array
+     */
+    private $metadata;
+
+    public function __construct(string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone, array $metadata = [])
     {
         $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
         $this->stackTrace = $stackTrace;
         $this->tombstone = $tombstone;
+        $this->metadata = $metadata;
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool
@@ -66,7 +72,7 @@ class Vampire
 
     public function getMetadata(): array
     {
-        return $this->tombstone->getMetadata();
+        return $this->metadata;
     }
 
     public function getTombstoneDate(): ?string

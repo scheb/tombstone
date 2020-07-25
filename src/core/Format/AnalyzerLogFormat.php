@@ -89,9 +89,9 @@ class AnalyzerLogFormat
                 $data[self::FIELD_ARGUMENTS],
                 $rootDir->createFilePath($data[self::FIELD_FILE]),
                 $data[self::FIELD_LINE],
-                $data[self::FIELD_METHOD] ?? null,
-                $data[self::FIELD_METADATA] ?? []
-            )
+                $data[self::FIELD_METHOD] ?? null
+            ),
+            $data[self::FIELD_METADATA] ?? []
         );
     }
 

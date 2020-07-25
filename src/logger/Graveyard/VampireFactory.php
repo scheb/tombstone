@@ -46,7 +46,7 @@ class VampireFactory
             $invoker = $this->getMethodFromFrame($trace[2]);
         }
 
-        $tombstone = new Tombstone($arguments, $file, $line, $method, $metadata);
+        $tombstone = new Tombstone($arguments, $file, $line, $method);
 
         $stackTrace = [];
         if ($this->stackTraceDepth > 0) {
@@ -54,7 +54,7 @@ class VampireFactory
             $stackTrace = $this->createStackTrace($trace);
         }
 
-        return new Vampire(date('c'), $invoker, $stackTrace, $tombstone);
+        return new Vampire(date('c'), $invoker, $stackTrace, $tombstone, $metadata);
     }
 
     private function getMethodFromFrame(array $frame): string

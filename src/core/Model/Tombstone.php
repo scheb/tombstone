@@ -37,19 +37,13 @@ class Tombstone
      */
     private $vampires = [];
 
-    /**
-     * @var array
-     */
-    private $metadata;
-
-    public function __construct(array $arguments, FilePathInterface $file, int $line, ?string $method, array $metadata = [])
+    public function __construct(array $arguments, FilePathInterface $file, int $line, ?string $method)
     {
         $this->arguments = $arguments;
         $this->tombstoneDate = $this->findDate($arguments);
         $this->file = $file;
         $this->line = $line;
         $this->method = $method;
-        $this->metadata = $metadata;
     }
 
     public function __toString(): string
@@ -106,11 +100,6 @@ class Tombstone
     public function getMethod(): ?string
     {
         return $this->method;
-    }
-
-    public function getMetadata(): array
-    {
-        return $this->metadata;
     }
 
     public function addVampire(Vampire $vampire): void
