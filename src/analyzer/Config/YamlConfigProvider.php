@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Config;
 
-use Scheb\Tombstone\Analyzer\PathTools;
+use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\PathNormalizer;
 use Symfony\Component\Yaml\Yaml;
 
 class YamlConfigProvider implements ConfigProviderInterface
@@ -14,44 +15,58 @@ class YamlConfigProvider implements ConfigProviderInterface
      */
     private $configFile;
 
+    /**
+     * @var RootPath
+     */
+    private $rootPath;
+
     public function __construct(string $configFile)
     {
         $this->configFile = $configFile;
+
+        // Make all paths relative to config file path
+        $this->rootPath = new RootPath(\dirname(realpath($this->configFile)));
     }
 
     public function readConfiguration(): array
     {
         $config = Yaml::parseFile($this->configFile);
 
-        // Make all paths relative to config file path
-        $configFileDir = \dirname(realpath($this->configFile));
-
         if (isset($config['rootDir'])) {
-            $config['rootDir'] = PathTools::makePathAbsolute($config['rootDir'], $configFileDir);
+            $config['rootDir'] = $this->resolvePath($config['rootDir']);
         }
 
         if (isset($config['source']['directories'])) {
-            $config['source']['directories'] = array_map(function (string $directory) use ($configFileDir): string {
-                return PathTools::makePathAbsolute($directory, $configFileDir);
+            $config['source']['directories'] = array_map(function (string $directory): string {
+                return $this->resolvePath($directory);
             }, $config['source']['directories']);
         }
 
         if (isset($config['logs']['directory'])) {
-            $config['logs']['directory'] = PathTools::makePathAbsolute($config['logs']['directory'], $configFileDir);
+            $config['logs']['directory'] = $this->resolvePath($config['logs']['directory']);
         }
 
         if (isset($config['logs']['custom']['file'])) {
-            $config['logs']['custom']['file'] = PathTools::makePathAbsolute($config['logs']['custom']['file'], $configFileDir);
+            $config['logs']['custom']['file'] = $this->resolvePath($config['logs']['custom']['file']);
         }
 
         if (isset($config['report']['php'])) {
-            $config['report']['php'] = PathTools::makePathAbsolute($config['report']['php'], $configFileDir);
+            $config['report']['php'] = $this->resolvePath($config['report']['php']);
         }
 
         if (isset($config['report']['html'])) {
-            $config['report']['html'] = PathTools::makePathAbsolute($config['report']['html'], $configFileDir);
+            $config['report']['html'] = $this->resolvePath($config['report']['html']);
         }
 
         return $config;
+    }
+
+    private function resolvePath(string $filePath): string
+    {
+        return PathNormalizer::normalizeDirectorySeparatorForEnvironment(
+            $this->rootPath
+                ->createFilePath($filePath)
+                ->getAbsolutePath()
+        );
     }
 }
