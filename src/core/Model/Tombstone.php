@@ -56,9 +56,9 @@ class Tombstone
         return 'tombstone('.$argumentsList.')';
     }
 
-    public function getHash(): string
+    public function getHash(): int
     {
-        return md5($this->file->getReferencePath()."\n".$this->line."\n".implode(',', $this->arguments));
+        return crc32($this->file->getReferencePath()."\n".$this->line."\n".implode(',', $this->arguments));
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Core\Model;
 
 use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
@@ -20,7 +21,7 @@ class TombstoneTest extends TestCase
     {
         $rootPath = new RootPath(self::ROOT_DIR);
 
-        return new Tombstone($arguments, $rootPath->createFilePath($file), 123, 'method', ['metaField' => 'metaValue']);
+        return new Tombstone($arguments, $rootPath->createFilePath($file), 123, 'method');
     }
 
     /**
@@ -57,7 +58,7 @@ class TombstoneTest extends TestCase
     {
         $tombstone = $this->createTombstone('file');
         $hash = $tombstone->getHash();
-        $this->assertEquals('f5825bfeac4236f671b94bab85752767', $hash);
+        $this->assertEquals(596497885, $hash);
     }
 
     /**
@@ -121,7 +122,7 @@ class TombstoneTest extends TestCase
     public function hasVampires_vampireAdded_returnTrue(): void
     {
         $tombstone = $this->createTombstone('file');
-        $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', [], $tombstone));
+        $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', new StackTrace(), $tombstone));
         $this->assertTrue($tombstone->hasVampires());
     }
 }

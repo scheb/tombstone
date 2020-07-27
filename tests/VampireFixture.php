@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests;
 
 use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -16,9 +17,9 @@ class VampireFixture
     public static function getVampire(string ...$arguments): Vampire
     {
         $rootPath = new RootPath(self::ROOT_DIR);
-        $tombstone = new Tombstone($arguments, $rootPath->createFilePath('file'), 123, 'method', ['metaField' => 'metaValue']);
-        $stackTrace = [new StackTraceFrame($rootPath->createFilePath('/path/to/file1.php'), 11, 'ClassName->method')];
+        $tombstone = new Tombstone($arguments, $rootPath->createFilePath('file'), 123, 'method');
+        $stackTrace = new StackTrace(new StackTraceFrame($rootPath->createFilePath('/path/to/file1.php'), 11, 'ClassName->method'));
 
-        return new Vampire('2015-01-01', 'invoker', $stackTrace, $tombstone);
+        return new Vampire('2015-01-01', 'invoker', $stackTrace, $tombstone, ['metaField' => 'metaValue']);
     }
 }

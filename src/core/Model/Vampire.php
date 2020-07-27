@@ -17,7 +17,7 @@ class Vampire
     private $invoker;
 
     /**
-     * @var array
+     * @var StackTrace
      */
     private $stackTrace;
 
@@ -31,7 +31,7 @@ class Vampire
      */
     private $metadata;
 
-    public function __construct(string $invocationDate, ?string $invoker, array $stackTrace, Tombstone $tombstone, array $metadata = [])
+    public function __construct(string $invocationDate, ?string $invoker, StackTrace $stackTrace, Tombstone $tombstone, array $metadata = [])
     {
         $this->invocationDate = $invocationDate;
         $this->invoker = $invoker;
@@ -95,16 +95,8 @@ class Vampire
         return $this->tombstone->getMethod();
     }
 
-    /**
-     * @return StackTraceFrame[]
-     */
-    public function getStackTrace(): array
+    public function getStackTrace(): StackTrace
     {
         return $this->stackTrace;
-    }
-
-    public function getStackTraceHash(): string
-    {
-        return sha1(serialize($this->stackTrace));
     }
 }

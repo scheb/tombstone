@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Logger\Formatter;
 
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Core\Model\Vampire;
 
@@ -23,7 +24,7 @@ class JsonFormatter implements FormatterInterface
         ]).PHP_EOL;
     }
 
-    private function getStackTraceValues(array $stackTrace): array
+    private function getStackTraceValues(StackTrace $stackTrace): array
     {
         return array_map(function (StackTraceFrame $frame): array {
             return [
@@ -31,6 +32,6 @@ class JsonFormatter implements FormatterInterface
                 'line' => $frame->getLine(),
                 'method' => $frame->getMethod(),
             ];
-        }, $stackTrace);
+        }, iterator_to_array($stackTrace));
     }
 }

@@ -42,4 +42,9 @@ class StackTraceFrame
     {
         return $this->method;
     }
+
+    public function getHash(): int
+    {
+        return crc32($this->file->getReferencePath()."\n".$this->line."\n".$this->method);
+    }
 }

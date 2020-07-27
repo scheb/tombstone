@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Core\Format;
 
 use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -47,10 +48,7 @@ class AnalyzerLogFormat
         ]);
     }
 
-    /**
-     * @param StackTraceFrame[] $stackTrace
-     */
-    private static function encodeStackTrace(array $stackTrace): array
+    private static function encodeStackTrace(StackTrace $stackTrace): array
     {
         $encodedTrace = [];
         foreach ($stackTrace as $frame) {
@@ -95,21 +93,21 @@ class AnalyzerLogFormat
         );
     }
 
-    private static function decodeStackTrace(array $stackTrace, RootPath $rootDir): array
+    private static function decodeStackTrace(array $stackTrace, RootPath $rootDir): StackTrace
     {
-        $decodedTrace = [];
+        $frames = [];
         foreach ($stackTrace as $frame) {
             if ($missingData = array_diff(self::REQUIRED_FIELDS_STACK_TRACE, array_keys($frame))) {
                 break; // Stack trace is incomplete, gracefully truncate at this point
             }
 
-            $decodedTrace[] = new StackTraceFrame(
+            $frames[] = new StackTraceFrame(
                 $rootDir->createFilePath($frame[self::FIELD_FILE]),
                 $frame[self::FIELD_LINE],
                 $frame[self::FIELD_METHOD] ?? null
             );
         }
 
-        return $decodedTrace;
+        return new StackTrace(...$frames);
     }
 }

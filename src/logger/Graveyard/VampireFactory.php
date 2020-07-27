@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Logger\Graveyard;
 
 use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -48,13 +49,13 @@ class VampireFactory
 
         $tombstone = new Tombstone($arguments, $file, $line, $method);
 
-        $stackTrace = [];
+        $stackTrace = null;
         if ($this->stackTraceDepth > 0) {
             $trace = \array_slice($trace, 0, $this->stackTraceDepth);
             $stackTrace = $this->createStackTrace($trace);
         }
 
-        return new Vampire(date('c'), $invoker, $stackTrace, $tombstone, $metadata);
+        return new Vampire(date('c'), $invoker, $stackTrace ?? new StackTrace(), $tombstone, $metadata);
     }
 
     private function getMethodFromFrame(array $frame): string
@@ -62,17 +63,17 @@ class VampireFactory
         return (isset($frame['class']) ? $frame['class'].$frame['type'] : '').$frame['function'];
     }
 
-    private function createStackTrace(array $trace): array
+    private function createStackTrace(array $trace): StackTrace
     {
-        $stackTrace = [];
+        $frames = [];
         foreach ($trace as $frame) {
-            $stackTrace[] = new StackTraceFrame(
+            $frames[] = new StackTraceFrame(
                 $this->rootPath->createFilePath($frame['file']),
                 $frame['line'],
                 self::getMethodFromFrame($frame)
             );
         }
 
-        return $stackTrace;
+        return new StackTrace(...$frames);
     }
 }
