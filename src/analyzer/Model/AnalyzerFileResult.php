@@ -4,92 +4,23 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
-use Scheb\Tombstone\Core\Model\Tombstone;
-use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Core\Model\FilePathInterface;
 
-class AnalyzerFileResult implements ResultAggregateInterface
+class AnalyzerFileResult extends AbstractResultAggregate
 {
     /**
-     * @var string
+     * @var FilePathInterface
      */
     private $file;
 
-    /**
-     * @var Tombstone[]
-     */
-    private $dead = [];
-
-    /**
-     * @var Tombstone[]
-     */
-    private $undead = [];
-
-    /**
-     * @var Vampire[]
-     */
-    private $deleted = [];
-
-    public function __construct(string $file)
+    public function __construct(FilePathInterface $file, array $dead, array $undead, array $deleted)
     {
+        parent::__construct($dead, $undead, $deleted);
         $this->file = $file;
     }
 
-    public function getFile(): string
+    public function getFile(): FilePathInterface
     {
         return $this->file;
-    }
-
-    public function addDead(Tombstone $tombstone): void
-    {
-        $this->dead[] = $tombstone;
-    }
-
-    public function addUndead(Tombstone $tombstone): void
-    {
-        $this->undead[] = $tombstone;
-    }
-
-    public function addDeleted(Vampire $vampire): void
-    {
-        $this->deleted[] = $vampire;
-    }
-
-    /**
-     * @return Tombstone[]
-     */
-    public function getDead(): array
-    {
-        return $this->dead;
-    }
-
-    /**
-     * @return Tombstone[]
-     */
-    public function getUndead(): array
-    {
-        return $this->undead;
-    }
-
-    /**
-     * @return Vampire[]
-     */
-    public function getDeleted(): array
-    {
-        return $this->deleted;
-    }
-
-    public function getDeadCount(): int
-    {
-        return \count($this->dead);
-    }
-
-    public function getUndeadCount(): int
-    {
-        return \count($this->undead);
-    }
-
-    public function getDeletedCount(): int
-    {
-        return \count($this->deleted);
     }
 }

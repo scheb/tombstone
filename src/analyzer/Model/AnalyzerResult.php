@@ -7,107 +7,66 @@ namespace Scheb\Tombstone\Analyzer\Model;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 
-class AnalyzerResult implements ResultAggregateInterface
+class AnalyzerResult extends AbstractResultAggregate
 {
-    /**
-     * @var AnalyzerFileResult[]
-     */
-    private $perFile = [];
+    private const INDEX_TYPE_DEAD = 1;
+    private const INDEX_TYPE_UNDEAD = 2;
+    private const INDEX_TYPE_DELETED = 3;
 
     /**
-     * @var Tombstone[]
+     * @var array|null
      */
-    private $dead = [];
-
-    /**
-     * @var Tombstone[]
-     */
-    private $undead = [];
-
-    /**
-     * @var Vampire[]
-     */
-    private $deleted = [];
-
-    public function addDead(Tombstone $tombstone): void
-    {
-        $this->dead[] = $tombstone;
-        $this->initFileIndex($tombstone->getFile());
-        $this->perFile[$tombstone->getFile()]->addDead($tombstone);
-    }
-
-    public function addUndead(Tombstone $tombstone): void
-    {
-        $this->undead[] = $tombstone;
-        $this->initFileIndex($tombstone->getFile());
-        $this->perFile[$tombstone->getFile()]->addUndead($tombstone);
-    }
-
-    /**
-     * @param Vampire[] $deleted
-     */
-    public function setDeleted(array $deleted): void
-    {
-        $this->deleted = $deleted;
-        foreach ($deleted as $vampire) {
-            $this->initFileIndex($vampire->getFile());
-            $this->perFile[$vampire->getFile()]->addDeleted($vampire);
-        }
-    }
-
-    private function initFileIndex(string $file): void
-    {
-        if (!isset($this->perFile[$file])) {
-            $this->perFile[$file] = new AnalyzerFileResult($file);
-        }
-    }
-
-    /**
-     * @return Tombstone[]
-     */
-    public function getDead(): array
-    {
-        return $this->dead;
-    }
-
-    /**
-     * @return Tombstone[]
-     */
-    public function getUndead(): array
-    {
-        return $this->undead;
-    }
-
-    /**
-     * @return Vampire[]
-     */
-    public function getDeleted(): array
-    {
-        return $this->deleted;
-    }
+    private $perFile;
 
     /**
      * @return AnalyzerFileResult[]
      */
     public function getPerFile(): array
     {
-        ksort($this->perFile);
+        if (null === $this->perFile) {
+            $this->perFile = iterator_to_array($this->createAnalyzerFileResults());
+        }
 
         return $this->perFile;
     }
 
-    public function getDeadCount(): int
+    private function createAnalyzerFileResults(): \Traversable
     {
-        return \count($this->dead);
+        $fileIndex = $this->createFileIndex();
+        ksort($fileIndex);
+        foreach ($fileIndex as $constructorArgs) {
+            yield new AnalyzerFileResult(...$constructorArgs);
+        }
     }
 
-    public function getUndeadCount(): int
+    private function createFileIndex(): array
     {
-        return \count($this->undead);
+        $fileIndex = [];
+
+        foreach ($this->dead as $tombstone) {
+            $this->writeFileIndex($fileIndex, $tombstone, self::INDEX_TYPE_DEAD);
+        }
+        foreach ($this->undead as $tombstone) {
+            $this->writeFileIndex($fileIndex, $tombstone, self::INDEX_TYPE_UNDEAD);
+        }
+        foreach ($this->deleted as $vampire) {
+            $this->writeFileIndex($fileIndex, $vampire, self::INDEX_TYPE_DELETED);
+        }
+
+        return $fileIndex;
     }
 
-    public function getDeletedCount(): int
+    /**
+     * @param Tombstone|Vampire $item
+     */
+    private function writeFileIndex(array &$fileIndex, $item, int $indexType): void
     {
-        return \count($this->deleted);
+        $file = $item->getFile();
+        $referencePath = $file->getReferencePath();
+        if (!isset($fileIndex[$referencePath])) {
+            $fileIndex[$referencePath] = [$file, [], [], []];
+        }
+        /** @psalm-suppress PossiblyUndefinedMethod */
+        $fileIndex[$referencePath][$indexType][] = $item;
     }
 }

@@ -23,7 +23,9 @@ class Processor
 
     public function process(TombstoneIndex $tombstoneIndex, VampireIndex $vampireIndex): AnalyzerResult
     {
-        $result = new AnalyzerResult();
+        $dead = [];
+        $undead = [];
+        $deleted = [];
 
         /** @var Vampire $vampire */
         foreach ($vampireIndex as $vampire) {
@@ -31,18 +33,18 @@ class Processor
             if (null !== $matchingTombstone) {
                 $matchingTombstone->addVampire($vampire->withTombstone($matchingTombstone));
             } else {
-                $result->addDeleted($vampire);
+                $deleted[] = $vampire;
             }
         }
 
         foreach ($tombstoneIndex as $tombstone) {
             if ($tombstone->hasVampires()) {
-                $result->addUndead($tombstone);
+                $undead[] = $tombstone;
             } else {
-                $result->addDead($tombstone);
+                $dead[] = $tombstone;
             }
         }
 
-        return $result;
+        return new AnalyzerResult($dead, $undead, $deleted);
     }
 }
