@@ -60,11 +60,6 @@ class Vampire
         return $this->tombstone;
     }
 
-    public function setTombstone(Tombstone $tombstone): void
-    {
-        $this->tombstone = $tombstone;
-    }
-
     public function getArguments(): array
     {
         return $this->tombstone->getArguments();
@@ -98,5 +93,16 @@ class Vampire
     public function getStackTrace(): StackTrace
     {
         return $this->stackTrace;
+    }
+
+    public function withTombstone(Tombstone $tombstone): Vampire
+    {
+        return new Vampire(
+            $this->invocationDate,
+            $this->invoker,
+            $this->stackTrace,
+            $tombstone,
+            $this->metadata
+        );
     }
 }
