@@ -9,7 +9,7 @@ use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
-use Scheb\Tombstone\Tests\Analyzer\TestCase;
+use Scheb\Tombstone\Tests\TestCase;
 
 abstract class AbstractMatchingStrategyTest extends TestCase
 {

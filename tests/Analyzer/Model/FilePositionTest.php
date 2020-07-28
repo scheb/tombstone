@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
 use Scheb\Tombstone\Analyzer\Model\FilePosition;
-use Scheb\Tombstone\Tests\Analyzer\TestCase;
+use Scheb\Tombstone\Tests\TestCase;
 
 class FilePositionTest extends TestCase
 {
