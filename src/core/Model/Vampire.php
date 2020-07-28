@@ -95,6 +95,11 @@ class Vampire
         return $this->stackTrace;
     }
 
+    public function getHash(): int
+    {
+        return crc32($this->tombstone->getHash()."\n".$this->invoker);
+    }
+
     public function withTombstone(Tombstone $tombstone): Vampire
     {
         return new Vampire(

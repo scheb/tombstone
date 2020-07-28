@@ -25,4 +25,14 @@ class VampireTest extends TestCase
         $this->assertSame($vampire->getStackTrace(), $newVampire->getStackTrace());
         $this->assertEquals($vampire->getMetadata(), $newVampire->getMetadata());
     }
+
+    /**
+     * @test
+     */
+    public function getHash_valuesSet_returnCorrectHash(): void
+    {
+        $vampire = VampireFixture::getVampire();
+        $hash = $vampire->getHash();
+        $this->assertEquals(1397077150, $hash);
+    }
 }

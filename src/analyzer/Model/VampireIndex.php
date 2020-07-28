@@ -6,55 +6,50 @@ namespace Scheb\Tombstone\Analyzer\Model;
 
 use Scheb\Tombstone\Core\Model\Vampire;
 
-class VampireIndex implements \Countable, \Iterator
+class VampireIndex implements \Countable, \IteratorAggregate
 {
     /**
      * @var Vampire[]
      */
-    private $vampires = [];
-
-    /**
-     * @var int[]
-     */
-    private $maxDatePerPosition = [];
+    private $vampiresByHash = [];
 
     public function addVampire(Vampire $vampire): void
     {
-        $position = FilePosition::createPosition($vampire->getFile(), $vampire->getLine());
-        $logDate = $vampire->getInvocationDate() ? strtotime($vampire->getInvocationDate()) : 0;
-        if (!isset($this->vampires[$position]) || $logDate > $this->maxDatePerPosition[$position]) {
-            $this->vampires[$position] = $vampire;
-            $this->maxDatePerPosition[$position] = $logDate;
+        $hash = $vampire->getHash();
+
+        // Deduplicate vampires by hash, prefer more recent ones
+        if (isset($this->vampiresByHash[$hash])) {
+            $this->vampiresByHash[$hash] = $this->chooseMoreRecent($this->vampiresByHash[$hash], $vampire);
+        } else {
+            $this->vampiresByHash[$hash] = $vampire;
         }
     }
 
-    public function count()
+    private function chooseMoreRecent(Vampire $vampire1, Vampire $vampire2): Vampire
     {
-        return \count($this->vampires);
+        return $this->getInvocationDate($vampire1) > $this->getInvocationDate($vampire2) ? $vampire1 : $vampire2;
     }
 
-    public function current()
+    private function getInvocationDate(Vampire $vampire): int
     {
-        return current($this->vampires);
+        $time = strtotime($vampire->getInvocationDate());
+
+        return false !== $time ? $time : 0;
     }
 
-    public function next()
+    public function count(): int
     {
-        next($this->vampires);
+        return \count($this->vampiresByHash);
     }
 
-    public function key()
+    /**
+     * @return \Traversable<int, Vampire>
+     */
+    public function getIterator(): \Traversable
     {
-        return key($this->vampires);
-    }
-
-    public function valid()
-    {
-        return isset($this->vampires[$this->key()]);
-    }
-
-    public function rewind()
-    {
-        reset($this->vampires);
+        // Doing this to remove array keys (hashes)
+        foreach ($this->vampiresByHash as $vampire) {
+            yield $vampire;
+        }
     }
 }
