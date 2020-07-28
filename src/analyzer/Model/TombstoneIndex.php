@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
-use Scheb\Tombstone\Analyzer\PathTools;
+use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 
-class TombstoneIndex implements \Countable, \Iterator
+class TombstoneIndex implements \Countable, \IteratorAggregate
 {
-    /**
-     * @var string|null
-     */
-    private $rootDir;
-
     /**
      * @var Tombstone[]
      */
@@ -25,31 +20,16 @@ class TombstoneIndex implements \Countable, \Iterator
     private $fileLineIndex = [];
 
     /**
-     * @var Tombstone[]
-     */
-    private $relativeFileLineIndex = [];
-
-    /**
-     * @var Tombstone[]
+     * @var Tombstone[][]
      */
     private $methodIndex = [];
-
-    public function __construct(?string $rootDir)
-    {
-        if (null !== $rootDir) {
-            $this->rootDir = PathTools::normalizeDirectorySeparator($rootDir);
-        }
-    }
 
     public function addTombstone(Tombstone $tombstone): void
     {
         $this->tombstones[] = $tombstone;
 
-        $position = FilePosition::createPosition($tombstone->getFile(), $tombstone->getLine());
+        $position = FilePosition::createPosition($tombstone->getFile()->getReferencePath(), $tombstone->getLine());
         $this->fileLineIndex[$position] = $tombstone;
-
-        $relativePosition = FilePosition::createPosition($this->normalizeAndRelativePath($tombstone->getFile()), $tombstone->getLine());
-        $this->relativeFileLineIndex[$relativePosition] = $tombstone;
 
         $methodName = $tombstone->getMethod();
         if (null !== $methodName) {
@@ -65,62 +45,26 @@ class TombstoneIndex implements \Countable, \Iterator
      */
     public function getInMethod(string $method): array
     {
-        if (isset($this->methodIndex[$method])) {
-            return $this->methodIndex[$method];
-        }
-
-        return [];
+        return $this->methodIndex[$method] ?? [];
     }
 
-    public function getInFileAndLine(string $file, int $line): ?Tombstone
+    public function getInFileAndLine(FilePathInterface $file, int $line): ?Tombstone
     {
-        $pos = FilePosition::createPosition($file, $line);
-        if (isset($this->fileLineIndex[$pos])) {
-            return $this->fileLineIndex[$pos];
-        }
+        $pos = FilePosition::createPosition($file->getReferencePath(), $line);
 
-        $pos = FilePosition::createPosition($file, $line);
-        if (isset($this->relativeFileLineIndex[$pos])) {
-            return $this->relativeFileLineIndex[$pos];
-        }
-
-        return null;
+        return $this->fileLineIndex[$pos] ?? null;
     }
 
-    private function normalizeAndRelativePath(string $path): string
+    public function count(): int
     {
-        $path = PathTools::normalizeDirectorySeparator($path);
-
-        return PathTools::makeRelativeTo($path, $this->rootDir);
+        return \count($this->tombstones);
     }
 
-    public function count()
+    /**
+     * @return \Traversable<int, Tombstone>
+     */
+    public function getIterator(): \Traversable
     {
-        return \count($this->fileLineIndex);
-    }
-
-    public function current()
-    {
-        return current($this->tombstones);
-    }
-
-    public function next()
-    {
-        next($this->tombstones);
-    }
-
-    public function key()
-    {
-        return key($this->tombstones);
-    }
-
-    public function valid()
-    {
-        return isset($this->tombstones[$this->key()]);
-    }
-
-    public function rewind()
-    {
-        reset($this->tombstones);
+        yield from $this->tombstones;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
+use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 
 class PositionStrategyTest extends AbstractMatchingStrategyTest
@@ -14,7 +15,7 @@ class PositionStrategyTest extends AbstractMatchingStrategyTest
         $this->tombstoneIndex
             ->expects($this->any())
             ->method('getInFileAndLine')
-            ->with(self::REFERENCE_PATH, self::LINE)
+            ->with($this->isInstanceOf(FilePathInterface::class), self::LINE)
             ->willReturn($tombstone);
     }
 
