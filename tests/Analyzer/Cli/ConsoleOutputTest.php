@@ -127,4 +127,61 @@ class ConsoleOutputTest extends TestCase
         $this->assertEquals(50, $progressBar->getBarWidth());
         $this->assertEquals(20, $progressBar->getMaxSteps());
     }
+
+    /**
+     * @test
+     */
+    public function error_debugEnabledNoException_writeOnlyErrorMessage(): void
+    {
+        $this->outputInterface
+            ->expects($this->any())
+            ->method('isDebug')
+            ->willReturn(true);
+
+        $this->outputInterface
+            ->expects($this->once())
+            ->method('writeln')
+            ->with('<error>error message</error>');
+
+        $this->consoleOutput->error('error message');
+    }
+
+    /**
+     * @test
+     */
+    public function error_debugDisabledWithException_writeOnlyErrorMessage(): void
+    {
+        $this->outputInterface
+            ->expects($this->any())
+            ->method('isDebug')
+            ->willReturn(false);
+
+        $this->outputInterface
+            ->expects($this->once())
+            ->method('writeln')
+            ->with('<error>error message</error>');
+
+        $this->consoleOutput->error('error message', new \Exception('exception message'));
+    }
+
+    /**
+     * @test
+     */
+    public function error_debugEnabledWithException_writeWithExceptionDetails(): void
+    {
+        $this->outputInterface
+            ->expects($this->any())
+            ->method('isDebug')
+            ->willReturn(true);
+
+        $this->outputInterface
+            ->expects($this->exactly(2))
+            ->method('writeln')
+            ->withConsecutive(
+                ['<error>error message</error>'],
+                [$this->matches('Exception: exception message at %s'.DIRECTORY_SEPARATOR.'ConsoleOutputTest.php line %i')]
+            );
+
+        $this->consoleOutput->error('error message', new \Exception('exception message'));
+    }
 }
