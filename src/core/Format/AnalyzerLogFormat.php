@@ -62,11 +62,11 @@ class AnalyzerLogFormat
         return $encodedTrace;
     }
 
-    public static function logToVampire(string $log, RootPath $rootDir): ?Vampire
+    public static function logToVampire(string $log, RootPath $rootDir): Vampire
     {
         $data = json_decode($log, true);
         if (!\is_array($data)) {
-            return null;
+            throw AnalyzerLogFormatException::createMissingDataException(self::REQUIRED_FIELDS_LOG);
         }
 
         $version = isset($data[self::FIELD_VERSION]) ? (int) $data[self::FIELD_VERSION] : null;

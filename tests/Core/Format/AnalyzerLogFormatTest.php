@@ -39,6 +39,17 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    public function logToVampire_malformedData_throwException(): void
+    {
+        $this->expectException(AnalyzerLogFormatException::class);
+        $this->expectExceptionCode(AnalyzerLogFormatException::MISSING_DATA);
+
+        AnalyzerLogFormat::logToVampire('{', new RootPath(__DIR__));
+    }
+
+    /**
+     * @test
+     */
     public function logToVampire_missingData_throwException(): void
     {
         $this->expectException(AnalyzerLogFormatException::class);
