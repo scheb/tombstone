@@ -122,10 +122,7 @@ class ConsoleOutputTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('write');
 
-        $progressBar = $this->consoleOutput->createProgressBar(20);
-
-        $this->assertEquals(50, $progressBar->getBarWidth());
-        $this->assertEquals(20, $progressBar->getMaxSteps());
+        $this->consoleOutput->createProgressBar(20);
     }
 
     /**

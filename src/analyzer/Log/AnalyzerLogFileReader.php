@@ -4,23 +4,47 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Log;
 
-use Scheb\Tombstone\Analyzer\Exception\LogReaderException;
-use Scheb\Tombstone\Analyzer\Model\VampireIndex;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormat;
+use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
+use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Core\Model\Vampire;
 
 class AnalyzerLogFileReader
 {
-    public function aggregateLog(string $file, VampireIndex $vampireIndex): void
+    /**
+     * @var RootPath
+     */
+    private $rootDir;
+
+    /**
+     * @var ConsoleOutput
+     */
+    private $output;
+
+    public function __construct(RootPath $rootDir, ConsoleOutput $output)
     {
-        $handle = fopen($file, 'r');
+        $this->rootDir = $rootDir;
+        $this->output = $output;
+    }
+
+    /**
+     * @return \Traversable<int, Vampire>
+     */
+    public function readLogFile(string $file): \Traversable
+    {
+        $handle = @fopen($file, 'r');
         if (false === $handle) {
             throw new LogReaderException(sprintf('Could not read log file %s', $file));
         }
 
+        $lineNumber = 0;
         while (false !== ($line = fgets($handle))) {
-            $vampire = AnalyzerLogFormat::logToVampire($line);
-            if ($vampire) {
-                $vampireIndex->addVampire($vampire);
+            ++$lineNumber;
+            try {
+                yield AnalyzerLogFormat::logToVampire($line, $this->rootDir);
+            } catch (AnalyzerLogFormatException $e) {
+                $this->output->error(sprintf('Ignoring invalid log data in "%s" on line %s', $file, $lineNumber), $e);
             }
         }
         fclose($handle);

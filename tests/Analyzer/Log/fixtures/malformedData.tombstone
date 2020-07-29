@@ -1,0 +1,3 @@
+{"v":10000,"a":["label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"\/path\/to\/file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}
+malformed
+{"v":10000,"a":["label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"\/path\/to\/file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}

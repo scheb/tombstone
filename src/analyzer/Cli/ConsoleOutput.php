@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Cli;
 
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutput
@@ -38,11 +37,7 @@ class ConsoleOutput
 
     public function createProgressBar(int $width): ProgressBar
     {
-        $progress = new ProgressBar($this->output, $width);
-        $progress->setBarWidth(50);
-        $progress->display();
-
-        return $progress;
+        return new ProgressBar($this->output, $width);
     }
 
     public function error(string $message, ?\Throwable $exception = null): void
