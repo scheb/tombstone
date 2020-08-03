@@ -18,7 +18,7 @@ $jsonLogHandler->setFormatter(new JsonFormatter());
 
 $graveyard = (new GraveyardBuilder())
     ->stackTraceDepth(3)
-    ->rootDir(__DIR__)
+    ->rootDir(__DIR__.'/src')
     ->withHandler($analyzerLogHandler)
     ->withHandler($jsonLogHandler)
     ->autoRegister()
