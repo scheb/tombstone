@@ -11,8 +11,6 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
-use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
-use Scheb\Tombstone\Core\Model\Tombstone;
 
 class TombstoneVisitor extends NameResolver
 {
@@ -27,24 +25,14 @@ class TombstoneVisitor extends NameResolver
     private $currentMethod = [];
 
     /**
-     * @var string|null
+     * @var TombstoneExtractor
      */
-    private $file;
+    private $tombstoneCallback;
 
-    /**
-     * @var TombstoneIndex
-     */
-    private $tombstoneIndex;
-
-    public function __construct(TombstoneIndex $tombstoneIndex)
+    public function __construct(TombstoneExtractor $tombstoneCallback)
     {
         parent::__construct();
-        $this->tombstoneIndex = $tombstoneIndex;
-    }
-
-    public function setCurrentFile(string $file): void
-    {
-        $this->file = $file;
+        $this->tombstoneCallback = $tombstoneCallback;
     }
 
     public function enterNode(Node $node)
@@ -95,10 +83,9 @@ class TombstoneVisitor extends NameResolver
         if ($this->isTombstoneFunction($node)) {
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
-            $params = $this->extractParameters($node);
+            $arguments = $this->extractArguments($node);
             /** @psalm-suppress PossiblyNullArgument */
-            $tombstone = new Tombstone($params, $this->file, $line, $methodName);
-            $this->tombstoneIndex->addTombstone($tombstone);
+            $this->tombstoneCallback->onTombstoneFound($arguments, $line, $methodName);
         }
     }
 
@@ -128,15 +115,10 @@ class TombstoneVisitor extends NameResolver
         return $this->currentMethod ? $this->currentMethod[key($this->currentMethod)] : null;
     }
 
-    public function getTombstones(): TombstoneIndex
-    {
-        return $this->tombstoneIndex;
-    }
-
     /**
      * @return list<string|null>
      */
-    private function extractParameters(FuncCall $node): array
+    private function extractArguments(FuncCall $node): array
     {
         $params = [];
         foreach ($node->args as $arg) {

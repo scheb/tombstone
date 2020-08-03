@@ -5,52 +5,76 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Source;
 
 use PhpParser\Error;
-use PhpParser\NodeTraverser;
+use PhpParser\NodeTraverserInterface;
 use PhpParser\Parser;
-use Scheb\Tombstone\Analyzer\Exception\TombstoneExtractionException;
+use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
+use Scheb\Tombstone\Core\Model\FilePathInterface;
+use Scheb\Tombstone\Core\Model\Tombstone;
 
 class TombstoneExtractor implements TombstoneExtractorInterface
 {
+    /**
+     * @var FilePathInterface|null
+     */
+    private $currentFile;
+
     /**
      * @var Parser
      */
     private $parser;
 
     /**
-     * @var NodeTraverser
+     * @var NodeTraverserInterface
      */
     private $traverser;
 
     /**
-     * @var TombstoneVisitor
+     * @var TombstoneIndex
      */
-    private $visitor;
+    private $tombstoneIndex;
 
-    public function __construct(Parser $parser, NodeTraverser $traverser, TombstoneVisitor $visitor)
+    public function __construct(Parser $parser, NodeTraverserInterface $traverser, TombstoneIndex $tombstoneIndex)
     {
         $this->parser = $parser;
-        $this->visitor = $visitor;
         $this->traverser = $traverser;
-        $this->traverser->addVisitor($visitor);
+        $this->tombstoneIndex = $tombstoneIndex;
     }
 
-    public function extractTombstones(string $filePath): void
+    public function extractTombstones(FilePathInterface $filePath): void
     {
-        $this->visitor->setCurrentFile($filePath);
-        if (!is_readable($filePath)) {
-            throw new TombstoneExtractionException(sprintf('File "%s" is not readable.', $filePath));
+        $this->currentFile = $filePath;
+        $absoluteFilePath = $filePath->getAbsolutePath();
+        if (!is_readable($absoluteFilePath)) {
+            throw new TombstoneExtractionException(sprintf('File "%s" is not readable.', $absoluteFilePath));
         }
 
         try {
-            $code = file_get_contents($filePath);
-            $stmts = $this->parser->parse($code);
+            $content = file_get_contents($absoluteFilePath);
+            $stmts = $this->parser->parse($content);
             if (null === $stmts) {
-                throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $filePath));
+                throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath));
             }
 
+            // Calls back to onTombstoneFound()
             $this->traverser->traverse($stmts);
+        } catch (TombstoneExtractionException $e) {
+            throw $e;
         } catch (Error $e) {
-            throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $filePath), 0, $e);
+            throw new TombstoneExtractionException(sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath), 0, $e);
+        } catch (\Throwable $e) {
+            throw new TombstoneExtractionException(sprintf('Exception while parsing "%s".', $absoluteFilePath), 0, $e);
         }
+
+        $this->currentFile = null;
+    }
+
+    public function onTombstoneFound(array $arguments, int $line, ?string $method): void
+    {
+        if (null === $this->currentFile) {
+            throw new \RuntimeException('Current file not available.');
+        }
+
+        $tombstone = new Tombstone($arguments, $this->currentFile, $line, $method);
+        $this->tombstoneIndex->addTombstone($tombstone);
     }
 }
