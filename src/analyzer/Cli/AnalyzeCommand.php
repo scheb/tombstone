@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Cli;
 
-use Scheb\Tombstone\Analyzer\Analyzer;
+use PhpParser\Lexer;
+use PhpParser\NodeTraverser;
+use PhpParser\ParserFactory;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
+use Scheb\Tombstone\Analyzer\Log\LogCollector;
 use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
+use Scheb\Tombstone\Analyzer\Processing\Processor;
+use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
-use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\PhpReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\ReportExporter;
-use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorFactory;
+use Scheb\Tombstone\Analyzer\Source\TombstoneExtractor;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorInterface;
+use Scheb\Tombstone\Analyzer\Source\TombstoneVisitor;
+use Scheb\Tombstone\Core\Model\RootPath;
 use SebastianBergmann\FinderFacade\FinderFacade;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -74,33 +81,33 @@ class AnalyzeCommand extends AbstractCommand
         $this->output->debug('Load config from '.$configFile);
         $configLoader = ConfigurationLoader::create();
         $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
-        $rootDir = $config['rootDir'] ?? null;
 
-        $tombstoneIndex = new TombstoneIndex($rootDir);
+        $rootPath = new RootPath($config['rootDir']);
+        $tombstoneIndex = new TombstoneIndex();
         $vampireIndex = new VampireIndex();
-        $tombstoneExtractor = TombstoneExtractorFactory::create($config, $tombstoneIndex, $this->output);
-        $logReaders = $this->createLogReaders($config);
+
+        $tombstoneExtractor = $this->createTombstoneExtractor($tombstoneIndex);
+
+        $logCollector = $this->createLogCollector($config, $rootPath, $vampireIndex);
         $analyzer = $this->createAnalyzer();
 
         $this->output->writeln('Scan source code ...');
         $files = $this->collectSourceFiles($config);
-        $this->extractTombstones($files, $tombstoneExtractor);
+        $this->extractTombstones($rootPath, $files, $tombstoneExtractor);
 
         $this->output->writeln('Read logs ...');
-        foreach ($logReaders as $logReader) {
-            $logReader->collectVampires($vampireIndex);
-        }
+        $logCollector->collectLogs();
 
         $this->output->writeln('Analyze tombstones ...');
-        $result = $analyzer->getResult($tombstoneIndex, $vampireIndex);
+        $result = $analyzer->process($tombstoneIndex, $vampireIndex);
 
         $reportGenerators = [];
         if (isset($config['report']['console'])) {
             $reportGenerators[] = new ConsoleReportGenerator($this->output);
         }
-        if (isset($config['report']['html'])) {
-            $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);
-        }
+//        if (isset($config['report']['html'])) {
+//            $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);
+//        }
         if (isset($config['report']['php'])) {
             $reportGenerators[] = new PhpReportGenerator($config['report']['php']);
         }
@@ -109,24 +116,35 @@ class AnalyzeCommand extends AbstractCommand
         $reportExporter->generate($result);
     }
 
-    private function createAnalyzer(): Analyzer
+    public function createTombstoneExtractor(TombstoneIndex $tombstoneIndex): TombstoneExtractorInterface
+    {
+        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
+        $traverser = new NodeTraverser();
+        $extractor = new TombstoneExtractor($parser, $traverser, $tombstoneIndex);
+        $traverser->addVisitor(new TombstoneVisitor($extractor));
+
+        return $extractor;
+    }
+
+    private function createAnalyzer(): Processor
     {
         $matchingStrategies = [
             new MethodNameStrategy(),
             new PositionStrategy(),
         ];
 
-        return new Analyzer($matchingStrategies);
+        return new Processor(new VampireMatcher($matchingStrategies));
     }
 
-    /**
-     * @return LogReaderInterface[]
-     */
-    private function createLogReaders(array $config): array
+    private function createLogCollector(array $config, RootPath $rootDir, VampireIndex $vampireIndex): LogCollector
     {
         $logReaders = [];
         if (isset($config['logs']['directory'])) {
-            $logReaders[] = AnalyzerLogDirectoryReader::create($config['logs']['directory'], $this->output);
+            $logReaders[] = new AnalyzerLogDirectoryReader(
+                new AnalyzerLogFileReader($rootDir, $this->output),
+                $config['logs']['directory'],
+                $this->output
+            );
         }
         if (isset($config['logs']['custom'])) {
             if (isset($config['logs']['custom']['file'])) {
@@ -143,7 +161,7 @@ class AnalyzeCommand extends AbstractCommand
             $logReaders[] = $logReader;
         }
 
-        return $logReaders;
+        return new LogCollector($logReaders, $vampireIndex);
     }
 
     private function collectSourceFiles(array $config): array
@@ -158,12 +176,12 @@ class AnalyzeCommand extends AbstractCommand
         return $finder->findFiles();
     }
 
-    private function extractTombstones(array $files, TombstoneExtractorInterface $tombstoneExtractor): void
+    private function extractTombstones(RootPath $rootPath, array $files, TombstoneExtractorInterface $tombstoneExtractor): void
     {
         $progress = $this->output->createProgressBar(\count($files));
         foreach ($files as $file) {
             $this->output->debug($file);
-            $tombstoneExtractor->extractTombstones($file);
+            $tombstoneExtractor->extractTombstones($rootPath->createFilePath($file));
             $progress->advance();
         }
         $this->output->writeln();
