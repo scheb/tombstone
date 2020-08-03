@@ -14,8 +14,9 @@ class PhpFileFormatterTest extends TestCase
      */
     public function loadFile_phpFileGiven_formattedHtmlReturned()
     {
-        $formattedLines = PhpFileFormatter::loadFile(__DIR__.'/Fixtures/FormattingTestClass.php');
+        $formattedLines = PhpFileFormatter::loadFile(__DIR__.'/fixtures/FormattingTestClass.php');
         $formattedFile = implode("<br />\n", $formattedLines);
-        $this->assertStringEqualsFile(__DIR__.'/Fixtures/FormattingTestClass.html', $formattedFile);
+        file_put_contents(__DIR__.'/fixtures/FormattingTestClass.html', $formattedFile);
+        $this->assertStringEqualsFile(__DIR__.'/fixtures/FormattingTestClass.html', $formattedFile);
     }
 }

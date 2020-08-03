@@ -1,6 +1,6 @@
 <?php
 
-namespace Scheb\Tombstone\Tests\Analyzer\Report\Html\Renderer\Fixtures;
+namespace Foo\Bar;
 
 class FormattingTestClass
 {
