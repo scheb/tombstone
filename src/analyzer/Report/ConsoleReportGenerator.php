@@ -44,7 +44,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $this->output->writeln(sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
         $this->output->writeln(sprintf('Deleted tombstones: %d', $numDeleted));
 
-        foreach ($result->getPerFile() as $fileResult) {
+        foreach ($result->getFileResults() as $fileResult) {
             $this->output->newLine();
 
             $this->output->writeln($fileResult->getFile()->getReferencePath());
