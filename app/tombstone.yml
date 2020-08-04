@@ -1,4 +1,4 @@
-rootDir: .
+rootDir: src
 source:
     directories:
         - src
@@ -15,5 +15,5 @@ logs:
 #        class: 'Scheb\Tombstone\TestApplication\Tombstone\LogProvider'
 report:
     php: report/tombstone-report.php
-#    html: report
+    html: report
     console: true

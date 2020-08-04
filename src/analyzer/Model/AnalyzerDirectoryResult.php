@@ -70,6 +70,11 @@ class AnalyzerDirectoryResult implements ResultAggregateInterface
         return $this->directoryPath;
     }
 
+    public function getDirectoryName(): string
+    {
+        return '' !== $this->directoryPath ? basename($this->directoryPath) : '';
+    }
+
     /**
      * @psalm-suppress InvalidNullableReturnType
      * @psalm-suppress NullableReturnStatement

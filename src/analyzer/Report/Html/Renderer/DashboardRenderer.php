@@ -6,9 +6,12 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\PathTools;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
+use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
+use Scheb\Tombstone\Core\Model\FilePathInterface;
+use Scheb\Tombstone\Core\Model\RelativeFilePath;
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
 
 class DashboardRenderer
@@ -17,11 +20,6 @@ class DashboardRenderer
      * @var string
      */
     private $reportDir;
-
-    /**
-     * @var string
-     */
-    private $rootDir;
 
     /**
      * @var \Text_Template
@@ -53,10 +51,15 @@ class DashboardRenderer
      */
     private $invokerTemplate;
 
-    public function __construct(string $reportDir, string $rootDir)
+    /**
+     * @var RootPath
+     */
+    private $sourceRootPath;
+
+    public function __construct(string $reportDir, RootPath $sourceRootPath)
     {
         $this->reportDir = $reportDir;
-        $this->rootDir = $rootDir;
+        $this->sourceRootPath = $sourceRootPath;
         $this->dashboardTemplate = TemplateFactory::getTemplate('dashboard.html');
         $this->fileTemplate = TemplateFactory::getTemplate('dashboard_file.html');
         $this->deadTemplate = TemplateFactory::getTemplate('dashboard_dead.html');
@@ -88,21 +91,21 @@ class DashboardRenderer
             'undead_percent' => $undeadPercent,
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
-            'full_path' => htmlspecialchars($this->rootDir),
+            'full_path' => htmlspecialchars(substr($this->sourceRootPath->getAbsolutePath(), 0, -1)),
             'date' => date('r'),
         ]);
-        $this->dashboardTemplate->renderTo($this->reportDir.DIRECTORY_SEPARATOR.'dashboard.html');
+        $this->dashboardTemplate->renderTo(FileSystem::createPath($this->reportDir, 'dashboard.html'));
     }
 
     private function renderTombstonesView(AnalyzerResult $result): string
     {
         $tombstonesView = '';
-        foreach ($result->getPerFile() as $fileResult) {
+        foreach ($result->getFileResults() as $fileResult) {
             if ($fileResult->getDeadCount() || $fileResult->getUndeadCount()) {
                 $itemList = $this->renderUndeadTombstones($fileResult);
                 $itemList .= $this->renderDeadTombstones($fileResult);
 
-                $fileName = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+                $fileName = $fileResult->getFile()->getReferencePath();
                 $tombstonesView .= $this->renderFile($fileName, $itemList);
             }
         }
@@ -125,7 +128,7 @@ class DashboardRenderer
             }
             $this->deadTemplate->setVar([
                 'path_to_root' => './',
-                'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
+                'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
                 'dead_since' => $deadSince,
@@ -143,7 +146,7 @@ class DashboardRenderer
             $invocation = $this->renderInvokers($tombstone);
             $this->undeadTemplate->setVar([
                 'path_to_root' => './',
-                'tombstone' => $this->linkTombstoneSource((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
+                'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
                 'invocation' => $invocation,
@@ -157,9 +160,9 @@ class DashboardRenderer
     private function renderDeletedView(AnalyzerResult $result): string
     {
         $deletedView = '';
-        foreach ($result->getPerFile() as $fileResult) {
+        foreach ($result->getFileResults() as $fileResult) {
             if ($fileResult->getDeletedCount()) {
-                $fileName = PathTools::makeRelativeTo($fileResult->getFile(), $this->rootDir);
+                $fileName = $fileResult->getFile()->getReferencePath();
                 $deletedView .= $this->renderFile($fileName, $this->renderDeletedTombstones($fileResult));
             }
         }
@@ -217,10 +220,12 @@ class DashboardRenderer
         return $invokersString;
     }
 
-    private function linkTombstoneSource(string $label, string $fileName, int $line): string
+    private function linkToTombstoneInCode(string $label, FilePathInterface $file, int $line): string
     {
-        $relativePath = PathTools::makeRelativeTo($fileName, $this->rootDir);
+        if ($file instanceof RelativeFilePath) {
+            return sprintf('<a href="./%s.html#%s">%s</a>', $file->getRelativePath(), $line, htmlspecialchars($label));
+        }
 
-        return sprintf('<a href="./%s.html#%s">%s</a>', $relativePath, $line, htmlspecialchars($label));
+        return htmlspecialchars($label);
     }
 }

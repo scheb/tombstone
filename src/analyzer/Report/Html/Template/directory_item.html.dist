@@ -1,5 +1,5 @@
 <tr>
-    <td class="{{class}}"><img src="{{path_to_root}}icons/file-{{icon}}.svg" class="octicon" /> <a href="{{link}}">{{name}}</a></td>
+    <td class="{{class}}"><img src="{{path_to_root}}_icons/file-{{icon}}.svg" class="octicon" /> <a href="{{link}}">{{name}}</a></td>
     <td class="{{class}}">{{bar}}</td>
     <td class="{{class}}">
         <div align="right">{{total}}</div>

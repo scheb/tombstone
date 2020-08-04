@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Report\Html\Exception;
+namespace Scheb\Tombstone\Analyzer\Report\Html;
 
 class HtmlReportException extends \Exception
 {

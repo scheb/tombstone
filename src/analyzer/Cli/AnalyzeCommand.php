@@ -20,6 +20,11 @@ use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Analyzer\Processing\Processor;
 use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Analyzer\Report\ConsoleReportGenerator;
+use Scheb\Tombstone\Analyzer\Report\FileSystem;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
+use Scheb\Tombstone\Analyzer\Report\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\PhpReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\ReportExporter;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractor;
@@ -82,18 +87,18 @@ class AnalyzeCommand extends AbstractCommand
         $configLoader = ConfigurationLoader::create();
         $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
 
-        $rootPath = new RootPath($config['rootDir']);
+        $sourceRootPath = new RootPath($config['rootDir']);
         $tombstoneIndex = new TombstoneIndex();
         $vampireIndex = new VampireIndex();
 
         $tombstoneExtractor = $this->createTombstoneExtractor($tombstoneIndex);
 
-        $logCollector = $this->createLogCollector($config, $rootPath, $vampireIndex);
+        $logCollector = $this->createLogCollector($config, $sourceRootPath, $vampireIndex);
         $analyzer = $this->createAnalyzer();
 
         $this->output->writeln('Scan source code ...');
         $files = $this->collectSourceFiles($config);
-        $this->extractTombstones($rootPath, $files, $tombstoneExtractor);
+        $this->extractTombstones($sourceRootPath, $files, $tombstoneExtractor);
 
         $this->output->writeln('Read logs ...');
         $logCollector->collectLogs();
@@ -105,9 +110,15 @@ class AnalyzeCommand extends AbstractCommand
         if (isset($config['report']['console'])) {
             $reportGenerators[] = new ConsoleReportGenerator($this->output);
         }
-//        if (isset($config['report']['html'])) {
-//            $reportGenerators[] = new HtmlReportGenerator($config['report']['html'], $rootDir);
-//        }
+        if (isset($config['report']['html'])) {
+            $reportGenerators[] = new HtmlReportGenerator(
+                $config['report']['html'],
+                new FileSystem(),
+                new DashboardRenderer($config['report']['html'], $sourceRootPath),
+                new DirectoryRenderer($config['report']['html'], $sourceRootPath),
+                new FileRenderer($config['report']['html'], $sourceRootPath)
+            );
+        }
         if (isset($config['report']['php'])) {
             $reportGenerators[] = new PhpReportGenerator($config['report']['php']);
         }

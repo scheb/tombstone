@@ -57,11 +57,11 @@ h3 .octicon {
 }
 
 .icon-vampire td.number {
-    background: url('../img/vampire.png') left center no-repeat;
+    background: url('../_img/vampire.png') left center no-repeat;
 }
 
 .icon-cross td.number {
-    background: url('../img/cross.png') left center no-repeat;
+    background: url('../_img/cross.png') left center no-repeat;
 }
 
 .tombstones-total {
