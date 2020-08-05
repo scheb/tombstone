@@ -20,9 +20,10 @@ use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Analyzer\Processing\Processor;
 use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Analyzer\Report\Console\ConsoleReportGenerator;
-use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportGenerator;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryItemRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
 use Scheb\Tombstone\Analyzer\Report\Php\PhpReportGenerator;
@@ -112,12 +113,12 @@ class AnalyzeCommand extends AbstractCommand
             $reportGenerators[] = new ConsoleReportGenerator($this->output);
         }
         if (isset($config['report']['html'])) {
+            $breadCrumbRenderer = new BreadCrumbRenderer($sourceRootPath);
             $reportGenerators[] = new HtmlReportGenerator(
                 $config['report']['html'],
-                new FileSystem(),
-                new DashboardRenderer($config['report']['html'], $sourceRootPath),
-                new DirectoryRenderer($config['report']['html'], $sourceRootPath),
-                new FileRenderer($config['report']['html'], $sourceRootPath)
+                new DashboardRenderer($config['report']['html'], $breadCrumbRenderer),
+                new DirectoryRenderer($config['report']['html'], $breadCrumbRenderer, new DirectoryItemRenderer()),
+                new FileRenderer($config['report']['html'], $breadCrumbRenderer)
             );
         }
         if (isset($config['report']['php'])) {

@@ -17,9 +17,6 @@ class ApplicationTest extends TestCase
     private const REPORT_DIR = self::APPLICATION_DIR.'/report';
     private const EXPECTED_REPORT_FILES = [
         '.gitkeep',
-        'App',
-        'App/SampleClass.php.html',
-        'App/index.html',
         '_css',
         '_css/bootstrap.min.css',
         '_css/style.css',
@@ -31,8 +28,13 @@ class ApplicationTest extends TestCase
         '_img/deleted.png',
         '_img/vampire.png',
         'dashboard.html',
-        'functions.php.html',
         'index.html',
+        'src',
+        'src/App',
+        'src/App/SampleClass.php.html',
+        'src/App/index.html',
+        'src/functions.php.html',
+        'src/index.html',
         'tombstone-report.php',
     ];
 

@@ -6,10 +6,11 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\PathNormalizer;
 use SebastianBergmann\Template\Template;
 
 class FileRenderer
@@ -20,9 +21,9 @@ class FileRenderer
     private $reportDir;
 
     /**
-     * @var RootPath
+     * @var BreadCrumbRenderer
      */
-    private $sourceRootPath;
+    private $breadCrumbRenderer;
 
     /**
      * @var Template|\Text_Template
@@ -34,12 +35,18 @@ class FileRenderer
      */
     private $tombstoneTemplate;
 
-    public function __construct(string $reportDir, RootPath $sourceRootPath)
+    /**
+     * @var Template|\Text_Template
+     */
+    private $sourceCodeTemplate;
+
+    public function __construct(string $reportDir, BreadCrumbRenderer $breadCrumbRenderer)
     {
         $this->reportDir = $reportDir;
-        $this->sourceRootPath = $sourceRootPath;
+        $this->breadCrumbRenderer = $breadCrumbRenderer;
         $this->fileTemplate = TemplateProvider::getTemplate('file.html');
         $this->tombstoneTemplate = TemplateProvider::getTemplate('file_tombstone.html');
+        $this->sourceCodeTemplate = TemplateProvider::getTemplate('file_source_code.html');
     }
 
     public function generate(AnalyzerResult $result): void
@@ -58,23 +65,19 @@ class FileRenderer
             return;
         }
 
-        $tombstonesList = $this->renderTombstonesList($fileResult);
-        $sourceCode = $this->formatSourceCode($fileResult);
         $relativeFilePath = $filePath->getRelativePath();
         $this->fileTemplate->setVar([
-            'path_to_root' => './'.str_repeat('../', substr_count($relativeFilePath, '/')),
-            'full_path' => htmlspecialchars($fileResult->getFile()->getAbsolutePath()),
-            'breadcrumb' => $this->renderBreadcrumb($relativeFilePath),
-            'tombstones_list' => $tombstonesList,
-            'source_code' => $sourceCode,
+            'path_to_root' => str_repeat('../', substr_count($relativeFilePath, PathNormalizer::NORMALIZED_DIRECTORY_SEPARATOR)),
+            'item_local_path' => htmlspecialchars(PathNormalizer::normalizeDirectorySeparatorForEnvironment($relativeFilePath)),
             'date' => date('r'),
+            'breadcrumb' => $this->breadCrumbRenderer->renderBreadcrumbToFile($relativeFilePath),
+            'tombstones_list' => $this->renderTombstonesList($fileResult),
+            'source_code' => $this->renderSourceCode($fileResult),
         ]);
 
-        $reportFile = $this->reportDir.'/'.$relativeFilePath.'.html';
-        $reportDir = \dirname($reportFile);
-        if (!is_dir($reportDir)) {
-            mkdir($reportDir, 0777, true);
-        }
+        $reportFile = FileSystem::createPath($this->reportDir, $relativeFilePath.'.html');
+        $reportFileDirectory = \dirname($reportFile);
+        FileSystem::ensureDirectoryCreated($reportFileDirectory);
         $this->fileTemplate->renderTo($reportFile);
     }
 
@@ -110,55 +113,44 @@ class FileRenderer
         return $this->tombstoneTemplate->render();
     }
 
-    private function formatSourceCode(AnalyzerFileResult $fileResult): string
+    private function renderSourceCode(AnalyzerFileResult $fileResult): string
     {
         $deadLines = [];
         $undeadLines = [];
         foreach ($fileResult->getDead() as $tombstone) {
-            $deadLines[] = $tombstone->getLine();
+            $deadLines[$tombstone->getLine()] = true;
         }
         foreach ($fileResult->getUndead() as $tombstone) {
-            $undeadLines[] = $tombstone->getLine();
+            $undeadLines[$tombstone->getLine()] = true;
         }
 
         $formattedCode = '';
-        $i = 0;
+        $lineNumber = 0;
         $code = PhpFileFormatter::loadFile($fileResult->getFile()->getAbsolutePath());
-        $lineTemplate = '<tr class="%s"><td class="number"><div align="right"><a name="%d"></a><a href="#%d">%d</a></div></td><td class="codeLine">%s</td></tr>';
         foreach ($code as $codeLine) {
-            ++$i;
+            ++$lineNumber;
 
             $class = 'default';
-            if (\in_array($i, $undeadLines)) {
+            if (isset($undeadLines[$lineNumber])) {
                 $class = 'danger icon-vampire';
-            } elseif (\in_array($i, $deadLines)) {
+            } elseif (isset($deadLines[$lineNumber])) {
                 $class = 'success icon-cross';
             }
 
-            $formattedCode .= sprintf($lineTemplate, $class, $i, $i, $i, $codeLine);
+            $formattedCode .= $this->renderCodeLine($class, $lineNumber, $codeLine);
         }
 
         return $formattedCode;
     }
 
-    private function renderBreadcrumb(string $relativeFilePath): string
+    private function renderCodeLine(string $class, int $lineNumber, string $codeLine): string
     {
-        $parts = explode('/', $relativeFilePath);
-        $numParts = \count($parts);
-        $rootDirName = htmlspecialchars(substr($this->sourceRootPath->getAbsolutePath(), 0, -1));
-        $breadcrumbString = '<li class="breadcrumb-item"><a href="'.str_repeat('../', $numParts - 1).'index.html">'.$rootDirName.'</a></li> ';
+        $this->sourceCodeTemplate->setVar([
+            'class' => $class,
+            'line' => $lineNumber,
+            'code' => $codeLine,
+        ]);
 
-        $folderUp = $numParts - 2;
-        while ($label = array_shift($parts)) {
-            if (!$parts) {
-                $breadcrumbString .= '<li class="breadcrumb-item active">'.$label.'</li> ';
-            } else {
-                $link = str_repeat('../', $folderUp).'index.html';
-                $breadcrumbString .= sprintf('<li class="breadcrumb-item"><a href="%s">%s</a></li> ', $link, htmlspecialchars($label));
-            }
-            --$folderUp;
-        }
-
-        return $breadcrumbString;
+        return $this->sourceCodeTemplate->render();
     }
 }

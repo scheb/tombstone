@@ -1,4 +1,4 @@
-rootDir: src
+rootDir: .
 source:
     directories:
         - src

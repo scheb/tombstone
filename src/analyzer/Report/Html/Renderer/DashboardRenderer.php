@@ -11,8 +11,8 @@ use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Vampire;
 use SebastianBergmann\Template\Template;
 
 class DashboardRenderer
@@ -21,6 +21,11 @@ class DashboardRenderer
      * @var string
      */
     private $reportDir;
+
+    /**
+     * @var BreadCrumbRenderer
+     */
+    private $breadCrumbRenderer;
 
     /**
      * @var Template|\Text_Template
@@ -52,21 +57,16 @@ class DashboardRenderer
      */
     private $invokerTemplate;
 
-    /**
-     * @var RootPath
-     */
-    private $sourceRootPath;
-
-    public function __construct(string $reportDir, RootPath $sourceRootPath)
+    public function __construct(string $reportDir, BreadCrumbRenderer $breadCrumbRenderer)
     {
         $this->reportDir = $reportDir;
-        $this->sourceRootPath = $sourceRootPath;
+        $this->breadCrumbRenderer = $breadCrumbRenderer;
         $this->dashboardTemplate = TemplateProvider::getTemplate('dashboard.html');
         $this->fileTemplate = TemplateProvider::getTemplate('dashboard_file.html');
         $this->deadTemplate = TemplateProvider::getTemplate('dashboard_dead.html');
         $this->undeadTemplate = TemplateProvider::getTemplate('dashboard_undead.html');
         $this->deletedTemplate = TemplateProvider::getTemplate('dashboard_deleted.html');
-        $this->invokerTemplate = TemplateProvider::getTemplate('dashboard_invoker.html.dist');
+        $this->invokerTemplate = TemplateProvider::getTemplate('dashboard_invoker.html');
     }
 
     public function generate(AnalyzerResult $result): void
@@ -83,7 +83,9 @@ class DashboardRenderer
         $undeadPercent = $total ? $numUndead / $total * 100 : 0;
 
         $this->dashboardTemplate->setVar([
-            'path_to_root' => './',
+            'path_to_root' => '',
+            'date' => date('r'),
+            'breadcrumb' => $this->breadCrumbRenderer->renderBreadcrumbRoot(),
             'tombstones_count' => $total,
             'dead_count' => $numDead,
             'undead_count' => $numUndead,
@@ -92,8 +94,6 @@ class DashboardRenderer
             'undead_percent' => $undeadPercent,
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
-            'full_path' => htmlspecialchars(substr($this->sourceRootPath->getAbsolutePath(), 0, -1)),
-            'date' => date('r'),
         ]);
         $this->dashboardTemplate->renderTo(FileSystem::createPath($this->reportDir, 'dashboard.html'));
     }
@@ -118,21 +118,12 @@ class DashboardRenderer
     {
         $itemList = '';
         foreach ($fileResult->getDead() as $tombstone) {
-            $date = $tombstone->getTombstoneDate();
-            $deadSince = '';
-            if ($date) {
-                if ($age = TimePeriodFormatter::formatAge($date)) {
-                    $deadSince = 'for '.$age;
-                } else {
-                    $deadSince = 'since '.$date;
-                }
-            }
             $this->deadTemplate->setVar([
-                'path_to_root' => './',
+                'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
-                'dead_since' => $deadSince,
+                'dead_since' => $this->getDeadSince($tombstone),
             ]);
             $itemList .= $this->deadTemplate->render();
         }
@@ -140,22 +131,55 @@ class DashboardRenderer
         return $itemList;
     }
 
+    private function getDeadSince(Tombstone $tombstone): string
+    {
+        $date = $tombstone->getTombstoneDate();
+        if (null === $date) {
+            return 'since unknown';
+        }
+
+        if ($age = TimePeriodFormatter::formatAge($date)) {
+            return 'for '.$age;
+        }
+
+        return 'since '.$date;
+    }
+
     private function renderUndeadTombstones(AnalyzerFileResult $fileResult): string
     {
         $itemList = '';
         foreach ($fileResult->getUndead() as $tombstone) {
-            $invocation = $this->renderInvokers($tombstone);
             $this->undeadTemplate->setVar([
-                'path_to_root' => './',
+                'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
                 'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
-                'invocation' => $invocation,
+                'invocation' => $this->renderInvokers($tombstone),
             ]);
             $itemList .= $this->undeadTemplate->render();
         }
 
         return $itemList;
+    }
+
+    private function renderInvokers(Tombstone $tombstone): string
+    {
+        $invokers = [];
+        foreach ($tombstone->getVampires() as $vampire) {
+            $invokers[] = $vampire->getInvoker();
+        }
+
+        $invokers = array_unique($invokers);
+        sort($invokers);
+        $invokersString = '';
+        foreach ($invokers as $invoker) {
+            $this->invokerTemplate->setVar([
+                'invoker' => $invoker ? htmlspecialchars($invoker) : 'global scope',
+            ]);
+            $invokersString .= $this->invokerTemplate->render();
+        }
+
+        return $invokersString;
     }
 
     private function renderDeletedView(AnalyzerResult $result): string
@@ -171,28 +195,6 @@ class DashboardRenderer
         return $deletedView;
     }
 
-    private function renderDeletedTombstones(AnalyzerFileResult $fileResult): string
-    {
-        $itemList = '';
-        foreach ($fileResult->getDeleted() as $vampire) {
-            $lastCalled = '';
-            if ($invocationDate = $vampire->getInvocationDate()) {
-                TimePeriodFormatter::formatAge($invocationDate);
-            }
-
-            $this->deletedTemplate->setVar([
-                'path_to_root' => './',
-                'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
-                'line' => $vampire->getLine(),
-                'method' => htmlspecialchars($vampire->getMethod() ?? ''),
-                'last_call' => $lastCalled,
-            ]);
-            $itemList .= $this->deletedTemplate->render();
-        }
-
-        return $itemList;
-    }
-
     private function renderFile(string $fileName, string $itemList): string
     {
         $this->fileTemplate->setVar([
@@ -203,22 +205,31 @@ class DashboardRenderer
         return $this->fileTemplate->render();
     }
 
-    private function renderInvokers(Tombstone $tombstone): string
+    private function renderDeletedTombstones(AnalyzerFileResult $fileResult): string
     {
-        $invokers = [];
-        foreach ($tombstone->getVampires() as $vampire) {
-            $invokers[] = $vampire->getInvoker();
-        }
-        $invokers = array_unique($invokers);
-        $invokersString = '';
-        foreach ($invokers as $invoker) {
-            $this->invokerTemplate->setVar([
-                'invoker' => $invoker ? htmlspecialchars($invoker) : 'global scope',
+        $itemList = '';
+        foreach ($fileResult->getDeleted() as $vampire) {
+            $this->deletedTemplate->setVar([
+                'path_to_root' => './',
+                'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
+                'line' => $vampire->getLine(),
+                'method' => htmlspecialchars($vampire->getMethod() ?? ''),
+                'last_call' => $this->getLastCalled($vampire),
             ]);
-            $invokersString .= $this->invokerTemplate->render();
+            $itemList .= $this->deletedTemplate->render();
         }
 
-        return $invokersString;
+        return $itemList;
+    }
+
+    private function getLastCalled(Vampire $vampire): string
+    {
+        $invocationDate = $vampire->getInvocationDate();
+        if ($age = TimePeriodFormatter::formatAge($invocationDate)) {
+            return $age;
+        }
+
+        return 'unknown';
     }
 
     private function linkToTombstoneInCode(string $label, FilePathInterface $file, int $line): string

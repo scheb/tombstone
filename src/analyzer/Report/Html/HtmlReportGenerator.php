@@ -21,11 +21,6 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     private $reportDir;
 
     /**
-     * @var \Scheb\Tombstone\Analyzer\Util\Scheb\Tombstone\Analyzer\Report\FileSystem
-     */
-    private $fileSystem;
-
-    /**
      * @var DashboardRenderer
      */
     private $dashboardRenderer;
@@ -40,10 +35,9 @@ class HtmlReportGenerator implements ReportGeneratorInterface
      */
     private $fileRenderer;
 
-    public function __construct(string $reportDir, FileSystem $fileSystem, DashboardRenderer $dashboardRenderer, DirectoryRenderer $directoryRenderer, FileRenderer $fileRenderer)
+    public function __construct(string $reportDir, DashboardRenderer $dashboardRenderer, DirectoryRenderer $directoryRenderer, FileRenderer $fileRenderer)
     {
         $this->reportDir = $reportDir;
-        $this->fileSystem = $fileSystem;
         $this->dashboardRenderer = $dashboardRenderer;
         $this->directoryRenderer = $directoryRenderer;
         $this->fileRenderer = $fileRenderer;
@@ -64,17 +58,17 @@ class HtmlReportGenerator implements ReportGeneratorInterface
 
     private function copySkeleton(): void
     {
-        $this->fileSystem->ensureDirectoryCreated($this->reportDir);
+        FileSystem::ensureDirectoryCreated($this->reportDir);
 
-        $this->fileSystem->copyDirectoryFiles(
+        FileSystem::copyDirectoryFiles(
             FileSystem::createPath(self::TEMPLATE_DIR, 'css'),
             FileSystem::createPath($this->reportDir, '_css')
         );
-        $this->fileSystem->copyDirectoryFiles(
+        FileSystem::copyDirectoryFiles(
             FileSystem::createPath(self::TEMPLATE_DIR, 'icons'),
             FileSystem::createPath($this->reportDir, '_icons')
         );
-        $this->fileSystem->copyDirectoryFiles(
+        FileSystem::copyDirectoryFiles(
             FileSystem::createPath(self::TEMPLATE_DIR, 'img'),
             FileSystem::createPath($this->reportDir, '_img')
         );

@@ -8,11 +8,11 @@ class TimePeriodFormatter
 {
     private const SECONDS_PER_DAY = 86400;
 
-    public static function formatAge(string $date): string
+    public static function formatAge(string $date): ?string
     {
         $tombstoneDate = strtotime($date);
         if (!$tombstoneDate) {
-            return 'unknown';
+            return null;
         }
 
         $daysPassed = floor((time() - $tombstoneDate) / self::SECONDS_PER_DAY);
