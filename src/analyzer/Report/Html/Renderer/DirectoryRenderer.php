@@ -10,6 +10,7 @@ use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Model\ResultAggregateInterface;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\RootPath;
+use SebastianBergmann\Template\Template;
 
 class DirectoryRenderer
 {
@@ -24,17 +25,17 @@ class DirectoryRenderer
     private $sourceRootPath;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $directoryTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $directoryItemTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $barTemplate;
 

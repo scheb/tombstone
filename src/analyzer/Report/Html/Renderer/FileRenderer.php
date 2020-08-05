@@ -10,6 +10,7 @@ use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use SebastianBergmann\Template\Template;
 
 class FileRenderer
 {
@@ -24,12 +25,12 @@ class FileRenderer
     private $sourceRootPath;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $fileTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $tombstoneTemplate;
 

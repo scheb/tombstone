@@ -13,6 +13,7 @@ use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use SebastianBergmann\Template\Template;
 
 class DashboardRenderer
 {
@@ -22,32 +23,32 @@ class DashboardRenderer
     private $reportDir;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $dashboardTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $fileTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $deadTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $undeadTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $deletedTemplate;
 
     /**
-     * @var \Text_Template
+     * @var Template|\Text_Template
      */
     private $invokerTemplate;
 

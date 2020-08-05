@@ -21,5 +21,17 @@
 		<DeprecatedMethod errorLevel="info" />
 		<DeprecatedProperty errorLevel="info" />
 		<DeprecatedTrait errorLevel="info" />
+		<UndefinedClass>
+			<!-- BC layer for phpunit/php-text-template v1 -->
+			<errorLevel type="info">
+				<referencedClass name="Text_Template"/>
+			</errorLevel>
+		</UndefinedClass>
+		<UndefinedDocblockClass>
+			<!-- BC layer for phpunit/php-text-template v1 -->
+			<errorLevel type="info">
+				<referencedClass name="Text_Template"/>
+			</errorLevel>
+		</UndefinedDocblockClass>
 	</issueHandlers>
 </psalm>
