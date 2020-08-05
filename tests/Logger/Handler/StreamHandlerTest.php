@@ -55,7 +55,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteLocking(): void
     {
-        $temp = sys_get_temp_dir().DIRECTORY_SEPARATOR.'monolog_locked_log';
+        $temp = sys_get_temp_dir().'/monolog_locked_log';
         $handler = new StreamHandler($temp, null, true);
         $handler->log($this->getRecord());
         $this->expectNotToPerformAssertions();
@@ -119,7 +119,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteNonExistingPath(): void
     {
-        $handler = new StreamHandler(sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
+        $handler = new StreamHandler(sys_get_temp_dir().'/bar/'.rand(0, 10000).'/'.rand(0, 10000));
         $handler->log($this->getRecord());
         $this->expectNotToPerformAssertions();
     }
@@ -130,7 +130,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteNonExistingFileResource(): void
     {
-        $handler = new StreamHandler('file://'.sys_get_temp_dir().'/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
+        $handler = new StreamHandler('file://'.sys_get_temp_dir().'/bar/'.rand(0, 10000).'/'.rand(0, 10000));
         $handler->log($this->getRecord());
         $this->expectNotToPerformAssertions();
     }
@@ -146,7 +146,7 @@ class StreamHandlerTest extends TestCase
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
-        $handler = new StreamHandler('/foo/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
+        $handler = new StreamHandler('/foo/bar/'.rand(0, 10000).'/'.rand(0, 10000));
         $handler->log($this->getRecord());
     }
 
@@ -161,7 +161,7 @@ class StreamHandlerTest extends TestCase
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
-        $handler = new StreamHandler('file:///foo/bar/'.rand(0, 10000).DIRECTORY_SEPARATOR.rand(0, 10000));
+        $handler = new StreamHandler('file:///foo/bar/'.rand(0, 10000).'/'.rand(0, 10000));
         $handler->log($this->getRecord());
     }
 }

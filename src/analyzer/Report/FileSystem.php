@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Report;
 
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportException;
+use Scheb\Tombstone\Core\PathNormalizer;
 
 class FileSystem
 {
@@ -49,6 +50,8 @@ class FileSystem
 
     public static function createPath(string $parentDirectoryPath, string $name): string
     {
+        $parentDirectoryPath = PathNormalizer::normalizeDirectorySeparatorForEnvironment($parentDirectoryPath);
+
         // Append directory separator if necessary
         if ('' !== $parentDirectoryPath && DIRECTORY_SEPARATOR !== substr($parentDirectoryPath, -1, 1)) {
             $parentDirectoryPath .= DIRECTORY_SEPARATOR;
