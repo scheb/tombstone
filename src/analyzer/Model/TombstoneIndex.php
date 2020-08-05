@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
-use Scheb\Tombstone\Analyzer\Util\FilePosition;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 
@@ -29,7 +28,7 @@ class TombstoneIndex implements \Countable, \IteratorAggregate
     {
         $this->tombstones[] = $tombstone;
 
-        $position = FilePosition::createPosition($tombstone->getFile()->getReferencePath(), $tombstone->getLine());
+        $position = $this->createPosition($tombstone->getFile()->getReferencePath(), $tombstone->getLine());
         $this->fileLineIndex[$position] = $tombstone;
 
         $methodName = $tombstone->getMethod();
@@ -51,7 +50,7 @@ class TombstoneIndex implements \Countable, \IteratorAggregate
 
     public function getInFileAndLine(FilePathInterface $file, int $line): ?Tombstone
     {
-        $pos = FilePosition::createPosition($file->getReferencePath(), $line);
+        $pos = $this->createPosition($file->getReferencePath(), $line);
 
         return $this->fileLineIndex[$pos] ?? null;
     }
@@ -67,5 +66,10 @@ class TombstoneIndex implements \Countable, \IteratorAggregate
     public function getIterator(): \Traversable
     {
         yield from $this->tombstones;
+    }
+
+    private function createPosition(string $file, int $line): string
+    {
+        return $file.':'.$line;
     }
 }
