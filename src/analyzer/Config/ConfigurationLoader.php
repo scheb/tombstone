@@ -25,11 +25,6 @@ class ConfigurationLoader
         $this->configuration = $configuration;
     }
 
-    public static function create(): self
-    {
-        return new self(new Processor(), new Configuration());
-    }
-
     /**
      * @param ConfigProviderInterface[] $configProviders
      */

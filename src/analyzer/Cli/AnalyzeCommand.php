@@ -7,6 +7,7 @@ namespace Scheb\Tombstone\Analyzer\Cli;
 use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
+use Scheb\Tombstone\Analyzer\Config\Configuration;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
@@ -32,6 +33,7 @@ use Scheb\Tombstone\Analyzer\Source\TombstoneExtractorInterface;
 use Scheb\Tombstone\Analyzer\Source\TombstoneVisitor;
 use Scheb\Tombstone\Core\Model\RootPath;
 use SebastianBergmann\FinderFacade\FinderFacade;
+use Symfony\Component\Config\Definition\Processor as ConfigurationProcessor;
 use Symfony\Component\Console\Command\Command as AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -84,7 +86,7 @@ class AnalyzeCommand extends AbstractCommand
         }
 
         $this->output->debug('Load config from '.$configFile);
-        $configLoader = ConfigurationLoader::create();
+        $configLoader = new ConfigurationLoader(new ConfigurationProcessor(), new Configuration());
         $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
 
         $sourceRootPath = new RootPath($config['rootDir']);
