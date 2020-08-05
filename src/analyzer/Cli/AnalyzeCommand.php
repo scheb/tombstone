@@ -13,7 +13,6 @@ use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
-use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
@@ -158,20 +157,6 @@ class AnalyzeCommand extends AbstractCommand
                 $config['logs']['directory'],
                 $this->output
             );
-        }
-        if (isset($config['logs']['custom'])) {
-            if (isset($config['logs']['custom']['file'])) {
-                /** @psalm-suppress UnresolvableInclude */
-                require_once $config['logs']['custom']['file'];
-            }
-            $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
-            if (!$reflectionClass->implementsInterface(LogReaderInterface::class)) {
-                throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogReaderInterface::class));
-            }
-
-            /** @var LogReaderInterface $logReader */
-            $logReader = $reflectionClass->newInstance();
-            $logReaders[] = $logReader;
         }
 
         return new LogCollector($logReaders, $vampireIndex);

@@ -15,7 +15,6 @@ class ConfigurationTest extends TestCase
     private const APPLICATION_DIR = self::ROOT_DIR.'/app';
     private const REPORT_DIR = self::APPLICATION_DIR.'/report';
     private const LOGS_DIR = self::APPLICATION_DIR.'/logs';
-    private const CUSTOM_LOG_PROVIDER = self::APPLICATION_DIR.'/src/Tombstone/LogProvider.php';
 
     private const VALID_CONFIG = [
         'source' => [
@@ -26,10 +25,6 @@ class ConfigurationTest extends TestCase
         'rootDir' => self::APPLICATION_DIR,
         'logs' => [
             'directory' => self::LOGS_DIR,
-            'custom' => [
-                'file' => self::CUSTOM_LOG_PROVIDER,
-                'class' => 'LogProvider',
-            ],
         ],
         'report' => [
             'php' => self::REPORT_DIR.'/report.php',
@@ -162,36 +157,6 @@ class ConfigurationTest extends TestCase
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('cannot contain an empty value, but got null');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_customLogProvider_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        unset($config['logs']['directory']);
-        unset($config['logs']['custom']['file']); // Not set
-        $config['logs']['custom']['class'] = 'LogsProvider';
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "file" at path "root.logs.custom" must be configured');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_customLogProviderInvalidFile_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        unset($config['logs']['directory']);
-        $config['logs']['custom']['file'] = 'invalid'; // Directory cannot be a valid file
-        $config['logs']['custom']['class'] = 'LogsProvider';
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Must be a valid file path, given: "invalid"');
         $this->processConfiguration($config);
     }
 
