@@ -1,7 +1,5 @@
-rootDir: .
 source:
-    directories:
-        - src
+    rootDirectory: .
     excludes:
         - run.php
     names:

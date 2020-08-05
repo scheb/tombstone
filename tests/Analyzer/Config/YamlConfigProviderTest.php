@@ -27,9 +27,7 @@ class YamlConfigProviderTest extends TestCase
 
         $expectedConfig = [
             'source' => [
-                'directories' => [
-                    self::CONFIG_DIR.'src',
-                ],
+                'rootDirectory' => self::CONFIG_DIR.'src',
             ],
             'logs' => [
                 'directory' => self::CONFIG_DIR.'logs',
@@ -48,9 +46,7 @@ class YamlConfigProviderTest extends TestCase
 
         $expectedConfig = [
             'source' => [
-                'directories' => [
-                    self::CONFIG_DIR.'src',
-                ],
+                'rootDirectory' => self::CONFIG_DIR.'src',
                 'excludes' => [
                     'tests',
                 ],
@@ -61,7 +57,6 @@ class YamlConfigProviderTest extends TestCase
                     '*.js',
                 ],
             ],
-            'rootDir' => self::CONFIG_DIR.'root',
             'logs' => [
                 'directory' => self::CONFIG_DIR.'logs',
             ],

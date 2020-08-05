@@ -18,9 +18,7 @@ class ConfigurationTest extends TestCase
 
     private const VALID_CONFIG = [
         'source' => [
-            'directories' => [
-                self::APPLICATION_DIR,
-            ],
+            'rootDirectory' => self::APPLICATION_DIR,
         ],
         'rootDir' => self::APPLICATION_DIR,
         'logs' => [
@@ -85,10 +83,10 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_missingSourceDirectory_throwsException()
+    public function getConfigTreeBuilder_missingRootDirectory_throwsException()
     {
         $config = self::VALID_CONFIG;
-        unset($config['source']['directories']);
+        unset($config['source']['rootDirectory']);
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('must be configured');
@@ -98,23 +96,10 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_emptySourceDirectory_throwsException()
+    public function getConfigTreeBuilder_invalidRootDirectory_throwsException()
     {
         $config = self::VALID_CONFIG;
-        $config['source']['directories'] = [];
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('should have at least 1 element(s) defined');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_invalidSourceDirectory_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        $config['source']['directories'] = ['invalid'];
+        $config['source']['rootDirectory'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
@@ -167,19 +152,6 @@ class ConfigurationTest extends TestCase
     {
         $config = self::VALID_CONFIG;
         $config['logs']['directory'] = 'invalid';
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_invalidRootDirectory_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        $config['rootDir'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');

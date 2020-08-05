@@ -1,5 +1,4 @@
 source:
-    directories:
-        - src
+    rootDirectory: src
 logs:
     directory: logs

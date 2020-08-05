@@ -1,13 +1,11 @@
 source:
-    directories:
-        - src
+    rootDirectory: src
     excludes:
         - tests
     names:
         - "*.php"
     notNames:
         - "*.js"
-rootDir: root
 logs:
     directory: logs
 report:
