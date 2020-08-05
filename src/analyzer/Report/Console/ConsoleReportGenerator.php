@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Report;
+namespace Scheb\Tombstone\Analyzer\Report\Console;
 
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Report\Console\FormattedConsoleOutput;
-use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
+use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 

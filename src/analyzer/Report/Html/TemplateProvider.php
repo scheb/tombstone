@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report\Html;
 
-class TemplateFactory
+class TemplateProvider
 {
     public static function getTemplate(string $file): \Text_Template
     {

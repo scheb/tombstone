@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Model;
+namespace Scheb\Tombstone\Analyzer\Util;
 
 class FilePosition
 {

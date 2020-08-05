@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
+use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
@@ -37,8 +37,8 @@ class FileRenderer
     {
         $this->reportDir = $reportDir;
         $this->sourceRootPath = $sourceRootPath;
-        $this->fileTemplate = TemplateFactory::getTemplate('file.html');
-        $this->tombstoneTemplate = TemplateFactory::getTemplate('file_tombstone.html');
+        $this->fileTemplate = TemplateProvider::getTemplate('file.html');
+        $this->tombstoneTemplate = TemplateProvider::getTemplate('file_tombstone.html');
     }
 
     public function generate(AnalyzerResult $result): void

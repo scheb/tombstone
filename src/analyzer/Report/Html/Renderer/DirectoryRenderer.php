@@ -8,7 +8,7 @@ use Scheb\Tombstone\Analyzer\Model\AnalyzerDirectoryResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Model\ResultAggregateInterface;
-use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
+use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\RootPath;
 
 class DirectoryRenderer
@@ -42,9 +42,9 @@ class DirectoryRenderer
     {
         $this->reportDir = $reportDir;
         $this->sourceRootPath = $sourceRootPath;
-        $this->directoryTemplate = TemplateFactory::getTemplate('directory.html');
-        $this->directoryItemTemplate = TemplateFactory::getTemplate('directory_item.html');
-        $this->barTemplate = TemplateFactory::getTemplate('percentage_bar.html');
+        $this->directoryTemplate = TemplateProvider::getTemplate('directory.html');
+        $this->directoryItemTemplate = TemplateProvider::getTemplate('directory_item.html');
+        $this->barTemplate = TemplateProvider::getTemplate('percentage_bar.html');
     }
 
     public function generate(AnalyzerResult $result): void

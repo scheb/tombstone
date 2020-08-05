@@ -8,7 +8,7 @@ use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\FileSystem;
-use Scheb\Tombstone\Analyzer\Report\Html\TemplateFactory;
+use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
@@ -60,12 +60,12 @@ class DashboardRenderer
     {
         $this->reportDir = $reportDir;
         $this->sourceRootPath = $sourceRootPath;
-        $this->dashboardTemplate = TemplateFactory::getTemplate('dashboard.html');
-        $this->fileTemplate = TemplateFactory::getTemplate('dashboard_file.html');
-        $this->deadTemplate = TemplateFactory::getTemplate('dashboard_dead.html');
-        $this->undeadTemplate = TemplateFactory::getTemplate('dashboard_undead.html');
-        $this->deletedTemplate = TemplateFactory::getTemplate('dashboard_deleted.html');
-        $this->invokerTemplate = TemplateFactory::getTemplate('dashboard_invoker.html.dist');
+        $this->dashboardTemplate = TemplateProvider::getTemplate('dashboard.html');
+        $this->fileTemplate = TemplateProvider::getTemplate('dashboard_file.html');
+        $this->deadTemplate = TemplateProvider::getTemplate('dashboard_dead.html');
+        $this->undeadTemplate = TemplateProvider::getTemplate('dashboard_undead.html');
+        $this->deletedTemplate = TemplateProvider::getTemplate('dashboard_deleted.html');
+        $this->invokerTemplate = TemplateProvider::getTemplate('dashboard_invoker.html.dist');
     }
 
     public function generate(AnalyzerResult $result): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Model;
 
+use Scheb\Tombstone\Analyzer\Util\FilePosition;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 

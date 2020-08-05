@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Report;
+namespace Scheb\Tombstone\Analyzer\Report\Html;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
+use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
+use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 
 class HtmlReportGenerator implements ReportGeneratorInterface
 {
-    private const TEMPLATE_DIR = __DIR__.'/Html/Template';
+    private const TEMPLATE_DIR = __DIR__.'/Template';
 
     /**
      * @var string
@@ -19,7 +21,7 @@ class HtmlReportGenerator implements ReportGeneratorInterface
     private $reportDir;
 
     /**
-     * @var FileSystem
+     * @var \Scheb\Tombstone\Analyzer\Util\Scheb\Tombstone\Analyzer\Report\FileSystem
      */
     private $fileSystem;
 
