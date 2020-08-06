@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Report\Console;
+namespace Scheb\Tombstone\Analyzer\Report;
 
 class TimePeriodFormatter
 {

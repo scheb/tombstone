@@ -6,9 +6,9 @@ namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
-use Scheb\Tombstone\Analyzer\Report\Console\TimePeriodFormatter;
 use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
+use Scheb\Tombstone\Analyzer\Report\TimePeriodFormatter;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\Tombstone;

@@ -7,6 +7,7 @@ namespace Scheb\Tombstone\Analyzer\Report\Console;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
+use Scheb\Tombstone\Analyzer\Report\TimePeriodFormatter;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 
