@@ -40,10 +40,6 @@ class YamlConfigProvider implements ConfigProviderInterface
             $config['logs']['directory'] = $this->resolvePath($config['logs']['directory']);
         }
 
-        if (isset($config['logs']['custom']['file'])) {
-            $config['logs']['custom']['file'] = $this->resolvePath($config['logs']['custom']['file']);
-        }
-
         if (isset($config['report']['php'])) {
             $config['report']['php'] = $this->resolvePath($config['report']['php']);
         }

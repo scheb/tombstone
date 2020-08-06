@@ -93,15 +93,6 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function isNoFile(): callable
-    {
-        return function (string $path): bool {
-            $path = realpath($path);
-
-            return !(false !== $path && !is_dir($path));
-        };
-    }
-
     private function isNoDirectory(): callable
     {
         return function (string $path): bool {
