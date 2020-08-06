@@ -10,6 +10,8 @@ scheb/tombstone
 
 Implements the concept of **tombstones for dead code detection in PHP**. If you're not familiar with that concept, read below.
 
+**⚠️ Version 0.x is no longer maintained. Please upgrade your project to a recent version.**
+
 This library provides you with a toolbox to place and track tombstones in your code. [scheb/tombstone-analyzer](https://github.com/scheb/tombstone-analyzer) can be used for report generation.
 
 What are Tombstones?
