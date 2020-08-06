@@ -4,12 +4,42 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
 use Scheb\Tombstone\Tests\VampireFixture;
 
 class VampireTest extends TestCase
 {
+    /**
+     * @test
+     * @dataProvider getResultsForInscriptionEquals
+     */
+    public function inscriptionEquals_vampireWithTombstoneGiven_getResultFromTombstone(bool $result): void
+    {
+        $otherTombstone = $this->createMock(Tombstone::class);
+        $tombstone = $this->createMock(Tombstone::class);
+        $vampire = new Vampire('2015-01-01', 'invoker', new StackTrace(), $tombstone, []);
+
+        $tombstone
+            ->expects($this->any())
+            ->method('inscriptionEquals')
+            ->with($this->identicalTo($otherTombstone))
+            ->willReturn($result);
+
+        $returnValue = $vampire->inscriptionEquals($otherTombstone);
+        $this->assertEquals($result, $returnValue);
+    }
+
+    public function getResultsForInscriptionEquals(): array
+    {
+        return [
+            [true],
+            [false],
+        ];
+    }
+
     /**
      * @test
      */

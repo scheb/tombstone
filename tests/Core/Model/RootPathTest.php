@@ -68,6 +68,15 @@ class RootPathTest extends TestCase
         $this->assertEquals($expectedRelativePath, $returnValue->getReferencePath());
     }
 
+    /**
+     * @test
+     */
+    public function getReferencePath_rootPathGiven_returnAbsolutePath(): void
+    {
+        $rootPath = new RootPath('/path/missing/slash');
+        $this->assertEquals('/path/missing/slash/', $rootPath->getReferencePath());
+    }
+
     public function provideRelativePathTestCases(): array
     {
         return [

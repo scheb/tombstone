@@ -125,4 +125,27 @@ class TombstoneTest extends TestCase
         $tombstone->addVampire(new Vampire('2015-08-20', 'invoker', new StackTrace(), $tombstone));
         $this->assertTrue($tombstone->hasVampires());
     }
+
+    /**
+     * @test
+     */
+    public function getVampires_noVampiresSet_returnEmptyArray(): void
+    {
+        $tombstone = $this->createTombstone('file');
+        $this->assertCount(0, $tombstone->getVampires());
+    }
+
+    /**
+     * @test
+     */
+    public function getVampires_vampireAdded_returnVampires(): void
+    {
+        $tombstone = $this->createTombstone('file');
+        $vampire = new Vampire('2015-08-20', 'invoker', new StackTrace(), $tombstone);
+        $tombstone->addVampire($vampire);
+
+        $returnValue = $tombstone->getVampires();
+        $this->assertCount(1, $returnValue);
+        $this->assertContains($vampire, $returnValue);
+    }
 }

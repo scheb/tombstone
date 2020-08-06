@@ -11,9 +11,11 @@ use Scheb\Tombstone\Tests\TestCase;
 class StackTraceTest extends TestCase
 {
     /**
-     * @test
+     * @var StackTrace
      */
-    public function getHash_framesProvided_returnCorrectHash(): void
+    private $stackTrace;
+
+    protected function setUp(): void
     {
         $frame1 = $this->createMock(StackTraceFrame::class);
         $frame1->expects($this->any())->method('getHash')->willReturn(123);
@@ -21,7 +23,30 @@ class StackTraceTest extends TestCase
         $frame2 = $this->createMock(StackTraceFrame::class);
         $frame2->expects($this->any())->method('getHash')->willReturn(456);
 
-        $stackTrace = new StackTrace($frame1, $frame2);
-        $this->assertEquals(488632175, $stackTrace->getHash());
+        $this->stackTrace = new StackTrace($frame1, $frame2);
+    }
+
+    /**
+     * @test
+     */
+    public function getHash_framesProvided_returnCorrectHash(): void
+    {
+        $this->assertEquals(488632175, $this->stackTrace->getHash());
+    }
+
+    /**
+     * @test
+     */
+    public function offsetExists_offsetIsSet_returnTrue(): void
+    {
+        $this->assertTrue(isset($this->stackTrace[1]));
+    }
+
+    /**
+     * @test
+     */
+    public function offsetExists_offsetIsNotSet_returnFalse(): void
+    {
+        $this->assertFalse(isset($this->stackTrace[999]));
     }
 }
