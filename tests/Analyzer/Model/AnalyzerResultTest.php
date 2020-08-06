@@ -11,6 +11,7 @@ use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
 
 class AnalyzerResultTest extends TestCase
@@ -251,5 +252,24 @@ class AnalyzerResultTest extends TestCase
         $this->assertCount(0, $dir21Result->getSubDirectoryResults());
         $this->assertCount(1, $dir21Result->getFileResults());
         $this->assertFileResult('dir2/dir2.1/file1', [], [$undeadTombstone3], [], $dir21Result->getFileResults()[0]);
+    }
+
+    /**
+     * @test
+     */
+    public function void(): void
+    {
+        $deadTombstone = Fixture::getTombstone('arg1');
+        $undeadTombstone = Fixture::getTombstone('arg2');
+        $deletedVampire = Fixture::getVampire('arg3');
+
+        $result = new AnalyzerResult(
+            [$deadTombstone],
+            [$undeadTombstone],
+            [$deletedVampire]
+        );
+
+        $unserializedResult = unserialize(serialize($result));
+        $this->assertEquals($result, $unserializedResult);
     }
 }

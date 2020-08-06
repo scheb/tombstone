@@ -24,6 +24,13 @@ class Fixture
         return new Vampire('2015-01-01', 'invoker', $stackTrace, $tombstone, ['metaField' => 'metaValue']);
     }
 
+    public static function getTombstone(string ...$arguments): Tombstone
+    {
+        $rootPath = new RootPath(self::ROOT_DIR);
+
+        return new Tombstone($arguments, $rootPath->createFilePath('file'), 123, 'method');
+    }
+
     public static function getTraceFixture(): array
     {
         return [
