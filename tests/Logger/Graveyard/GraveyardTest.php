@@ -10,7 +10,7 @@ use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Graveyard\Graveyard;
 use Scheb\Tombstone\Logger\Graveyard\VampireFactory;
 use Scheb\Tombstone\Logger\Handler\HandlerInterface;
-use Scheb\Tombstone\Tests\StackTraceFixture;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
 
 class GraveyardTest extends TestCase
@@ -67,7 +67,7 @@ class GraveyardTest extends TestCase
      */
     public function tombstone_traceGiven_createVampire(): void
     {
-        $trace = StackTraceFixture::getTraceFixture();
+        $trace = Fixture::getTraceFixture();
 
         $this->vampireFactory
             ->expects($this->once())
@@ -90,7 +90,7 @@ class GraveyardTest extends TestCase
             ->method('log')
             ->with($this->identicalTo($vampire));
 
-        $trace = StackTraceFixture::getTraceFixture();
+        $trace = Fixture::getTraceFixture();
         $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
     }
 
@@ -111,7 +111,7 @@ class GraveyardTest extends TestCase
             ->method('error')
             ->with('Exception while tracking a tombstone call: Exception message (123)');
 
-        $trace = StackTraceFixture::getTraceFixture();
+        $trace = Fixture::getTraceFixture();
         $this->graveyard->tombstone([], $trace, []);
     }
 

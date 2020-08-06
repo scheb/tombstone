@@ -7,8 +7,8 @@ namespace Scheb\Tombstone\Tests\Core\Model;
 use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
-use Scheb\Tombstone\Tests\VampireFixture;
 
 class VampireTest extends TestCase
 {
@@ -46,7 +46,7 @@ class VampireTest extends TestCase
     public function withTombstone_differentTombstoneObjectGiven_returnDuplicateWithThatTombstone()
     {
         $tombstone = $this->createMock(Tombstone::class);
-        $vampire = VampireFixture::getVampire();
+        $vampire = Fixture::getVampire();
         $newVampire = $vampire->withTombstone($tombstone);
 
         $this->assertSame($tombstone, $newVampire->getTombstone());
@@ -61,7 +61,7 @@ class VampireTest extends TestCase
      */
     public function getHash_valuesSet_returnCorrectHash(): void
     {
-        $vampire = VampireFixture::getVampire();
+        $vampire = Fixture::getVampire();
         $hash = $vampire->getHash();
         $this->assertEquals(1397077150, $hash);
     }

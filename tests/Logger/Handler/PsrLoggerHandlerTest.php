@@ -6,8 +6,8 @@ namespace Scheb\Tombstone\Tests\Logger\Handler;
 
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Logger\Handler\PsrLoggerHandler;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
-use Scheb\Tombstone\Tests\VampireFixture;
 
 class PsrLoggerHandlerTest extends TestCase
 {
@@ -25,6 +25,6 @@ class PsrLoggerHandlerTest extends TestCase
         $handler = new PsrLoggerHandler($logger, 'level');
         $handler->setFormatter(new LabelFormatter());
 
-        $handler->log(VampireFixture::getVampire('label'));
+        $handler->log(Fixture::getVampire('label'));
     }
 }

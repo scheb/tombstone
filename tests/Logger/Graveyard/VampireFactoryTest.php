@@ -8,7 +8,7 @@ use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Graveyard\VampireFactory;
-use Scheb\Tombstone\Tests\StackTraceFixture;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
 
 class VampireFactoryTest extends TestCase
@@ -22,7 +22,7 @@ class VampireFactoryTest extends TestCase
     {
         $factory = new VampireFactory(new RootPath('/root'), self::LONG_STACK_TRACE_DEPTH);
 
-        $stackTrace = StackTraceFixture::getTraceFixture();
+        $stackTrace = Fixture::getTraceFixture();
         $metadata = ['metaField' => 'metaValue'];
         $vampire = $factory->createFromCall(['label', '2015-08-19'], $stackTrace, $metadata);
 
@@ -37,7 +37,7 @@ class VampireFactoryTest extends TestCase
         $this->assertEquals('invokerMethodName', $vampire->getInvoker());
 
         $stackTrace = $vampire->getStackTrace();
-        $this->assertCount(StackTraceFixture::NUMBER_OF_FRAMES, $stackTrace);
+        $this->assertCount(Fixture::NUMBER_OF_FRAMES, $stackTrace);
 
         $frame = $stackTrace[3];
         $this->assertEquals('C:/path/to/file4.php', $frame->getFile()->getAbsolutePath());
@@ -54,9 +54,9 @@ class VampireFactoryTest extends TestCase
      */
     public function createFromCall_rootDirSetMatchesFilePath_logRelativePath(): void
     {
-        $factory = new VampireFactory(new RootPath(StackTraceFixture::ROOT_DIR), self::LONG_STACK_TRACE_DEPTH);
+        $factory = new VampireFactory(new RootPath(Fixture::ROOT_DIR), self::LONG_STACK_TRACE_DEPTH);
 
-        $stackTrace = StackTraceFixture::getTraceFixture();
+        $stackTrace = Fixture::getTraceFixture();
         $vampire = $factory->createFromCall([], $stackTrace, []);
 
         $this->assertEquals('file1.php', $vampire->getFile()->getReferencePath());
@@ -74,7 +74,7 @@ class VampireFactoryTest extends TestCase
     {
         $factory = new VampireFactory(new RootPath('/other/path'), self::LONG_STACK_TRACE_DEPTH);
 
-        $stackTrace = StackTraceFixture::getTraceFixture();
+        $stackTrace = Fixture::getTraceFixture();
         $vampire = $factory->createFromCall(['label'], $stackTrace, []);
 
         $this->assertEquals('/path/to/file1.php', $vampire->getFile()->getAbsolutePath());
@@ -92,7 +92,7 @@ class VampireFactoryTest extends TestCase
     {
         $factory = new VampireFactory(new RootPath(__DIR__), 2);
 
-        $stackTrace = StackTraceFixture::getTraceFixture();
+        $stackTrace = Fixture::getTraceFixture();
         $vampire = $factory->createFromCall([], $stackTrace, []);
 
         $stackTrace = $vampire->getStackTrace();

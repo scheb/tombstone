@@ -12,7 +12,7 @@ use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilder;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilderException;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry;
 use Scheb\Tombstone\Logger\Handler\HandlerInterface;
-use Scheb\Tombstone\Tests\StackTraceFixture;
+use Scheb\Tombstone\Tests\Fixture;
 
 class GraveyardBuilderTest extends TestCase
 {
@@ -70,7 +70,7 @@ class GraveyardBuilderTest extends TestCase
             ->expects($this->once())
             ->method('log');
 
-        $graveyard->tombstone([], StackTraceFixture::getTraceFixture(), []);
+        $graveyard->tombstone([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -95,7 +95,7 @@ class GraveyardBuilderTest extends TestCase
             ->expects($this->once())
             ->method('error');
 
-        $graveyard->tombstone([], StackTraceFixture::getTraceFixture(), []);
+        $graveyard->tombstone([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -115,7 +115,7 @@ class GraveyardBuilderTest extends TestCase
             ->stackTraceDepth(2)
             ->build();
 
-        $graveyard->tombstone([], StackTraceFixture::getTraceFixture(), []);
+        $graveyard->tombstone([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -130,11 +130,11 @@ class GraveyardBuilderTest extends TestCase
             ->with($this->callback($this->assertRelativeFilePath()));
 
         $graveyard = $this->builder
-            ->rootDirectory(StackTraceFixture::ROOT_DIR)
+            ->rootDirectory(Fixture::ROOT_DIR)
             ->withHandler($handler)
             ->build();
 
-        $graveyard->tombstone([], StackTraceFixture::getTraceFixture(), []);
+        $graveyard->tombstone([], Fixture::getTraceFixture(), []);
     }
 
     /**

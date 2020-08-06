@@ -6,8 +6,8 @@ namespace Scheb\Tombstone\Tests\Logger\Handler;
 
 use Scheb\Tombstone\Logger\Handler\AnalyzerLogHandler;
 use Scheb\Tombstone\Tests\Core\Format\AnalyzerLogFormatTest;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
-use Scheb\Tombstone\Tests\VampireFixture;
 
 class AnalyzerLogHandlerTest extends TestCase
 {
@@ -55,8 +55,8 @@ class AnalyzerLogHandlerTest extends TestCase
     public function log_differentTombstones_twoLogFilesWritten(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2014-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2014-01-01'));
 
         $logFiles = $this->readLogFiles();
         $this->assertCount(2, $logFiles);
@@ -68,16 +68,16 @@ class AnalyzerLogHandlerTest extends TestCase
     public function log_sizeLimitSet_stopWhenLimitExceeded(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir, 128);
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
-        $handler->log(VampireFixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
+        $handler->log(Fixture::getVampire('2015-01-01'));
 
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);
@@ -90,7 +90,7 @@ class AnalyzerLogHandlerTest extends TestCase
     public function log_logWritten_isAnalyzerLogFormat(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
-        $handler->log(VampireFixture::getVampire(...AnalyzerLogFormatTest::TOMBSTONE_ARGUMENTS));
+        $handler->log(Fixture::getVampire(...AnalyzerLogFormatTest::TOMBSTONE_ARGUMENTS));
 
         $logFiles = $this->readLogFiles();
         $this->assertCount(1, $logFiles);

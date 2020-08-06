@@ -13,14 +13,14 @@ namespace Scheb\Tombstone\Tests\Logger\Handler;
 
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Handler\StreamHandler;
+use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
-use Scheb\Tombstone\Tests\VampireFixture;
 
 class StreamHandlerTest extends TestCase
 {
     public function getRecord($label = 'label'): Vampire
     {
-        return VampireFixture::getVampire($label);
+        return Fixture::getVampire($label);
     }
 
     /**
