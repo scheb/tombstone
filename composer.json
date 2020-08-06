@@ -40,6 +40,9 @@
             "Scheb\\Tombstone\\TestApplication\\": "app/src/"
         }
     },
+    "bin": [
+        "src/analyzer/tombstone-analyzer"
+    ],
     "replace": {
         "scheb/tombstone-analyzer": "^1.0",
         "scheb/tombstone-core": "^1.0",
