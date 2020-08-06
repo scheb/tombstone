@@ -50,7 +50,7 @@ class GraveyardBuilderTest extends TestCase
     public function build_noRootPathSet_throwException(): void
     {
         $this->expectException(GraveyardBuilderException::class);
-        $this->expectExceptionMessage('rootDir');
+        $this->expectExceptionMessage('rootDirectory');
 
         $this->builder->build();
     }
@@ -62,7 +62,7 @@ class GraveyardBuilderTest extends TestCase
     {
         $handler = $this->createMock(HandlerInterface::class);
         $graveyard = $this->builder
-            ->rootDir(__DIR__)
+            ->rootDirectory(__DIR__)
             ->withHandler($handler)
             ->build();
 
@@ -86,7 +86,7 @@ class GraveyardBuilderTest extends TestCase
 
         $logger = $this->createMock(LoggerInterface::class);
         $graveyard = $this->builder
-            ->rootDir(__DIR__)
+            ->rootDirectory(__DIR__)
             ->withHandler($handler)
             ->withLogger($logger)
             ->build();
@@ -110,7 +110,7 @@ class GraveyardBuilderTest extends TestCase
             ->with($this->callback($this->assertStackTraceLength(2)));
 
         $graveyard = $this->builder
-            ->rootDir(__DIR__)
+            ->rootDirectory(__DIR__)
             ->withHandler($handler)
             ->stackTraceDepth(2)
             ->build();
@@ -130,7 +130,7 @@ class GraveyardBuilderTest extends TestCase
             ->with($this->callback($this->assertRelativeFilePath()));
 
         $graveyard = $this->builder
-            ->rootDir(StackTraceFixture::ROOT_DIR)
+            ->rootDirectory(StackTraceFixture::ROOT_DIR)
             ->withHandler($handler)
             ->build();
 
@@ -143,7 +143,7 @@ class GraveyardBuilderTest extends TestCase
     public function build_buffered_buildBufferedGraveyard(): void
     {
         $graveyard = $this->builder
-            ->rootDir(__DIR__)
+            ->rootDirectory(__DIR__)
             ->buffered()
             ->build();
 
@@ -156,7 +156,7 @@ class GraveyardBuilderTest extends TestCase
     public function build_autoRegister_setToGraveyardRegistry(): void
     {
         $graveyard = $this->builder
-            ->rootDir(__DIR__)
+            ->rootDirectory(__DIR__)
             ->autoRegister()
             ->build();
 
