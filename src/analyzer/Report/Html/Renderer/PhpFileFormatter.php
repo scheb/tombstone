@@ -68,6 +68,12 @@ class PhpFileFormatter
             } else {
                 $lines = explode("\n", $value);
 
+                if (T_START_HEREDOC === $token) {
+                    $stringFlag = true;
+                } elseif (T_END_HEREDOC === $token) {
+                    $stringFlag = false;
+                }
+
                 foreach ($lines as $jj => $line) {
                     $line = trim($line);
 

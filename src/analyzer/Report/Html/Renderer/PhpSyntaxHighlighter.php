@@ -98,6 +98,8 @@ class PhpSyntaxHighlighter
             case T_YIELD:
                 return self::COLOR_KEYWORD;
             case T_CONSTANT_ENCAPSED_STRING:
+            case T_START_HEREDOC:
+            case T_END_HEREDOC:
                 return self::COLOR_STRING;
             default:
                 return self::COLOR_DEFAULT;
