@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerDirectoryResult;
+use Scheb\Tombstone\Tests\TestCase;
 
 class AnalyzerDirectoryResultTest extends TestCase
 {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Graveyard;
 
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Graveyard\BufferedGraveyard;
@@ -13,6 +12,7 @@ use Scheb\Tombstone\Logger\Graveyard\GraveyardBuilderException;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry;
 use Scheb\Tombstone\Logger\Handler\HandlerInterface;
 use Scheb\Tombstone\Tests\Fixture;
+use Scheb\Tombstone\Tests\TestCase;
 
 class GraveyardBuilderTest extends TestCase
 {

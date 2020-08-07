@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Cli\ProgressBar;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\TestCase;
 
 class AnalyzerLogDirectoryReaderTest extends TestCase
 {

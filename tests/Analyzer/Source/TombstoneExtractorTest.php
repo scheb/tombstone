@@ -9,12 +9,12 @@ use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverserInterface;
 use PhpParser\Parser;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractionException;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractor;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Tests\TestCase;
 
 class TombstoneExtractorTest extends TestCase
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Core\Model\AbsoluteFilePath;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
+use Scheb\Tombstone\Tests\TestCase;
 
 class RootPathTest extends TestCase
 {

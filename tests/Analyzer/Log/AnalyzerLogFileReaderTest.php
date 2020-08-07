@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
 use Scheb\Tombstone\Analyzer\Log\LogReaderException;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\TestCase;
 
 class AnalyzerLogFileReaderTest extends TestCase
 {

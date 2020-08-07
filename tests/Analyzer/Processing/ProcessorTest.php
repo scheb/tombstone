@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Processing;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Analyzer\Processing\Processor;
 use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\TestCase;
 
 class ProcessorTest extends TestCase
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
-use PHPUnit\Framework\TestCase;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
 use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Core\Model\Vampire;
+use Scheb\Tombstone\Tests\TestCase;
 
 class LogCollectorTest extends TestCase
 {
