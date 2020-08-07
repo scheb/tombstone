@@ -14,7 +14,7 @@ use Scheb\Tombstone\Core\Model\Vampire;
 class ConsoleReportGenerator implements ReportGeneratorInterface
 {
     /**
-     * @var FormattedConsoleOutput
+     * @var ConsoleOutput
      */
     private $output;
 
@@ -25,7 +25,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
     public function __construct(ConsoleOutput $output)
     {
-        $this->output = new FormattedConsoleOutput($output);
+        $this->output = $output;
         $this->now = time();
     }
 
@@ -40,12 +40,12 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $numDead = $result->getDeadCount();
         $numDeleted = $result->getDeletedCount();
 
-        $this->output->newLine();
+        $this->newLine();
         $this->output->writeln(sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
         $this->output->writeln(sprintf('Deleted tombstones: %d', $numDeleted));
 
         foreach ($result->getFileResults() as $fileResult) {
-            $this->output->newLine();
+            $this->newLine();
 
             $this->output->writeln($fileResult->getFile()->getReferencePath());
             $this->displayVampires($fileResult->getUndead());
@@ -60,13 +60,23 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private function displayVampires(array $result): void
     {
         foreach ($result as $tombstone) {
-            $this->output->newLine();
-            $this->output->printTombstone($tombstone, 'Vampire');
+            $this->newLine();
+            $this->printTombstone($tombstone, 'Vampire');
             $invokers = [];
             foreach ($tombstone->getVampires() as $vampire) {
                 $invokers[] = $vampire->getInvoker();
             }
-            $this->output->printCalledBy(array_unique($invokers));
+            $this->printCalledBy(array_unique($invokers));
+        }
+    }
+
+    /**
+     * @psalm-type list<string|null>
+     */
+    private function printCalledBy(array $invokers): void
+    {
+        foreach ($invokers as $invoker) {
+            $this->output->writeln(sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));
         }
     }
 
@@ -76,8 +86,8 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private function displayTombstones(array $result): void
     {
         foreach ($result as $tombstone) {
-            $this->output->newLine();
-            $this->output->printTombstone($tombstone, 'RIP');
+            $this->newLine();
+            $this->printTombstone($tombstone, 'RIP');
             $date = $tombstone->getTombstoneDate();
             if ($date) {
                 if ($age = TimePeriodFormatter::formatAge($date)) {
@@ -89,14 +99,30 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         }
     }
 
+    private function printTombstone(Tombstone $tombstone, string $prefix): void
+    {
+        $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
+        $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
+        if ($tombstone->getMethod()) {
+            $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
+        } else {
+            $this->output->writeln(sprintf('    in global scope'));
+        }
+    }
+
     /**
      * @param Vampire[] $result
      */
     private function displayDeleted(array $result): void
     {
         foreach ($result as $vampire) {
-            $this->output->newLine();
-            $this->output->printTombstone($vampire->getTombstone(), 'Deleted');
+            $this->newLine();
+            $this->printTombstone($vampire->getTombstone(), 'Deleted');
         }
+    }
+
+    private function newLine(): void
+    {
+        $this->output->writeln('');
     }
 }
