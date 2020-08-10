@@ -14,3 +14,4 @@ composer.lock
 # Tests
 app/logs/
 app/report/
+*.actual.*
