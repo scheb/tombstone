@@ -1,0 +1,40 @@
+
+Vampires/Tombstones: 2/5
+Deleted tombstones: 1
+
+Bar/Class2.php
+
+  [Vampire] tombstone("2020-01-01", "Class2")
+    in line 11
+    in method Foo\Bar\Class2->publicMethod
+    was called by invoker2
+
+Bar/Class3.php
+
+  [RIP] tombstone("2020-01-01", "Class3")
+    in line 11
+    in method Foo\Bar\Class3->someOtherMethod
+    was not called for %s
+
+Class1.php
+
+  [RIP] tombstone("2020-01-01", "Class1")
+    in line 11
+    in method Foo\Class1::staticMethod
+    was not called for %s
+
+  [Deleted] tombstone("2020-01-01", "Class1")
+    in line 18
+    in method Foo\Class1->deletedMethod
+
+functions.php
+
+  [Vampire] tombstone("2020-01-01", "globalScope")
+    in line 10
+    in global scope
+    was called by invoker1
+
+  [RIP] tombstone("2020-01-01", "globalFunction")
+    in line 7
+    in method globalFunction
+    was not called for %s
