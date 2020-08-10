@@ -17,7 +17,7 @@ class TimePeriodFormatter
 
         $daysPassed = floor((time() - $tombstoneDate) / self::SECONDS_PER_DAY);
         if ($daysPassed <= 0) {
-            return 'less than 1 day';
+            return 'less than a day';
         }
 
         $weeksPassed = floor($daysPassed / 7);
@@ -25,7 +25,7 @@ class TimePeriodFormatter
 
         $timePassed = $daysPassed.' days';
         if ($weeksPassed) {
-            $timePassed = $weeksPassed.' weeks and '.$timePassed;
+            $timePassed = $weeksPassed.' weeks, '.$timePassed;
         }
 
         return $timePassed;
