@@ -40,9 +40,6 @@ class GraveyardBuilder
      */
     private $autoRegister = false;
 
-    /**
-     * How many frames of the stack trace should be logged (default: 0).
-     */
     public function stackTraceDepth(int $stackTraceDepth): self
     {
         $this->stackTraceDepth = $stackTraceDepth;
@@ -50,9 +47,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Root dir of the project. File paths will be logged relative to that directory (if possible).
-     */
     public function rootDirectory(string $rootDir): self
     {
         $this->rootDirectory = $rootDir;
@@ -60,9 +54,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Add a handler to the graveyard to log tombstone calls.
-     */
     public function withHandler(HandlerInterface $handler): self
     {
         $this->handlers[] = $handler;
@@ -70,9 +61,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Add a PSR logger to the graveyard to log exceptions.
-     */
     public function withLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
@@ -80,10 +68,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Make it a buffered graveyard, that doesn't log tombstone calls immediately. The flush() method has to be called
-     * to call the handlers.
-     */
     public function buffered(): self
     {
         $this->buffered = true;
@@ -91,9 +75,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Automatically register the new graveyard in the GraveyardRegistry once it is built.
-     */
     public function autoRegister(): self
     {
         $this->autoRegister = true;
@@ -101,9 +82,6 @@ class GraveyardBuilder
         return $this;
     }
 
-    /**
-     * Build and return the graveyard object.
-     */
     public function build(): GraveyardInterface
     {
         $graveyard = new Graveyard(

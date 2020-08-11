@@ -36,7 +36,14 @@ the logs will tell you, which tombstones are dead and which ones aren't (the so 
 Installation
 ------------
 
-[WIP]
+The library consists of multiple components, that need to be installed and configured independently:
+
+Read [how to install `scheb/tombstone-logger`](doc/logger/installation.md) for placing and logging tombstones in your code.
+
+Read [how to install `scheb/tombstone-analyzer`](doc/analyzer/installation.md), which takes log data from
+`scheb/tombstone-logger` to generate reports in various formats. For example an HTML report:
+
+[![Dashboard view](doc/analyzer/dashboard-small.png)](doc/analyzer/dashboard.png) [![Code view](doc/analyzer/code-small.png)](doc/analyzer/code.png)
 
 Security
 --------
