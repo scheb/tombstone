@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Cli;
 
 use Scheb\Tombstone\Analyzer\Cli\Application;
+use Scheb\Tombstone\Tests\DirectoryHelper;
 use Scheb\Tombstone\Tests\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -85,44 +86,13 @@ class ApplicationTest extends TestCase
 
     private function assertReportFileStructure(): void
     {
-        $directoryListing = $this->listReportDirectory();
+        $directoryListing = DirectoryHelper::listDirectory(self::REPORT_DIR);
         $this->assertEquals(self::EXPECTED_REPORT_FILES, $directoryListing);
-    }
-
-    private function listReportDirectory(): array
-    {
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(self::REPORT_DIR, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
-        $relativePathStart = \strlen(realpath(self::REPORT_DIR)) + 1;
-        $files = [];
-        foreach ($iterator as $fileInfo) {
-            $files[] = str_replace('\\', '/', substr($fileInfo->getRealPath(), $relativePathStart));
-        }
-        sort($files);
-
-        return $files;
     }
 
     private function clean(): void
     {
-        $this->clearDirectory(self::LOG_DIR);
-        $this->clearDirectory(self::REPORT_DIR);
-    }
-
-    private function clearDirectory(string $directory): void
-    {
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
-        foreach ($files as $fileInfo) {
-            if ('.gitkeep' === $fileInfo->getBaseName()) {
-                continue;
-            }
-            $cmd = ($fileInfo->isDir() ? 'rmdir' : 'unlink');
-            @$cmd($fileInfo->getRealPath());
-        }
+        DirectoryHelper::clearDirectory(self::LOG_DIR);
+        DirectoryHelper::clearDirectory(self::REPORT_DIR);
     }
 }
