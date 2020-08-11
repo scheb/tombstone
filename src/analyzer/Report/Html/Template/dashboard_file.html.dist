@@ -1,4 +1,6 @@
-<h3><img src="_icons/file-code.svg" class="octicon" /> {{file}}</h3>
-<ul class="tombstone-list list-group">
-{{item_list}}
-</ul>
+<div class="tombstone-file">
+    <h3><img src="_icons/file-code.svg" class="octicon" /> {{file}}</h3>
+    <ul class="tombstone-list list-group">
+    {{item_list}}
+    </ul>
+</div>

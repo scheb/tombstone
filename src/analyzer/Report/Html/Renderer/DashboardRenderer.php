@@ -122,7 +122,7 @@ class DashboardRenderer
                 'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
+                'scope' => $this->getTombstoneScope($tombstone),
                 'dead_since' => $this->getDeadSince($tombstone),
             ]);
             $itemList .= $this->deadTemplate->render();
@@ -153,7 +153,7 @@ class DashboardRenderer
                 'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
                 'line' => $tombstone->getLine(),
-                'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
+                'scope' => $this->getTombstoneScope($tombstone),
                 'invocation' => $this->renderInvokers($tombstone),
             ]);
             $itemList .= $this->undeadTemplate->render();
@@ -213,7 +213,7 @@ class DashboardRenderer
                 'path_to_root' => './',
                 'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
                 'line' => $vampire->getLine(),
-                'method' => htmlspecialchars($vampire->getMethod() ?? ''),
+                'scope' => $this->getTombstoneScope($vampire->getTombstone()),
                 'last_call' => $this->getLastCalled($vampire),
             ]);
             $itemList .= $this->deletedTemplate->render();
@@ -230,6 +230,15 @@ class DashboardRenderer
         }
 
         return 'unknown';
+    }
+
+    private function getTombstoneScope(Tombstone $tombstone): string
+    {
+        if ($tombstone->getMethod()) {
+            return sprintf('method <samp>%s</samp>', htmlspecialchars($tombstone->getMethod()));
+        }
+
+        return 'global scope';
     }
 
     private function linkToTombstoneInCode(string $label, FilePathInterface $file, int $line): string

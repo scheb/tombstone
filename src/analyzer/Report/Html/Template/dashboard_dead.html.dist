@@ -2,7 +2,7 @@
     <h4><img src="{{path_to_root}}_img/cross.png" title="Dead" /> <samp>{{tombstone}}</samp></h4>
     <div class="tombstone-detail">
         in line <samp>{{line}}</samp><br/>
-        in method <samp>{{method}}</samp><br/>
+        in {{scope}}<br/>
         was <strong>not called {{dead_since}}</strong>
     </div>
 </li>
