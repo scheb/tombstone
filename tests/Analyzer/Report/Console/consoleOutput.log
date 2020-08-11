@@ -8,6 +8,7 @@ Bar/Class2.php
     in line 11
     in method Foo\Bar\Class2->publicMethod
     was called by invoker2
+    was called by invoker3
 
 Bar/Class3.php
 
