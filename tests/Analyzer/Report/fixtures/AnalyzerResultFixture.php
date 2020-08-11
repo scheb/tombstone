@@ -25,12 +25,14 @@ class AnalyzerResultFixture
         $vampire1 = new Vampire('2020-02-01', 'invoker1', new StackTrace(), $globalScope, []);
         $globalScope->addVampire($vampire1);
         $vampire2 = new Vampire('2020-02-01', 'invoker2', new StackTrace(), $class2Tombstone, []);
+        $vampire3 = new Vampire('2020-02-01', 'invoker3', new StackTrace(), $class2Tombstone, []);
         $class2Tombstone->addVampire($vampire2);
-        $vampire3 = new Vampire('2020-02-01', 'invoker3', new StackTrace(), $deletedTombstone, []);
+        $class2Tombstone->addVampire($vampire3);
+        $vampire4 = new Vampire('2020-02-01', 'invoker4', new StackTrace(), $deletedTombstone, []);
 
         $deadList = [$functionTombstone, $class1Tombstone, $class3Tombstone];
         $undeadList = [$globalScope, $class2Tombstone];
-        $deletedList = [$vampire3];
+        $deletedList = [$vampire4];
 
         return new AnalyzerResult($deadList, $undeadList, $deletedList);
     }

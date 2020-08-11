@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+  <file name="%sfixtures%ssource%sBar%sClass2.php">
+    <error severity="error" source="Tombstone.Analyzer.undead" message="Tombstone &quot;tombstone(&quot;2020-01-01&quot;, &quot;Class2&quot;)&quot; was called by &quot;invoker2&quot; and 1 more caller" line="11"/>
+  </file>
+  <file name="%sfixtures%ssource%sfunctions.php">
+    <error severity="error" source="Tombstone.Analyzer.undead" message="Tombstone &quot;tombstone(&quot;2020-01-01&quot;, &quot;globalScope&quot;)&quot; was called by &quot;invoker1&quot;" line="10"/>
+  </file>
+</checkstyle>
