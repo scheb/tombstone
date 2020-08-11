@@ -62,6 +62,7 @@ class YamlConfigProviderTest extends TestCase
             ],
             'report' => [
                 'php' => self::CONFIG_DIR.'report'.DIRECTORY_SEPARATOR.'tombstone-report.php',
+                'checkstyle' => self::CONFIG_DIR.'report'.DIRECTORY_SEPARATOR.'checkstyle.xml',
                 'html' => self::CONFIG_DIR.'report',
                 'console' => true,
             ],

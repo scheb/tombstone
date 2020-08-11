@@ -19,6 +19,7 @@ use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Analyzer\Processing\Processor;
 use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
+use Scheb\Tombstone\Analyzer\Report\Checkstyle\CheckstyleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Console\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
@@ -136,6 +137,9 @@ class AnalyzeCommand extends AbstractCommand
                     new FileSourceCodeRenderer(new PhpFileFormatter(new PhpSyntaxHighlighter()))
                 )
             );
+        }
+        if (isset($config['report']['checkstyle'])) {
+            $reportGenerators[] = new CheckstyleReportGenerator($config['report']['checkstyle']);
         }
         if (isset($config['report']['php'])) {
             $reportGenerators[] = new PhpReportGenerator($config['report']['php']);

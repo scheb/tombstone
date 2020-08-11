@@ -28,6 +28,7 @@ class ApplicationTest extends TestCase
         '_img/cross.png',
         '_img/deleted.png',
         '_img/vampire.png',
+        'checkstyle.xml',
         'dashboard.html',
         'index.html',
         'src',

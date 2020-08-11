@@ -10,5 +10,6 @@ logs:
     directory: logs
 report:
     php: report/tombstone-report.php
+    checkstyle: report/checkstyle.xml
     html: report
     console: true

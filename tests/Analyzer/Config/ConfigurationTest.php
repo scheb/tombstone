@@ -26,7 +26,9 @@ class ConfigurationTest extends TestCase
         ],
         'report' => [
             'php' => self::REPORT_DIR.'/report.php',
+            'checkstyle' => self::REPORT_DIR.'/checkstyle.xml',
             'html' => self::REPORT_DIR,
+            'console' => true,
         ],
     ];
 
