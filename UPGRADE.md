@@ -16,16 +16,22 @@ the package `scheb/tombstone` with `scheb/tombstone-logger`.
 
 ### Tombstone Logger (previously `scheb/tombstone`)
 
-The classes of the library have been moved to the `Scheb\Tombstone\Logger` namespace.
+Tombstone logs written by version 0.x are not compatible with 1.x. So when you upgrade, please purge your tombstone logs
+and wait for some new data to be logged.
 
-That means the `Graveyard`-related classes are now located in the namespace `Scheb\Tombstone\Logger\Graveyard`. Please
-note that`Scheb\Tombstone\GraveyardProvider` was renamed to `Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry`.
+The classes of this package have been moved to the `Scheb\Tombstone\Logger` namespace.
 
 Handlers and formatters have been moved respectively to the `Scheb\Tombstone\Logger\Handler` and
 `Scheb\Tombstone\Logger\Formatter` namespace.
 
+All the `Graveyard`-related classes are now located in the namespace `Scheb\Tombstone\Logger\Graveyard`.
+
+`Scheb\Tombstone\GraveyardProvider` was renamed to `Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry`.
+
 The constructor of the `Graveyard` class changed. Please use the more convenient
 `Scheb\Tombstone\Logger\Graveyard\GraveyardBuilder` to configure and create a graveyard instance.
+
+The `Scheb\Tombstone\Logger\Graveyard\GraveyardInterface` has changed, please update your own implementations.
 
 File `tombstone.php`, providing the `tombstone()` and located in the root directory of the `scheb/tombstone-logger`
 package, was renamed to `tombstone-function.php`.
