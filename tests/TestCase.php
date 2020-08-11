@@ -20,4 +20,16 @@ abstract class TestCase extends PHPUnitTestCase
             parent::expectExceptionMessageRegExp($regularExpression);
         }
     }
+
+    /**
+     * Backwards compatibility for PHPUnit 7.5.
+     */
+    public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
+    {
+        if (method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
+            parent::assertDirectoryDoesNotExist($directory, $message);
+        } else {
+            static::assertFalse(is_dir($directory), $message);
+        }
+    }
 }
