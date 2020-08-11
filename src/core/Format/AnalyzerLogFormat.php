@@ -14,6 +14,7 @@ class AnalyzerLogFormat
 {
     private const CURRENT_VERSION = 10000; // 1.0.0
     private const FIELD_VERSION = 'v';
+    private const FIELD_FUNCTION_NAME = 'fn';
     private const FIELD_ARGUMENTS = 'a';
     private const FIELD_FILE = 'f';
     private const FIELD_LINE = 'l';
@@ -28,6 +29,7 @@ class AnalyzerLogFormat
     ];
     private const REQUIRED_FIELDS_LOG = [
         self::FIELD_INVOCATION_DATE,
+        self::FIELD_FUNCTION_NAME,
         self::FIELD_ARGUMENTS,
         self::FIELD_FILE,
         self::FIELD_LINE,
@@ -37,6 +39,7 @@ class AnalyzerLogFormat
     {
         return json_encode([
             self::FIELD_VERSION => self::CURRENT_VERSION,
+            self::FIELD_FUNCTION_NAME => $vampire->getFunctionName(),
             self::FIELD_ARGUMENTS => $vampire->getArguments(),
             self::FIELD_FILE => $vampire->getFile()->getReferencePath(),
             self::FIELD_LINE => $vampire->getLine(),
@@ -84,6 +87,7 @@ class AnalyzerLogFormat
             $data[self::FIELD_INVOKER] ?? null,
             self::decodeStackTrace($data[self::FIELD_STACKTRACE] ?? [], $rootDir),
             new Tombstone(
+                $data[self::FIELD_FUNCTION_NAME],
                 $data[self::FIELD_ARGUMENTS],
                 $rootDir->createFilePath($data[self::FIELD_FILE]),
                 $data[self::FIELD_LINE],

@@ -72,10 +72,10 @@ class GraveyardTest extends TestCase
         $this->vampireFactory
             ->expects($this->once())
             ->method('createFromCall')
-            ->with(['label'], $trace, ['metaField' => 'metaValue'])
+            ->with('tombstone', ['label'], $trace, ['metaField' => 'metaValue'])
             ->willReturn($this->createMock(Vampire::class));
 
-        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
+        $this->graveyard->tombstone('tombstone', ['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
@@ -91,7 +91,7 @@ class GraveyardTest extends TestCase
             ->with($this->identicalTo($vampire));
 
         $trace = Fixture::getTraceFixture();
-        $this->graveyard->tombstone(['label'], $trace, ['metaField' => 'metaValue']);
+        $this->graveyard->tombstone('tombstone', ['label'], $trace, ['metaField' => 'metaValue']);
     }
 
     /**
@@ -112,7 +112,7 @@ class GraveyardTest extends TestCase
             ->with('Exception while tracking a tombstone call: Exception message (123)');
 
         $trace = Fixture::getTraceFixture();
-        $this->graveyard->tombstone([], $trace, []);
+        $this->graveyard->tombstone('tombstone', [], $trace, []);
     }
 
     /**

@@ -85,7 +85,7 @@ class TombstoneVisitor extends NameResolver
             $methodName = $this->getCurrentMethodName();
             $arguments = $this->extractArguments($node);
             /** @psalm-suppress PossiblyNullArgument */
-            $this->tombstoneCallback->onTombstoneFound($arguments, $line, $methodName);
+            $this->tombstoneCallback->onTombstoneFound('tombstone', $arguments, $line, $methodName);
         }
     }
 

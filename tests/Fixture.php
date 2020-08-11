@@ -18,7 +18,7 @@ class Fixture
     public static function getVampire(string ...$arguments): Vampire
     {
         $rootPath = new RootPath(self::ROOT_DIR);
-        $tombstone = new Tombstone($arguments, $rootPath->createFilePath('file'), 123, 'method');
+        $tombstone = new Tombstone('tombstone', $arguments, $rootPath->createFilePath('file'), 123, 'method');
         $stackTrace = new StackTrace(new StackTraceFrame($rootPath->createFilePath('/path/to/file1.php'), 11, 'ClassName->method'));
 
         return new Vampire('2015-01-01', 'invoker', $stackTrace, $tombstone, ['metaField' => 'metaValue']);
@@ -28,7 +28,7 @@ class Fixture
     {
         $rootPath = new RootPath(self::ROOT_DIR);
 
-        return new Tombstone($arguments, $rootPath->createFilePath('file'), 123, 'method');
+        return new Tombstone('tombstone', $arguments, $rootPath->createFilePath('file'), 123, 'method');
     }
 
     public static function getTraceFixture(): array

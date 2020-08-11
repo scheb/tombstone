@@ -15,12 +15,12 @@ class AnalyzerResultFixture
     public static function getAnalyzerResult(): AnalyzerResult
     {
         $rootDir = new RootPath(__DIR__.'/source');
-        $functionTombstone = new Tombstone(['2020-01-01', 'globalFunction'], $rootDir->createFilePath('functions.php'), 7, 'globalFunction');
-        $globalScope = new Tombstone(['2020-01-01', 'globalScope'], $rootDir->createFilePath('functions.php'), 10, null);
-        $class1Tombstone = new Tombstone(['2020-01-01', 'Class1'], $rootDir->createFilePath('Class1.php'), 11, 'Foo\\Class1::staticMethod');
-        $class2Tombstone = new Tombstone(['2020-01-01', 'Class2'], $rootDir->createFilePath('Bar/Class2.php'), 11, 'Foo\\Bar\\Class2->publicMethod');
-        $class3Tombstone = new Tombstone(['2020-01-01', 'Class3'], $rootDir->createFilePath('Bar/Class3.php'), 11, 'Foo\\Bar\\Class3->someOtherMethod');
-        $deletedTombstone = new Tombstone(['2020-01-01', 'Class1'], $rootDir->createFilePath('Class1.php'), 18, 'Foo\\Class1->deletedMethod');
+        $functionTombstone = new Tombstone('tombstone', ['2020-01-01', 'globalFunction'], $rootDir->createFilePath('functions.php'), 7, 'globalFunction');
+        $globalScope = new Tombstone('tombstone', ['2020-01-01', 'globalScope'], $rootDir->createFilePath('functions.php'), 10, null);
+        $class1Tombstone = new Tombstone('tombstone', ['2020-01-01', 'Class1'], $rootDir->createFilePath('Class1.php'), 11, 'Foo\\Class1::staticMethod');
+        $class2Tombstone = new Tombstone('tombstone', ['2020-01-01', 'Class2'], $rootDir->createFilePath('Bar/Class2.php'), 11, 'Foo\\Bar\\Class2->publicMethod');
+        $class3Tombstone = new Tombstone('tombstone', ['2020-01-01', 'Class3'], $rootDir->createFilePath('Bar/Class3.php'), 11, 'Foo\\Bar\\Class3->someOtherMethod');
+        $deletedTombstone = new Tombstone('tombstone', ['2020-01-01', 'Class1'], $rootDir->createFilePath('Class1.php'), 18, 'Foo\\Class1->deletedMethod');
 
         $vampire1 = new Vampire('2020-02-01', 'invoker1', new StackTrace(), $globalScope, []);
         $globalScope->addVampire($vampire1);

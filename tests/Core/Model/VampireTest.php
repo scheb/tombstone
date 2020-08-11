@@ -63,6 +63,6 @@ class VampireTest extends TestCase
     {
         $vampire = Fixture::getVampire();
         $hash = $vampire->getHash();
-        $this->assertEquals(1397077150, $hash);
+        $this->assertEquals(2405246921, $hash);
     }
 }

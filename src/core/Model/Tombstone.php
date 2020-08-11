@@ -7,6 +7,11 @@ namespace Scheb\Tombstone\Core\Model;
 class Tombstone
 {
     /**
+     * @var string
+     */
+    private $functionName;
+
+    /**
      * @var array
      * @psalm-type list<string|null>
      */
@@ -37,8 +42,9 @@ class Tombstone
      */
     private $vampires = [];
 
-    public function __construct(array $arguments, FilePathInterface $file, int $line, ?string $method)
+    public function __construct(string $functionName, array $arguments, FilePathInterface $file, int $line, ?string $method)
     {
+        $this->functionName = $functionName;
         $this->arguments = $arguments;
         $this->tombstoneDate = $this->findDate($arguments);
         $this->file = $file;
@@ -53,17 +59,17 @@ class Tombstone
             $argumentsList = '"'.implode('", "', $this->arguments).'"';
         }
 
-        return 'tombstone('.$argumentsList.')';
+        return $this->functionName.'('.$argumentsList.')';
     }
 
     public function getHash(): int
     {
-        return crc32($this->file->getReferencePath()."\n".$this->line."\n".implode(',', $this->arguments));
+        return crc32($this->file->getReferencePath()."\n".$this->line."\n".$this->functionName."\n".implode(',', $this->arguments));
     }
 
     public function inscriptionEquals(Tombstone $tombstone): bool
     {
-        return $tombstone->getArguments() === $this->arguments;
+        return $tombstone->getFunctionName() === $this->functionName && $tombstone->getArguments() === $this->arguments;
     }
 
     private function findDate(array $arguments): ?string
@@ -75,6 +81,11 @@ class Tombstone
         }
 
         return null;
+    }
+
+    public function getFunctionName(): string
+    {
+        return $this->functionName;
     }
 
     public function getArguments(): array

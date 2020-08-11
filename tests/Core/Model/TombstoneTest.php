@@ -21,7 +21,7 @@ class TombstoneTest extends TestCase
     {
         $rootPath = new RootPath(self::ROOT_DIR);
 
-        return new Tombstone($arguments, $rootPath->createFilePath($file), 123, 'method');
+        return new Tombstone('tombstone', $arguments, $rootPath->createFilePath($file), 123, 'method');
     }
 
     /**
@@ -58,7 +58,7 @@ class TombstoneTest extends TestCase
     {
         $tombstone = $this->createTombstone('file');
         $hash = $tombstone->getHash();
-        $this->assertEquals(596497885, $hash);
+        $this->assertEquals(1385567777, $hash);
     }
 
     /**

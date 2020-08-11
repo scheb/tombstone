@@ -13,7 +13,7 @@ use Scheb\Tombstone\Tests\TestCase;
 class AnalyzerLogFormatTest extends TestCase
 {
     public const TOMBSTONE_ARGUMENTS = ['2014-01-01', 'label'];
-    public const LOG_RECORD = '{"v":10000,"a":["2014-01-01","label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}';
+    public const LOG_RECORD = '{"v":10000,"fn":"tombstone","a":["2014-01-01","label"],"f":"file","l":123,"m":"method","d":{"metaField":"metaValue"},"s":[{"f":"file1.php","l":11,"m":"ClassName->method"}],"id":"2015-01-01","im":"invoker"}';
 
     /**
      * @test
@@ -63,7 +63,7 @@ class AnalyzerLogFormatTest extends TestCase
      */
     public function logToVampire_missingDataInStackTrace_truncateStackTrace(): void
     {
-        $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}', new RootPath(__DIR__));
+        $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"fn":"tombstone","a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}', new RootPath(__DIR__));
 
         $this->assertCount(1, $returnValue->getStackTrace());
     }

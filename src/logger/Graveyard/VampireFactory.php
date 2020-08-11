@@ -28,7 +28,7 @@ class VampireFactory
         $this->stackTraceDepth = $stackTraceDepth;
     }
 
-    public function createFromCall(array $arguments, array $trace, array $metadata): Vampire
+    public function createFromCall(string $functionName, array $arguments, array $trace, array $metadata): Vampire
     {
         // This is the call to the tombstone
         $tombstoneCall = $trace[0];
@@ -47,7 +47,7 @@ class VampireFactory
             $invoker = $this->getMethodFromFrame($trace[2]);
         }
 
-        $tombstone = new Tombstone($arguments, $file, $line, $method);
+        $tombstone = new Tombstone($functionName, $arguments, $file, $line, $method);
 
         $stackTrace = null;
         if ($this->stackTraceDepth > 0) {

@@ -76,7 +76,7 @@ class TombstoneExtractorTest extends TestCase
             ->method('traverse')
             ->with($this->identicalTo($statements))
             ->willReturnCallback(function (array $statements): array {
-                $this->extractor->onTombstoneFound(['args'], 123, 'method');
+                $this->extractor->onTombstoneFound('tombstone', ['args'], 123, 'method');
 
                 return $statements;
             });

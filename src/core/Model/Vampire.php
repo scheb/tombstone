@@ -60,6 +60,11 @@ class Vampire
         return $this->tombstone;
     }
 
+    public function getFunctionName(): string
+    {
+        return $this->tombstone->getFunctionName();
+    }
+
     public function getArguments(): array
     {
         return $this->tombstone->getArguments();

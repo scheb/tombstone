@@ -68,13 +68,13 @@ class TombstoneExtractor implements TombstoneExtractorInterface
         $this->currentFile = null;
     }
 
-    public function onTombstoneFound(array $arguments, int $line, ?string $method): void
+    public function onTombstoneFound(string $functionName, array $arguments, int $line, ?string $method): void
     {
         if (null === $this->currentFile) {
             throw new \RuntimeException('Current file not available.');
         }
 
-        $tombstone = new Tombstone($arguments, $this->currentFile, $line, $method);
+        $tombstone = new Tombstone($functionName, $arguments, $this->currentFile, $line, $method);
         $this->tombstoneIndex->addTombstone($tombstone);
     }
 }
