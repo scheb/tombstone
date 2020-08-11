@@ -32,7 +32,7 @@ class Graveyard implements GraveyardInterface
         $this->handlers = $handlers;
     }
 
-    public function tombstone(string $functionName, array $arguments, array $trace, array $metadata): void
+    public function logTombstoneCall(string $functionName, array $arguments, array $trace, array $metadata): void
     {
         try {
             $vampire = $this->vampireFactory->createFromCall($functionName, $arguments, $trace, $metadata);

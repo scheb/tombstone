@@ -31,27 +31,27 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
-    public function tombstone_tombstoneInvoked_notAddToInnerGraveyard(): void
+    public function logTombstoneCall_tombstoneInvoked_notAddToInnerGraveyard(): void
     {
         $this->innerGraveyard
             ->expects($this->never())
             ->method($this->anything());
 
-        $this->graveyard->tombstone('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
+        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
     }
 
     /**
      * @test
      */
-    public function tombstone_autoFlushEnabled_directlyAddToInnerGraveyard(): void
+    public function logTombstoneCall_autoFlushEnabled_directlyAddToInnerGraveyard(): void
     {
         $this->innerGraveyard
             ->expects($this->once())
-            ->method('tombstone')
+            ->method('logTombstoneCall')
             ->with('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
 
         $this->graveyard->setAutoFlush(true);
-        $this->graveyard->tombstone('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
+        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
     }
 
     /**
@@ -61,7 +61,7 @@ class BufferedGraveyardTest extends TestCase
     {
         $this->innerGraveyard
             ->expects($this->exactly(2))
-            ->method('tombstone')
+            ->method('logTombstoneCall')
             ->withConsecutive(
                 ['tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue1']],
                 ['tombstone', ['args'], ['trace2'], ['metaField' => 'metaValue2']]
@@ -71,10 +71,10 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->exactly(2))
             ->method('flush');
 
-        $this->graveyard->tombstone('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue1']);
+        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue1']);
         $this->graveyard->flush();
 
-        $this->graveyard->tombstone('tombstone', ['args'], ['trace2'], ['metaField' => 'metaValue2']);
+        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace2'], ['metaField' => 'metaValue2']);
         $this->graveyard->flush();
     }
 }
