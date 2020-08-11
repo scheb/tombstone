@@ -9,7 +9,7 @@ use Scheb\Tombstone\Tests\TestCase;
 
 class YamlConfigProviderTest extends TestCase
 {
-    private const CONFIG_DIR = __DIR__.DIRECTORY_SEPARATOR.'configs'.DIRECTORY_SEPARATOR;
+    private const CONFIG_DIR = __DIR__.DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR;
 
     protected function readConfiguration(string $file): array
     {
