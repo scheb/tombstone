@@ -31,23 +31,27 @@
     </div>
 
     <div class="progress tombstones-distribution">
-        <div class="progress-bar bg-success" style="width: {{dead_percent}}%">
+        <div class="progress-bar bg-success tombstones-dead" style="width: {{dead_percent}}%">
             <strong>{{dead_count}} Dead</strong>
         </div>
-        <div class="progress-bar bg-danger" style="width: {{undead_percent}}%">
+        <div class="progress-bar bg-danger tombstones-undead" style="width: {{undead_percent}}%">
             <strong>{{undead_count}} Undead</strong>
         </div>
     </div>
 
     <hr />
 
-    <h2>Tombstones in Your Code</h2>
+    <div class="tombstones-active">
+        <h2>Tombstones in Your Code</h2>
 {{tombstones_view}}
+    </div>
 
     <hr />
 
-    <h2>Deleted Tombstones</h2>
+    <div class="tombstones-deleted">
+        <h2>Deleted Tombstones</h2>
 {{deleted_view}}
+    </div>
 </div>
 <footer>
     <div class="container-fluid">

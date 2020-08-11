@@ -23,7 +23,7 @@
 </header>
 <div class="container-fluid">
     <div class="table-responsive-md">
-        <table class="table table-bordered">
+        <table class="table table-bordered file-tombstone-list">
             <thead>
                 <tr>
                     <td colspan="2">

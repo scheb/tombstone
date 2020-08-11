@@ -1,4 +1,4 @@
-<li class="list-group-item list-group-item-success">
+<li class="list-group-item list-group-item-success tombstone-dead">
     <h4><img src="{{path_to_root}}_img/cross.png" title="Dead" /> <samp>{{tombstone}}</samp></h4>
     <div class="tombstone-detail">
         in line <samp>{{line}}</samp><br/>
