@@ -61,7 +61,7 @@ class AnalyzeCommand extends AbstractCommand
     protected function configure(): void
     {
         $this
-            ->setName('tombstone')
+            ->setName('analyze')
             ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to config file');
     }
 
