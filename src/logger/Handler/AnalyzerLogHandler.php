@@ -29,6 +29,11 @@ class AnalyzerLogHandler extends AbstractHandler
     private $sizeLimit;
 
     /**
+     * @var array<string,bool>
+     */
+    private $sizeLimitReached = [];
+
+    /**
      * @var int|null
      */
     private $filePermission;
@@ -93,9 +98,17 @@ class AnalyzerLogHandler extends AbstractHandler
             return false;
         }
 
-        clearstatcache(false, $logFile);
+        if (isset($this->sizeLimitReached[$logFile])) {
+            return $this->sizeLimitReached[$logFile];
+        }
 
-        return filesize($logFile) >= $this->sizeLimit;
+        clearstatcache(false, $logFile);
+        $sizeLimitReached = filesize($logFile) >= $this->sizeLimit;
+        if ($sizeLimitReached) {
+            $this->sizeLimitReached[$logFile] = true;
+        }
+
+        return $sizeLimitReached;
     }
 
     public function flush(): void
