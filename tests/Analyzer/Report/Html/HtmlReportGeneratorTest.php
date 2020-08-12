@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report\Html;
 
+use PHPUnit\Framework\Constraint\Constraint;
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
@@ -110,55 +111,80 @@ class HtmlReportGeneratorTest extends TestCase
         $this->assertEquals('3 Dead', $this->getText($crawler->filter('.tombstones-dead')));
         $this->assertEquals('2 Undead', $this->getText($crawler->filter('.tombstones-undead')));
 
-        $expectedActiveTombstones = [];
-        $expectedActiveTombstones['Bar/Class2.php'] = [
-            [
-                'inscription' => 'tombstone("2020-01-01", "Class2")',
-                'type' => 'undead',
-                'details' => 'in line 11 in method Foo\\Bar\\Class2->publicMethod was called by invoker2 was called by invoker3',
+        $expectedActiveTombstones = [
+            'Bar/Class2.php' => [
+                [
+                    'inscription' => 'tombstone("2020-01-01", "Class2")',
+                    'type' => 'undead',
+                    'details' => $this->equalTo('in line 11 in method Foo\\Bar\\Class2->publicMethod was called by invoker2 was called by invoker3'),
+                ],
             ],
-        ];
-        $expectedActiveTombstones['Bar/Class3.php'] = [
-            [
-                'inscription' => 'tombstone("2020-01-01", "Class3")',
-                'type' => 'dead',
-                'details' => 'in line 11 in method Foo\\Bar\\Class3->someOtherMethod was not called for 31 weeks, 6 days',
+            'Bar/Class3.php' => [
+                [
+                    'inscription' => 'tombstone("2020-01-01", "Class3")',
+                    'type' => 'dead',
+                    'details' => $this->matches('in line 11 in method Foo\\Bar\\Class3->someOtherMethod was not called for %s'),
+                ],
             ],
-        ];
-        $expectedActiveTombstones['Class1.php'] = [
-            [
-                'inscription' => 'tombstone("2020-01-01", "Class1")',
-                'type' => 'dead',
-                'details' => 'in line 11 in method Foo\\Class1::staticMethod was not called for 31 weeks, 6 days',
+            'Class1.php' => [
+                [
+                    'inscription' => 'tombstone("2020-01-01", "Class1")',
+                    'type' => 'dead',
+                    'details' => $this->matches('in line 11 in method Foo\\Class1::staticMethod was not called for %s'),
+                ],
             ],
-        ];
-        $expectedActiveTombstones['functions.php'] = [
-            [
-                'inscription' => 'tombstone("2020-01-01", "globalScope")',
-                'type' => 'undead',
-                'details' => 'in line 10 in global scope was called by invoker1',
-            ],
-            [
-                'inscription' => 'tombstone("2020-01-01", "globalFunction")',
-                'type' => 'dead',
-                'details' => 'in line 7 in method globalFunction was not called for 31 weeks, 6 days',
+            'functions.php' => [
+                [
+                    'inscription' => 'tombstone("2020-01-01", "globalScope")',
+                    'type' => 'undead',
+                    'details' => $this->equalTo('in line 10 in global scope was called by invoker1'),
+                ],
+                [
+                    'inscription' => 'tombstone("2020-01-01", "globalFunction")',
+                    'type' => 'dead',
+                    'details' => $this->matches('in line 7 in method globalFunction was not called for %s'),
+                ],
             ],
         ];
 
         $activeTombstones = $this->extractDashboardTombstones($crawler->filter('.tombstones-active .tombstone-file'));
-        $this->assertEquals($expectedActiveTombstones, $activeTombstones);
+        $this->assertDashboardTombstones($expectedActiveTombstones, $activeTombstones);
 
-        $expectedDeletedTombstones = [];
-        $expectedDeletedTombstones['Class1.php'] = [
-            [
-                'inscription' => 'tombstone("2020-01-01", "Class1")',
-                'type' => 'deleted',
-                'details' => 'in line 18 in method Foo\\Class1->deletedMethod was last called 27 weeks, 3 days ago',
+        $expectedDeletedTombstones = [
+            'Class1.php' => [
+                [
+                    'inscription' => 'tombstone("2020-01-01", "Class1")',
+                    'type' => 'deleted',
+                    'details' => $this->matches('in line 18 in method Foo\\Class1->deletedMethod was last called %s'),
+                ],
             ],
         ];
 
         $deletedTombstones = $this->extractDashboardTombstones($crawler->filter('.tombstones-deleted .tombstone-file'));
-        $this->assertEquals($expectedDeletedTombstones, $deletedTombstones);
+        $this->assertDashboardTombstones($expectedDeletedTombstones, $deletedTombstones);
+    }
+
+    private function assertDashboardTombstones(array $expectations, array $results): void
+    {
+        $this->assertEquals(array_keys($expectations), array_keys($results));
+        foreach ($expectations as $file => $expectedTombstones) {
+            $resultTombstones = $results[$file];
+            $this->assertEquals(\count($expectedTombstones), \count($resultTombstones));
+
+            // Assert each tombstone individually
+            foreach ($expectedTombstones as $key => $expected) {
+                $result = $resultTombstones[$key];
+
+                // Details are asserted separately since they contain some dynamic content
+                /** @var Constraint $expectedDetails */
+                $expectedDetails = $expected['details'];
+                $resultDetails = $result['details'];
+                unset($result['details'], $expected['details']);
+
+                $this->assertEquals($expected, $result);
+                $this->assertThat($resultDetails, $expectedDetails);
+            }
+        }
     }
 
     private function extractDashboardTombstones(Crawler $crawler): array
