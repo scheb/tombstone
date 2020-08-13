@@ -48,7 +48,9 @@ class AnalyzerLogProvider implements LogProviderInterface
         $finder = new FinderFacade([$this->logDir], [], ['*.tombstone']);
         $files = $finder->findFiles();
 
+        $this->output->writeln('Read analyzer log data ...');
         $progress = $this->output->createProgressBar(\count($files));
+
         foreach ($files as $file) {
             // This is done to reset keys
             foreach ($this->logFileReader->readLogFile($file) as $vampire) {
