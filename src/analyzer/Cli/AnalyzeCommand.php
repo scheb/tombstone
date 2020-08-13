@@ -21,15 +21,6 @@ use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Analyzer\Report\Checkstyle\CheckstyleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Console\ConsoleReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportGenerator;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryItemRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileSourceCodeRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileTombstoneListRenderer;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpFileFormatter;
-use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpSyntaxHighlighter;
 use Scheb\Tombstone\Analyzer\Report\Php\PhpReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\ReportExporter;
 use Scheb\Tombstone\Analyzer\Source\TombstoneExtractor;
@@ -112,40 +103,7 @@ class AnalyzeCommand extends AbstractCommand
         $this->output->writeln('Analyze tombstones ...');
         $result = $analyzer->process($tombstoneIndex, $vampireIndex);
 
-        $reportGenerators = [];
-        if (isset($config['report']['console'])) {
-            $reportGenerators[] = new ConsoleReportGenerator($this->output);
-        }
-        if (isset($config['report']['html'])) {
-            $breadCrumbRenderer = new BreadCrumbRenderer($sourceRootPath);
-            $reportGenerators[] = new HtmlReportGenerator(
-                $config['report']['html'],
-                new DashboardRenderer(
-                    $config['report']['html'],
-                    $breadCrumbRenderer
-                ),
-                new DirectoryRenderer(
-                    $config['report']['html'],
-                    $breadCrumbRenderer,
-                    new DirectoryItemRenderer()
-                ),
-                new FileRenderer(
-                    $config['report']['html'],
-                    $breadCrumbRenderer,
-                    new FileTombstoneListRenderer(),
-                    new FileSourceCodeRenderer(new PhpFileFormatter(new PhpSyntaxHighlighter()))
-                )
-            );
-        }
-        if (isset($config['report']['checkstyle'])) {
-            $reportGenerators[] = new CheckstyleReportGenerator($config['report']['checkstyle']);
-        }
-        if (isset($config['report']['php'])) {
-            $reportGenerators[] = new PhpReportGenerator($config['report']['php']);
-        }
-
-        $reportExporter = new ReportExporter($this->output, $reportGenerators);
-        $reportExporter->generate($result);
+        $this->createReportExporter($config)->generate($result);
     }
 
     private function createTombstoneExtractor(TombstoneIndex $tombstoneIndex): TombstoneExtractorInterface
@@ -199,5 +157,24 @@ class AnalyzeCommand extends AbstractCommand
             $progress->advance();
         }
         $this->output->writeln();
+    }
+
+    private function createReportExporter(array $config): ReportExporter
+    {
+        $reportGenerators = [];
+        if (isset($config['report']['console'])) {
+            $reportGenerators[] = ConsoleReportGenerator::create($config, $this->output);
+        }
+        if (isset($config['report']['html'])) {
+            $reportGenerators[] = HtmlReportGenerator::create($config, $this->output);
+        }
+        if (isset($config['report']['checkstyle'])) {
+            $reportGenerators[] = CheckstyleReportGenerator::create($config, $this->output);
+        }
+        if (isset($config['report']['php'])) {
+            $reportGenerators[] = PhpReportGenerator::create($config, $this->output);
+        }
+
+        return new ReportExporter($this->output, $reportGenerators);
     }
 }

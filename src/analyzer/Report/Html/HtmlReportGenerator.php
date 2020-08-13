@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report\Html;
 
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\FileSystem;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DashboardRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryItemRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\DirectoryRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileSourceCodeRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileTombstoneListRenderer;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpFileFormatter;
+use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpSyntaxHighlighter;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
+use Scheb\Tombstone\Core\Model\RootPath;
 
 class HtmlReportGenerator implements ReportGeneratorInterface
 {
@@ -71,6 +79,31 @@ class HtmlReportGenerator implements ReportGeneratorInterface
         FileSystem::copyDirectoryFiles(
             FileSystem::createPath(self::TEMPLATE_DIR, 'img'),
             FileSystem::createPath($this->reportDir, '_img')
+        );
+    }
+
+    public static function create(array $config, ConsoleOutputInterface $consoleOutput): ReportGeneratorInterface
+    {
+        $sourceRootPath = new RootPath($config['source_code']['root_directory']);
+        $breadCrumbRenderer = new BreadCrumbRenderer($sourceRootPath);
+
+        return new HtmlReportGenerator(
+            $config['report']['html'],
+            new DashboardRenderer(
+                $config['report']['html'],
+                $breadCrumbRenderer
+            ),
+            new DirectoryRenderer(
+                $config['report']['html'],
+                $breadCrumbRenderer,
+                new DirectoryItemRenderer()
+            ),
+            new FileRenderer(
+                $config['report']['html'],
+                $breadCrumbRenderer,
+                new FileTombstoneListRenderer(),
+                new FileSourceCodeRenderer(new PhpFileFormatter(new PhpSyntaxHighlighter()))
+            )
         );
     }
 }

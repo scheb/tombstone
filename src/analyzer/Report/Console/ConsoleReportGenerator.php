@@ -29,6 +29,11 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $this->now = time();
     }
 
+    public static function create(array $config, ConsoleOutputInterface $consoleOutput): ReportGeneratorInterface
+    {
+        return new self($consoleOutput);
+    }
+
     public function getName(): string
     {
         return 'Console';

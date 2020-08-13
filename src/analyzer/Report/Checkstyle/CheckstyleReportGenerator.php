@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report\Checkstyle;
 
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
@@ -18,6 +19,11 @@ class CheckstyleReportGenerator implements ReportGeneratorInterface
     public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
+    }
+
+    public static function create(array $config, ConsoleOutputInterface $consoleOutput): ReportGeneratorInterface
+    {
+        return new self($config['report']['checkstyle']);
     }
 
     public function getName(): string
