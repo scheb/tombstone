@@ -49,6 +49,9 @@ class ConfigurationLoaderTest extends TestCase
         $this->assertEquals(['processed'], $returnValue);
     }
 
+    /**
+     * @return MockObject|ConfigProviderInterface
+     */
     private function createProviderReturns(array $config): MockObject
     {
         $provider = $this->createMock(ConfigProviderInterface::class);
