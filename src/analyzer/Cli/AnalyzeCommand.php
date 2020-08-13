@@ -149,7 +149,7 @@ class AnalyzeCommand extends AbstractCommand
         $reportExporter->generate($result);
     }
 
-    public function createTombstoneExtractor(TombstoneIndex $tombstoneIndex): TombstoneExtractorInterface
+    private function createTombstoneExtractor(TombstoneIndex $tombstoneIndex): TombstoneExtractorInterface
     {
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         $traverser = new NodeTraverser();
