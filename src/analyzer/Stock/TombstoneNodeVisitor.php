@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Analyzer\Source;
+namespace Scheb\Tombstone\Analyzer\Stock;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\NodeVisitor\NameResolver;
 
-class TombstoneVisitor extends NameResolver
+class TombstoneNodeVisitor extends NameResolver
 {
     /**
      * @var string|null

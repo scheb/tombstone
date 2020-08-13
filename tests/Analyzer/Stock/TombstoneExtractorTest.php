@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests\Analyzer\Source;
+namespace Scheb\Tombstone\Tests\Analyzer\Stock;
 
 use PhpParser\Error;
 use PhpParser\Node\Stmt;
@@ -10,14 +10,19 @@ use PhpParser\NodeTraverserInterface;
 use PhpParser\Parser;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
-use Scheb\Tombstone\Analyzer\Source\TombstoneExtractionException;
-use Scheb\Tombstone\Analyzer\Source\TombstoneExtractor;
+use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
+use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractorException;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
-use Scheb\Tombstone\Core\Model\Tombstone;
+use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Tests\TestCase;
 
 class TombstoneExtractorTest extends TestCase
 {
+    /**
+     * @var MockObject|FilePathInterface
+     */
+    private $filePath;
+
     /**
      * @var MockObject|Parser
      */
@@ -40,22 +45,18 @@ class TombstoneExtractorTest extends TestCase
 
     protected function setUp(): void
     {
+        $this->filePath = $this->createMock(FilePathInterface::class);
+        $sourceRootPath = $this->createMock(RootPath::class);
+        $sourceRootPath
+            ->expects($this->any())
+            ->method('createFilePath')
+            ->willReturn($this->filePath);
+
         $this->parser = $this->createMock(Parser::class);
         $this->traverser = $this->createMock(NodeTraverserInterface::class);
         $this->tombstoneIndex = $this->createMock(TombstoneIndex::class);
 
-        $this->extractor = new TombstoneExtractor($this->parser, $this->traverser, $this->tombstoneIndex);
-    }
-
-    private function createFilePath(string $absoluteFilePath): FilePathInterface
-    {
-        $filePath = $this->createMock(FilePathInterface::class);
-        $filePath
-            ->expects($this->any())
-            ->method('getAbsolutePath')
-            ->willReturn($absoluteFilePath);
-
-        return $filePath;
+        $this->extractor = new TombstoneExtractor($this->parser, $this->traverser, $sourceRootPath);
     }
 
     /**
@@ -63,7 +64,6 @@ class TombstoneExtractorTest extends TestCase
      */
     public function extractTombstones_tombstoneFound_addToTombstoneIndex(): void
     {
-        $filePath = $this->createFilePath(__DIR__.'/fixtures/parameters.php');
         $statements = [$this->createMock(Stmt::class)];
         $this->parser
             ->expects($this->once())
@@ -81,19 +81,14 @@ class TombstoneExtractorTest extends TestCase
                 return $statements;
             });
 
-        $this->tombstoneIndex
-            ->expects($this->once())
-            ->method('addTombstone')
-            ->with($this->callback(function (Tombstone $tombstone) use ($filePath): bool {
-                $this->assertEquals(['args'], $tombstone->getArguments());
-                $this->assertSame($filePath, $tombstone->getFile());
-                $this->assertEquals(123, $tombstone->getLine());
-                $this->assertEquals('method', $tombstone->getMethod());
+        $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/parameters.php');
 
-                return true;
-            }));
-
-        $this->extractor->extractTombstones($filePath);
+        $this->assertCount(1, $returnValue);
+        $tombstone = $returnValue[0];
+        $this->assertEquals(['args'], $tombstone->getArguments());
+        $this->assertSame($this->filePath, $tombstone->getFile());
+        $this->assertEquals(123, $tombstone->getLine());
+        $this->assertEquals('method', $tombstone->getMethod());
     }
 
     /**
@@ -101,12 +96,10 @@ class TombstoneExtractorTest extends TestCase
      */
     public function extractTombstones_fileNotReadable_throwTombstoneExtractionException(): void
     {
-        $filePath = $this->createFilePath(__DIR__.'/does_not_exist');
-
-        $this->expectException(TombstoneExtractionException::class);
+        $this->expectException(TombstoneExtractorException::class);
         $this->expectExceptionMessage('is not readable');
 
-        $this->extractor->extractTombstones($filePath);
+        $this->extractor->extractTombstones(__DIR__.'/does_not_exist');
     }
 
     /**
@@ -114,16 +107,15 @@ class TombstoneExtractorTest extends TestCase
      */
     public function extractTombstones_parserReturnsNull_throwTombstoneExtractionException(): void
     {
-        $filePath = $this->createFilePath(__DIR__.'/fixtures/parameters.php');
         $this->parser
             ->expects($this->any())
             ->method('parse')
             ->willReturn(null);
 
-        $this->expectException(TombstoneExtractionException::class);
+        $this->expectException(TombstoneExtractorException::class);
         $this->expectExceptionMessage('could not be parsed');
 
-        $this->extractor->extractTombstones($filePath);
+        $this->extractor->extractTombstones(__DIR__.'/fixtures/parameters.php');
     }
 
     /**
@@ -131,16 +123,15 @@ class TombstoneExtractorTest extends TestCase
      */
     public function extractTombstones_parserThrowsError_throwTombstoneExtractionException(): void
     {
-        $filePath = $this->createFilePath(__DIR__.'/fixtures/parameters.php');
         $this->parser
             ->expects($this->any())
             ->method('parse')
             ->willThrowException(new Error('msg'));
 
-        $this->expectException(TombstoneExtractionException::class);
+        $this->expectException(TombstoneExtractorException::class);
         $this->expectExceptionMessage('could not be parsed');
 
-        $this->extractor->extractTombstones($filePath);
+        $this->extractor->extractTombstones(__DIR__.'/fixtures/parameters.php');
     }
 
     /**
@@ -148,7 +139,6 @@ class TombstoneExtractorTest extends TestCase
      */
     public function extractTombstones_traverserThrowsError_throwTombstoneExtractionException(): void
     {
-        $filePath = $this->createFilePath(__DIR__.'/fixtures/parameters.php');
         $this->parser
             ->expects($this->any())
             ->method('parse')
@@ -159,9 +149,9 @@ class TombstoneExtractorTest extends TestCase
             ->method('traverse')
             ->willThrowException(new Error('msg'));
 
-        $this->expectException(TombstoneExtractionException::class);
+        $this->expectException(TombstoneExtractorException::class);
         $this->expectExceptionMessage('could not be parsed');
 
-        $this->extractor->extractTombstones($filePath);
+        $this->extractor->extractTombstones(__DIR__.'/fixtures/parameters.php');
     }
 }
