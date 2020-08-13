@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
-use Scheb\Tombstone\Analyzer\Log\LogReaderException;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerLogProviderException;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -21,7 +21,7 @@ class AnalyzerLogFileReaderTest extends TestCase
     private $rootDir;
 
     /**
-     * @var MockObject|ConsoleOutput
+     * @var MockObject|ConsoleOutputInterface
      */
     private $output;
 
@@ -33,16 +33,16 @@ class AnalyzerLogFileReaderTest extends TestCase
     protected function setUp(): void
     {
         $this->rootDir = $this->createMock(RootPath::class);
-        $this->output = $this->createMock(ConsoleOutput::class);
+        $this->output = $this->createMock(ConsoleOutputInterface::class);
         $this->logFileReader = new AnalyzerLogFileReader($this->rootDir, $this->output);
     }
 
     /**
      * @test
      */
-    public function readLogFile_fileNotReadable_throwLogReaderException(): void
+    public function readLogFile_fileNotReadable_throwAnalyzerLogProviderException(): void
     {
-        $this->expectException(LogReaderException::class);
+        $this->expectException(AnalyzerLogProviderException::class);
         $traversable = $this->logFileReader->readLogFile(__DIR__.'/fixtures/non_existent_file');
         iterator_to_array($traversable);
     }

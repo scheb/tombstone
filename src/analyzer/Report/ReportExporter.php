@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report;
 
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 
 class ReportExporter
 {
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      */
     private $output;
 
@@ -19,7 +19,7 @@ class ReportExporter
      */
     private $reportGenerators;
 
-    public function __construct(ConsoleOutput $output, array $reportGenerators)
+    public function __construct(ConsoleOutputInterface $output, array $reportGenerators)
     {
         $this->output = $output;
         $this->reportGenerators = $reportGenerators;

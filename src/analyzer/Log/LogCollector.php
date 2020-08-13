@@ -9,25 +9,25 @@ use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 class LogCollector
 {
     /**
-     * @var LogReaderInterface[]
+     * @var LogProviderInterface[]
      */
-    private $logReaders;
+    private $logProviders;
 
     /**
      * @var VampireIndex
      */
     private $vampireIndex;
 
-    public function __construct(array $logReaders, VampireIndex $vampireIndex)
+    public function __construct(array $logProviders, VampireIndex $vampireIndex)
     {
-        $this->logReaders = $logReaders;
+        $this->logProviders = $logProviders;
         $this->vampireIndex = $vampireIndex;
     }
 
     public function collectLogs(): void
     {
-        foreach ($this->logReaders as $logReader) {
-            foreach ($logReader->iterateVampires() as $vampire) {
+        foreach ($this->logProviders as $logProvider) {
+            foreach ($logProvider->getVampires() as $vampire) {
                 $this->vampireIndex->addVampire($vampire);
             }
         }

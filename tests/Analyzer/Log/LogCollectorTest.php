@@ -5,35 +5,35 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
-use Scheb\Tombstone\Analyzer\Log\LogReaderInterface;
+use Scheb\Tombstone\Analyzer\Log\LogProviderInterface;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
 
 class LogCollectorTest extends TestCase
 {
-    private function createReader(array $vampires): LogReaderInterface
+    private function createProvider(array $vampires): LogProviderInterface
     {
-        $reader = $this->createMock(LogReaderInterface::class);
-        $reader
+        $provider = $this->createMock(LogProviderInterface::class);
+        $provider
             ->expects($this->any())
-            ->method('iterateVampires')
+            ->method('getVampires')
             ->willReturn(new \ArrayIterator($vampires));
 
-        return $reader;
+        return $provider;
     }
 
     /**
      * @test
      */
-    public function collectLogs_multipleReaders_addVampiresFromEachReaderToIndex(): void
+    public function collectLogs_multipleProviders_addVampiresFromEachProviderToIndex(): void
     {
         $vampire1 = $this->createMock(Vampire::class);
         $vampire2 = $this->createMock(Vampire::class);
         $vampire3 = $this->createMock(Vampire::class);
 
-        $reader1 = $this->createReader([$vampire1, $vampire2]);
-        $reader2 = $this->createReader([$vampire3]);
+        $provider1 = $this->createProvider([$vampire1, $vampire2]);
+        $provider2 = $this->createProvider([$vampire3]);
         $vampireIndex = $this->createMock(VampireIndex::class);
 
         $vampireIndex
@@ -45,7 +45,7 @@ class LogCollectorTest extends TestCase
                 [$this->identicalTo($vampire3)]
             );
 
-        $collector = new LogCollector([$reader1, $reader2], $vampireIndex);
+        $collector = new LogCollector([$provider1, $provider2], $vampireIndex);
         $collector->collectLogs();
     }
 }

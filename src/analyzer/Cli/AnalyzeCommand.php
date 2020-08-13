@@ -10,8 +10,7 @@ use PhpParser\ParserFactory;
 use Scheb\Tombstone\Analyzer\Config\Configuration;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
-use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
-use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerLogProvider;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
@@ -53,7 +52,7 @@ class AnalyzeCommand extends AbstractCommand
     private $input;
 
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      * @psalm-suppress PropertyNotSetInConstructor
      */
     private $output;
@@ -100,7 +99,7 @@ class AnalyzeCommand extends AbstractCommand
 
         $tombstoneExtractor = $this->createTombstoneExtractor($tombstoneIndex);
 
-        $logCollector = $this->createLogCollector($config, $sourceRootPath, $vampireIndex);
+        $logCollector = $this->createLogCollector($config, $vampireIndex);
         $analyzer = $this->createAnalyzer();
 
         $this->output->writeln('Scan source code ...');
@@ -169,18 +168,14 @@ class AnalyzeCommand extends AbstractCommand
         return new Processor(new VampireMatcher($matchingStrategies));
     }
 
-    private function createLogCollector(array $config, RootPath $rootDir, VampireIndex $vampireIndex): LogCollector
+    private function createLogCollector(array $config, VampireIndex $vampireIndex): LogCollector
     {
-        $logReaders = [];
+        $logProviders = [];
         if (isset($config['logs']['directory'])) {
-            $logReaders[] = new AnalyzerLogDirectoryReader(
-                new AnalyzerLogFileReader($rootDir, $this->output),
-                $config['logs']['directory'],
-                $this->output
-            );
+            $logProviders[] = AnalyzerLogProvider::create($config, $this->output);
         }
 
-        return new LogCollector($logReaders, $vampireIndex);
+        return new LogCollector($logProviders, $vampireIndex);
     }
 
     private function collectSourceFiles(array $config): array

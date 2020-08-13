@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Report\Console;
 
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
 use Scheb\Tombstone\Analyzer\Report\TimePeriodFormatter;
@@ -14,7 +14,7 @@ use Scheb\Tombstone\Core\Model\Vampire;
 class ConsoleReportGenerator implements ReportGeneratorInterface
 {
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      */
     private $output;
 
@@ -23,7 +23,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
      */
     private $now;
 
-    public function __construct(ConsoleOutput $output)
+    public function __construct(ConsoleOutputInterface $output)
     {
         $this->output = $output;
         $this->now = time();

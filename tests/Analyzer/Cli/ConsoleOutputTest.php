@@ -6,6 +6,7 @@ namespace Scheb\Tombstone\Tests\Analyzer\Cli;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Tests\TestCase;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +19,7 @@ class ConsoleOutputTest extends TestCase
     private $outputInterface;
 
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      */
     private $consoleOutput;
 

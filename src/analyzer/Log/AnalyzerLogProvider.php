@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Log;
 
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
+use Scheb\Tombstone\Core\Model\RootPath;
 use SebastianBergmann\FinderFacade\FinderFacade;
 
-class AnalyzerLogDirectoryReader implements LogReaderInterface
+class AnalyzerLogProvider implements LogProviderInterface
 {
     /**
      * @var AnalyzerLogFileReader
@@ -20,18 +21,29 @@ class AnalyzerLogDirectoryReader implements LogReaderInterface
     private $logDir;
 
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      */
     private $output;
 
-    public function __construct(AnalyzerLogFileReader $logFileReader, string $logDir, ConsoleOutput $output)
+    public function __construct(AnalyzerLogFileReader $logFileReader, string $logDir, ConsoleOutputInterface $output)
     {
         $this->logFileReader = $logFileReader;
         $this->logDir = $logDir;
         $this->output = $output;
     }
 
-    public function iterateVampires(): \Traversable
+    public static function create(array $config, ConsoleOutputInterface $consoleOutput): LogProviderInterface
+    {
+        $rootDir = new RootPath($config['source_code']['root_directory']);
+
+        return new self(
+            new AnalyzerLogFileReader($rootDir, $consoleOutput),
+            $config['logs']['directory'],
+            $consoleOutput
+        );
+    }
+
+    public function getVampires(): iterable
     {
         $finder = new FinderFacade([$this->logDir], [], ['*.tombstone']);
         $files = $finder->findFiles();

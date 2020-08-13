@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Analyzer\Log;
 
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormat;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
 use Scheb\Tombstone\Core\Model\RootPath;
@@ -18,11 +18,11 @@ class AnalyzerLogFileReader
     private $rootDir;
 
     /**
-     * @var ConsoleOutput
+     * @var ConsoleOutputInterface
      */
     private $output;
 
-    public function __construct(RootPath $rootDir, ConsoleOutput $output)
+    public function __construct(RootPath $rootDir, ConsoleOutputInterface $output)
     {
         $this->rootDir = $rootDir;
         $this->output = $output;
@@ -35,7 +35,7 @@ class AnalyzerLogFileReader
     {
         $handle = @fopen($file, 'r');
         if (false === $handle) {
-            throw new LogReaderException(sprintf('Could not read log file %s', $file));
+            throw new AnalyzerLogProviderException(sprintf('Could not read log file %s', $file));
         }
 
         $lineNumber = 0;

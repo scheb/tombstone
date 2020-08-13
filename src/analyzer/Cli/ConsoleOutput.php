@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Analyzer\Cli;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConsoleOutput
+class ConsoleOutput implements ConsoleOutputInterface
 {
     /**
      * @var OutputInterface

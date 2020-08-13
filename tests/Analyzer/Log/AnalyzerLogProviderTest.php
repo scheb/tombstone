@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
+use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Cli\ProgressBar;
-use Scheb\Tombstone\Analyzer\Log\AnalyzerLogDirectoryReader;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerLogProvider;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
 
-class AnalyzerLogDirectoryReaderTest extends TestCase
+class AnalyzerLogProviderTest extends TestCase
 {
     /**
      * @var MockObject|AnalyzerLogFileReader
@@ -20,20 +20,20 @@ class AnalyzerLogDirectoryReaderTest extends TestCase
     private $logFileReader;
 
     /**
-     * @var MockObject|ConsoleOutput
+     * @var MockObject|ConsoleOutputInterface
      */
     private $consoleOutput;
 
     /**
-     * @var AnalyzerLogDirectoryReader
+     * @var AnalyzerLogProvider
      */
-    private $directoryLogReader;
+    private $logProvider;
 
     protected function setUp(): void
     {
         $this->logFileReader = $this->createMock(AnalyzerLogFileReader::class);
-        $this->consoleOutput = $this->createMock(ConsoleOutput::class);
-        $this->directoryLogReader = new AnalyzerLogDirectoryReader($this->logFileReader, __DIR__.'/fixtures', $this->consoleOutput);
+        $this->consoleOutput = $this->createMock(ConsoleOutputInterface::class);
+        $this->logProvider = new AnalyzerLogProvider($this->logFileReader, __DIR__.'/fixtures', $this->consoleOutput);
     }
 
     /**
@@ -57,7 +57,7 @@ class AnalyzerLogDirectoryReaderTest extends TestCase
                 new \ArrayIterator([$vampire3])
             );
 
-        $traversable = $this->directoryLogReader->iterateVampires();
+        $traversable = $this->logProvider->getVampires();
         $items = iterator_to_array($traversable, false);
 
         $this->assertCount(3, $items);
@@ -84,7 +84,7 @@ class AnalyzerLogDirectoryReaderTest extends TestCase
             ->method('createProgressBar')
             ->willReturn($progressBar);
 
-        $traversable = $this->directoryLogReader->iterateVampires();
+        $traversable = $this->logProvider->getVampires();
         iterator_to_array($traversable, false);
     }
 }
