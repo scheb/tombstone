@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests\Analyzer\Processing;
+namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
+use Scheb\Tombstone\Analyzer\Matching\VampireMatcher;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
-use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
@@ -58,7 +58,7 @@ class VampireMatcherTest extends TestCase
         $this->tombstoneIndex = $this->createMock(TombstoneIndex::class);
         $this->matchingTombstone = $this->createMock(Tombstone::class);
 
-        $this->matcher = new VampireMatcher([
+        $this->matcher = new \Scheb\Tombstone\Analyzer\Matching\VampireMatcher([
             $this->matchingStrategy1,
             $this->matchingStrategy2,
         ]);

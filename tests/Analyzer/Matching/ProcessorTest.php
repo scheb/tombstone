@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Scheb\Tombstone\Tests\Analyzer\Processing;
+namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use Scheb\Tombstone\Analyzer\Matching\Processor;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
-use Scheb\Tombstone\Analyzer\Processing\Processor;
-use Scheb\Tombstone\Analyzer\Processing\VampireMatcher;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
@@ -16,7 +15,7 @@ use Scheb\Tombstone\Tests\TestCase;
 class ProcessorTest extends TestCase
 {
     /**
-     * @var MockObject|VampireMatcher
+     * @var MockObject|\Scheb\Tombstone\Analyzer\Matching\VampireMatcher
      */
     private $matcher;
 
@@ -65,7 +64,7 @@ class ProcessorTest extends TestCase
                 return new \ArrayIterator($this->tombstones);
             });
 
-        $this->matcher = $this->createMock(VampireMatcher::class);
+        $this->matcher = $this->createMock(\Scheb\Tombstone\Analyzer\Matching\VampireMatcher::class);
         $this->processor = new Processor($this->matcher);
     }
 
