@@ -1,4 +1,4 @@
-source:
-    rootDirectory: src
+source_code:
+    root_directory: src
 logs:
     directory: logs

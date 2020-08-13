@@ -26,8 +26,8 @@ class YamlConfigProviderTest extends TestCase
         $config = $this->readConfiguration('minimum.yml');
 
         $expectedConfig = [
-            'source' => [
-                'rootDirectory' => self::CONFIG_DIR.'src',
+            'source_code' => [
+                'root_directory' => self::CONFIG_DIR.'src',
             ],
             'logs' => [
                 'directory' => self::CONFIG_DIR.'logs',
@@ -45,15 +45,15 @@ class YamlConfigProviderTest extends TestCase
         $config = $this->readConfiguration('full.yml');
 
         $expectedConfig = [
-            'source' => [
-                'rootDirectory' => self::CONFIG_DIR.'src',
+            'source_code' => [
+                'root_directory' => self::CONFIG_DIR.'src',
                 'excludes' => [
                     'tests',
                 ],
                 'names' => [
                     '*.php',
                 ],
-                'notNames' => [
+                'not_names' => [
                     '*.js',
                 ],
             ],

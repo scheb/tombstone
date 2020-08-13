@@ -16,11 +16,17 @@ class ConfigurationTest extends TestCase
     private const REPORT_DIR = self::APPLICATION_DIR.'/report';
     private const LOGS_DIR = self::APPLICATION_DIR.'/logs';
 
-    private const VALID_CONFIG = [
-        'source' => [
-            'rootDirectory' => self::APPLICATION_DIR,
+    private const FULL_CONFIG = [
+        'source_code' => [
+            'root_directory' => self::APPLICATION_DIR,
         ],
-        'rootDir' => self::APPLICATION_DIR,
+        'tombstones' => [
+            'parser' => [
+                'excludes' => ['tests'],
+                'names' => ['*.php'],
+                'not_names' => ['*.js'],
+            ],
+        ],
         'logs' => [
             'directory' => self::LOGS_DIR,
         ],
@@ -29,6 +35,15 @@ class ConfigurationTest extends TestCase
             'checkstyle' => self::REPORT_DIR.'/checkstyle.xml',
             'html' => self::REPORT_DIR,
             'console' => true,
+        ],
+    ];
+
+    private const MINIMUM_CONFIG = [
+        'source_code' => [
+            'root_directory' => self::APPLICATION_DIR,
+        ],
+        'logs' => [
+            'directory' => self::LOGS_DIR,
         ],
     ];
 
@@ -43,9 +58,40 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_additionalConfig_isPassedThrough()
+    public function getConfigTreeBuilder_validFullConfig_returnSameConfig(): void
     {
-        $config = self::VALID_CONFIG;
+        $config = self::FULL_CONFIG;
+        $expectedProcessedConfig = $config;
+
+        $processedConfig = $this->processConfiguration($config);
+        $this->assertEquals($expectedProcessedConfig, $processedConfig);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_validMinimumConfig_addDefaultValues(): void
+    {
+        $config = self::MINIMUM_CONFIG;
+        $expectedProcessedConfig = $config;
+        $expectedProcessedConfig['tombstones']['parser']['excludes'] = [];
+        $expectedProcessedConfig['tombstones']['parser']['names'] = ['*.php'];
+        $expectedProcessedConfig['tombstones']['parser']['not_names'] = [];
+        $expectedProcessedConfig['report']['console'] = true;
+        $expectedProcessedConfig['report']['php'] = null;
+        $expectedProcessedConfig['report']['checkstyle'] = null;
+        $expectedProcessedConfig['report']['html'] = null;
+
+        $processedConfig = $this->processConfiguration($config);
+        $this->assertEquals($expectedProcessedConfig, $processedConfig);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_additionalConfigValue_isPassedThrough(): void
+    {
+        $config = self::FULL_CONFIG;
         $config['additional'] = 'value';
 
         $processedConfig = $this->processConfiguration($config);
@@ -56,52 +102,49 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_validConfig_returnProcessedConfig()
+    public function getConfigTreeBuilder_missingSourceCodeNode_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
-        $expectedProcessedConfig = $config;
-        $expectedProcessedConfig['source']['excludes'] = [];
-        $expectedProcessedConfig['source']['names'] = ['*.php'];
-        $expectedProcessedConfig['source']['notNames'] = [];
-        $expectedProcessedConfig['report']['console'] = true;
-
-        $processedConfig = $this->processConfiguration($config);
-        $this->assertEquals($expectedProcessedConfig, $processedConfig);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_missingSourceNode_throwsException()
-    {
-        $config = self::VALID_CONFIG;
-        unset($config['source']);
+        $config = self::FULL_CONFIG;
+        unset($config['source_code']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "source" at path "root" must be configured.');
+        $this->expectExceptionMessage('child node "source_code" at path "" must be configured');
         $this->processConfiguration($config);
     }
 
     /**
      * @test
      */
-    public function getConfigTreeBuilder_missingRootDirectory_throwsException()
+    public function getConfigTreeBuilder_missingRootDirectory_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
-        unset($config['source']['rootDirectory']);
+        $config = self::FULL_CONFIG;
+        unset($config['source_code']['root_directory']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('must be configured');
+        $this->expectExceptionMessage('child node "root_directory" at path ".source_code" must be configured');
         $this->processConfiguration($config);
     }
 
     /**
      * @test
      */
-    public function getConfigTreeBuilder_invalidRootDirectory_throwsException()
+    public function getConfigTreeBuilder_emptyRootDirectory_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
-        $config['source']['rootDirectory'] = 'invalid';
+        $config = self::FULL_CONFIG;
+        $config['source_code']['root_directory'] = '';
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('path ".source_code.root_directory" cannot contain an empty value');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_invalidRootDirectory_throwsException(): void
+    {
+        $config = self::FULL_CONFIG;
+        $config['source_code']['root_directory'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
@@ -111,48 +154,35 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_missingLogNode_throwsException()
+    public function getConfigTreeBuilder_missingLogNode_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
+        $config = self::FULL_CONFIG;
         unset($config['logs']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "logs" at path "root" must be configured.');
+        $this->expectExceptionMessage('The child node "logs" at path "" must be configured.');
         $this->processConfiguration($config);
     }
 
     /**
      * @test
      */
-    public function getConfigTreeBuilder_missingLogProvider_throwsException()
+    public function getConfigTreeBuilder_emptyLogDirectory_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
-        $config['logs'] = [];
+        $config = self::FULL_CONFIG;
+        $config['logs']['directory'] = '';
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('Must have at least one log provider configured');
+        $this->expectExceptionMessage('path ".logs.directory" cannot contain an empty value');
         $this->processConfiguration($config);
     }
 
     /**
      * @test
      */
-    public function getConfigTreeBuilder_emptyLogDirectory_throwsException()
+    public function getConfigTreeBuilder_invalidLogDirectory_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
-        $config['logs']['directory'] = null;
-
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('cannot contain an empty value, but got null');
-        $this->processConfiguration($config);
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigTreeBuilder_invalidLogDirectory_throwsException()
-    {
-        $config = self::VALID_CONFIG;
+        $config = self::FULL_CONFIG;
         $config['logs']['directory'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
@@ -163,9 +193,9 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_invalidHtmlReportDirectory_throwsException()
+    public function getConfigTreeBuilder_invalidHtmlReportDirectory_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
+        $config = self::FULL_CONFIG;
         $config['report']['html'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
@@ -176,9 +206,9 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function getConfigTreeBuilder_invalidPhpReportFile_throwsException()
+    public function getConfigTreeBuilder_invalidPhpReportFile_throwsException(): void
     {
-        $config = self::VALID_CONFIG;
+        $config = self::FULL_CONFIG;
         $config['report']['php'] = self::REPORT_DIR;
 
         $this->expectException(InvalidConfigurationException::class);

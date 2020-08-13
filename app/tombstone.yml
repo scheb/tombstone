@@ -1,11 +1,13 @@
-source:
-    rootDirectory: .
-    excludes:
-        - run.php
-    names:
-        - "*.php"
-    notNames:
-        - "*.js"
+source_code:
+    root_directory: .
+tombstones:
+    parser:
+        excludes:
+            - run.php
+        names:
+            - "*.php"
+        not_names:
+            - "*.js"
 logs:
     directory: logs
 report:

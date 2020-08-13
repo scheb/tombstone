@@ -32,8 +32,8 @@ class YamlConfigProvider implements ConfigProviderInterface
     {
         $config = Yaml::parseFile($this->configFile);
 
-        if (isset($config['source']['rootDirectory'])) {
-            $config['source']['rootDirectory'] = $this->resolvePath($config['source']['rootDirectory']);
+        if (isset($config['source_code']['root_directory'])) {
+            $config['source_code']['root_directory'] = $this->resolvePath($config['source_code']['root_directory']);
         }
 
         if (isset($config['logs']['directory'])) {

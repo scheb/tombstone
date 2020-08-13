@@ -94,7 +94,7 @@ class AnalyzeCommand extends AbstractCommand
         $configLoader = new ConfigurationLoader(new ConfigurationProcessor(), new Configuration());
         $config = $configLoader->loadConfiguration([new YamlConfigProvider($configFile)]);
 
-        $sourceRootPath = new RootPath($config['source']['rootDirectory']);
+        $sourceRootPath = new RootPath($config['source_code']['root_directory']);
         $tombstoneIndex = new TombstoneIndex();
         $vampireIndex = new VampireIndex();
 
@@ -186,10 +186,10 @@ class AnalyzeCommand extends AbstractCommand
     private function collectSourceFiles(array $config): array
     {
         $finder = new FinderFacade(
-            [$config['source']['rootDirectory']],
-            $config['source']['excludes'],
-            $config['source']['names'],
-            $config['source']['notNames']
+            [$config['source_code']['root_directory']],
+            $config['tombstones']['parser']['excludes'],
+            $config['tombstones']['parser']['names'],
+            $config['tombstones']['parser']['not_names']
         );
 
         return $finder->findFiles();

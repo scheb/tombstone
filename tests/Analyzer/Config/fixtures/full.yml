@@ -1,10 +1,10 @@
-source:
-    rootDirectory: src
+source_code:
+    root_directory: src
     excludes:
         - tests
     names:
         - "*.php"
-    notNames:
+    not_names:
         - "*.js"
 logs:
     directory: logs
