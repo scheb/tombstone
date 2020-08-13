@@ -35,3 +35,9 @@ The `Scheb\Tombstone\Logger\Graveyard\GraveyardInterface` has changed, please up
 
 File `tombstone.php`, providing the `tombstone()` and located in the root directory of the `scheb/tombstone-logger`
 package, was renamed to `tombstone-function.php`.
+
+### Tombstone Analyzer
+
+If you used the YAML configuration before (since `scheb/tombstone-analyzer` version 0.4.0), you need to update your
+configuration file. If you used an older version, you need to create such a config file. See the
+[Configuration Reference](doc/analyzer/configuration.md).
