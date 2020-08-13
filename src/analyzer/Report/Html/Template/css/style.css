@@ -1,5 +1,10 @@
-body {
-    padding-top: 10px;
+header .navbar {
+    margin-bottom: 20px;
+}
+
+.navbar-brand img {
+    vertical-align: text-bottom;
+    opacity: 0.5;
 }
 
 .progress {
@@ -8,6 +13,12 @@ body {
 
 .dashboard h3 {
     margin-top: 0.8em;
+    font-size: 1.2em;
+}
+
+.dashboard h3 .octicon {
+    height: 1.2em;
+    vertical-align: text-bottom;
 }
 
 .tombstone-list {
@@ -15,6 +26,7 @@ body {
 }
 
 .tombstone-list img {
+    height: 20px;
     vertical-align: bottom;
 }
 
@@ -32,8 +44,10 @@ body {
     background-color: #f5f5f5;
 }
 
-.directory-list .glyphicon {
+.directory-list .octicon {
     margin-right: 0.25em;
+    display: inline-block;
+    vertical-align: bottom;
 }
 
 .source-code td.number {
@@ -45,23 +59,14 @@ body {
     width: 100%;
 }
 
-.octicon {
-    display: inline-block;
-    vertical-align: baseline;
-    fill: currentColor;
-}
-
-h3 .octicon {
-    height: 32px;
-    vertical-align: text-bottom;
-}
-
 .icon-vampire td.number {
-    background: url('../_img/vampire.png') left center no-repeat;
+    background: url('../_icons/vampire.svg') left center no-repeat;
+    background-size: 20px;
 }
 
 .icon-cross td.number {
-    background: url('../_img/cross.png') left center no-repeat;
+    background: url('../_icons/cross.svg') left center no-repeat;
+    background-size: 20px;
 }
 
 .tombstones-total {
@@ -89,8 +94,8 @@ h3 .octicon {
 }
 
 .table tbody > tr > td, .table thead > tr > td {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .table-condensed tbody > tr > td {
@@ -149,4 +154,14 @@ span.success, span.warning, span.danger {
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
+}
+
+.legend span {
+    padding: 2px 7px;
+    display: inline-block;
+}
+
+.legend img {
+    height: 20px;
+    vertical-align: text-bottom;
 }

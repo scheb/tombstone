@@ -9,13 +9,27 @@
 </head>
 <body>
 <header>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href="{{path_to_root}}index.html" class="navbar-brand">
+            <img src="{{path_to_root}}_icons/tombstone.svg" alt="Tombstone Icon" />
+            Tombstone Report
+        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <span class="nav-link">Source</span>
+            </li>
+            <li class="nav-item">
+                <a href="{{path_to_root}}dashboard.html" class="nav-link">Dashboard</a>
+            </li>
+        </ul>
+    </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-{{breadcrumb}}
-                        <li class="breadcrumb-item">(<a href="{{path_to_root}}dashboard.html">Dashboard</a>)</li>
+                        <li class="breadcrumb-item"><a href="{{path_to_root}}index.html"><img src="{{path_to_root}}_icons/home.svg" alt="Home" /></a></li>
+                        {{breadcrumb}}
                     </ol>
                 </nav>
             </div>
@@ -24,26 +38,14 @@
 </header>
 <div class="container-fluid">
     <div class="table-responsive-md">
-        <table class="table table-bordered directory-list">
-            <thead>
+        <table class="table table-bordered table-sm directory-list">
+            <thead class="thead-light">
                 <tr>
-                    <td>&nbsp;</td>
-                    <td colspan="4">
-                        <div align="center"><strong>Tombstones</strong></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Name</td>
-                    <td width="10%">&nbsp;</td>
-                    <td width="10%">
-                        <div align="center"><strong>Total</strong></div>
-                    </td>
-                    <td width="10%">
-                        <div align="center"><strong>Dead</strong></div>
-                    </td>
-                    <td width="10%">
-                        <div align="center"><strong>Undead</strong></div>
-                    </td>
+                    <th>Name</th>
+                    <th class="text-center" width="10%">&nbsp;</th>
+                    <th class="text-center" width="5%">Total</th>
+                    <th class="text-center" width="5%">Dead</th>
+                    <th class="text-center" width="5%">Undead</th>
                 </tr>
             </thead>
             <tbody>

@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Report\Html\Renderer;
 
 use Scheb\Tombstone\Analyzer\Report\Html\TemplateProvider;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\PathNormalizer;
 use SebastianBergmann\Template\Template;
 
 class BreadCrumbRenderer
 {
-    /**
-     * @var string
-     */
-    private $sourceRootPath;
+    private const ROOT_ICON = '';
 
     /**
      * @var Template|\Text_Template
@@ -26,16 +22,10 @@ class BreadCrumbRenderer
      */
     private $itemActiveTemplate;
 
-    public function __construct(RootPath $sourceRootPath)
+    public function __construct()
     {
-        $this->sourceRootPath = rtrim($sourceRootPath->getAbsolutePath(), '\\/');
         $this->itemTemplate = TemplateProvider::getTemplate('breadcrumb_item.html');
         $this->itemActiveTemplate = TemplateProvider::getTemplate('breadcrumb_item_active.html');
-    }
-
-    public function renderBreadcrumbRoot(): string
-    {
-        return $this->renderItem($this->sourceRootPath, 'index.html');
     }
 
     public function renderBreadcrumbToFile(string $relativeFilePath): string
@@ -51,13 +41,13 @@ class BreadCrumbRenderer
     public function renderBreadcrumb(string $relativeFilePath, bool $isFile): string
     {
         if ('' === $relativeFilePath) {
-            return $this->renderActiveItem($this->sourceRootPath);
+            return '';
         }
 
         $pathSegments = explode(PathNormalizer::NORMALIZED_DIRECTORY_SEPARATOR, $relativeFilePath);
         $directoryLevel = \count($pathSegments) - ($isFile ? 1 : 0);
-        $breadcrumbString = $this->renderItem($this->sourceRootPath, str_repeat('../', $directoryLevel).'index.html');
 
+        $breadcrumbString = '';
         while ($label = array_shift($pathSegments)) {
             --$directoryLevel;
             if (0 === \count($pathSegments)) {

@@ -17,7 +17,6 @@ use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileTombstoneListRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpFileFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpSyntaxHighlighter;
 use Scheb\Tombstone\Analyzer\Report\ReportGeneratorInterface;
-use Scheb\Tombstone\Core\Model\RootPath;
 
 class HtmlReportGenerator implements ReportGeneratorInterface
 {
@@ -76,22 +75,16 @@ class HtmlReportGenerator implements ReportGeneratorInterface
             FileSystem::createPath(self::TEMPLATE_DIR, 'icons'),
             FileSystem::createPath($this->reportDir, '_icons')
         );
-        FileSystem::copyDirectoryFiles(
-            FileSystem::createPath(self::TEMPLATE_DIR, 'img'),
-            FileSystem::createPath($this->reportDir, '_img')
-        );
     }
 
     public static function create(array $config, ConsoleOutputInterface $consoleOutput): ReportGeneratorInterface
     {
-        $sourceRootPath = new RootPath($config['source_code']['root_directory']);
-        $breadCrumbRenderer = new BreadCrumbRenderer($sourceRootPath);
+        $breadCrumbRenderer = new BreadCrumbRenderer();
 
         return new HtmlReportGenerator(
             $config['report']['html'],
             new DashboardRenderer(
-                $config['report']['html'],
-                $breadCrumbRenderer
+                $config['report']['html']
             ),
             new DirectoryRenderer(
                 $config['report']['html'],

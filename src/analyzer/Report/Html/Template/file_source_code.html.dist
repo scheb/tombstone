@@ -1,1 +1,1 @@
-<tr class="{{class}}"><td class="number"><div align="right"><a name="{{line}}"></a><a href="#{{line}}">{{line}}</a></div></td><td class="codeLine">{{code}}</td></tr>
+<tr class="{{class}}"><td class="number text-right"><a name="{{line}}"></a><a href="#{{line}}">{{line}}</a></td><td class="codeLine">{{code}}</td></tr>

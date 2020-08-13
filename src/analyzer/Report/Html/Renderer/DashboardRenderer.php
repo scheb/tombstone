@@ -23,11 +23,6 @@ class DashboardRenderer
     private $reportDir;
 
     /**
-     * @var BreadCrumbRenderer
-     */
-    private $breadCrumbRenderer;
-
-    /**
      * @var Template|\Text_Template
      */
     private $dashboardTemplate;
@@ -57,10 +52,9 @@ class DashboardRenderer
      */
     private $invokerTemplate;
 
-    public function __construct(string $reportDir, BreadCrumbRenderer $breadCrumbRenderer)
+    public function __construct(string $reportDir)
     {
         $this->reportDir = $reportDir;
-        $this->breadCrumbRenderer = $breadCrumbRenderer;
         $this->dashboardTemplate = TemplateProvider::getTemplate('dashboard.html');
         $this->fileTemplate = TemplateProvider::getTemplate('dashboard_file.html');
         $this->deadTemplate = TemplateProvider::getTemplate('dashboard_dead.html');
@@ -85,7 +79,6 @@ class DashboardRenderer
         $this->dashboardTemplate->setVar([
             'path_to_root' => '',
             'date' => date('r'),
-            'breadcrumb' => $this->breadCrumbRenderer->renderBreadcrumbRoot(),
             'tombstones_count' => $total,
             'dead_count' => $numDead,
             'undead_count' => $numUndead,

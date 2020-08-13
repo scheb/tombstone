@@ -1,14 +1,8 @@
-<tr>
-    <td class="{{class}}"><img src="{{path_to_root}}_icons/file-{{icon}}.svg" class="octicon" /> <a href="{{link}}">{{name}}</a></td>
-    <td class="{{class}}">{{bar}}</td>
-    <td class="{{class}}">
-        <div align="right">{{total}}</div>
-    </td>
-    <td class="{{class}}">
-        <div align="right">{{numDead}}</div>
-    </td>
-    <td class="{{class}}">
-        <div align="right">{{numUndead}}</div>
-    </td>
+<tr class="{{class}}">
+    <td><img src="{{path_to_root}}_icons/file-{{icon}}.svg" class="octicon" alt="Directory" /> <a href="{{link}}">{{name}}</a></td>
+    <td>{{bar}}</td>
+    <td class="text-right">{{total}}</td>
+    <td class="text-right">{{numDead}}</td>
+    <td class="text-right">{{numUndead}}</td>
 </tr>
 

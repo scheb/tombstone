@@ -15,7 +15,6 @@ use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileSourceCodeRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\FileTombstoneListRenderer;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpFileFormatter;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\PhpSyntaxHighlighter;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Tests\Analyzer\Report\fixtures\AnalyzerResultFixture;
 use Scheb\Tombstone\Tests\DirectoryHelper;
 use Scheb\Tombstone\Tests\TestCase;
@@ -34,12 +33,13 @@ class HtmlReportGeneratorTest extends TestCase
         '_css/bootstrap.min.css',
         '_css/style.css',
         '_icons',
+        '_icons/cross.svg',
         '_icons/file-code.svg',
         '_icons/file-directory.svg',
-        '_img',
-        '_img/cross.png',
-        '_img/deleted.png',
-        '_img/vampire.png',
+        '_icons/home.svg',
+        '_icons/tombstone.svg',
+        '_icons/trash.svg',
+        '_icons/vampire.svg',
         'dashboard.html',
         'functions.php.html',
         'index.html',
@@ -68,15 +68,13 @@ class HtmlReportGeneratorTest extends TestCase
      */
     public function generate_resultGiven_exportedDataEqualsOriginalResult(): void
     {
-        $sourceRootPath = new RootPath(__DIR__.'/../fixtures/source');
         $result = AnalyzerResultFixture::getAnalyzerResult();
 
-        $breadCrumbRenderer = new BreadCrumbRenderer($sourceRootPath);
+        $breadCrumbRenderer = new BreadCrumbRenderer();
         $generator = new HtmlReportGenerator(
             self::REPORT_DIR,
             new DashboardRenderer(
-                self::REPORT_DIR,
-                $breadCrumbRenderer
+                self::REPORT_DIR
             ),
             new DirectoryRenderer(
                 self::REPORT_DIR,

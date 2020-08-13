@@ -9,21 +9,22 @@
 </head>
 <body>
 <header>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-{{breadcrumb}}
-                        <li class="breadcrumb-item active">(Dashboard)</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href="{{path_to_root}}index.html" class="navbar-brand">
+            <img src="{{path_to_root}}_icons/tombstone.svg" alt="Tombstone Icon" />
+            Tombstone Report
+        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Source</a>
+            </li>
+            <li class="nav-item active">
+                <span class="nav-link">Dashboard</span>
+            </li>
+        </ul>
+    </nav>
 </header>
 <div class="container-fluid dashboard">
-
     <div class="progress tombstones-total">
         <div class="progress-bar" style="width: 100%">
             <strong>{{tombstones_count}} Tombstones</strong>
@@ -31,7 +32,7 @@
     </div>
 
     <div class="progress tombstones-distribution">
-        <div class="progress-bar bg-success tombstones-dead" style="width: {{dead_percent}}%">
+        <div class="progress-bar bg-dark tombstones-dead" style="width: {{dead_percent}}%">
             <strong>{{dead_count}} Dead</strong>
         </div>
         <div class="progress-bar bg-danger tombstones-undead" style="width: {{undead_percent}}%">
