@@ -11,6 +11,6 @@ class TraceProvider
         ++$skipFrames; // Skip this call
         $trace = (new \Exception())->getTrace();
 
-        return array_splice($trace, $skipFrames, 3);
+        return array_splice($trace, $skipFrames);
     }
 }

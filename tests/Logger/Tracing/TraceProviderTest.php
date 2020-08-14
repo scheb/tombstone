@@ -18,9 +18,14 @@ class TraceProviderTest extends TestCase
         $thisClass = __CLASS__;
 
         $trace = TraceProvider::getTraceHere();
+
         $this->assertIsArray($trace);
-        $this->assertGreaterThanOrEqual(3, $trace);
-        $this->assertEquals($thisMethod, $trace[0]['function']);
-        $this->assertEquals($thisClass, $trace[0]['class']);
+
+        // At least 2 because there must be a frame for this method here and one for the calling method from PHPUnit
+        $this->assertGreaterThanOrEqual(2, \count($trace));
+
+        $firstFrame = array_shift($trace);
+        $this->assertEquals($thisMethod, $firstFrame['function']);
+        $this->assertEquals($thisClass, $firstFrame['class']);
     }
 }
