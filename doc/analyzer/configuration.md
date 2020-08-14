@@ -27,10 +27,10 @@ source_code:
 # How the analyzer gets the list of active tombstones
 tombstones:
     parser:
-        # Exclude patterns within the source directory (see symfony/finder's "exclude" option)
+        # Exclude directories within the source directory (see symfony/finder's "exclude" option)
         # Default: none
         excludes:
-          - ./tests
+          - tests
 
         # Name pattern to be included (see symfony/finder's "name" option)
         # Default: *.php

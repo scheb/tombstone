@@ -3,7 +3,8 @@ source_code:
 tombstones:
     parser:
         excludes:
-            - run.php
+            - logs
+            - report
         names:
             - "*.php"
         not_names:
