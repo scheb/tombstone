@@ -37,7 +37,7 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->never())
             ->method($this->anything());
 
-        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
+        $this->graveyard->logTombstoneCall(['args'], ['trace1'], ['metaField' => 'metaValue']);
     }
 
     /**
@@ -48,10 +48,10 @@ class BufferedGraveyardTest extends TestCase
         $this->innerGraveyard
             ->expects($this->once())
             ->method('logTombstoneCall')
-            ->with('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
+            ->with(['args'], ['trace1'], ['metaField' => 'metaValue']);
 
         $this->graveyard->setAutoFlush(true);
-        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue']);
+        $this->graveyard->logTombstoneCall(['args'], ['trace1'], ['metaField' => 'metaValue']);
     }
 
     /**
@@ -63,18 +63,18 @@ class BufferedGraveyardTest extends TestCase
             ->expects($this->exactly(2))
             ->method('logTombstoneCall')
             ->withConsecutive(
-                ['tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue1']],
-                ['tombstone', ['args'], ['trace2'], ['metaField' => 'metaValue2']]
+                [['args'], ['trace1'], ['metaField' => 'metaValue1']],
+                [['args'], ['trace2'], ['metaField' => 'metaValue2']]
             );
 
         $this->innerGraveyard
             ->expects($this->exactly(2))
             ->method('flush');
 
-        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace1'], ['metaField' => 'metaValue1']);
+        $this->graveyard->logTombstoneCall(['args'], ['trace1'], ['metaField' => 'metaValue1']);
         $this->graveyard->flush();
 
-        $this->graveyard->logTombstoneCall('tombstone', ['args'], ['trace2'], ['metaField' => 'metaValue2']);
+        $this->graveyard->logTombstoneCall(['args'], ['trace2'], ['metaField' => 'metaValue2']);
         $this->graveyard->flush();
     }
 }

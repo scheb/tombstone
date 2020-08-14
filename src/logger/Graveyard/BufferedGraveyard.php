@@ -31,10 +31,10 @@ class BufferedGraveyard implements GraveyardInterface
         $this->autoFlush = $autoFlush;
     }
 
-    public function logTombstoneCall(string $functionName, array $arguments, array $trace, array $metadata): void
+    public function logTombstoneCall(array $arguments, array $trace, array $metadata): void
     {
         if ($this->autoFlush) {
-            $this->graveyard->logTombstoneCall($functionName, $arguments, $trace, $metadata);
+            $this->graveyard->logTombstoneCall($arguments, $trace, $metadata);
         } else {
             $this->tombstoneCalls[] = \func_get_args();
         }

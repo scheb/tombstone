@@ -28,12 +28,13 @@ class VampireFactory
         $this->stackTraceDepth = $stackTraceDepth;
     }
 
-    public function createFromCall(string $functionName, array $arguments, array $trace, array $metadata): Vampire
+    public function createFromCall(array $arguments, array $trace, array $metadata): Vampire
     {
         // This is the call to the tombstone
         $tombstoneCall = $trace[0];
         $file = $this->rootPath->createFilePath($tombstoneCall['file']);
         $line = $tombstoneCall['line'];
+        $functionName = $this->getTombstoneFunctionName($tombstoneCall);
 
         // This is the method containing the tombstone
         $method = null;
@@ -56,6 +57,13 @@ class VampireFactory
         }
 
         return new Vampire(date('c'), $invoker, $stackTrace ?? new StackTrace(), $tombstone, $metadata);
+    }
+
+    private function getTombstoneFunctionName(array $frame): string
+    {
+        // Always using :: here because we want the fully qualified name of the tombstone function and not how it was
+        // called (static vs. non-static).
+        return (isset($frame['class']) ? $frame['class'].'::' : '').$frame['function'];
     }
 
     private function getMethodFromFrame(array $frame): string

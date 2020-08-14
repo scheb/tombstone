@@ -9,6 +9,6 @@ if (!function_exists('tombstone')) {
     function tombstone(string ...$arguments): void
     {
         $trace = \Scheb\Tombstone\Logger\Tracing\TraceProvider::getTraceHere();
-        \Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry::getGraveyard()->logTombstoneCall(__FUNCTION__, $arguments, $trace, []);
+        \Scheb\Tombstone\Logger\Graveyard\GraveyardRegistry::getGraveyard()->logTombstoneCall($arguments, $trace, []);
     }
 }

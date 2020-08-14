@@ -70,7 +70,7 @@ class GraveyardBuilderTest extends TestCase
             ->expects($this->once())
             ->method('log');
 
-        $graveyard->logTombstoneCall('tombstone', [], Fixture::getTraceFixture(), []);
+        $graveyard->logTombstoneCall([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -95,7 +95,7 @@ class GraveyardBuilderTest extends TestCase
             ->expects($this->once())
             ->method('error');
 
-        $graveyard->logTombstoneCall('tombstone', [], Fixture::getTraceFixture(), []);
+        $graveyard->logTombstoneCall([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -115,7 +115,7 @@ class GraveyardBuilderTest extends TestCase
             ->stackTraceDepth(2)
             ->build();
 
-        $graveyard->logTombstoneCall('tombstone', [], Fixture::getTraceFixture(), []);
+        $graveyard->logTombstoneCall([], Fixture::getTraceFixture(), []);
     }
 
     /**
@@ -134,7 +134,7 @@ class GraveyardBuilderTest extends TestCase
             ->withHandler($handler)
             ->build();
 
-        $graveyard->logTombstoneCall('tombstone', [], Fixture::getTraceFixture(), []);
+        $graveyard->logTombstoneCall([], Fixture::getTraceFixture(), []);
     }
 
     /**
