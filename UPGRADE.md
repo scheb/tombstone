@@ -8,8 +8,8 @@ Here's an overview if you have to do any work when upgrading.
 
 ### Packages
 
-The `scheb/tombstone`now is the main repository, containing all code related to the tombstone project. Please replace
-the package `scheb/tombstone` with `scheb/tombstone-logger`.
+The `scheb/tombstone` repository is now the main repository, containing all code related to the
+tombstone project. Please replace the package `scheb/tombstone` with `scheb/tombstone-logger`.
 
 - `scheb/tombstone-logger` provides the tombstone logging library
 - `scheb/tombstone-analyzer` provides the command line tool for report generation
