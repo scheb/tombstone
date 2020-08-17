@@ -98,4 +98,27 @@ class VampireFactoryTest extends TestCase
         $stackTrace = $vampire->getStackTrace();
         $this->assertCount(2, $stackTrace);
     }
+
+    /**
+     * @test
+     * @dataProvider getTraceToTestTombstoneFunctionName
+     */
+    public function createFromCall_traceGiven_extractTombstoneFunctionName(array $stackTrace, string $expectedFunctionName): void
+    {
+        $factory = new VampireFactory(new RootPath('/root'), 0);
+
+        $vampire = $factory->createFromCall([], $stackTrace, []);
+
+        $this->assertEquals($expectedFunctionName, $vampire->getTombstone()->getFunctionName());
+    }
+
+    public function getTraceToTestTombstoneFunctionName(): array
+    {
+        return [
+            [[['file' => 'file.php', 'line' => 1, 'function' => 'tombstone']], 'tombstone'],
+            [[['file' => 'file.php', 'line' => 1, 'function' => 'Namespace\\tombstone']], 'Namespace\\tombstone'],
+            [[['file' => 'file.php', 'line' => 1, 'class' => 'Namespace\\Class', 'type' => '::', 'function' => 'tombstone']], 'Namespace\\Class::tombstone'],
+            [[['file' => 'file.php', 'line' => 1, 'class' => 'Namespace\\Class', 'type' => '->', 'function' => 'tombstone']], 'Namespace\\Class::tombstone'],
+        ];
+    }
 }
