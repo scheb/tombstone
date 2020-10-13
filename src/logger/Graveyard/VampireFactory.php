@@ -76,8 +76,8 @@ class VampireFactory
         $frames = [];
         foreach ($trace as $frame) {
             $frames[] = new StackTraceFrame(
-                $this->rootPath->createFilePath($frame['file']),
-                $frame['line'],
+                $this->rootPath->createFilePath($frame['file'] ?? '/'),
+                $frame['line'] ?? 0,
                 self::getMethodFromFrame($frame)
             );
         }

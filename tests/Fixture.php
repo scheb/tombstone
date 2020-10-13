@@ -13,7 +13,7 @@ use Scheb\Tombstone\Core\Model\Vampire;
 class Fixture
 {
     public const ROOT_DIR = '/path/to';
-    public const NUMBER_OF_FRAMES = 4;
+    public const NUMBER_OF_FRAMES = 5;
 
     public static function getVampire(string ...$arguments): Vampire
     {
@@ -55,6 +55,11 @@ class Fixture
                 'class' => 'ClassName',
                 'type' => '->',
                 'function' => 'invokerInvokerMethodName',
+            ],
+            [
+                'function' => '__destruct',
+                'class' => 'ClassName',
+                'type' => '->',
             ],
         ];
     }
