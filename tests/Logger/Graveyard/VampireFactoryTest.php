@@ -44,6 +44,11 @@ class VampireFactoryTest extends TestCase
         $this->assertEquals(44, $frame->getLine());
         $this->assertEquals('ClassName->invokerInvokerMethodName', $frame->getMethod());
 
+        $frame = $stackTrace[4];
+        $this->assertSame('/', $frame->getFile()->getAbsolutePath());
+        $this->assertSame(0, $frame->getLine());
+        $this->assertSame('ClassName->__destruct', $frame->getMethod());
+
         $invocationDate = strtotime($vampire->getInvocationDate());
         $this->assertEquals(time(), $invocationDate);
         $this->assertEqualsWithDelta(time(), $invocationDate, 5);
