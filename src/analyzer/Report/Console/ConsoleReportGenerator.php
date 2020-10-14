@@ -108,8 +108,9 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     {
         $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
         $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
-        if ($tombstone->getMethod()) {
-            $this->output->writeln(sprintf('    in method <comment>%s</comment>', $tombstone->getMethod()));
+        $method = $tombstone->getMethod();
+        if ($method) {
+            $this->output->writeln(sprintf('    in method <comment>%s</comment>', $method));
         } else {
             $this->output->writeln(sprintf('    in global scope'));
         }

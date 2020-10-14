@@ -227,8 +227,9 @@ class DashboardRenderer
 
     private function getTombstoneScope(Tombstone $tombstone): string
     {
-        if ($tombstone->getMethod()) {
-            return sprintf('method <samp>%s</samp>', htmlspecialchars($tombstone->getMethod()));
+        $method = $tombstone->getMethod();
+        if ($method) {
+            return sprintf('method <samp>%s</samp>', htmlspecialchars($method));
         }
 
         return 'global scope';
