@@ -1,7 +1,7 @@
 scheb/tombstone-logger
 ======================
 
-[![Build Status](https://travis-ci.org/scheb/tombstone.svg?branch=1.x)](https://travis-ci.org/scheb/tombstone)
+[![Build Status](https://api.travis-ci.com/scheb/tombstone.svg?branch=1.x)](https://travis-ci.com/scheb/tombstone)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
 [![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
 [![Latest Stable Version](https://poser.pugx.org/scheb/tombstone-logger/v/stable.svg)](https://packagist.org/packages/scheb/tombstone-logger)
