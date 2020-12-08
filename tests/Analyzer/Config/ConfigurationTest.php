@@ -108,7 +108,7 @@ class ConfigurationTest extends TestCase
         unset($config['source_code']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('child node "source_code" at path "" must be configured');
+        $this->expectExceptionMessageMatches('/"source_code".*must be configured/');
         $this->processConfiguration($config);
     }
 
@@ -121,7 +121,7 @@ class ConfigurationTest extends TestCase
         unset($config['source_code']['root_directory']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('child node "root_directory" at path ".source_code" must be configured');
+        $this->expectExceptionMessageMatches('/"root_directory".*must be configured/');
         $this->processConfiguration($config);
     }
 
@@ -160,7 +160,7 @@ class ConfigurationTest extends TestCase
         unset($config['logs']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "logs" at path "" must be configured.');
+        $this->expectExceptionMessageMatches('/"logs".*must be configured/');
         $this->processConfiguration($config);
     }
 
