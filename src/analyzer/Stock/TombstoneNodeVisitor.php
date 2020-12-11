@@ -100,6 +100,7 @@ class TombstoneNodeVisitor extends NameResolver
 
     private function isTombstoneFunction(FuncCall $node): bool
     {
+        /** @psalm-suppress RedundantCondition */
         if (isset($node->name->parts)) {
             $nameParts = $node->name->parts;
 
@@ -124,6 +125,7 @@ class TombstoneNodeVisitor extends NameResolver
         $params = [];
         foreach ($node->args as $arg) {
             if ($arg->value instanceof String_) {
+                /** @psalm-suppress RedundantCastGivenDocblockType */
                 $params[] = (string) $arg->value->value;
             } else {
                 $params[] = null;
