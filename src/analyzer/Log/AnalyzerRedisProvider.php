@@ -44,11 +44,11 @@ class AnalyzerRedisProvider implements LogProviderInterface
 
         $redis->connect(
             $config['driver']['host'] ?: '',
-            $config['driver']['port'] ?: null,
-            $config['driver']['timeout'] ?: null,
+            $config['driver']['port'] ?: 6379,
+            $config['driver']['timeout'] ?: 0.0,
             $config['driver']['reserved'] ?: null,
-            $config['driver']['retryInterval'] ?: null,
-            $config['driver']['readTimeout'] ?: null
+            $config['driver']['retryInterval'] ?: 0,
+            $config['driver']['readTimeout'] ?: 0.0
         );
 
         return new self(
