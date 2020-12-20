@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  tombstone-library:
+    container_name: tombstone-library
+    build: .
+    volumes:
+      - ./:/library
+
+  tombstone-redis-test:
+    container_name: tombstone-redis-test
+    image: redis:6-alpine
