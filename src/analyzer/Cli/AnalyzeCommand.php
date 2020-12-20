@@ -8,6 +8,7 @@ use Scheb\Tombstone\Analyzer\Config\Configuration;
 use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogProvider;
+use Scheb\Tombstone\Analyzer\Log\AnalyzerRedisProvider;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
@@ -103,7 +104,16 @@ class AnalyzeCommand extends AbstractCommand
     private function createLogCollector(array $config, VampireIndex $vampireIndex): LogCollector
     {
         $logProviders = [];
-        if (isset($config['logs']['directory'])) {
+
+        if (isset($config['driver']['type'])) {
+            switch ($config['driver']['type']) {
+                case 'redis':
+                    $logProviders[] = AnalyzerRedisProvider::create($config, $this->output);
+                    break;
+                default:
+                    throw new \Exception("Unknown driver '" . $config['driver']['type'] . "'");
+            }
+        } elseif (isset($config['logs']['directory'])) {
             $logProviders[] = AnalyzerLogProvider::create($config, $this->output);
         }
 
