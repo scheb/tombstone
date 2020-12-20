@@ -43,12 +43,12 @@ class AnalyzerRedisProvider implements LogProviderInterface
         }
 
         $redis->connect(
-            $config['driver']['host'] ?: '',
-            $config['driver']['port'] ?: 6379,
-            $config['driver']['timeout'] ?: 0.0,
-            $config['driver']['reserved'] ?: null,
-            $config['driver']['retryInterval'] ?: 0,
-            $config['driver']['readTimeout'] ?: 0.0
+            isset($config['driver']['host']) ? $config['driver']['host'] : '',
+            isset($config['driver']['port']) ? $config['driver']['port'] : 6379,
+            isset($config['driver']['timeout']) ? $config['driver']['timeout'] : 0.0,
+            isset($config['driver']['reserved']) ? $config['driver']['reserved'] : null,
+            isset($config['driver']['retryInterval']) ? $config['driver']['retryInterval'] : 0,
+            isset($config['driver']['readTimeout']) ? $config['driver']['readTimeout'] : 0.0
         );
 
         return new self(
@@ -69,7 +69,7 @@ class AnalyzerRedisProvider implements LogProviderInterface
             // This is done to reset keys
             foreach ($this->redis->xRead([$file => '0-0']) as $rows) {
                 foreach ($rows as $timestamp => $line) {
-                    yield AnalyzerLogFormat::logToVampire($line, $this->rootDir);
+                    yield AnalyzerLogFormat::logToVampire($line['data'], $this->rootDir);
                 }
             }
             $progress->advance();
