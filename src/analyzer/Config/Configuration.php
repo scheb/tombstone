@@ -40,7 +40,6 @@ class Configuration implements ConfigurationInterface
                                 ->thenInvalid('Must be a valid directory path, given: %s')
                             ->end()
                         ->end()
-
                     ->end()
                 ->end()
                 ->arrayNode('tombstones')
