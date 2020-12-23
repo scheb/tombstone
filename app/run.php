@@ -16,7 +16,7 @@ $analyzerLogHandler = new AnalyzerLogHandler(__DIR__.'/logs');
 $jsonLogHandler = new StreamHandler(__DIR__.'/logs/tombstones.json');
 $jsonLogHandler->setFormatter(new JsonFormatter());
 
-$graveyard = (new GraveyardBuilder())
+(new GraveyardBuilder())
     ->stackTraceDepth(3)
     ->rootDirectory(__DIR__)
     ->withHandler($analyzerLogHandler)
