@@ -15,6 +15,7 @@ class ConfigurationTest extends TestCase
     private const APPLICATION_DIR = self::ROOT_DIR.'/app';
     private const REPORT_DIR = self::APPLICATION_DIR.'/report';
     private const LOGS_DIR = self::APPLICATION_DIR.'/logs';
+    private const CUSTOM_LOG_PROVIDER = self::APPLICATION_DIR.'/src/Tombstone/LogProvider.php';
 
     private const FULL_CONFIG = [
         'source_code' => [
@@ -29,6 +30,10 @@ class ConfigurationTest extends TestCase
         ],
         'logs' => [
             'directory' => self::LOGS_DIR,
+            'custom' => [
+                'file' => self::CUSTOM_LOG_PROVIDER,
+                'class' => 'LogProvider',
+            ],
         ],
         'report' => [
             'php' => self::REPORT_DIR.'/report.php',
@@ -170,6 +175,7 @@ class ConfigurationTest extends TestCase
     public function getConfigTreeBuilder_emptyLogDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
+        unset($config['logs']['custom']);
         $config['logs']['directory'] = '';
 
         $this->expectException(InvalidConfigurationException::class);
@@ -183,10 +189,39 @@ class ConfigurationTest extends TestCase
     public function getConfigTreeBuilder_invalidLogDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
+        unset($config['logs']['custom']);
         $config['logs']['directory'] = 'invalid';
 
         $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Must be a valid directory path, given: "invalid"');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_missingCustomLogProviderClass_throwsException(): void
+    {
+        $config = self::FULL_CONFIG;
+        unset($config['logs']['directory']);
+        unset($config['logs']['custom']['class']);
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessageMatches('/"class".*must be configured/');
+        $this->processConfiguration($config);
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigTreeBuilder_customLogProviderInvalidFile_throwsException(): void
+    {
+        $config = self::FULL_CONFIG;
+        unset($config['logs']['directory']);
+        $config['logs']['custom']['file'] = 'invalid'; // Not a valid file
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Must be a valid file path, given: "invalid"');
         $this->processConfiguration($config);
     }
 

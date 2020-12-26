@@ -9,6 +9,7 @@ use Scheb\Tombstone\Analyzer\Config\ConfigurationLoader;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogProvider;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
+use Scheb\Tombstone\Analyzer\Log\LogProviderInterface;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Analyzer\Matching\Processor;
@@ -105,6 +106,21 @@ class AnalyzeCommand extends AbstractCommand
         $logProviders = [];
         if (isset($config['logs']['directory'])) {
             $logProviders[] = AnalyzerLogProvider::create($config, $this->output);
+        }
+        if (isset($config['logs']['custom'])) {
+            if (isset($config['logs']['custom']['file'])) {
+                /** @psalm-suppress UnresolvableInclude */
+                require_once $config['logs']['custom']['file'];
+            }
+
+            $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
+            if (!$reflectionClass->implementsInterface(LogProviderInterface::class)) {
+                throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogProviderInterface::class));
+            }
+
+            /** @var LogProviderInterface $logReader */
+            $logReader = $reflectionClass->newInstance();
+            $logProviders[] = $logReader;
         }
 
         return new LogCollector($logProviders, $vampireIndex);

@@ -7,6 +7,7 @@ Index
 -----
 
 - [Installation](installation.md)
+- [Custom Log Providers](log_providers.md)
 - [Configuration Reference](configuration.md)
 - [Report Formats](report_formats.md)
 

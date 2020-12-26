@@ -59,6 +59,10 @@ class YamlConfigProviderTest extends TestCase
             ],
             'logs' => [
                 'directory' => self::CONFIG_DIR.'logs',
+                'custom' => [
+                    'file' => self::CONFIG_DIR.'src'.DIRECTORY_SEPARATOR.'Tombstone'.DIRECTORY_SEPARATOR.'LogProvider.php',
+                    'class' => 'Scheb\Tombstone\Analyzer\TestApplication\Tombstone\LogProvider',
+                ],
             ],
             'report' => [
                 'php' => self::CONFIG_DIR.'report'.DIRECTORY_SEPARATOR.'tombstone-report.php',

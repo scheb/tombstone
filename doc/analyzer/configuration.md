@@ -48,6 +48,14 @@ logs:
     # including sub-directories will be processed.
     directory: logs
 
+    # Alternatively, if you can't write/read logs in the analyzer file format, you can configure a
+    # custom log provider, that allows you read read logs from any source in any format.
+    custom:
+        class: Acme\Tombstone\CustomLogProvider
+
+        # Optional, in case the autoloader doesn't automatically find the class file
+        file: src/tombstone/CustomLogProvider.php
+
 # Report generation options. See the "Report Formats" documentation for more details on this.
 report:
     php: report/tombstone-report.php   # Generate a PHP dump of the result in this file

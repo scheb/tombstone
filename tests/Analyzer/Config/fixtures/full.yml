@@ -8,6 +8,9 @@ source_code:
         - "*.js"
 logs:
     directory: logs
+    custom:
+        file: "src/Tombstone/LogProvider.php"
+        class: 'Scheb\Tombstone\Analyzer\TestApplication\Tombstone\LogProvider'
 report:
     php: report/tombstone-report.php
     checkstyle: report/checkstyle.xml

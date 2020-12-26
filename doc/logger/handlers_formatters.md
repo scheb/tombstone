@@ -80,6 +80,11 @@ use Scheb\Tombstone\Logger\Handler\AnalyzerLogHandler;
 $analyzerLogHandler = new AnalyzerLogHandler('logs/tombstones', 102400);
 ```
 
+In some environments it may not be possible to use the `AnalyzerLogHandler` to write tombstone logs, as it depends on
+the file system. In such a case it's recommended to implement a custom handler to write tombstone logs to a log storage
+of your choice. Then, in order to generate a report with the analyzer, implement a
+[custom log provider](../analyzer/log_providers.md) class.
+
 Formatters
 ----------
 
