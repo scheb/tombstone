@@ -76,7 +76,6 @@ jobs:
                     coverage: 'none'
                     extensions: 'json,dom'
                     php-version: '${{ matrix.php-version }}'
-                    tools: php-cs-fixer
 
             -   name: 'Display PHP versions'
                 run: |
@@ -116,7 +115,6 @@ jobs:
                     coverage: 'none'
                     extensions: 'json,dom'
                     php-version: '${{ matrix.php-version }}'
-                    tools: php-cs-fixer
 
             -   name: 'Display PHP versions'
                 run: |
