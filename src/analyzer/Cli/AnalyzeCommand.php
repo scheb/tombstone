@@ -119,7 +119,7 @@ class AnalyzeCommand extends AbstractCommand
             }
 
             /** @var LogProviderInterface $logReader */
-            $logReader = $reflectionClass->newInstance();
+            $logReader = $reflectionClass->getMethod('create')->invoke(null, $config, $this->output);
             $logProviders[] = $logReader;
         }
 
