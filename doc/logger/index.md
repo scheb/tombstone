@@ -31,10 +31,10 @@ class SomeClass {
 }
 ```
 
-The arguments from the function call are used by the [analyzer](../analyzer/index.md) to match tombstone calls to the
-source code. Therefore, once set, you must not change the arguments of a tombstone – except you want it to be treated as
-a whole new tombstone. The more unique the combination of arguments, position (file/line) and surrounding
-function/method is, the more reliable the matching will be.
+The fully qualified name of the tombstone function and its arguments are used by the [analyzer](../analyzer/index.md) to
+match tombstone calls to the source code. Therefore, once set, you must not change the arguments of a tombstone – except
+you want it to be treated as a whole new tombstone. The more unique the combination of arguments, position (file/line)
+and surrounding function/method is, the more reliable the matching will be.
 
 As you can see in the example above, one of the tombstone arguments may be a date, which is intended to be the date when
 the tombstone was introduced into the codebase. The library will take the first string that can be interpreted as a date

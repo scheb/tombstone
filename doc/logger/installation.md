@@ -9,8 +9,8 @@ composer require scheb/tombstone-logger
 
 ## Step 2: Define a tombstone function
 
-You have to define a function `tombstone(string ...$arguments): void` in the global scope, which is sending tombstone
-calls to the graveyard.
+The easiest way is to define a function `tombstone(string ...$arguments): void` in the global scope, which is sending
+tombstone calls to the graveyard.
 
 The library is shipped with a standard implementation. Include `tombstone-function.php` from the logger's directory in
 your bootstrap. It is recommended to define this function as early as possible, so that executed code (which potentially
@@ -20,6 +20,13 @@ can contain tombstones) doesn't run into "Call to undefined function" errors.
 <?php
 require 'vendor/scheb/tombstone-logger/tombstone-function.php';
 ```
+
+Alternatively, you can name the function however you like or place it in a namespace. The only requirements are: it has
+to be a function (class methods, even static ones, don't work), and it has to take strings as arguments. You can have
+multiple tombstone functions, it's up to you.
+
+If you do so, when you want to [generate reports](../analyzer/index.md), please remember to configure the fully
+qualified names of your tombstone functions in the [analyzer's YAML configuration](../analyzer/configuration.md).
 
 ## Step 3: Create a graveyard
 
