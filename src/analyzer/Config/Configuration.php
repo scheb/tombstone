@@ -53,7 +53,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                                 ->arrayNode('names')
                                     ->defaultValue(['*.php'])
-                                ->scalarPrototype()->end()
+                                    ->scalarPrototype()->end()
                                 ->end()
                                 ->arrayNode('not_names')
                                     ->scalarPrototype()->end()
