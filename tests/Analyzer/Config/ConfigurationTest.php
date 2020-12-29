@@ -26,6 +26,7 @@ class ConfigurationTest extends TestCase
                 'excludes' => ['tests'],
                 'names' => ['*.php'],
                 'not_names' => ['*.js'],
+                'function_names' => ['tombstone', 'fqn\\tomb'],
             ],
         ],
         'logs' => [
@@ -82,6 +83,7 @@ class ConfigurationTest extends TestCase
         $expectedProcessedConfig['tombstones']['parser']['excludes'] = [];
         $expectedProcessedConfig['tombstones']['parser']['names'] = ['*.php'];
         $expectedProcessedConfig['tombstones']['parser']['not_names'] = [];
+        $expectedProcessedConfig['tombstones']['parser']['function_names'] = ['tombstone'];
         $expectedProcessedConfig['report']['console'] = true;
         $expectedProcessedConfig['report']['php'] = null;
         $expectedProcessedConfig['report']['checkstyle'] = null;

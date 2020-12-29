@@ -39,7 +39,10 @@ class TombstoneExtractorIntegrationTest extends TestCase
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         $traverser = new NodeTraverser();
         $this->extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
-        $traverser->addVisitor(new TombstoneNodeVisitor($this->extractor));
+        $traverser->addVisitor(new TombstoneNodeVisitor($this->extractor, [
+            'tombstone',                      // Global function
+            'Tombstone\\Func\\ns_tombstone',  // Namespaced function
+        ]));
     }
 
     private function assertTombstoneLocation(int $line, ?string $method, Tombstone $tombstone): void
@@ -52,6 +55,15 @@ class TombstoneExtractorIntegrationTest extends TestCase
         } else {
             $this->assertEquals($method, $tombstone->getMethod());
         }
+    }
+
+    private function assertTombstoneLines(array $expectedLines, array $extractedTombstones): void
+    {
+        $lines = array_map(function (Tombstone $tombstone): int {
+            return $tombstone->getLine();
+        }, $extractedTombstones);
+
+        $this->assertEquals($expectedLines, $lines);
     }
 
     /**
@@ -77,5 +89,40 @@ class TombstoneExtractorIntegrationTest extends TestCase
         $this->assertTombstoneLocation(15, null, $returnValue[2]);
         $this->assertTombstoneLocation(21, 'Foo\\Bar->method', $returnValue[3]);
         $this->assertTombstoneLocation(26, 'Foo\\Bar::staticFunction', $returnValue[4]);
+    }
+
+    /**
+     * @test
+     */
+    public function extractTombstones_differentFunctionNames_extractTombstoneCalls(): void
+    {
+        $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/function_names.php');
+
+        $this->assertTombstoneLines([
+            // Global namespace
+            12,
+            13,
+            16,
+            20,
+            24,
+            25,
+            28,
+
+            // Foo namespace
+            38,
+            39,
+            42,
+            46,
+            51,
+            54,
+
+            // Tombstone\Func namespace
+            63,
+            64,
+            67,
+            71,
+            76,
+            79,
+        ], $returnValue);
     }
 }

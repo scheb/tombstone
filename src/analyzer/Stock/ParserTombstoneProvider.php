@@ -41,7 +41,7 @@ class ParserTombstoneProvider implements TombstoneProviderInterface
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         $traverser = new NodeTraverser();
         $extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
-        $traverser->addVisitor(new TombstoneNodeVisitor($extractor));
+        $traverser->addVisitor(new TombstoneNodeVisitor($extractor, $config['tombstones']['parser']['function_names']));
 
         $finder = new FinderFacade(
             [$config['source_code']['root_directory']],

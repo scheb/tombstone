@@ -9,6 +9,9 @@ tombstones:
             - "*.php"
         not_names:
             - "*.js"
+        function_names:
+            - "tombstone"
+            - "deadCodeDetection"
 logs:
     directory: logs
     custom:

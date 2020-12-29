@@ -29,10 +29,16 @@ class TombstoneNodeVisitor extends NameResolver
      */
     private $tombstoneCallback;
 
-    public function __construct(TombstoneExtractor $tombstoneCallback)
+    /**
+     * @var string[]
+     */
+    private $tombstoneFunctionNames;
+
+    public function __construct(TombstoneExtractor $tombstoneCallback, array $tombstoneFunctionNames)
     {
         parent::__construct();
         $this->tombstoneCallback = $tombstoneCallback;
+        $this->tombstoneFunctionNames = $tombstoneFunctionNames;
     }
 
     public function enterNode(Node $node)
@@ -82,11 +88,13 @@ class TombstoneNodeVisitor extends NameResolver
     private function visitFunctionCallNode(FuncCall $node): void
     {
         if ($this->isTombstoneFunction($node)) {
+            /** @psalm-suppress PossiblyInvalidCast */
+            $functionName = (string) $node->name;
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
             $arguments = $this->extractArguments($node);
             /** @psalm-suppress PossiblyNullArgument */
-            $this->tombstoneCallback->onTombstoneFound('tombstone', $arguments, $line, $methodName);
+            $this->tombstoneCallback->onTombstoneFound($functionName, $arguments, $line, $methodName);
         }
     }
 
@@ -100,11 +108,24 @@ class TombstoneNodeVisitor extends NameResolver
 
     private function isTombstoneFunction(FuncCall $node): bool
     {
-        /** @psalm-suppress RedundantCondition */
-        if (isset($node->name->parts)) {
-            $nameParts = $node->name->parts;
+        // Function name must be available
+        if (!($node->name instanceof Node\Name)) {
+            return false;
+        }
 
-            return 1 === \count($nameParts) && 'tombstone' === $nameParts[0];
+        $fqn = (string) $node->name;
+
+        // Unambiguous calls resolving to a FQN
+        if (\in_array($fqn, $this->tombstoneFunctionNames)) {
+            return true;
+        }
+
+        // Ambiguous calls that may refer to the local namespace
+        if ($node->name->hasAttribute('namespacedName')) {
+            $fqn = (string) $node->name->getAttribute('namespacedName');
+            if (\in_array($fqn, $this->tombstoneFunctionNames)) {
+                return true;
+            }
         }
 
         return false;

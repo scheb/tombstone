@@ -26,21 +26,28 @@ source_code:
 
 # How the analyzer gets the list of active tombstones
 tombstones:
+    # Use PHP parser to extract all currently configured tombstones from the source code
     parser:
         # Exclude directories within the source directory (see symfony/finder's "exclude" option)
         # Default: none
         excludes:
           - tests
 
-        # Name pattern to be included (see symfony/finder's "name" option)
+        # Name pattern of files to be included (see symfony/finder's "name" option)
         # Default: *.php
         names:
           - "*.php7"  # For example
 
-        # Name pattern to be excluded (see symfony/finder's "notName" option)
+        # Name pattern of files to be excluded (see symfony/finder's "notName" option)
         # Default: none
         not_names:
           - "*Test.php"  # For example
+
+        # Fully qualified name of the tombstone functions
+        # If not set, defaults to "tombstone"
+        function_names:
+          - "tombstone"                 # A function in the global scope
+          - "Acme\Tombstone\tombstone"  # A function in the Acme\Tombstone namespace
 
 # How the analyzer gets the tombstone logs
 logs:

@@ -45,11 +45,13 @@ class ParserTombstoneProviderTest extends TestCase
         $this->extractor
             ->expects($this->any())
             ->method('extractTombstones')
-            ->withConsecutive(
-                [realpath(__DIR__.'/fixtures/location.php')],
-                [realpath(__DIR__.'/fixtures/parameters.php')]
-            )
+            ->with($this->logicalOr(
+                $this->equalTo(realpath(__DIR__.'/fixtures/function_names.php')),
+                $this->equalTo(realpath(__DIR__.'/fixtures/location.php')),
+                $this->equalTo(realpath(__DIR__.'/fixtures/parameters.php'))
+            ))
             ->willReturnOnConsecutiveCalls(
+                [],
                 [$tombstone1, $tombstone2],
                 [$tombstone3]
             );
