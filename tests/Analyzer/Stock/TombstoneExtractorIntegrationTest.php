@@ -68,7 +68,7 @@ class TombstoneExtractorIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function extractTombstones_tombstoneLocations_extractFunctionNames(): void
+    public function extractTombstones_tombstoneLocations_extractTombstonesWithLocation(): void
     {
         $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/location.php');
         $this->assertCount(5, $returnValue);
