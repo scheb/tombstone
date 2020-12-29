@@ -113,13 +113,15 @@ class AnalyzeCommand extends AbstractCommand
                 require_once $config['logs']['custom']['file'];
             }
 
-            $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
+            $className = $config['logs']['custom']['class'];
+            $reflectionClass = new \ReflectionClass($className);
             if (!$reflectionClass->implementsInterface(LogProviderInterface::class)) {
-                throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogProviderInterface::class));
+                throw new \Exception(sprintf('Class %s must implement %s', $className, LogProviderInterface::class));
             }
 
             /** @var LogProviderInterface $logReader */
-            $logReader = $reflectionClass->newInstance();
+            $logReader = $className::create($config, $this->output);
+
             $logProviders[] = $logReader;
         }
 
