@@ -19,7 +19,7 @@ composer require scheb/tombstone-analyzer --dev
 Create a YAML configuration file that contains at least the minimum configuration:
 
 ```yaml
-# tombstone.yaml
+# tombstone.yml
 source_code:
     # Where your source files are located. This should point to the same folder as the rootDirectory
     # that you have configured for the tombstone-logger component
