@@ -8,8 +8,9 @@ The library provides you with a toolbox to place, track and evaluate tombstones 
 [![Build Status](https://github.com/scheb/tombstone/workflows/CI/badge.svg?branch=1.x)](https://github.com/scheb/tombstone/actions?query=workflow%3ACI+branch%3A1.x)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
 [![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
-[![Latest Stable Version](https://poser.pugx.org/scheb/tombstone/v/stable.svg)](https://packagist.org/packages/scheb/tombstone)
-[![Total Downloads](https://poser.pugx.org/scheb/tombstone/downloads)](https://packagist.org/packages/scheb/tombstone)
+[![Latest Stable Version](https://img.shields.io/packagist/v/scheb/tombstone)](https://packagist.org/packages/scheb/tombstone)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/scheb/tombstone)](https://packagist.org/packages/scheb/tombstone/stats)
+[![Total Downloads](https://img.shields.io/packagist/dt/scheb/tombstone)](https://packagist.org/packages/scheb/tombstone/stats)
 [![License](https://poser.pugx.org/scheb/tombstone/license.svg)](https://packagist.org/packages/scheb/tombstone)
 
 <p align="center"><img alt="Logo" src="doc/tombstone-logo.svg" width="300" /></p>
