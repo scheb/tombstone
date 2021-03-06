@@ -60,10 +60,19 @@ This software is available under the [MIT license](LICENSE).
 
 Acknowledgments
 ---------------
-
 The library is heavly inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code) of the tombstone concept.
 
 Thanks to [Jordi Boggiano](https://github.com/Seldaek) for creating [Monolog](https://github.com/Seldaek/monolog), from
 where I lend the handler/formatter concept.
 
 The tombstone graphic is based on a licensed illustration by "lemonadeserenade".
+
+Support Me
+----------
+I'm developing this library since 2015. I love to hear from people using it, giving me the motivation to keep working
+on my open source projects.
+
+If you want to let me know you're finding it useful, please consider giving it a star ⭐ on GitHub.
+
+If you love my work and want to say thank you, you can help me out for a beer 🍻️
+[via PayPal](https://paypal.me/ChristianScheb).
