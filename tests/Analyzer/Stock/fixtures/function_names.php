@@ -83,3 +83,25 @@ namespace Tombstone\Func {
     {
     }
 }
+
+namespace Tombstone\StaticCall {
+    class Bar {
+        public static function tombstone(): void
+        {
+        }
+    }
+}
+
+namespace Tombstone\StaticFoo {
+    use Tombstone\StaticCall\Bar;
+    use Tombstone\StaticCall as StaticCall2;
+
+    \Bar::tombstone(); // Ignore
+    Bar::tombstone();  // Ok
+
+    \Tombstone\StaticCall\Bar::tombstone(); // Ok
+    Tombstone\StaticCall\Bar::tombstone();  // Ignore
+
+    \StaticCall2\Bar::tombstone(); // Ignore
+    StaticCall2\Bar::tombstone();  // Ok
+}
