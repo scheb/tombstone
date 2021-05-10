@@ -126,9 +126,9 @@ class TombstoneExtractorIntegrationTest extends TestCase
             79,
 
             // Tombstone\StaticCall namespace
-            100,
-            102,
-            106,
+            101,
+            103,
+            107,
         ], $returnValue);
     }
 }
