@@ -22,7 +22,7 @@ require 'vendor/scheb/tombstone-logger/tombstone-function.php';
 ```
 
 Alternatively, you can name the function however you like or place it in a namespace. You can also create a class static
-method. The only requirements are: it has to be a function or class static method(class instance methods, don't work),
+method. The only requirements are: it has to be a function or class static method (class instance methods, don't work),
 and it has to take strings as arguments. You can have multiple tombstone functions, it's up to you.
 
 If you do so, when you want to [generate reports](../analyzer/index.md), please remember to configure the fully
