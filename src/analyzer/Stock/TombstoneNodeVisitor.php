@@ -105,7 +105,7 @@ class TombstoneNodeVisitor extends NameResolver
     {
         if ($this->isStaticTombstoneMethod($node)) {
             /** @psalm-suppress PossiblyInvalidCast */
-            $tombstoneMethodName = (string) $node->class . '::' . (string) $node->name;
+            $tombstoneMethodName = (string) $node->class.'::'.(string) $node->name;
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
             $arguments = $this->extractArguments($node->args);
@@ -154,7 +154,7 @@ class TombstoneNodeVisitor extends NameResolver
             return false;
         }
 
-        $fqn = (string) $node->class . '::' . (string) $node->name;
+        $fqn = (string) $node->class.'::'.(string) $node->name;
 
         // Unambiguous calls resolving to a FQN
         if (\in_array($fqn, $this->tombstoneFunctionNames)) {
