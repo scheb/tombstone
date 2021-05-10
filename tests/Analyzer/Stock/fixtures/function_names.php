@@ -85,7 +85,8 @@ namespace Tombstone\Func {
 }
 
 namespace Tombstone\StaticCall {
-    class Bar {
+    class Bar
+    {
         public static function tombstone(): void
         {
         }
