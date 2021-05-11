@@ -157,11 +157,7 @@ class TombstoneNodeVisitor extends NameResolver
         $fqn = (string) $node->class.'::'.(string) $node->name;
 
         // Unambiguous calls resolving to a FQN
-        if (\in_array($fqn, $this->tombstoneFunctionNames)) {
-            return true;
-        }
-
-        return false;
+        return \in_array($fqn, $this->tombstoneFunctionNames);
     }
 
     private function getCurrentMethodName(): ?string
