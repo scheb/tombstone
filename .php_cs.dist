@@ -14,6 +14,7 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__.'/tests',
     ])
     ->notPath('FormattingTestClass.php')
+    ->notPath('function_names.php')
 ;
 
 $config = new PhpCsFixer\Config();

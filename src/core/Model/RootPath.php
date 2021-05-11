@@ -32,7 +32,7 @@ class RootPath implements FilePathInterface
         $rootPath = PathNormalizer::normalizeDirectorySeparator($rootPath);
 
         // If missing, append a directory separator at the end
-        if (PathNormalizer::NORMALIZED_DIRECTORY_SEPARATOR !== \substr($rootPath, -1)) {
+        if (PathNormalizer::NORMALIZED_DIRECTORY_SEPARATOR !== substr($rootPath, -1)) {
             $rootPath .= PathNormalizer::NORMALIZED_DIRECTORY_SEPARATOR;
         }
 

@@ -4,6 +4,7 @@
 // phpcs:ignoreFile
 
 namespace {
+
     use Tombstone as Tombstone2;
     use function Tombstone\Func\ns_tombstone;
     use function Tombstone\Func\ns_tombstone as ns_tombstone2;
@@ -30,6 +31,7 @@ namespace {
 }
 
 namespace Foo {
+
     use Tombstone as Tombstone2;
     use function Tombstone\Func\ns_tombstone;
     use function Tombstone\Func\ns_tombstone as ns_tombstone2;
@@ -56,6 +58,7 @@ namespace Foo {
 }
 
 namespace Tombstone\Func {
+
     use Tombstone as Tombstone2;
     use function Tombstone\Func\ns_tombstone as ns_tombstone2;
 
@@ -94,8 +97,8 @@ namespace Tombstone\StaticCall {
 }
 
 namespace Tombstone\StaticFoo {
-    use Tombstone\StaticCall\Bar;
     use Tombstone\StaticCall as StaticCall2;
+    use Tombstone\StaticCall\Bar;
 
     \Bar::tombstone(); // Ignore
     Bar::tombstone();  // Ok
