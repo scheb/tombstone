@@ -1,0 +1,26 @@
+name: 'Split Release'
+
+on:
+    release:
+        types:
+            - published
+
+jobs:
+    split:
+        name: 'Split sub-packages'
+
+        runs-on: 'ubuntu-latest'
+
+        steps:
+            -
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0  # Fetch all history
+
+            -
+                name: "Gitsplit"
+                uses: docker://jderusse/gitsplit:latest
+                with:
+                    args: gitsplit
+                env:
+                    GH_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
