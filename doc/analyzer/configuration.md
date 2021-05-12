@@ -46,8 +46,9 @@ tombstones:
         # Fully qualified name of the tombstone functions
         # If not set, defaults to "tombstone"
         function_names:
-          - tombstone                 # A function in the global scope
-          - Acme\Tombstone\tombstone  # A function in the Acme\Tombstone namespace
+          - tombstone                     # A function in the global scope
+          - Acme\Tombstone\tombstone      # A function in the Acme\Tombstone namespace
+          - Acme\Tombstone\Foo::tombstone # A static method of the Foo class
 
 # How the analyzer gets the tombstone logs
 logs:

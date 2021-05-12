@@ -40,8 +40,9 @@ class TombstoneExtractorIntegrationTest extends TestCase
         $traverser = new NodeTraverser();
         $this->extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
         $traverser->addVisitor(new TombstoneNodeVisitor($this->extractor, [
-            'tombstone',                      // Global function
-            'Tombstone\\Func\\ns_tombstone',  // Namespaced function
+            'tombstone',                             // Global function
+            'Tombstone\\Func\\ns_tombstone',         // Namespaced function
+            'Tombstone\\StaticCall\\Bar::tombstone', // Static method
         ]));
     }
 
@@ -123,6 +124,11 @@ class TombstoneExtractorIntegrationTest extends TestCase
             71,
             76,
             79,
+
+            // Tombstone\StaticCall namespace
+            101,
+            103,
+            107,
         ], $returnValue);
     }
 }

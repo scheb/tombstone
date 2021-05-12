@@ -212,13 +212,13 @@ class HtmlReportGeneratorTest extends TestCase
 
     private function getDashboardTombstoneType(string $classes): ?string
     {
-        if (false !== \strpos($classes, 'tombstone-undead')) {
+        if (false !== strpos($classes, 'tombstone-undead')) {
             return 'undead';
         }
-        if (false !== \strpos($classes, 'tombstone-dead')) {
+        if (false !== strpos($classes, 'tombstone-dead')) {
             return 'dead';
         }
-        if (false !== \strpos($classes, 'tombstone-deleted')) {
+        if (false !== strpos($classes, 'tombstone-deleted')) {
             return 'deleted';
         }
 

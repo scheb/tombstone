@@ -14,11 +14,15 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__.'/tests',
     ])
     ->notPath('FormattingTestClass.php')
+    ->notPath('function_names.php')
 ;
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+$config
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setRules($rules)
     ->setUsingCache(true)
 ;
+
+return $config;

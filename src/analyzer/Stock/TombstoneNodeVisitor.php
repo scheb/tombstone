@@ -6,6 +6,7 @@ namespace Scheb\Tombstone\Analyzer\Stock;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -52,6 +53,8 @@ class TombstoneNodeVisitor extends NameResolver
             $this->visitFunctionNode($node);
         } elseif ($node instanceof FuncCall) {
             $this->visitFunctionCallNode($node);
+        } elseif ($node instanceof StaticCall) {
+            $this->visitStaticCallNode($node);
         }
     }
 
@@ -92,9 +95,22 @@ class TombstoneNodeVisitor extends NameResolver
             $functionName = (string) $node->name;
             $line = $node->getLine();
             $methodName = $this->getCurrentMethodName();
-            $arguments = $this->extractArguments($node);
+            $arguments = $this->extractArguments($node->args);
             /** @psalm-suppress PossiblyNullArgument */
             $this->tombstoneCallback->onTombstoneFound($functionName, $arguments, $line, $methodName);
+        }
+    }
+
+    private function visitStaticCallNode(StaticCall $node): void
+    {
+        if ($this->isStaticTombstoneMethod($node)) {
+            /** @psalm-suppress PossiblyInvalidCast */
+            $tombstoneMethodName = (string) $node->class.'::'.(string) $node->name;
+            $line = $node->getLine();
+            $methodName = $this->getCurrentMethodName();
+            $arguments = $this->extractArguments($node->args);
+            /** @psalm-suppress PossiblyNullArgument */
+            $this->tombstoneCallback->onTombstoneFound($tombstoneMethodName, $arguments, $line, $methodName);
         }
     }
 
@@ -131,6 +147,19 @@ class TombstoneNodeVisitor extends NameResolver
         return false;
     }
 
+    private function isStaticTombstoneMethod(StaticCall $node): bool
+    {
+        // Class and method name must be available
+        if (!($node->class instanceof Node\Name && $node->name instanceof Node\Identifier)) {
+            return false;
+        }
+
+        $fqn = (string) $node->class.'::'.(string) $node->name;
+
+        // Unambiguous calls resolving to a FQN
+        return \in_array($fqn, $this->tombstoneFunctionNames);
+    }
+
     private function getCurrentMethodName(): ?string
     {
         end($this->currentMethod);
@@ -139,12 +168,14 @@ class TombstoneNodeVisitor extends NameResolver
     }
 
     /**
+     * @param Node\Arg[] $args
+     *
      * @return list<string|null>
      */
-    private function extractArguments(FuncCall $node): array
+    private function extractArguments(array $args): array
     {
         $params = [];
-        foreach ($node->args as $arg) {
+        foreach ($args as $arg) {
             if ($arg->value instanceof String_) {
                 /** @psalm-suppress RedundantCastGivenDocblockType */
                 $params[] = (string) $arg->value->value;
