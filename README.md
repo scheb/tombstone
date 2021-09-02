@@ -60,7 +60,8 @@ This software is available under the [MIT license](LICENSE).
 
 Acknowledgments
 ---------------
-The library is heavly inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code) of the tombstone concept.
+The library is heavily inspired by [Nestoria.com's implementation](http://devblog.nestoria.com/post/115930183873/tombstones-for-dead-code)
+of the tombstone concept.
 
 Thanks to [Jordi Boggiano](https://github.com/Seldaek) for creating [Monolog](https://github.com/Seldaek/monolog), from
 where I lend the handler/formatter concept.
