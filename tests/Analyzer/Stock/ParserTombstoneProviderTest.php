@@ -10,7 +10,7 @@ use Scheb\Tombstone\Analyzer\Stock\ParserTombstoneProvider;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Tests\TestCase;
-use SebastianBergmann\FinderFacade\FinderFacade;
+use Scheb\Tombstone\Core\FinderFacade;
 
 class ParserTombstoneProviderTest extends TestCase
 {
