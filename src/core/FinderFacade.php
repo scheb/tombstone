@@ -28,12 +28,8 @@ final class FinderFacade
      */
     private array $notNames = [];
 
-    public function __construct(
-        array $items = [],
-        array $excludes = [],
-        array $names = [],
-        array $notNames = []
-    ) {
+    public function __construct(array $items = [], array $excludes = [], array $names = [], array $notNames = [])
+    {
         $this->items = $items;
         $this->excludes  = $excludes;
         $this->names = $names;
