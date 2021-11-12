@@ -8,30 +8,18 @@ use Symfony\Component\Finder\Finder;
 
 final class FinderFacade
 {
-    /**
-     * @var array
-     */
-    private array $items = [];
+    private $items = [];
 
-    /**
-     * @var array
-     */
-    private array $excludes = [];
+    private $excludes = [];
 
-    /**
-     * @var array
-     */
-    private array $names = [];
+    private $names = [];
 
-    /**
-     * @var array
-     */
-    private array $notNames = [];
+    private $notNames = [];
 
     public function __construct(array $items = [], array $excludes = [], array $names = [], array $notNames = [])
     {
         $this->items = $items;
-        $this->excludes  = $excludes;
+        $this->excludes = $excludes;
         $this->names = $names;
         $this->notNames = $notNames;
     }
@@ -41,19 +29,19 @@ final class FinderFacade
      */
     public function findFiles(): array
     {
-        $files   = [];
-        $finder  = new Finder();
+        $files = [];
+        $finder = new Finder();
         $iterate = false;
 
         $finder->ignoreUnreadableDirs();
         $finder->sortByName();
 
         foreach ($this->items as $item) {
-            if (!\is_file($item)) {
+            if (!is_file($item)) {
                 $finder->in($item);
                 $iterate = true;
             } else {
-                $files[] = \realpath($item);
+                $files[] = realpath($item);
             }
         }
 

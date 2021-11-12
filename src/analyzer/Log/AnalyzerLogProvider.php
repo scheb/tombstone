@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Scheb\Tombstone\Analyzer\Log;
 
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\FinderFacade;
+use Scheb\Tombstone\Core\Model\RootPath;
 
 class AnalyzerLogProvider implements LogProviderInterface
 {

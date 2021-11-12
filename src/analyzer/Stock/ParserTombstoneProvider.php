@@ -8,8 +8,8 @@ use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
-use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\FinderFacade;
+use Scheb\Tombstone\Core\Model\RootPath;
 
 class ParserTombstoneProvider implements TombstoneProviderInterface
 {
