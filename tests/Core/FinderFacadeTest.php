@@ -22,7 +22,7 @@ class FinderFacadeTest extends TestCase
             [$this->fixtureDir, $this->fixtureDir.'bar.phtml'],
             ['bar'],
             ['*.php'],
-            ['*.fail.php']
+            ['*Fail.php']
         );
 
         $this->assertEquals(
