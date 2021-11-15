@@ -6,7 +6,7 @@ namespace Scheb\Tombstone\Core;
 
 use Symfony\Component\Finder\Finder;
 
-final class FinderFacade
+class FinderFacade
 {
     private $items = [];
 
