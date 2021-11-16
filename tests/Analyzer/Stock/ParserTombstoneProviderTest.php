@@ -8,9 +8,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Stock\ParserTombstoneProvider;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
+use Scheb\Tombstone\Core\FinderFacade;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Tests\TestCase;
-use SebastianBergmann\FinderFacade\FinderFacade;
 
 class ParserTombstoneProviderTest extends TestCase
 {
