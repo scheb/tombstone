@@ -14,9 +14,6 @@ class TombstoneTest extends TestCase
 {
     private const ROOT_DIR = '/path/to';
 
-    /**
-     * @param string ...$arguments
-     */
     private function createTombstone(string $file, string ...$arguments): Tombstone
     {
         $rootPath = new RootPath(self::ROOT_DIR);

@@ -75,7 +75,7 @@ class Tombstone
     private function findDate(array $arguments): ?string
     {
         foreach ($arguments as $argument) {
-            if (is_scalar($argument) && false !== strtotime((string) $argument)) {
+            if (\is_scalar($argument) && false !== strtotime((string) $argument)) {
                 return (string) $argument;
             }
         }
