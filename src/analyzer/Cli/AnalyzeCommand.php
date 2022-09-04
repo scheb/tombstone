@@ -33,12 +33,14 @@ class AnalyzeCommand extends AbstractCommand
 {
     /**
      * @var InputInterface
+     *
      * @psalm-suppress PropertyNotSetInConstructor
      */
     private $input;
 
     /**
      * @var ConsoleOutputInterface
+     *
      * @psalm-suppress PropertyNotSetInConstructor
      */
     private $output;

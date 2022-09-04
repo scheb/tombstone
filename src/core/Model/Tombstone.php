@@ -13,6 +13,7 @@ class Tombstone
 
     /**
      * @var array
+     *
      * @psalm-type list<string|null>
      */
     private $arguments;
