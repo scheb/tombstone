@@ -6,6 +6,7 @@ $rules = [
     'phpdoc_to_comment' => false,
     'phpdoc_align' => false,
     'php_unit_method_casing' => false,
+    'phpdoc_separation' => ['groups' => [['test', 'dataProvider', 'covers']]],
 ];
 
 $finder = PhpCsFixer\Finder::create()
