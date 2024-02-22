@@ -26,7 +26,7 @@ abstract class TestCase extends PHPUnitTestCase
      */
     public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
     {
-        if (method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
+        if (method_exists(PHPUnitTestCase::class, 'assertDirectoryDoesNotExist')) {
             parent::assertDirectoryDoesNotExist($directory, $message);
         } else {
             static::assertFalse(is_dir($directory), $message);
