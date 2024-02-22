@@ -7,6 +7,9 @@ namespace Scheb\Tombstone\Analyzer\Model;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 
+/**
+ * @template-implements \IteratorAggregate<array-key, Tombstone>
+ */
 class TombstoneIndex implements \Countable, \IteratorAggregate
 {
     /**

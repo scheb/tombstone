@@ -11,7 +11,7 @@ class TimePeriodFormatter
     public static function formatAge(string $date): ?string
     {
         $tombstoneDate = strtotime($date);
-        if (!$tombstoneDate) {
+        if (false === $tombstoneDate) {
             return null;
         }
 

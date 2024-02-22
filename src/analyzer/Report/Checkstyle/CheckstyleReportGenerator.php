@@ -82,7 +82,7 @@ class CheckstyleReportGenerator implements ReportGeneratorInterface
         }
 
         $invoker = array_shift($vampires)->getInvoker();
-        $calledBy = sprintf(' by "%s"', $invoker ?: 'global scope');
+        $calledBy = sprintf(' by "%s"', null !== $invoker ? $invoker : 'global scope');
 
         $numAdditionalVampires = $numVampires - 1;
         if ($numAdditionalVampires > 0) {

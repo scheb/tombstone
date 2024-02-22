@@ -71,7 +71,7 @@ class StreamHandler extends AbstractHandler
 
     public function close(): void
     {
-        if ($this->url && \is_resource($this->stream)) {
+        if (null !== $this->url && \is_resource($this->stream)) {
             fclose($this->stream);
         }
         $this->stream = null;

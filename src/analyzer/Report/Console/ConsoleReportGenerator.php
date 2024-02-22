@@ -94,8 +94,9 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
             $this->newLine();
             $this->printTombstone($tombstone, 'RIP');
             $date = $tombstone->getTombstoneDate();
-            if ($date) {
-                if ($age = TimePeriodFormatter::formatAge($date)) {
+            if (null !== $date) {
+                $age = TimePeriodFormatter::formatAge($date);
+                if (null !== $age) {
                     $this->output->writeln(sprintf('    was not called for %s', $age));
                 } else {
                     $this->output->writeln(sprintf('    was not called since %s', $date));
@@ -109,10 +110,10 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
         $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
         $method = $tombstone->getMethod();
-        if ($method) {
+        if (null !== $method) {
             $this->output->writeln(sprintf('    in method <comment>%s</comment>', $method));
         } else {
-            $this->output->writeln(sprintf('    in global scope'));
+            $this->output->writeln('    in global scope');
         }
     }
 

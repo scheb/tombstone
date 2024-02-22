@@ -42,7 +42,7 @@ class TombstoneNodeVisitor extends NameResolver
         $this->tombstoneFunctionNames = $tombstoneFunctionNames;
     }
 
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
         parent::enterNode($node);
         if ($node instanceof Class_) {
@@ -114,7 +114,7 @@ class TombstoneNodeVisitor extends NameResolver
         }
     }
 
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): void
     {
         parent::leaveNode($node);
         if ($node instanceof ClassMethod || $node instanceof Function_) {

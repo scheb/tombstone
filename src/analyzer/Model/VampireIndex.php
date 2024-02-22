@@ -6,6 +6,9 @@ namespace Scheb\Tombstone\Analyzer\Model;
 
 use Scheb\Tombstone\Core\Model\Vampire;
 
+/**
+ * @template-implements \IteratorAggregate<array-key, Vampire>
+ */
 class VampireIndex implements \Countable, \IteratorAggregate
 {
     /**
