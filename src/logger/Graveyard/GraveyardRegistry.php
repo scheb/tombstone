@@ -9,7 +9,7 @@ class GraveyardRegistry
     /**
      * @var GraveyardInterface|null
      */
-    private static $graveyard = null;
+    private static $graveyard;
 
     public static function getGraveyard(): GraveyardInterface
     {

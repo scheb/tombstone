@@ -18,7 +18,7 @@ class TombstoneNodeVisitor extends NameResolver
     /**
      * @var string|null
      */
-    private $currentClass = null;
+    private $currentClass;
 
     /**
      * @var string[]

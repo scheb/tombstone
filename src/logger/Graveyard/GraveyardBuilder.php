@@ -18,7 +18,7 @@ class GraveyardBuilder
     /**
      * @var string|null
      */
-    private $rootDirectory = null;
+    private $rootDirectory;
 
     /**
      * @var HandlerInterface[]
@@ -28,7 +28,7 @@ class GraveyardBuilder
     /**
      * @var LoggerInterface|null
      */
-    private $logger = null;
+    private $logger;
 
     /**
      * @var bool

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Logger\Handler;
 
-use LogicException;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Formatter\AnalyzerLogFormatter;
 use Scheb\Tombstone\Logger\Formatter\FormatterInterface;
@@ -43,7 +42,7 @@ class AnalyzerLogHandler extends AbstractHandler
      */
     private $useLocking;
 
-    public function __construct(string $logDir, int $sizeLimit = null, ?int $filePermission = null, bool $useLocking = false)
+    public function __construct(string $logDir, ?int $sizeLimit = null, ?int $filePermission = null, bool $useLocking = false)
     {
         $this->logDir = $logDir;
         $this->sizeLimit = $sizeLimit;
@@ -120,7 +119,7 @@ class AnalyzerLogHandler extends AbstractHandler
 
     public function setFormatter(FormatterInterface $formatter): void
     {
-        throw new LogicException('Formatter of AnalyzerLogHandler cannot be changed.');
+        throw new \LogicException('Formatter of AnalyzerLogHandler cannot be changed.');
     }
 
     protected function getDefaultFormatter(): FormatterInterface

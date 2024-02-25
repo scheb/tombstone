@@ -7,4 +7,4 @@ $var = 'foo';
 tombstone('2020-01-01', 'author', 'label');
 
 // Invalid arguments
-tombstone(123, 1.23, false, $var, DIRECTORY_SEPARATOR, new \stdClass(), 'label');
+tombstone(123, 1.23, false, $var, DIRECTORY_SEPARATOR, new stdClass(), 'label');

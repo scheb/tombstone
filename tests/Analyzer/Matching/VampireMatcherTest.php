@@ -58,7 +58,7 @@ class VampireMatcherTest extends TestCase
         $this->tombstoneIndex = $this->createMock(TombstoneIndex::class);
         $this->matchingTombstone = $this->createMock(Tombstone::class);
 
-        $this->matcher = new \Scheb\Tombstone\Analyzer\Matching\VampireMatcher([
+        $this->matcher = new VampireMatcher([
             $this->matchingStrategy1,
             $this->matchingStrategy2,
         ]);

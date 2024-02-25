@@ -14,14 +14,8 @@ class PsrLoggerHandler extends AbstractHandler
      */
     private $logger;
 
-    /**
-     * @var mixed
-     */
     private $level;
 
-    /**
-     * @param mixed $level
-     */
     public function __construct(LoggerInterface $logger, $level)
     {
         $this->logger = $logger;
