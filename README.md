@@ -5,7 +5,7 @@ Implements the concept of **tombstones for dead code detection in PHP**.
 
 The library provides you with a toolbox to place, track and evaluate tombstones in your code.
 
-[![Build Status](https://github.com/scheb/tombstone/workflows/CI/badge.svg?branch=1.x)](https://github.com/scheb/tombstone/actions?query=workflow%3ACI+branch%3A1.x)
+[![Build Status](https://github.com/scheb/tombstone/actions/workflows/ci.yaml/badge.svg?branch=1.x)](https://github.com/scheb/tombstone/actions?query=workflow%3ACI+branch%3A1.x)
 [![Code Coverage](https://codecov.io/gh/scheb/tombstone/branch/1.x/graph/badge.svg)](https://app.codecov.io/gh/scheb/tombstone/branch/1.x)
 [![Latest Stable Version](https://img.shields.io/packagist/v/scheb/tombstone)](https://packagist.org/packages/scheb/tombstone)
 [![Monthly Downloads](https://img.shields.io/packagist/dm/scheb/tombstone)](https://packagist.org/packages/scheb/tombstone/stats)
