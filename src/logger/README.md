@@ -2,8 +2,7 @@ scheb/tombstone-logger
 ======================
 
 [![Build Status](https://github.com/scheb/tombstone/workflows/CI/badge.svg?branch=1.x)](https://github.com/scheb/tombstone/actions?query=workflow%3ACI+branch%3A1.x)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/scheb/tombstone/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
-[![Code Coverage](https://scrutinizer-ci.com/g/scheb/tombstone/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/scheb/tombstone/?branch=1.x)
+[![Code Coverage](https://codecov.io/gh/scheb/tombstone/branch/1.x/graph/badge.svg)](https://app.codecov.io/gh/scheb/tombstone/branch/1.x)
 [![Latest Stable Version](https://img.shields.io/packagist/v/scheb/tombstone-logger)](https://packagist.org/packages/scheb/tombstone-logger)
 [![Monthly Downloads](https://img.shields.io/packagist/dm/scheb/tombstone-logger)](https://packagist.org/packages/scheb/tombstone-logger/stats)
 [![Total Downloads](https://img.shields.io/packagist/dt/scheb/tombstone-logger)](https://packagist.org/packages/scheb/tombstone-logger/stats)

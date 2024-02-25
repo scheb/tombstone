@@ -7,8 +7,9 @@ on:
 jobs:
     coding-standards:
         name: 'Coding Standards - PHP ${{ matrix.php-version }}'
-
         runs-on: 'ubuntu-latest'
+        # We want to run on external PRs, but not on our own internal PRs as they'll be run by the push to the branch.
+        if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
 
         strategy:
             fail-fast: false
@@ -54,8 +55,9 @@ jobs:
 
     tests:
         name: 'Tests - PHP ${{ matrix.php-version }}'
-
         runs-on: ubuntu-latest
+        # We want to run on external PRs, but not on our own internal PRs as they'll be run by the push to the branch.
+        if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
 
         strategy:
             fail-fast: false
@@ -96,8 +98,9 @@ jobs:
 
     code-coverage:
         name: 'Code Coverage - PHP ${{ matrix.php-version }}'
-
         runs-on: 'ubuntu-latest'
+        # We want to run on external PRs, but not on our own internal PRs as they'll be run by the push to the branch.
+        if: ${{ !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
 
         strategy:
             fail-fast: false
@@ -112,7 +115,7 @@ jobs:
             -   name: 'Setup PHP'
                 uses: shivammathur/setup-php@v2
                 with:
-                    coverage: 'none'
+                    coverage: 'pcov'
                     extensions: 'json,dom'
                     php-version: '${{ matrix.php-version }}'
 
@@ -130,11 +133,12 @@ jobs:
                 run: composer show
 
             -   name: 'Run tests with coverage'
-                run: phpdbg -qrr vendor/bin/phpunit --coverage-clover coverage/clover.xml
+                run: vendor/bin/phpunit --coverage-clover coverage/clover.xml
 
-            -   name: 'Send Coverage'
-                continue-on-error: true
-                timeout-minutes: 1
-                run: |
-                    wget https://scrutinizer-ci.com/ocular.phar
-                    php ocular.phar code-coverage:upload --format=php-clover coverage/clover.xml
+            -   name: 'Send Coverage to Codecov'
+                uses: codecov/codecov-action@v3
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
+                    files: coverage/clover.xml
+                    flags: unittests
+                    fail_ci_if_error: true
