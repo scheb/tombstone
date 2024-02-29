@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Core\Model;
 
-class StackTrace implements \Countable, \IteratorAggregate, \ArrayAccess
+class StackTrace implements \Countable, StackTraceInterface
 {
     /**
      * @var StackTraceFrame[]
@@ -32,7 +32,7 @@ class StackTrace implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
-     * @return \Traversable<int, StackTraceFrame>
+     * @return \Traversable<array-key, StackTraceFrame>
      */
     public function getIterator(): \Traversable
     {

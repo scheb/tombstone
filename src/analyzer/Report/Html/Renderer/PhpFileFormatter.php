@@ -49,8 +49,9 @@ class PhpFileFormatter
         $stringFlag = false;
         $result = '';
         foreach ($tokens as $j => $token) {
+            $previousToken = $j > 0 ? $tokens[$j - 1] : null;
             if (\is_string($token)) {
-                if ('"' === $token && '\\' !== $tokens[$j - 1]) {
+                if ('"' === $token && '\\' !== $previousToken) {
                     $result .= $this->highlighter->formatString($token);
                     $stringFlag = !$stringFlag;
                 } else {

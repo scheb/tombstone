@@ -69,11 +69,11 @@ class RootPath implements FilePathInterface
     {
         if ('' !== $path && '.' === $path[0]) {
             if ('.' === $path) {
-                $path = ''; // Path is equal root path
-            } elseif ('.' === $path[0]) {
-                // Remove leading "./"
-                $path = preg_replace('#^(\\./)+#', '', $path);
+                // Path is equal root path
+                return new RelativeFilePath('', $this);
             }
+            // Remove leading "./"
+            $path = preg_replace('#^(\\./)+#', '', $path);
         }
 
         return new RelativeFilePath($path, $this);

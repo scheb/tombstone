@@ -131,7 +131,8 @@ class DashboardRenderer
             return 'since unknown';
         }
 
-        if ($age = TimePeriodFormatter::formatAge($date)) {
+        $age = TimePeriodFormatter::formatAge($date);
+        if (null !== $age) {
             return 'for '.$age;
         }
 
@@ -167,7 +168,7 @@ class DashboardRenderer
         $invokersString = '';
         foreach ($invokers as $invoker) {
             $this->invokerTemplate->setVar([
-                'invoker' => $invoker ? htmlspecialchars($invoker) : 'global scope',
+                'invoker' => null !== $invoker ? htmlspecialchars($invoker) : 'global scope',
             ]);
             $invokersString .= $this->invokerTemplate->render();
         }
@@ -218,7 +219,8 @@ class DashboardRenderer
     private function getLastCalled(Vampire $vampire): string
     {
         $invocationDate = $vampire->getInvocationDate();
-        if ($age = TimePeriodFormatter::formatAge($invocationDate)) {
+        $age = TimePeriodFormatter::formatAge($invocationDate);
+        if (null !== $age) {
             return $age;
         }
 
@@ -228,7 +230,7 @@ class DashboardRenderer
     private function getTombstoneScope(Tombstone $tombstone): string
     {
         $method = $tombstone->getMethod();
-        if ($method) {
+        if (null !== $method) {
             return sprintf('method <samp>%s</samp>', htmlspecialchars($method));
         }
 
