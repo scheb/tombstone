@@ -8,6 +8,11 @@ use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\PathNormalizer;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @psalm-type SourceConfig array{root_directory: string}
+ * @psalm-type LogConfig array{directory: string, custom: array{file: string}}
+ * @psalm-type ReportConfig array{php: string, checkstyle: string, html: string}
+ */
 class YamlConfigProvider implements ConfigProviderInterface
 {
     /**
@@ -30,6 +35,9 @@ class YamlConfigProvider implements ConfigProviderInterface
 
     public function readConfiguration(): array
     {
+        /**
+         * @var array{source_code: SourceConfig, logs: LogConfig, report: ReportConfig}  $config
+         */
         $config = Yaml::parseFile($this->configFile);
 
         if (isset($config['source_code']['root_directory'])) {
