@@ -13,27 +13,15 @@ class Application extends AbstractApplication
     public function __construct()
     {
         parent::__construct('cli', '');
+        parent::setDefaultCommand('analyze');
     }
 
-    protected function getCommandName(InputInterface $input)
-    {
-        return 'analyze';
-    }
-
-    protected function getDefaultCommands()
+    protected function getDefaultCommands(): array
     {
         $defaultCommands = AbstractApplication::getDefaultCommands();
         $defaultCommands[] = new AnalyzeCommand();
 
         return $defaultCommands;
-    }
-
-    public function getDefinition()
-    {
-        $inputDefinition = AbstractApplication::getDefinition();
-        $inputDefinition->setArguments();
-
-        return $inputDefinition;
     }
 
     public function doRun(InputInterface $input, OutputInterface $output): int
