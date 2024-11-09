@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
 {
     public const CONFIG_ROOT = '';
 
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::CONFIG_ROOT);
         if (method_exists($treeBuilder, 'getRootNode')) {
