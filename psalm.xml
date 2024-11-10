@@ -24,6 +24,8 @@
 		<DeprecatedMethod errorLevel="info" />
 		<DeprecatedProperty errorLevel="info" />
 		<DeprecatedTrait errorLevel="info" />
+		<!-- Not supported before PHP 8.3 -->
+		<MissingClassConstType errorLevel="info" />
 		<UndefinedClass>
 			<!-- BC layer for phpunit/php-text-template v1 -->
 			<errorLevel type="info">
