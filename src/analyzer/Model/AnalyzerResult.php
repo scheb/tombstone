@@ -169,8 +169,8 @@ class AnalyzerResult extends AbstractResultAggregate implements \Serializable
     }
 
     // Compatibility PHP < 7.4
-    public function unserialize($serialized): void
+    public function unserialize($data): void
     {
-        $this->__unserialize(unserialize($serialized));
+        $this->__unserialize(unserialize($data));
     }
 }
