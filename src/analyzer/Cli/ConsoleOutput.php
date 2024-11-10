@@ -42,9 +42,9 @@ class ConsoleOutput implements ConsoleOutputInterface
 
     public function error(string $message, ?\Throwable $exception = null): void
     {
-        $this->output->writeln(sprintf('<error>%s</error>', $message));
+        $this->output->writeln(\sprintf('<error>%s</error>', $message));
         if (null !== $exception && $this->output->isDebug()) {
-            $this->output->writeln(sprintf(
+            $this->output->writeln(\sprintf(
                 '%s: %s at %s line %s',
                 \get_class($exception),
                 $exception->getMessage(),

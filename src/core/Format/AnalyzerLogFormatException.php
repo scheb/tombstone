@@ -12,7 +12,7 @@ class AnalyzerLogFormatException extends \Exception
     public static function createIncompatibleDataException(int $currentVersion, ?int $version): self
     {
         return new self(
-            sprintf('Log data provided in incompatible version, current version %s, provided version: %s', $currentVersion, $version ?? 'unknown'),
+            \sprintf('Log data provided in incompatible version, current version %s, provided version: %s', $currentVersion, $version ?? 'unknown'),
             self::INCOMPATIBLE_VERSION
         );
     }
@@ -20,7 +20,7 @@ class AnalyzerLogFormatException extends \Exception
     public static function createMissingDataException(array $missingData): self
     {
         return new self(
-            sprintf('Log data is missing fields: %s', implode(', ', $missingData)),
+            \sprintf('Log data is missing fields: %s', implode(', ', $missingData)),
             self::MISSING_DATA
         );
     }

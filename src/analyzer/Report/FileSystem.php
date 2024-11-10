@@ -13,7 +13,7 @@ class FileSystem
         self::ensureDirectoryCreated($reportDir);
         $handle = @opendir($templateDir);
         if (!$handle) {
-            throw new FileSystemException(sprintf('Could not read template files from %s', $templateDir));
+            throw new FileSystemException(\sprintf('Could not read template files from %s', $templateDir));
         }
 
         while ($file = readdir($handle)) {
@@ -30,7 +30,7 @@ class FileSystem
             }
 
             if (!@copy($templateFile, $reportFile)) {
-                throw new FileSystemException(sprintf('Could not copy %s to %s', $templateFile, $reportFile));
+                throw new FileSystemException(\sprintf('Could not copy %s to %s', $templateFile, $reportFile));
             }
         }
         closedir($handle);
@@ -40,10 +40,10 @@ class FileSystem
     {
         if (!is_dir($dir)) {
             if (!@mkdir($dir, 0777, true)) {
-                throw new FileSystemException(sprintf('Could not create directory %s', $dir));
+                throw new FileSystemException(\sprintf('Could not create directory %s', $dir));
             }
         } elseif (!is_writable($dir)) {
-            throw new FileSystemException(sprintf('Directory %s has to be writable', $dir));
+            throw new FileSystemException(\sprintf('Directory %s has to be writable', $dir));
         }
     }
 

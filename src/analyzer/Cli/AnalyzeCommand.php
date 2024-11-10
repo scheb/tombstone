@@ -74,7 +74,7 @@ class AnalyzeCommand extends AbstractCommand
         /** @var string $configFile */
         $configFile = $this->input->getOption('config') ?? getcwd().DIRECTORY_SEPARATOR.'tombstone.yml';
         if (!file_exists($configFile)) {
-            throw new \InvalidArgumentException(sprintf('Could not find configuration file %s', $configFile));
+            throw new \InvalidArgumentException(\sprintf('Could not find configuration file %s', $configFile));
         }
 
         $this->output->debug('Load config from '.$configFile);
@@ -117,7 +117,7 @@ class AnalyzeCommand extends AbstractCommand
 
             $reflectionClass = new \ReflectionClass($config['logs']['custom']['class']);
             if (!$reflectionClass->implementsInterface(LogProviderInterface::class)) {
-                throw new \Exception(sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogProviderInterface::class));
+                throw new \Exception(\sprintf('Class %s must implement %s', $config['logs']['custom']['class'], LogProviderInterface::class));
             }
 
             /** @var LogProviderInterface $logReader */

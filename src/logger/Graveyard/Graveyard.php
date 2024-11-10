@@ -40,7 +40,7 @@ class Graveyard implements GraveyardInterface
                 $handler->log($vampire);
             }
         } catch (\Throwable $e) {
-            $this->logger->error(sprintf('Exception while tracking a tombstone call: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
+            $this->logger->error(\sprintf('Exception while tracking a tombstone call: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
         }
     }
 
@@ -51,7 +51,7 @@ class Graveyard implements GraveyardInterface
                 $handler->flush();
             }
         } catch (\Throwable $e) {
-            $this->logger->error(sprintf('Exception while flushing tombstones: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
+            $this->logger->error(\sprintf('Exception while flushing tombstones: %s %s (%s)', \get_class($e), $e->getMessage(), $e->getCode()));
         }
     }
 }

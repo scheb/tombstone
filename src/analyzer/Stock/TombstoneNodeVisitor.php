@@ -82,7 +82,7 @@ class TombstoneNodeVisitor extends NameResolver
         /** @psalm-suppress DocblockTypeContradiction */
         if (!isset($node->namespacedName)) {
             $nodeName = isset($node->name) ? (string) $node->name : '<anonymous>';
-            throw new \RuntimeException(sprintf('Node %s of type %s did not provide attribute namespacedName', $nodeName, \get_class($node)));
+            throw new \RuntimeException(\sprintf('Node %s of type %s did not provide attribute namespacedName', $nodeName, \get_class($node)));
         }
 
         return (string) $node->namespacedName;

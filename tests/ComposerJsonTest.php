@@ -24,10 +24,10 @@ class ComposerJsonTest extends TestCase
                     continue;
                 }
 
-                $message = sprintf('Dependency "%s" from package "%s" is not defined in root composer.json', $dependency, $package);
+                $message = \sprintf('Dependency "%s" from package "%s" is not defined in root composer.json', $dependency, $package);
                 $this->assertArrayHasKey($dependency, $rootDependencies, $message);
 
-                $message = sprintf('Dependency "%s:%s" from package "%s" requires a different version in the root composer.json', $dependency, $version, $package);
+                $message = \sprintf('Dependency "%s:%s" from package "%s" requires a different version in the root composer.json', $dependency, $version, $package);
                 $this->assertEquals($version, $rootDependencies[$dependency], $message);
 
                 $usedDependencies[] = $dependency;
@@ -35,7 +35,7 @@ class ComposerJsonTest extends TestCase
         }
 
         $unusedDependencies = array_diff(array_keys($rootDependencies), array_unique($usedDependencies));
-        $message = sprintf('Dependencies declared in root composer.json, which are not declared in any sub-package: %s', implode($unusedDependencies));
+        $message = \sprintf('Dependencies declared in root composer.json, which are not declared in any sub-package: %s', implode($unusedDependencies));
         $this->assertCount(0, $unusedDependencies, $message);
     }
 
@@ -47,7 +47,7 @@ class ComposerJsonTest extends TestCase
         $rootReplaces = $this->getComposerReplaces(__DIR__.'/../composer.json');
         foreach ($this->listSubPackages() as $package) {
             $packageName = $this->getComposerPackageName(self::SRC_DIR.'/'.$package.'/composer.json');
-            $message = sprintf('Root composer.json must replace the sub-packages "%s"', $packageName);
+            $message = \sprintf('Root composer.json must replace the sub-packages "%s"', $packageName);
             $this->assertArrayHasKey($packageName, $rootReplaces, $message);
         }
     }

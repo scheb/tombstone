@@ -50,7 +50,7 @@ class TombstoneExtractor
             $this->extractedTombstones = [];
             $this->currentFilePath = $filePath;
             if (!is_readable($filePath)) {
-                throw new TombstoneExtractorException(sprintf('File "%s" is not readable.', $filePath));
+                throw new TombstoneExtractorException(\sprintf('File "%s" is not readable.', $filePath));
             }
 
             $this->parseSourceCode($filePath);
@@ -68,7 +68,7 @@ class TombstoneExtractor
             $content = file_get_contents($absoluteFilePath);
             $stmts = $this->parser->parse($content);
             if (null === $stmts) {
-                throw new TombstoneExtractorException(sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath));
+                throw new TombstoneExtractorException(\sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath));
             }
 
             // Calls back to onTombstoneFound()
@@ -76,9 +76,9 @@ class TombstoneExtractor
         } catch (TombstoneExtractorException $e) {
             throw $e;
         } catch (Error $e) {
-            throw new TombstoneExtractorException(sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath), 0, $e);
+            throw new TombstoneExtractorException(\sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath), 0, $e);
         } catch (\Throwable $e) {
-            throw new TombstoneExtractorException(sprintf('Exception while parsing "%s".', $absoluteFilePath), 0, $e);
+            throw new TombstoneExtractorException(\sprintf('Exception while parsing "%s".', $absoluteFilePath), 0, $e);
         }
     }
 

@@ -231,7 +231,7 @@ class DashboardRenderer
     {
         $method = $tombstone->getMethod();
         if (null !== $method) {
-            return sprintf('method <samp>%s</samp>', htmlspecialchars($method));
+            return \sprintf('method <samp>%s</samp>', htmlspecialchars($method));
         }
 
         return 'global scope';
@@ -240,7 +240,7 @@ class DashboardRenderer
     private function linkToTombstoneInCode(string $label, FilePathInterface $file, int $line): string
     {
         if ($file instanceof RelativeFilePath) {
-            return sprintf('<a href="./%s.html#%s">%s</a>', $file->getRelativePath(), $line, htmlspecialchars($label));
+            return \sprintf('<a href="./%s.html#%s">%s</a>', $file->getRelativePath(), $line, htmlspecialchars($label));
         }
 
         return htmlspecialchars($label);

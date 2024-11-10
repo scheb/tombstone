@@ -29,7 +29,7 @@ class PhpSyntaxHighlighter
 
     private static function formatValue(string $value, string $color): string
     {
-        return sprintf('<span class="%s">%s</span>', $color, $value);
+        return \sprintf('<span class="%s">%s</span>', $color, $value);
     }
 
     private static function getColorForToken(int $token): string

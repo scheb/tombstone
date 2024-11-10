@@ -77,7 +77,7 @@ class AnalyzerLogHandler extends AbstractHandler
         $date = date('Ymd');
         $hash = $vampire->getTombstone()->getHash();
 
-        return $this->logDir.'/'.sprintf(self::LOG_FILE_NAME, $hash, $date);
+        return $this->logDir.'/'.\sprintf(self::LOG_FILE_NAME, $hash, $date);
     }
 
     private function getLogStream(string $logFile): StreamHandler

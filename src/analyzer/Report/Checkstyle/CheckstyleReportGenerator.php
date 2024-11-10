@@ -67,7 +67,7 @@ class CheckstyleReportGenerator implements ReportGeneratorInterface
 
     private function getMessage(Tombstone $tombstone): string
     {
-        return sprintf('Tombstone "%s" was called', (string) $tombstone).$this->getCalledBy($tombstone);
+        return \sprintf('Tombstone "%s" was called', (string) $tombstone).$this->getCalledBy($tombstone);
     }
 
     /**
@@ -82,7 +82,7 @@ class CheckstyleReportGenerator implements ReportGeneratorInterface
         }
 
         $invoker = array_shift($vampires)->getInvoker();
-        $calledBy = sprintf(' by "%s"', null !== $invoker ? $invoker : 'global scope');
+        $calledBy = \sprintf(' by "%s"', null !== $invoker ? $invoker : 'global scope');
 
         $numAdditionalVampires = $numVampires - 1;
         if ($numAdditionalVampires > 0) {

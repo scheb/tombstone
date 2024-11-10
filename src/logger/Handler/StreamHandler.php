@@ -96,7 +96,7 @@ class StreamHandler extends AbstractHandler
             if (!\is_resource($this->stream)) {
                 $this->stream = null;
                 /** @psalm-suppress NullArgument */
-                throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url));
+                throw new \UnexpectedValueException(\sprintf('The stream or file "%s" could not be opened: %s', $this->errorMessage, $this->url));
             }
         }
         if ($this->useLocking) {
@@ -145,7 +145,7 @@ class StreamHandler extends AbstractHandler
             restore_error_handler();
             if (false === $status && !is_dir($dir)) {
                 /** @psalm-suppress NullArgument */
-                throw new \UnexpectedValueException(sprintf('There is no existing directory at "%s" and its not buildable: %s', $dir, $this->errorMessage));
+                throw new \UnexpectedValueException(\sprintf('There is no existing directory at "%s" and its not buildable: %s', $dir, $this->errorMessage));
             }
         }
         $this->dirCreated = true;

@@ -26,7 +26,7 @@ class RootPath implements FilePathInterface
         }
 
         if (!self::isPathAbsolute($rootPath)) {
-            throw new \InvalidArgumentException(sprintf('Root rootPath "%s" must be absolute.', $rootPath));
+            throw new \InvalidArgumentException(\sprintf('Root rootPath "%s" must be absolute.', $rootPath));
         }
 
         $rootPath = PathNormalizer::normalizeDirectorySeparator($rootPath);

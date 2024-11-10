@@ -35,7 +35,7 @@ class AnalyzerLogFileReader
     {
         $handle = @fopen($file, 'r');
         if (false === $handle) {
-            throw new AnalyzerLogProviderException(sprintf('Could not read log file %s', $file));
+            throw new AnalyzerLogProviderException(\sprintf('Could not read log file %s', $file));
         }
 
         $lineNumber = 0;
@@ -44,7 +44,7 @@ class AnalyzerLogFileReader
             try {
                 yield AnalyzerLogFormat::logToVampire($line, $this->rootDir);
             } catch (AnalyzerLogFormatException $e) {
-                $this->output->error(sprintf('Ignoring invalid log data in "%s" on line %s', $file, $lineNumber), $e);
+                $this->output->error(\sprintf('Ignoring invalid log data in "%s" on line %s', $file, $lineNumber), $e);
             }
         }
         fclose($handle);

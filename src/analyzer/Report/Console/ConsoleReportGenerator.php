@@ -46,8 +46,8 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
         $numDeleted = $result->getDeletedCount();
 
         $this->newLine();
-        $this->output->writeln(sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
-        $this->output->writeln(sprintf('Deleted tombstones: %d', $numDeleted));
+        $this->output->writeln(\sprintf('Vampires/Tombstones: %d/%d', $numUndead, $numUndead + $numDead));
+        $this->output->writeln(\sprintf('Deleted tombstones: %d', $numDeleted));
 
         foreach ($result->getFileResults() as $fileResult) {
             $this->newLine();
@@ -81,7 +81,7 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
     private function printCalledBy(array $invokers): void
     {
         foreach ($invokers as $invoker) {
-            $this->output->writeln(sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));
+            $this->output->writeln(\sprintf('    was called by <error>%s</error>', $invoker ?: 'global scope'));
         }
     }
 
@@ -97,9 +97,9 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
             if (null !== $date) {
                 $age = TimePeriodFormatter::formatAge($date);
                 if (null !== $age) {
-                    $this->output->writeln(sprintf('    was not called for %s', $age));
+                    $this->output->writeln(\sprintf('    was not called for %s', $age));
                 } else {
-                    $this->output->writeln(sprintf('    was not called since %s', $date));
+                    $this->output->writeln(\sprintf('    was not called since %s', $date));
                 }
             }
         }
@@ -107,11 +107,11 @@ class ConsoleReportGenerator implements ReportGeneratorInterface
 
     private function printTombstone(Tombstone $tombstone, string $prefix): void
     {
-        $this->output->writeln(sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
-        $this->output->writeln(sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
+        $this->output->writeln(\sprintf('  [%s] <info>%s</info>', $prefix, (string) $tombstone));
+        $this->output->writeln(\sprintf('    in <comment>line %s</comment>', $tombstone->getLine()));
         $method = $tombstone->getMethod();
         if (null !== $method) {
-            $this->output->writeln(sprintf('    in method <comment>%s</comment>', $method));
+            $this->output->writeln(\sprintf('    in method <comment>%s</comment>', $method));
         } else {
             $this->output->writeln('    in global scope');
         }

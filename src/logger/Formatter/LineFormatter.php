@@ -10,7 +10,7 @@ class LineFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        $line = sprintf(
+        $line = \sprintf(
             '%s - Vampire detected: %s, in file %s:%s',
             $vampire->getInvocationDate(),
             (string) $vampire->getTombstone(),
