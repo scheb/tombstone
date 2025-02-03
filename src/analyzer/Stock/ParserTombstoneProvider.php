@@ -40,13 +40,12 @@ class ParserTombstoneProvider implements TombstoneProviderInterface
     {
         $sourceRootPath = new RootPath($config['source_code']['root_directory']);
 
-        // This if enables php-parser in version ^5.0. The ‘create’ function no longer exists here.
-        if (method_exists(ParserFactory::class, 'create')) {
-            $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
-        } else {
+        // This if enables nikic/php-parser in version ^5.0. The ‘create’ function no longer exists here.
+        if (method_exists(ParserFactory::class, 'createForVersion')) {
             $parser = (new ParserFactory())->createForVersion(PhpVersion::getHostVersion());
+        } else {
+            $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         }
-        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         $traverser = new NodeTraverser();
         $extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
         $traverser->addVisitor(new TombstoneNodeVisitor($extractor, $config['tombstones']['parser']['function_names']));
