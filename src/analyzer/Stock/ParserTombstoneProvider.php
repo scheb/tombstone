@@ -7,6 +7,7 @@ namespace Scheb\Tombstone\Analyzer\Stock;
 use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Core\FinderFacade;
 use Scheb\Tombstone\Core\Model\RootPath;
@@ -38,6 +39,13 @@ class ParserTombstoneProvider implements TombstoneProviderInterface
     public static function create(array $config, ConsoleOutputInterface $consoleOutput): TombstoneProviderInterface
     {
         $sourceRootPath = new RootPath($config['source_code']['root_directory']);
+
+        // This if enables php-parser in version ^5.0. The ‘create’ function no longer exists here.
+        if (method_exists(ParserFactory::class, 'create')) {
+            $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
+        } else {
+            $parser = (new ParserFactory())->createForVersion(PhpVersion::getHostVersion());
+        }
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         $traverser = new NodeTraverser();
         $extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
