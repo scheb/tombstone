@@ -7,6 +7,7 @@ namespace Scheb\Tombstone\Tests\Analyzer\Stock;
 use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneNodeVisitor;
@@ -36,7 +37,13 @@ class TombstoneExtractorIntegrationTest extends TestCase
             ->method('createFilePath')
             ->willReturn($this->filePath);
 
-        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
+        // This if enables nikic/php-parser in version ^5.0. The ‘create’ function no longer exists here.
+        if (method_exists(ParserFactory::class, 'createForVersion')) {
+            $parser = (new ParserFactory())->createForVersion(PhpVersion::getHostVersion());
+        } else {
+            $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
+        }
+
         $traverser = new NodeTraverser();
         $this->extractor = new TombstoneExtractor($parser, $traverser, $sourceRootPath);
         $traverser->addVisitor(new TombstoneNodeVisitor($this->extractor, [
