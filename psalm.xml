@@ -28,13 +28,13 @@
 		<MissingClassConstType errorLevel="info" />
 		<UndefinedClass>
 			<!-- BC layer for phpunit/php-text-template v1 -->
-			<errorLevel type="info">
+			<errorLevel type="suppress">
 				<referencedClass name="Text_Template"/>
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
 			<!-- BC layer for phpunit/php-text-template v1 -->
-			<errorLevel type="info">
+			<errorLevel type="suppress">
 				<referencedClass name="Text_Template"/>
 			</errorLevel>
 		</UndefinedDocblockClass>

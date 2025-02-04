@@ -28,9 +28,13 @@ class YamlConfigProvider implements ConfigProviderInterface
     public function __construct(string $configFile)
     {
         $this->configFile = $configFile;
+        $realpath = realpath($this->configFile);
+        if (false === $realpath) {
+            throw new \InvalidArgumentException("Config file '$this->configFile' is not a valid file path.");
+        }
 
         // Make all paths relative to config file path
-        $this->rootPath = new RootPath(\dirname(realpath($this->configFile)));
+        $this->rootPath = new RootPath(\dirname($realpath));
     }
 
     public function readConfiguration(): array

@@ -25,6 +25,9 @@ class FinderFacade
     }
 
     /**
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
+     *
      * @return string[]
      */
     public function findFiles(): array

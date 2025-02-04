@@ -44,6 +44,7 @@ class ParserTombstoneProvider implements TombstoneProviderInterface
         if (method_exists(ParserFactory::class, 'createForVersion')) {
             $parser = (new ParserFactory())->createForVersion(PhpVersion::getHostVersion());
         } else {
+            /** @psalm-suppress UndefinedConstant Backwards compatibility for php-parser v4 */
             $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
         }
         $traverser = new NodeTraverser();

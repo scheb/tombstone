@@ -37,7 +37,8 @@ class AnalyzerLogFormat
 
     public static function vampireToLog(Vampire $vampire): string
     {
-        return json_encode([
+        /** @var string $encoded */
+        $encoded = json_encode([
             self::FIELD_VERSION => self::CURRENT_VERSION,
             self::FIELD_FUNCTION_NAME => $vampire->getFunctionName(),
             self::FIELD_ARGUMENTS => $vampire->getArguments(),
@@ -49,6 +50,8 @@ class AnalyzerLogFormat
             self::FIELD_INVOCATION_DATE => $vampire->getInvocationDate(),
             self::FIELD_INVOKER => $vampire->getInvoker(),
         ]);
+
+        return $encoded;
     }
 
     private static function encodeStackTrace(StackTrace $stackTrace): array

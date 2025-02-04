@@ -116,10 +116,12 @@ class AnalyzerResult extends AbstractResultAggregate implements \Serializable
             $tree['files'][] = $fileResult;
         } else {
             $pathPart = array_shift($pathSegments);
-            if (!isset($tree['dirs'][$pathPart])) {
-                $tree['dirs'][$pathPart] = ['dirs' => [], 'files' => []];
+            if (null !== $pathPart) {
+                if (!isset($tree['dirs'][$pathPart])) {
+                    $tree['dirs'][$pathPart] = ['dirs' => [], 'files' => []];
+                }
+                $this->writeResultDirectoryTree($tree['dirs'][$pathPart], $pathSegments, $fileResult);
             }
-            $this->writeResultDirectoryTree($tree['dirs'][$pathPart], $pathSegments, $fileResult);
         }
     }
 

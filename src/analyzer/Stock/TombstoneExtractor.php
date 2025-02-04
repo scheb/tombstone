@@ -66,6 +66,10 @@ class TombstoneExtractor
     {
         try {
             $content = file_get_contents($absoluteFilePath);
+            if (false === $content) {
+                throw new TombstoneExtractorException(\sprintf('File "%s" could not be read.', $absoluteFilePath));
+            }
+
             $stmts = $this->parser->parse($content);
             if (null === $stmts) {
                 throw new TombstoneExtractorException(\sprintf('PHP code in "%s" could not be parsed.', $absoluteFilePath));

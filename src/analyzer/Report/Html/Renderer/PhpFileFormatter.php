@@ -28,6 +28,10 @@ class PhpFileFormatter
     public function formatFile(string $file): array
     {
         $buffer = file_get_contents($file);
+        if (false === $buffer) {
+            return [];
+        }
+
         $tokens = token_get_all($buffer);
         $fileEndsWithNewLine = "\n" === substr($buffer, -1);
         unset($buffer);

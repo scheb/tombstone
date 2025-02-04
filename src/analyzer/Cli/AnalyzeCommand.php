@@ -71,8 +71,15 @@ class AnalyzeCommand extends AbstractCommand
 
     private function doExecute(): void
     {
-        /** @var string $configFile */
-        $configFile = $this->input->getOption('config') ?? getcwd().DIRECTORY_SEPARATOR.'tombstone.yml';
+        /** @var string|null $configFile */
+        $configFile = $this->input->getOption('config');
+        if (null === $configFile) {
+            if (!($cwd = getcwd())) {
+                throw new \RuntimeException('Could not determine current working directory, please provide a configuration file path.');
+            }
+            $configFile = $cwd.DIRECTORY_SEPARATOR.'tombstone.yml';
+        }
+
         if (!file_exists($configFile)) {
             throw new \InvalidArgumentException(\sprintf('Could not find configuration file %s', $configFile));
         }

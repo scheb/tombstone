@@ -12,16 +12,18 @@ class JsonFormatter implements FormatterInterface
 {
     public function format(Vampire $vampire): string
     {
-        return json_encode([
+        /** @var string $encoded */
+        $encoded = json_encode([
             'arguments' => $vampire->getArguments(),
             'file' => $vampire->getFile()->getReferencePath(),
             'line' => $vampire->getLine(),
             'method' => $vampire->getMethod(),
             'stackTrace' => $this->getStackTraceValues($vampire->getStackTrace()),
             'metadata' => $vampire->getMetadata(),
-            'invocationDate' => $vampire->getInvocationDate(),
-            'invoker' => $vampire->getInvoker(),
-        ]).PHP_EOL;
+            'invocationDate' => $vampire->getInvocationDate(), 'invoker' => $vampire->getInvoker(),
+        ]);
+
+        return $encoded.PHP_EOL;
     }
 
     private function getStackTraceValues(StackTrace $stackTrace): array

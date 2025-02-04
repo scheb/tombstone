@@ -15,7 +15,7 @@ use Scheb\Tombstone\Core\Model\Vampire;
 class StreamHandler extends AbstractHandler
 {
     /**
-     * @var resource|closed-resource|null
+     * @var resource|closed-resource|false|null
      */
     protected $stream;
 

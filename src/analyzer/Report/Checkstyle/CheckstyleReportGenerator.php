@@ -81,6 +81,7 @@ class CheckstyleReportGenerator implements ReportGeneratorInterface
             return '';
         }
 
+        /** @psalm-suppress PossiblyNullReference Handled in the if statement above */
         $invoker = array_shift($vampires)->getInvoker();
         $calledBy = \sprintf(' by "%s"', null !== $invoker ? $invoker : 'global scope');
 

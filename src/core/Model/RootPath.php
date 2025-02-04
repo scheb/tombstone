@@ -73,6 +73,7 @@ class RootPath implements FilePathInterface
                 return new RelativeFilePath('', $this);
             }
             // Remove leading "./"
+            /** @var string $path */
             $path = preg_replace('#^(\\./)+#', '', $path);
         }
 
