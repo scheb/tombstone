@@ -7,6 +7,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 	findUnusedBaselineEntry="true"
 	findUnusedCode="false"
+	ensureOverrideAttribute="false"
 	phpVersion="8.3"
 >
     <projectFiles>
@@ -38,5 +39,7 @@
 				<referencedClass name="Text_Template"/>
 			</errorLevel>
 		</UndefinedDocblockClass>
+		<!-- Breaking change, final keywords to be added in next major version -->
+		<ClassMustBeFinal errorLevel="info" />
 	</issueHandlers>
 </psalm>

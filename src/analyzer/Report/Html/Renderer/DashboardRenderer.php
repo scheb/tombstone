@@ -73,8 +73,8 @@ class DashboardRenderer
         $numDeleted = \count($result->getDeleted());
         $total = $numDead + $numUndead;
 
-        $deadPercent = $total ? $numDead / $total * 100 : 0;
-        $undeadPercent = $total ? $numUndead / $total * 100 : 0;
+        $deadPercent = $total ? (float) $numDead / (float) $total * 100.0 : 0.0;
+        $undeadPercent = $total ? (float) $numUndead / (float) $total * 100.0 : 0.0;
 
         $this->dashboardTemplate->setVar([
             'path_to_root' => '',

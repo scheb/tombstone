@@ -65,7 +65,7 @@ class TombstoneNodeVisitor extends NameResolver
 
     private function visitMethodNode(ClassMethod $node): void
     {
-        $methodName = $this->currentClass.($node->isStatic() ? '::' : '->').$node->name;
+        $methodName = $this->currentClass.($node->isStatic() ? '::' : '->').(string) $node->name;
         $this->currentMethod[] = $methodName;
     }
 

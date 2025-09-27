@@ -66,7 +66,7 @@ class DirectoryItemRenderer
     {
         $this->barTemplate->setVar([
             'level' => 'success',
-            'percent' => round($numDead / $total * 100, 2),
+            'percent' => round((float) $numDead / (float) $total * 100.0, 2),
         ]);
 
         return $this->barTemplate->render();

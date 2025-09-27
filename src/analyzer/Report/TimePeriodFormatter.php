@@ -20,8 +20,8 @@ class TimePeriodFormatter
             return 'less than a day';
         }
 
-        $weeksPassed = floor($daysPassed / 7);
-        $daysPassed = $daysPassed % 7;
+        $weeksPassed = (int) floor($daysPassed / 7.0);
+        $daysPassed = (int) $daysPassed % 7;
 
         $timePassed = $daysPassed.' days';
         if ($weeksPassed) {
