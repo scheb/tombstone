@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Log\LogCollector;
 use Scheb\Tombstone\Analyzer\Log\LogProviderInterface;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
@@ -27,6 +28,7 @@ class LogCollectorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function collectLogs_multipleProviders_addVampiresFromEachProviderToIndex(): void
     {
         $vampire1 = $this->createMock(Vampire::class);

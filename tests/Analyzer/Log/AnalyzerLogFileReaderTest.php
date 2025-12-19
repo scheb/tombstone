@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Log\AnalyzerLogFileReader;
@@ -40,6 +41,7 @@ class AnalyzerLogFileReaderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function readLogFile_fileNotReadable_throwAnalyzerLogProviderException(): void
     {
         $this->expectException(AnalyzerLogProviderException::class);
@@ -50,6 +52,7 @@ class AnalyzerLogFileReaderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function readLogFile_invalidLogData_outputErrorReturnValidVampires(): void
     {
         $this->output
@@ -66,6 +69,7 @@ class AnalyzerLogFileReaderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function readLogFile_allValidData_returnVampires(): void
     {
         $this->output

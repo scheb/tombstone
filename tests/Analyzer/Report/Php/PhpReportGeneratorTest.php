@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report\Php;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Report\Php\PhpReportGenerator;
 use Scheb\Tombstone\Tests\Analyzer\Report\fixtures\AnalyzerResultFixture;
 use Scheb\Tombstone\Tests\TestCase;
@@ -25,6 +26,7 @@ class PhpReportGeneratorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_resultGiven_exportedDataEqualsOriginalResult(): void
     {
         $result = AnalyzerResultFixture::getAnalyzerResult();

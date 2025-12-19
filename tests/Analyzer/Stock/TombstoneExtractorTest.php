@@ -8,6 +8,7 @@ use PhpParser\Error;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverserInterface;
 use PhpParser\Parser;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
@@ -62,6 +63,7 @@ class TombstoneExtractorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_tombstoneFound_addToTombstoneIndex(): void
     {
         $statements = [$this->createMock(Stmt::class)];
@@ -94,6 +96,7 @@ class TombstoneExtractorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_fileNotReadable_throwTombstoneExtractionException(): void
     {
         $this->expectException(TombstoneExtractorException::class);
@@ -105,6 +108,7 @@ class TombstoneExtractorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_parserReturnsNull_throwTombstoneExtractionException(): void
     {
         $this->parser
@@ -121,6 +125,7 @@ class TombstoneExtractorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_parserThrowsError_throwTombstoneExtractionException(): void
     {
         $this->parser
@@ -137,6 +142,7 @@ class TombstoneExtractorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_traverserThrowsError_throwTombstoneExtractionException(): void
     {
         $this->parser

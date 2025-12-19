@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Config;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Config\ConfigProviderInterface;
 use Scheb\Tombstone\Analyzer\Config\Configuration;
@@ -17,6 +18,7 @@ class ConfigurationLoaderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function loadConfiguration_multipleProviders_processMergedConfig(): void
     {
         $provider1 = $this->createProviderReturns(['option1' => ['subNode1' => 'subValue1', 'subNode2' => 'subValue2'], 'option2' => 'value2']);

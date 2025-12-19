@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Graveyard;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Logger\Graveyard\BufferedGraveyard;
 use Scheb\Tombstone\Logger\Graveyard\Graveyard;
@@ -32,6 +33,7 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logTombstoneCall_tombstoneInvoked_notAddToInnerGraveyard(): void
     {
         $this->innerGraveyard
@@ -44,6 +46,7 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logTombstoneCall_autoFlushEnabled_directlyAddToInnerGraveyard(): void
     {
         $this->innerGraveyard
@@ -58,6 +61,7 @@ class BufferedGraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function flush_tombstonesBuffered_addBufferedTombstonesAndFlush(): void
     {
         $this->innerGraveyard

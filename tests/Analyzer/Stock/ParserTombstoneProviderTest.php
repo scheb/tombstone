@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Stock;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Stock\ParserTombstoneProvider;
@@ -36,6 +37,7 @@ class ParserTombstoneProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getTombstones_sourceFilesFound_returnAllTombstones(): void
     {
         $tombstone1 = $this->createMock(Tombstone::class);

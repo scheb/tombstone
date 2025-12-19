@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Tests\TestCase;
@@ -13,6 +14,7 @@ class StackTraceFrameTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getHash_valuesSet_returnCorrectHash(): void
     {
         $rootPath = new RootPath('/root');

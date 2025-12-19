@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report\Console;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Report\Console\ConsoleReportGenerator;
 use Scheb\Tombstone\Tests\Analyzer\Report\fixtures\AnalyzerResultFixture;
@@ -15,6 +16,7 @@ class ConsoleReportGeneratorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_resultGiven_generateConsoleOutput(): void
     {
         $result = AnalyzerResultFixture::getAnalyzerResult();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\StackTraceFrame;
 use Scheb\Tombstone\Tests\TestCase;
@@ -29,6 +30,7 @@ class StackTraceTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getHash_framesProvided_returnCorrectHash(): void
     {
         $this->assertEquals(488632175, $this->stackTrace->getHash());
@@ -37,6 +39,7 @@ class StackTraceTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function offsetExists_offsetIsSet_returnTrue(): void
     {
         $this->assertTrue(isset($this->stackTrace[1]));
@@ -45,6 +48,7 @@ class StackTraceTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function offsetExists_offsetIsNotSet_returnFalse(): void
     {
         $this->assertFalse(isset($this->stackTrace[999]));

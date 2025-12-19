@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
 use Scheb\Tombstone\Core\Model\AbsoluteFilePath;
@@ -100,6 +101,7 @@ class AnalyzerResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getFileResults_multipleFilesWithDifferentResults_returnAnalyzerFileResults(): void
     {
         $deadTombstone1 = $this->createTombstone('file3');
@@ -154,6 +156,7 @@ class AnalyzerResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getRootDirectoryResult_filesWithAbsolutePathGiven_ignoreTheseResults(): void
     {
         $deadTombstone = $this->createTombstoneWithPath($this->createAbsoluteFilePath('/absolute/path1'));
@@ -179,6 +182,7 @@ class AnalyzerResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getRootDirectoryResult_filesWithRelativePathGiven_returnResultTree(): void
     {
         $deadTombstone1 = $this->createTombstoneWithPath($this->createRelativeFilePath('dir1/file1'));
@@ -257,6 +261,7 @@ class AnalyzerResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function void(): void
     {
         $deadTombstone = Fixture::getTombstone('arg1');

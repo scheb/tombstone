@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Handler;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Handler\StreamHandler;
 use Scheb\Tombstone\Tests\Fixture;
@@ -76,6 +77,7 @@ class StreamHandlerTest extends TestCase
      * @dataProvider provideInvalidArguments
      * @covers \Scheb\Tombstone\Logger\Handler\StreamHandler::__construct
      */
+    #[DataProvider('provideInvalidArguments')]
     public function testWriteInvalidArgument($invalidArgument): void
     {
         $this->expectException('InvalidArgumentException');

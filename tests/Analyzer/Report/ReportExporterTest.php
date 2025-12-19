@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerResult;
@@ -60,6 +61,7 @@ class ReportExporterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_multipleGenerators_executeEachGenerator(): void
     {
         $result = $this->createMock(AnalyzerResult::class);
@@ -80,6 +82,7 @@ class ReportExporterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_multipleGenerators_printProgressOnConsole(): void
     {
         $this->exporter->generate($this->createMock(AnalyzerResult::class));
@@ -91,6 +94,7 @@ class ReportExporterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_exceptionThrown_continueGenerating(): void
     {
         $this->generator1
@@ -108,6 +112,7 @@ class ReportExporterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_exceptionThrown_printError(): void
     {
         $this->generator1

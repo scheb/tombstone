@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Config;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Config\YamlConfigProvider;
 use Scheb\Tombstone\Tests\TestCase;
 
@@ -21,6 +22,7 @@ class YamlConfigProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function processConfiguration_minimum_haveDirectoriesSet(): void
     {
         $config = $this->readConfiguration('minimum.yml');
@@ -40,6 +42,7 @@ class YamlConfigProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function processConfiguration_fullConfig_haveAllValuesSet(): void
     {
         $config = $this->readConfiguration('full.yml');

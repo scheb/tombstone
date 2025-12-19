@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Cli;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
+use Scheb\Tombstone\Analyzer\Cli\AnalyzeCommand;
 use Scheb\Tombstone\Analyzer\Cli\Application;
 use Scheb\Tombstone\Tests\DirectoryHelper;
 use Scheb\Tombstone\Tests\TestCase;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 
+#[CoversClass(Application::class)]
+#[CoversClass(AnalyzeCommand::class)]
 class ApplicationTest extends TestCase
 {
     private const ROOT_DIR = __DIR__.'/../../..';
@@ -53,9 +58,8 @@ class ApplicationTest extends TestCase
 
     /**
      * @test
-     * @covers \Scheb\Tombstone\Analyzer\Cli\Application
-     * @covers \Scheb\Tombstone\Analyzer\Cli\AnalyzeCommand
      */
+    #[Test]
     public function generate_logsAndSourceGiven_createHtmlReport(): void
     {
         $this->runTestApplication();

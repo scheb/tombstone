@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Matching\PositionStrategy;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
@@ -22,6 +23,7 @@ class PositionStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_tombstoneMatches_returnTombstone(): void
     {
         $matchedTombstone = $this->createTombstone();
@@ -37,6 +39,7 @@ class PositionStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_noTombstoneAtPosition_returnNull(): void
     {
         $matchedTombstone = $this->createTombstone();
@@ -52,6 +55,7 @@ class PositionStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_tombstoneInscriptionDifferent_returnNull(): void
     {
         $matchedTombstone = $this->createTombstone();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Graveyard;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -65,6 +66,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logTombstoneCall_traceGiven_createVampire(): void
     {
         $trace = Fixture::getTraceFixture();
@@ -81,6 +83,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logTombstoneCall_handlersRegistered_callAllHandlers(): void
     {
         $vampire = $this->stubVampireFactory();
@@ -97,6 +100,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logTombstoneCall_exceptionHappened_logError(): void
     {
         $this->stubVampireFactory();
@@ -118,6 +122,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function flush_handlerRegistered_flushAllHandlers(): void
     {
         $this->handler
@@ -130,6 +135,7 @@ class GraveyardTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function flush_exceptionHappened_logError(): void
     {
         $this->handler

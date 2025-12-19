@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report\Checkstyle;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Report\Checkstyle\CheckstyleReportGenerator;
 use Scheb\Tombstone\Tests\Analyzer\Report\fixtures\AnalyzerResultFixture;
 use Scheb\Tombstone\Tests\TestCase;
@@ -15,6 +16,7 @@ class CheckstyleReportGeneratorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_resultGiven_generateXmlFile(): void
     {
         $result = AnalyzerResultFixture::getAnalyzerResult();

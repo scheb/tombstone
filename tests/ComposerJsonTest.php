@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class ComposerJsonTest extends TestCase
 {
     private const SRC_DIR = __DIR__.'/../src';
@@ -11,6 +13,7 @@ class ComposerJsonTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function packageDependenciesEqualRootDependencies(): void
     {
         $usedDependencies = [];
@@ -42,6 +45,7 @@ class ComposerJsonTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function rootReplacesSubPackages(): void
     {
         $rootReplaces = $this->getComposerReplaces(__DIR__.'/../composer.json');

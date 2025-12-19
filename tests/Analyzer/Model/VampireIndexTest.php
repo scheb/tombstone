@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
@@ -66,6 +67,7 @@ class VampireIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function count_hasDuplicates_returnDeduplicatedNumberOfVampires(): void
     {
         $this->assertEquals(2, $this->vampireIndex->count());
@@ -74,6 +76,7 @@ class VampireIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getIterator_hasVampires_iterateDeduplicatedVampires(): void
     {
         $returnValue = iterator_to_array($this->vampireIndex);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Handler;
 
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Logger\Handler\PsrLoggerHandler;
 use Scheb\Tombstone\Tests\Fixture;
@@ -14,6 +15,7 @@ class PsrLoggerHandlerTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function log_logMessageGiven_forwardToPsrLogger(): void
     {
         $logger = $this->createMock(LoggerInterface::class);

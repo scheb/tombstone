@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Core\Model\FilePathInterface;
@@ -84,6 +85,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function count_hasTombstones_returnNumberOfTombstones(): void
     {
         $this->assertEquals(4, $this->tombstoneIndex->count());
@@ -92,6 +94,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getIterator_hasTombstones_iterateAllTombstones(): void
     {
         $tombstones = iterator_to_array($this->tombstoneIndex);
@@ -101,6 +104,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getInMethod_hasTombstones_returnArrayOfTombstones(): void
     {
         $returnValue = $this->tombstoneIndex->getInMethod('method1');
@@ -112,6 +116,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getInMethod_noTombstones_returnEmptyArray(): void
     {
         $returnValue = $this->tombstoneIndex->getInMethod('otherMethod');
@@ -121,6 +126,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getInFileAndLine_hasTombstone_returnTombstone(): void
     {
         $returnValue = $this->tombstoneIndex->getInFileAndLine($this->createFilePath('file'), 2);
@@ -130,6 +136,7 @@ class TombstoneIndexTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getInFileAndLine_noTombstone_returnNull(): void
     {
         $returnValue = $this->tombstoneIndex->getInFileAndLine($this->createFilePath('file'), 5);

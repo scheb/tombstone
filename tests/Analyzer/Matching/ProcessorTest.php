@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Matching\Processor;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
@@ -90,6 +91,7 @@ class ProcessorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function process_tombstoneHasVampire_setVampireAndResultsAsUndead(): void
     {
         $tombstone = $this->createMock(Tombstone::class);
@@ -130,6 +132,7 @@ class ProcessorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function process_tombstoneHasNoVampire_resultsAsDead(): void
     {
         $tombstone = $this->createMock(Tombstone::class);
@@ -156,6 +159,7 @@ class ProcessorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function process_vampireWithoutTombstone_resultsAsDeleted(): void
     {
         $vampire = $this->createMock(Vampire::class);

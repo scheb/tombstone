@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Log;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Analyzer\Cli\ProgressBar;
@@ -39,6 +40,7 @@ class AnalyzerLogProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function iterateVampires_fixtureDirectoryGiven_yieldVampiresFromAllLogFiles(): void
     {
         $vampire1 = $this->createMock(Vampire::class);
@@ -67,6 +69,7 @@ class AnalyzerLogProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function iterateVampires_fixtureDirectoryGiven_advanceProgressBarForEachFile(): void
     {
         $this->logFileReader

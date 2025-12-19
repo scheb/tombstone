@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Handler;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Logger\Handler\AnalyzerLogHandler;
 use Scheb\Tombstone\Tests\Core\Format\AnalyzerLogFormatTest;
 use Scheb\Tombstone\Tests\Fixture;
@@ -52,6 +53,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function log_differentTombstones_twoLogFilesWritten(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);
@@ -65,6 +67,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function log_sizeLimitSet_stopWhenLimitExceeded(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir, 128);
@@ -87,6 +90,7 @@ class AnalyzerLogHandlerTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function log_logWritten_isAnalyzerLogFormat(): void
     {
         $handler = new AnalyzerLogHandler($this->logDir);

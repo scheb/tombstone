@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Tracing;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Logger\Tracing\TraceProvider;
 use Scheb\Tombstone\Tests\TestCase;
 
@@ -12,6 +13,7 @@ class TraceProviderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getTraceHere_traceContainingFunction_returnStackTrace(): void
     {
         $thisMethod = __FUNCTION__;

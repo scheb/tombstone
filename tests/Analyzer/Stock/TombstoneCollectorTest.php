@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Stock;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Model\TombstoneIndex;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneCollector;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneProviderInterface;
@@ -27,6 +28,7 @@ class TombstoneCollectorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function collectTombstones_multipleProviders_addVampiresFromEachProviderToIndex(): void
     {
         $tombstone1 = $this->createMock(Tombstone::class);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\AbsoluteFilePath;
 use Scheb\Tombstone\Core\Model\RelativeFilePath;
 use Scheb\Tombstone\Core\Model\RootPath;
@@ -14,6 +16,7 @@ class RootPathTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function construct_relativePath_throwInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -26,6 +29,8 @@ class RootPathTest extends TestCase
      * @test
      * @dataProvider provideDenormalizedPaths
      */
+    #[Test]
+    #[DataProvider('provideDenormalizedPaths')]
     public function getAbsolutePath_denormalizedPathGiven_returnNormalizedPath(string $path, string $normalizedPath): void
     {
         $rootPath = new RootPath($path);
@@ -44,6 +49,7 @@ class RootPathTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getAbsolutePath_withoutTailingBackslashGiven_returnWithBackslash(): void
     {
         $rootPath = new RootPath('/path/missing/slash');
@@ -54,6 +60,8 @@ class RootPathTest extends TestCase
      * @test
      * @dataProvider provideRelativePathTestCases
      */
+    #[Test]
+    #[DataProvider('provideRelativePathTestCases')]
     public function createFilePath_pathWithinRoot_returnRelativeFilePath(string $rootPath, string $path, string $expectedAbsolutePath): void
     {
         $expectedRelativePath = 'directory/file.php';
@@ -71,6 +79,7 @@ class RootPathTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getReferencePath_rootPathGiven_returnAbsolutePath(): void
     {
         $rootPath = new RootPath('/path/missing/slash');
@@ -95,6 +104,8 @@ class RootPathTest extends TestCase
      * @test
      * @dataProvider provideRelativePathNotPossible
      */
+    #[Test]
+    #[DataProvider('provideRelativePathNotPossible')]
     public function createFilePath_pathOutsideRoot_returnAbsoluteFilePath(string $rootPath, string $path, string $expectedAbsolutePath)
     {
         $rootPath = new RootPath($rootPath);
@@ -119,6 +130,8 @@ class RootPathTest extends TestCase
      * @test
      * @dataProvider provideRelativePaths
      */
+    #[Test]
+    #[DataProvider('provideRelativePaths')]
     public function createFilePath_relativePathGiven_generateAbsolutePath(string $rootPath, string $path, string $expectedAbsolutePath)
     {
         $rootPath = new RootPath($rootPath);

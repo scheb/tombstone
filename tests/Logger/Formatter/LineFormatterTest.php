@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Formatter;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Logger\Formatter\LineFormatter;
 use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
@@ -13,6 +14,7 @@ class LineFormatterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function format_vampireGiven_returnFormattedString(): void
     {
         $vampire = Fixture::getVampire('2014-01-01', 'label');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Formatter;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Logger\Formatter\JsonFormatter;
 use Scheb\Tombstone\Tests\Fixture;
 use Scheb\Tombstone\Tests\TestCase;
@@ -13,6 +14,7 @@ class JsonFormatterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function format_vampireGiven_returnFormattedString(): void
     {
         $vampire = Fixture::getVampire('label');

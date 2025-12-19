@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Report\TimePeriodFormatter;
 use Scheb\Tombstone\Tests\TestCase;
 
@@ -12,6 +14,7 @@ class TimePeriodFormatterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function formatAge_invalidDateString_returnNull(): void
     {
         $this->assertNull(TimePeriodFormatter::formatAge('invalid'));
@@ -21,6 +24,8 @@ class TimePeriodFormatterTest extends TestCase
      * @test
      * @dataProvider getFormatDateTestCases
      */
+    #[Test]
+    #[DataProvider('getFormatDateTestCases')]
     public function formatAge_dateGiven_returnFormattedTimePeriod(string $date, string $expectedFormattedPeriod): void
     {
         $returnValue = TimePeriodFormatter::formatAge($date);

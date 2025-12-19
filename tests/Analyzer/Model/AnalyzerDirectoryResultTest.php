@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerDirectoryResult;
 use Scheb\Tombstone\Analyzer\Model\AnalyzerFileResult;
 use Scheb\Tombstone\Tests\TestCase;
@@ -44,6 +45,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getDirectoryPath_directorySet_returnPath(): void
     {
         $result = new AnalyzerDirectoryResult('path/to/dir', [], []);
@@ -53,6 +55,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getDirectoryName_directorySet_returnLastSegment(): void
     {
         $result = new AnalyzerDirectoryResult('path/to/dir', [], []);
@@ -62,6 +65,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getDirectoryName_rootDirectory_returnEmptyString(): void
     {
         $result = new AnalyzerDirectoryResult('', [], []);
@@ -71,6 +75,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getDeadCount_directoryAndFileResultsGiven_returnSum(): void
     {
         $result = $this->createAnalyzerDirectoryResult();
@@ -80,6 +85,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getUndeadCount_directoryAndFileResultsGiven_returnSum(): void
     {
         $result = $this->createAnalyzerDirectoryResult();
@@ -89,6 +95,7 @@ class AnalyzerDirectoryResultTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getDeletedCount_directoryAndFileResultsGiven_returnSum(): void
     {
         $result = $this->createAnalyzerDirectoryResult();

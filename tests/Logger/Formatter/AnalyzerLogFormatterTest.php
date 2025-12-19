@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Formatter;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Logger\Formatter\AnalyzerLogFormatter;
 use Scheb\Tombstone\Tests\Core\Format\AnalyzerLogFormatTest;
 use Scheb\Tombstone\Tests\Fixture;
@@ -14,6 +15,7 @@ class AnalyzerLogFormatterTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function format_vampireGiven_returnFormattedString(): void
     {
         $vampire = Fixture::getVampire(...AnalyzerLogFormatTest::TOMBSTONE_ARGUMENTS);

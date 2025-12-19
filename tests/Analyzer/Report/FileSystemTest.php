@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Report\FileSystem;
 use Scheb\Tombstone\Analyzer\Report\FileSystemException;
 use Scheb\Tombstone\Tests\DirectoryHelper;
@@ -35,6 +37,7 @@ class FileSystemTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function copyDirectoryFiles_cannotOpenSourceDirectory_throwFileSystemException(): void
     {
         $this->expectException(FileSystemException::class);
@@ -44,6 +47,7 @@ class FileSystemTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function copyDirectoryFiles_targetIsWritable_copyAllFiles(): void
     {
         FileSystem::copyDirectoryFiles(self::SOURCE_DIRECTORY, self::TEST_DIRECTORY);
@@ -56,6 +60,7 @@ class FileSystemTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function ensureDirectoryCreated_directoryAlreadyCreated_doNothing(): void
     {
         $this->assertDirectoryDoesNotExistBC(self::TEST_DIRECTORY);
@@ -66,6 +71,7 @@ class FileSystemTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function ensureDirectoryCreated_directoryNotCreated_createDirectory(): void
     {
         mkdir(self::TEST_DIRECTORY); // Make sure the directory already exists
@@ -77,6 +83,7 @@ class FileSystemTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function ensureDirectoryCreated_cannotCreateDirectory_throwFileSystemException(): void
     {
         $this->expectException(FileSystemException::class);
@@ -87,6 +94,8 @@ class FileSystemTest extends TestCase
      * @test
      * @dataProvider getTestCasesForCreatePath
      */
+    #[Test]
+    #[DataProvider('getTestCasesForCreatePath')]
     public function createPath_parentAndNameGiven_returnConcatenatedPath(string $parent, string $name, string $expectedResult): void
     {
         $this->assertEquals($expectedResult, FileSystem::createPath($parent, $name));

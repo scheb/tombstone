@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -16,6 +18,8 @@ class VampireTest extends TestCase
      * @test
      * @dataProvider getResultsForInscriptionEquals
      */
+    #[Test]
+    #[DataProvider('getResultsForInscriptionEquals')]
     public function inscriptionEquals_vampireWithTombstoneGiven_getResultFromTombstone(bool $result): void
     {
         $otherTombstone = $this->createMock(Tombstone::class);
@@ -43,6 +47,7 @@ class VampireTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function withTombstone_differentTombstoneObjectGiven_returnDuplicateWithThatTombstone()
     {
         $tombstone = $this->createMock(Tombstone::class);
@@ -59,6 +64,7 @@ class VampireTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getHash_valuesSet_returnCorrectHash(): void
     {
         $vampire = Fixture::getVampire();

@@ -8,6 +8,7 @@ use PhpParser\Lexer;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneExtractor;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneNodeVisitor;
@@ -77,6 +78,7 @@ class TombstoneExtractorIntegrationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_parameterTypes_extractTombstonesWithSupportedParameters(): void
     {
         $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/parameters.php');
@@ -88,6 +90,7 @@ class TombstoneExtractorIntegrationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_tombstoneLocations_extractTombstonesWithLocation(): void
     {
         $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/location.php');
@@ -102,6 +105,7 @@ class TombstoneExtractorIntegrationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function extractTombstones_differentFunctionNames_extractTombstoneCalls(): void
     {
         $returnValue = $this->extractor->extractTombstones(__DIR__.'/fixtures/function_names.php');

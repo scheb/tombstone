@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\StackTrace;
 use Scheb\Tombstone\Core\Model\Tombstone;
@@ -24,6 +26,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function toString_argumentsGiven_returnString(): void
     {
         $tombstone = $this->createTombstone('file', '2015-08-19', 'author');
@@ -33,6 +36,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getTombstoneDate_dateArgumentGiven_returnFirstDetectedTombstoneDate(): void
     {
         $tombstone = $this->createTombstone('file', 'label', '123', '2015-02-02', '2015-03-03');
@@ -42,6 +46,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getTombstoneDate_noDateArgument_returnNull(): void
     {
         $tombstone = $this->createTombstone('file', 'label', '123');
@@ -51,6 +56,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getHash_valuesSet_returnCorrectHash(): void
     {
         $tombstone = $this->createTombstone('file');
@@ -61,6 +67,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function inscriptionEquals_sameValues_returnTrue(): void
     {
         $tombstone1 = $this->createTombstone('file');
@@ -72,6 +79,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function inscriptionEquals_absolutePathVsRelativePath_returnTrue(): void
     {
         $tombstone1 = $this->createTombstone('file');
@@ -84,6 +92,8 @@ class TombstoneTest extends TestCase
      * @test
      * @dataProvider provideTombstonesToCompare
      */
+    #[Test]
+    #[DataProvider('provideTombstonesToCompare')]
     public function inscriptionEquals_differentInscription_returnFalse(Tombstone $tombstone1, Tombstone $tombstone2): void
     {
         $result = $tombstone1->inscriptionEquals($tombstone2);
@@ -107,6 +117,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function hasVampires_noVampiresSet_returnFalse(): void
     {
         $tombstone = $this->createTombstone('file');
@@ -116,6 +127,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function hasVampires_vampireAdded_returnTrue(): void
     {
         $tombstone = $this->createTombstone('file');
@@ -126,6 +138,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getVampires_noVampiresSet_returnEmptyArray(): void
     {
         $tombstone = $this->createTombstone('file');
@@ -135,6 +148,7 @@ class TombstoneTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getVampires_vampireAdded_returnVampires(): void
     {
         $tombstone = $this->createTombstone('file');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Config;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Config\Configuration;
 use Scheb\Tombstone\Tests\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -64,6 +65,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_validFullConfig_returnSameConfig(): void
     {
         $config = self::FULL_CONFIG;
@@ -76,6 +78,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_validMinimumConfig_addDefaultValues(): void
     {
         $config = self::MINIMUM_CONFIG;
@@ -96,6 +99,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_additionalConfigValue_isPassedThrough(): void
     {
         $config = self::FULL_CONFIG;
@@ -109,6 +113,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_missingSourceCodeNode_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -122,6 +127,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_missingRootDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -135,6 +141,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_emptyRootDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -148,6 +155,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_invalidRootDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -161,6 +169,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_missingLogNode_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -174,6 +183,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_emptyLogDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -188,6 +198,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_invalidLogDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -202,6 +213,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_missingCustomLogProviderClass_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -216,6 +228,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_customLogProviderInvalidFile_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -230,6 +243,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_invalidHtmlReportDirectory_throwsException(): void
     {
         $config = self::FULL_CONFIG;
@@ -243,6 +257,7 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function getConfigTreeBuilder_invalidPhpReportFile_throwsException(): void
     {
         $config = self::FULL_CONFIG;

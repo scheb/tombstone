@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Cli;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
@@ -44,6 +45,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function write_stringGiven_writeToOutput(): void
     {
         $this->outputInterface
@@ -57,6 +59,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function writeln_stringGiven_writeToOutput(): void
     {
         $this->outputInterface
@@ -70,6 +73,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function writeln_nothingGiven_writeEmptyLine(): void
     {
         $this->outputInterface
@@ -83,6 +87,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function debug_debugEnabled_writeMessage(): void
     {
         $this->outputInterface
@@ -101,6 +106,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function debug_debugDisabled_writeNothing(): void
     {
         $this->outputInterface
@@ -118,6 +124,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function createProgressBar_withWidth_returnConfiguredProgressBar(): void
     {
         $this->outputInterface
@@ -130,6 +137,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function error_debugEnabledNoException_writeOnlyErrorMessage(): void
     {
         $this->outputInterface
@@ -148,6 +156,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function error_debugDisabledWithException_writeOnlyErrorMessage(): void
     {
         $this->outputInterface
@@ -166,6 +175,7 @@ class ConsoleOutputTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function error_debugEnabledWithException_writeWithExceptionDetails(): void
     {
         $this->outputInterface

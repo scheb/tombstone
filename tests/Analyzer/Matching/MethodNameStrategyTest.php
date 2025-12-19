@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Analyzer\Matching\MethodNameStrategy;
 
 class MethodNameStrategyTest extends AbstractMatchingStrategyTest
@@ -30,6 +31,7 @@ class MethodNameStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_singleTombstoneMatches_returnTombstone(): void
     {
         $matchedTombstone = $this->createTombstone();
@@ -46,6 +48,7 @@ class MethodNameStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_multipleTombstonesInMethod_returnFirstMatchingInscription(): void
     {
         $matchedTombstone1 = $this->createTombstone();
@@ -68,6 +71,7 @@ class MethodNameStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_vampireHasNoMethod_returnNull(): void
     {
         $matchedTombstone = $this->createTombstone();
@@ -83,6 +87,7 @@ class MethodNameStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_noTombstoneInMethod_returnNull(): void
     {
         $matchedTombstone = $this->createTombstone();
@@ -99,6 +104,7 @@ class MethodNameStrategyTest extends AbstractMatchingStrategyTest
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_tombstoneInscriptionDifferent_returnNull(): void
     {
         $matchedTombstone = $this->createTombstone();

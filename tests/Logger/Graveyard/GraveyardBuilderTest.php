@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Graveyard;
 
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\LoggerInterface;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Logger\Graveyard\BufferedGraveyard;
@@ -47,6 +48,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_noRootPathSet_throwException(): void
     {
         $this->expectException(GraveyardBuilderException::class);
@@ -58,6 +60,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_withHandler_logTombstonesToHandler(): void
     {
         $handler = $this->createMock(HandlerInterface::class);
@@ -76,6 +79,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_withLogger_logExceptionsToLogger(): void
     {
         $handler = $this->createMock(HandlerInterface::class);
@@ -101,6 +105,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_stackTraceDepthSet_logTruncatedStackTrace(): void
     {
         $handler = $this->createMock(HandlerInterface::class);
@@ -121,6 +126,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_rootDirSet_logRelativePaths(): void
     {
         $handler = $this->createMock(HandlerInterface::class);
@@ -140,6 +146,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_buffered_buildBufferedGraveyard(): void
     {
         $graveyard = $this->builder
@@ -153,6 +160,7 @@ class GraveyardBuilderTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function build_autoRegister_setToGraveyardRegistry(): void
     {
         $graveyard = $this->builder

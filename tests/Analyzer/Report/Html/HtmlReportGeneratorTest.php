@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Report\Html;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Constraint\Constraint;
 use Scheb\Tombstone\Analyzer\Report\Html\HtmlReportGenerator;
 use Scheb\Tombstone\Analyzer\Report\Html\Renderer\BreadCrumbRenderer;
@@ -66,6 +67,7 @@ class HtmlReportGeneratorTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function generate_resultGiven_exportedDataEqualsOriginalResult(): void
     {
         $result = AnalyzerResultFixture::getAnalyzerResult();

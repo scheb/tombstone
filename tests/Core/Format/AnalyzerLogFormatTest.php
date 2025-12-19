@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Core\Format;
 
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormat;
 use Scheb\Tombstone\Core\Format\AnalyzerLogFormatException;
 use Scheb\Tombstone\Core\Model\RootPath;
@@ -18,6 +19,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function vampireToLog_formatVampire_returnLogFormat(): void
     {
         $vampire = Fixture::getVampire(...self::TOMBSTONE_ARGUMENTS);
@@ -28,6 +30,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logToVampire_invalidVersion_throwException(): void
     {
         $this->expectException(AnalyzerLogFormatException::class);
@@ -39,6 +42,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logToVampire_malformedData_throwException(): void
     {
         $this->expectException(AnalyzerLogFormatException::class);
@@ -50,6 +54,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logToVampire_missingData_throwException(): void
     {
         $this->expectException(AnalyzerLogFormatException::class);
@@ -61,6 +66,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logToVampire_missingDataInStackTrace_truncateStackTrace(): void
     {
         $returnValue = AnalyzerLogFormat::logToVampire('{"v":10000,"fn":"tombstone","a":[],"f":"file","l":123,"s":[{"f":"file1","l":1},{"f":"file2"},{"f":"file3","l":3}],"id":"2015-01-01"}', new RootPath(__DIR__));
@@ -71,6 +77,7 @@ class AnalyzerLogFormatTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function logToVampire_validLog_returnVampire(): void
     {
         $returnValue = AnalyzerLogFormat::logToVampire(self::LOG_RECORD, new RootPath(Fixture::ROOT_DIR));

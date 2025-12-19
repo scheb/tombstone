@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Analyzer\Matching;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Matching\MatchingStrategyInterface;
 use Scheb\Tombstone\Analyzer\Matching\VampireMatcher;
@@ -67,6 +68,7 @@ class VampireMatcherTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_matches_returnFirstMatchingTombstone(): void
     {
         $this->matchingStrategy1
@@ -92,6 +94,7 @@ class VampireMatcherTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function matchVampireToTombstone_noMatch_returnNull(): void
     {
         $this->matchingStrategy1

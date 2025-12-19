@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Scheb\Tombstone\Tests\Logger\Graveyard;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Scheb\Tombstone\Core\Model\RootPath;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Core\Model\Vampire;
@@ -18,6 +20,7 @@ class VampireFactoryTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function createFromCall_dataGiven_returnCorrectlyConstructedVampire(): void
     {
         $factory = new VampireFactory(new RootPath('/root'), self::LONG_STACK_TRACE_DEPTH);
@@ -57,6 +60,7 @@ class VampireFactoryTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function createFromCall_rootDirSetMatchesFilePath_logRelativePath(): void
     {
         $factory = new VampireFactory(new RootPath(Fixture::ROOT_DIR), self::LONG_STACK_TRACE_DEPTH);
@@ -75,6 +79,7 @@ class VampireFactoryTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function createFromCall_rootDirNotMatchedFilePath_logAbsolutePath(): void
     {
         $factory = new VampireFactory(new RootPath('/other/path'), self::LONG_STACK_TRACE_DEPTH);
@@ -93,6 +98,7 @@ class VampireFactoryTest extends TestCase
     /**
      * @test
      */
+    #[Test]
     public function createFromCall_largeTrace_limitStackTrace(): void
     {
         $factory = new VampireFactory(new RootPath(__DIR__), 2);
@@ -108,6 +114,8 @@ class VampireFactoryTest extends TestCase
      * @test
      * @dataProvider getTraceToTestTombstoneFunctionName
      */
+    #[Test]
+    #[DataProvider('getTraceToTestTombstoneFunctionName')]
     public function createFromCall_traceGiven_extractTombstoneFunctionName(array $stackTrace, string $expectedFunctionName): void
     {
         $factory = new VampireFactory(new RootPath('/root'), 0);
