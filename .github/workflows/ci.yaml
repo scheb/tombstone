@@ -15,7 +15,7 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - '8.3'
+                    - '8.4'
 
         steps:
             -   name: 'Checkout code'
@@ -66,7 +66,7 @@ jobs:
                     -   php-version: '7.1.3'
                         dependency-versions: 'lowest'  # Test lowest possible configuration
                     -   php-version: '7.4'  # Highest PHP 7 version
-                    -   php-version: '8.3'  # Highest PHP 8 version
+                    -   php-version: '8.5'  # Highest PHP 8 version
 
         steps:
             -   name: 'Checkout code'
@@ -106,7 +106,7 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - '8.3'
+                    - '8.4'
 
         steps:
             -   name: 'Checkout code'
