@@ -60,7 +60,7 @@ class FileSourceCodeRenderer
     {
         $this->sourceCodeTemplate->setVar([
             'class' => $class,
-            'line' => $lineNumber,
+            'line' => (string) $lineNumber,
             'code' => $codeLine,
         ]);
 

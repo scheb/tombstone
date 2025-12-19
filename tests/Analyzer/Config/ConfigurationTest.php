@@ -115,7 +115,7 @@ class ConfigurationTest extends TestCase
         unset($config['source_code']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessageMatches('/"source_code".*must be configured/');
+        $this->expectExceptionMessageMatchesBC('/"source_code".*must be configured/');
         $this->processConfiguration($config);
     }
 
@@ -128,7 +128,7 @@ class ConfigurationTest extends TestCase
         unset($config['source_code']['root_directory']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessageMatches('/"root_directory".*must be configured/');
+        $this->expectExceptionMessageMatchesBC('/"root_directory".*must be configured/');
         $this->processConfiguration($config);
     }
 
@@ -167,7 +167,7 @@ class ConfigurationTest extends TestCase
         unset($config['logs']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessageMatches('/"logs".*must be configured/');
+        $this->expectExceptionMessageMatchesBC('/"logs".*must be configured/');
         $this->processConfiguration($config);
     }
 
@@ -209,7 +209,7 @@ class ConfigurationTest extends TestCase
         unset($config['logs']['custom']['class']);
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessageMatches('/"class".*must be configured/');
+        $this->expectExceptionMessageMatchesBC('/"class".*must be configured/');
         $this->processConfiguration($config);
     }
 

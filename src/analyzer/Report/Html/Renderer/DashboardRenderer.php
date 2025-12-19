@@ -79,12 +79,12 @@ class DashboardRenderer
         $this->dashboardTemplate->setVar([
             'path_to_root' => '',
             'date' => date('r'),
-            'tombstones_count' => $total,
-            'dead_count' => $numDead,
-            'undead_count' => $numUndead,
-            'deleted_count' => $numDeleted,
-            'dead_percent' => $deadPercent,
-            'undead_percent' => $undeadPercent,
+            'tombstones_count' => (string) $total,
+            'dead_count' => (string) $numDead,
+            'undead_count' => (string) $numUndead,
+            'deleted_count' => (string) $numDeleted,
+            'dead_percent' => (string) $deadPercent,
+            'undead_percent' => (string) $undeadPercent,
             'tombstones_view' => $tombstonesView,
             'deleted_view' => $deletedView,
         ]);
@@ -114,7 +114,7 @@ class DashboardRenderer
             $this->deadTemplate->setVar([
                 'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
-                'line' => $tombstone->getLine(),
+                'line' => (string) $tombstone->getLine(),
                 'scope' => $this->getTombstoneScope($tombstone),
                 'dead_since' => $this->getDeadSince($tombstone),
             ]);
@@ -146,7 +146,7 @@ class DashboardRenderer
             $this->undeadTemplate->setVar([
                 'path_to_root' => '',
                 'tombstone' => $this->linkToTombstoneInCode((string) $tombstone, $fileResult->getFile(), $tombstone->getLine()),
-                'line' => $tombstone->getLine(),
+                'line' => (string) $tombstone->getLine(),
                 'scope' => $this->getTombstoneScope($tombstone),
                 'invocation' => $this->renderInvokers($tombstone),
             ]);
@@ -206,7 +206,7 @@ class DashboardRenderer
             $this->deletedTemplate->setVar([
                 'path_to_root' => './',
                 'tombstone' => htmlspecialchars((string) $vampire->getTombstone()),
-                'line' => $vampire->getLine(),
+                'line' => (string) $vampire->getLine(),
                 'scope' => $this->getTombstoneScope($vampire->getTombstone()),
                 'last_call' => $this->getLastCalled($vampire),
             ]);

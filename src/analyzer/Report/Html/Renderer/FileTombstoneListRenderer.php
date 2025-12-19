@@ -45,7 +45,7 @@ class FileTombstoneListRenderer
     {
         $this->tombstoneTemplate->setVar([
             'tombstone' => htmlspecialchars((string) $tombstone),
-            'line' => $tombstone->getLine(),
+            'line' => (string) $tombstone->getLine(),
             'method' => htmlspecialchars($tombstone->getMethod() ?? ''),
             'level' => $class,
         ]);

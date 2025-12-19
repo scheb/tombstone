@@ -58,7 +58,7 @@ class FileSystemTest extends TestCase
      */
     public function ensureDirectoryCreated_directoryAlreadyCreated_doNothing(): void
     {
-        $this->assertDirectoryDoesNotExist(self::TEST_DIRECTORY);
+        $this->assertDirectoryDoesNotExistBC(self::TEST_DIRECTORY);
         FileSystem::ensureDirectoryCreated(self::TEST_DIRECTORY);
         $this->assertDirectoryExists(self::TEST_DIRECTORY);
     }
@@ -92,7 +92,7 @@ class FileSystemTest extends TestCase
         $this->assertEquals($expectedResult, FileSystem::createPath($parent, $name));
     }
 
-    public function getTestCasesForCreatePath(): array
+    public static function getTestCasesForCreatePath(): array
     {
         return [
             'root' => ['/root', 'name', DIRECTORY_SEPARATOR.'root'.DIRECTORY_SEPARATOR.'name'],

@@ -82,7 +82,7 @@ class StreamHandlerTest extends TestCase
         new StreamHandler($invalidArgument);
     }
 
-    public function provideInvalidArguments(): array
+    public static function provideInvalidArguments(): array
     {
         return [
             [1],
@@ -142,7 +142,7 @@ class StreamHandlerTest extends TestCase
     public function testWriteNonExistingAndNotCreatablePath(): void
     {
         $this->expectException('Exception');
-        $this->expectExceptionMessageMatches('/There is no existing directory at/');
+        $this->expectExceptionMessageMatchesBC('/There is no existing directory at/');
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }
@@ -157,7 +157,7 @@ class StreamHandlerTest extends TestCase
     public function testWriteNonExistingAndNotCreatableFileResource(): void
     {
         $this->expectException('Exception');
-        $this->expectExceptionMessageMatches('/There is no existing directory at/');
+        $this->expectExceptionMessageMatchesBC('/There is no existing directory at/');
         if (\defined('PHP_WINDOWS_VERSION_BUILD')) {
             $this->markTestSkipped('Permissions checks can not run on windows');
         }

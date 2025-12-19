@@ -40,9 +40,9 @@ class DirectoryItemRenderer
             'link' => $link,
             'class' => $this->getClass($undeadCount, $totalCount),
             'bar' => $this->renderBar($deadCount, $totalCount),
-            'total' => $totalCount,
-            'numDead' => $deadCount,
-            'numUndead' => $undeadCount,
+            'total' => (string) $totalCount,
+            'numDead' => (string) $deadCount,
+            'numUndead' => (string) $undeadCount,
         ]);
 
         return $this->directoryItemTemplate->render();
@@ -66,7 +66,7 @@ class DirectoryItemRenderer
     {
         $this->barTemplate->setVar([
             'level' => 'success',
-            'percent' => round((float) $numDead / (float) $total * 100.0, 2),
+            'percent' => (string) round((float) $numDead / (float) $total * 100.0, 2),
         ]);
 
         return $this->barTemplate->render();

@@ -117,7 +117,7 @@ class VampireFactoryTest extends TestCase
         $this->assertEquals($expectedFunctionName, $vampire->getTombstone()->getFunctionName());
     }
 
-    public function getTraceToTestTombstoneFunctionName(): array
+    public static function getTraceToTestTombstoneFunctionName(): array
     {
         return [
             [[['file' => 'file.php', 'line' => 1, 'function' => 'tombstone']], 'tombstone'],

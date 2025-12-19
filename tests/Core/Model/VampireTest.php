@@ -32,7 +32,7 @@ class VampireTest extends TestCase
         $this->assertEquals($result, $returnValue);
     }
 
-    public function getResultsForInscriptionEquals(): array
+    public static function getResultsForInscriptionEquals(): array
     {
         return [
             [true],

@@ -37,7 +37,7 @@ class PathNormalizerTest extends TestCase
         $this->assertEquals($expectedPath, $returnValue);
     }
 
-    public function provideDifferentPlatformPaths(): array
+    public static function provideDifferentPlatformPaths(): array
     {
         return [
             ['/dir/file.php', DIRECTORY_SEPARATOR.'dir'.DIRECTORY_SEPARATOR.'file.php'],

@@ -9,6 +9,7 @@ use Scheb\Tombstone\Analyzer\Stock\TombstoneCollector;
 use Scheb\Tombstone\Analyzer\Stock\TombstoneProviderInterface;
 use Scheb\Tombstone\Core\Model\Tombstone;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\WithConsecutive;
 
 class TombstoneCollectorTest extends TestCase
 {
@@ -39,11 +40,11 @@ class TombstoneCollectorTest extends TestCase
         $tombstoneIndex
             ->expects($this->exactly(3))
             ->method('addTombstone')
-            ->withConsecutive(
+            ->with(...WithConsecutive::create(
                 [$this->identicalTo($tombstone1)],
                 [$this->identicalTo($tombstone2)],
                 [$this->identicalTo($tombstone3)]
-            );
+            ));
 
         $collector = new TombstoneCollector([$provider1, $provider2], $tombstoneIndex);
         $collector->collectTombstones();

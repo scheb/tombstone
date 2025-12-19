@@ -14,7 +14,7 @@ class TombstoneTest extends TestCase
 {
     private const ROOT_DIR = '/path/to';
 
-    private function createTombstone(string $file, string ...$arguments): Tombstone
+    private static function createTombstone(string $file, string ...$arguments): Tombstone
     {
         $rootPath = new RootPath(self::ROOT_DIR);
 
@@ -90,12 +90,12 @@ class TombstoneTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function provideTombstonesToCompare(): array
+    public static function provideTombstonesToCompare(): array
     {
-        $reference = $this->createTombstone('file', '2015-01-01', 'author', 'label');
-        $tombstone1 = $this->createTombstone('file', '2015-01-02', 'author', 'label');
-        $tombstone2 = $this->createTombstone('file', '2015-01-01', 'otherAuthor', 'label');
-        $tombstone3 = $this->createTombstone('file', '2015-01-01', 'author', 'otherLabel');
+        $reference = self::createTombstone('file', '2015-01-01', 'author', 'label');
+        $tombstone1 = self::createTombstone('file', '2015-01-02', 'author', 'label');
+        $tombstone2 = self::createTombstone('file', '2015-01-01', 'otherAuthor', 'label');
+        $tombstone3 = self::createTombstone('file', '2015-01-01', 'author', 'otherLabel');
 
         return [
             [$reference, $tombstone1],

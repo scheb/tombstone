@@ -9,6 +9,7 @@ use Scheb\Tombstone\Logger\Graveyard\BufferedGraveyard;
 use Scheb\Tombstone\Logger\Graveyard\Graveyard;
 use Scheb\Tombstone\Logger\Graveyard\GraveyardInterface;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\WithConsecutive;
 
 class BufferedGraveyardTest extends TestCase
 {
@@ -62,10 +63,10 @@ class BufferedGraveyardTest extends TestCase
         $this->innerGraveyard
             ->expects($this->exactly(2))
             ->method('logTombstoneCall')
-            ->withConsecutive(
+            ->with(...WithConsecutive::create(
                 [['args'], ['trace1'], ['metaField' => 'metaValue1']],
                 [['args'], ['trace2'], ['metaField' => 'metaValue2']]
-            );
+            ));
 
         $this->innerGraveyard
             ->expects($this->exactly(2))

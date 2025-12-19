@@ -32,7 +32,7 @@ class RootPathTest extends TestCase
         $this->assertEquals($normalizedPath, $rootPath->getAbsolutePath());
     }
 
-    public function provideDenormalizedPaths(): array
+    public static function provideDenormalizedPaths(): array
     {
         return [
             ['/path/to/test', '/path/to/test/'],
@@ -77,7 +77,7 @@ class RootPathTest extends TestCase
         $this->assertEquals('/path/missing/slash/', $rootPath->getReferencePath());
     }
 
-    public function provideRelativePathTestCases(): array
+    public static function provideRelativePathTestCases(): array
     {
         return [
             ['/path/to', '/path/to/directory/file.php', '/path/to/directory/file.php'],
@@ -107,7 +107,7 @@ class RootPathTest extends TestCase
         $this->assertEquals($expectedAbsolutePath, $returnValue->getReferencePath());
     }
 
-    public function provideRelativePathNotPossible(): array
+    public static function provideRelativePathNotPossible(): array
     {
         return [
             ['/other/base', '/path/to/file.php', '/path/to/file.php'],
@@ -130,7 +130,7 @@ class RootPathTest extends TestCase
         $this->assertEquals($expectedAbsolutePath, $returnValue->getAbsolutePath());
     }
 
-    public function provideRelativePaths(): array
+    public static function provideRelativePaths(): array
     {
         return [
             ['/root/path', '', '/root/path/'],

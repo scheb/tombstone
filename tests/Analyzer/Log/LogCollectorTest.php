@@ -9,6 +9,7 @@ use Scheb\Tombstone\Analyzer\Log\LogProviderInterface;
 use Scheb\Tombstone\Analyzer\Model\VampireIndex;
 use Scheb\Tombstone\Core\Model\Vampire;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\WithConsecutive;
 
 class LogCollectorTest extends TestCase
 {
@@ -39,11 +40,11 @@ class LogCollectorTest extends TestCase
         $vampireIndex
             ->expects($this->exactly(3))
             ->method('addVampire')
-            ->withConsecutive(
+            ->with(...WithConsecutive::create(
                 [$this->identicalTo($vampire1)],
                 [$this->identicalTo($vampire2)],
                 [$this->identicalTo($vampire3)]
-            );
+            ));
 
         $collector = new LogCollector([$provider1, $provider2], $vampireIndex);
         $collector->collectLogs();

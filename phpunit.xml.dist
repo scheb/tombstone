@@ -7,12 +7,13 @@
     <testsuites>
         <testsuite name="Test suite">
             <directory suffix="Test.php">./tests</directory>
+            <exclude>./tests/Analyzer/Matching/AbstractMatchingStrategyTest.php</exclude>
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>./src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>

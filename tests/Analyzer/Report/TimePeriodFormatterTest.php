@@ -27,7 +27,7 @@ class TimePeriodFormatterTest extends TestCase
         $this->assertEquals($expectedFormattedPeriod, $returnValue);
     }
 
-    public function getFormatDateTestCases(): array
+    public static function getFormatDateTestCases(): array
     {
         $fewHoursDate = date('Y-m-d', strtotime('-6 hours'));
         $daysDate = date('Y-m-d', strtotime('-5 days'));

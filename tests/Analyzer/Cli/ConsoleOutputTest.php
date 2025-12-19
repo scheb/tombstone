@@ -8,6 +8,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutput;
 use Scheb\Tombstone\Analyzer\Cli\ConsoleOutputInterface;
 use Scheb\Tombstone\Tests\TestCase;
+use Scheb\Tombstone\Tests\WithConsecutive;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -175,10 +176,10 @@ class ConsoleOutputTest extends TestCase
         $this->outputInterface
             ->expects($this->exactly(2))
             ->method('writeln')
-            ->withConsecutive(
+            ->with(...WithConsecutive::create(
                 ['<error>error message</error>'],
                 [$this->matches('Exception: exception message at %s'.DIRECTORY_SEPARATOR.'ConsoleOutputTest.php line %i')]
-            );
+            ));
 
         $this->consoleOutput->error('error message', new \Exception('exception message'));
     }
