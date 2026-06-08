@@ -125,7 +125,7 @@ class TombstoneNodeVisitor extends NameResolver
     private function isTombstoneFunction(FuncCall $node): bool
     {
         // Function name must be available
-        if (!($node->name instanceof Node\Name)) {
+        if (!$node->name instanceof Node\Name) {
             return false;
         }
 

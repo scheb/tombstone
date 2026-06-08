@@ -60,7 +60,7 @@ class FileRenderer
     private function renderFile(AnalyzerFileResult $fileResult): void
     {
         $filePath = $fileResult->getFile();
-        if (!($filePath instanceof RelativeFilePath)) {
+        if (!$filePath instanceof RelativeFilePath) {
             return;
         }
 
