@@ -168,7 +168,7 @@ class TombstoneNodeVisitor extends NameResolver
     }
 
     /**
-     * @param Node\Arg[]|Node\VariadicPlaceholder[] $args
+     * @param Node\Arg[]|Node\VariadicPlaceholder[]|Node\ArgPlaceholder[] $args
      *
      * @return list<string|null>
      */
@@ -178,7 +178,7 @@ class TombstoneNodeVisitor extends NameResolver
         foreach ($args as $arg) {
             if ($arg instanceof Node\VariadicPlaceholder) {
                 break; // Can't extract from ...$var arguments
-            } elseif ($arg->value instanceof String_) {
+            } elseif ($arg instanceof Node\Arg && $arg->value instanceof String_) {
                 /** @psalm-suppress RedundantCast */
                 $params[] = (string) $arg->value->value;
             } else {
